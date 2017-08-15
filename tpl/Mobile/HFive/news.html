@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<!--<title>资讯详细</title>-->
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+</head>
+<body>
+   <!-- <header>
+       <div class="back"></div> 
+       &lt;!&ndash;<p>资讯详细</p>&ndash;&gt;
+    </header>-->
+    <!--<div class="my_blank"></div>-->
+    <div class="news">
+    	<if condition="$code eq 1000">
+	        <h1>{$data.title}</h1>
+	        <div class="info">
+	            <em>{$data.create_time}</em>
+	        </div>
+            <div class="info">
+                <em><img src="{$data.img}" width="100" height="80"/></em>
+            </div>
+	        <div class="content">
+	        	{$data.content}
+	        </div>
+    	<else/>
+    		<h1>{$message}</h1>
+    	</if>
+    </div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+</html>

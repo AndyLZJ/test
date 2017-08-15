@@ -1,0 +1,50 @@
+<layout name="layout"/>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div style="height:160px;">
+        <div class="mb10" id="addExamclassify">
+            <foreach name="items" item="item">
+                <a type="button" class="btn mb10  btn-default btn-sm"><input class="btn-sm" type="text" name="tag[]" maxlength="10" value="{$item['cat_name']}" id="{$item['id']}"><i class=" ml5 fa fa-times" onclick="del_button(this,{$item['id']})"></i></a>
+            </foreach>
+        </div>
+        <div>
+            <button type="button" onclick="addnew();" class="btn btn-primary  btn-sm"><i class="fa fa-plus"></i>新增</button>
+        </div>
+    </div>
+</section>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript">
+    //点击新增按钮，添加分类栏
+    function addnew() {
+        $("#addExamclassify").append('<a type="button" name="button" class="btn mb10  btn-default btn-sm"><input class="btn-sm" type="text" name="tag[]" maxlength="10" value=""><i  class=" ml5 fa fa-times remove_button"" onclick="del_button(this,0)")></i></a>');
+    }
+
+    function del_button(items,id){
+
+        var parentNode = items.parentNode;
+
+        if(id == 0){
+            parentNode.remove();
+        }else{
+
+            $.ajax({
+                url:"{:U('delTestCategory')}",
+                type:"POST",
+                data:{"id":id},
+                dataType:"JSON",
+                success:function(xhr){
+                    if(xhr.status > 0){
+                        layer.msg('操作成功', {time:1500,icon: 1});
+                        parentNode.remove();
+                    }else{
+                        layer.msg('该分类正在使用,删除失败',{time:1500});
+                    }
+                },
+            });
+
+        }
+    }
+
+</script>

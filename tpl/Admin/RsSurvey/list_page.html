@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>资源管理_问卷列表</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<style>
+	#categorys {
+		display: none;
+		width:300px; 
+		margin:10px 20px;
+	}
+	.operate a:hover{color:#f79a0b !important; }
+</style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+	<h1 class="info_title">
+			           问卷管理
+			<small>/问卷列表</small>
+	</h1>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+	<div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li <if condition="$type eq '1'">class="active" </if> >
+					<a href="__CONTROLLER__/listPage?type=1">已发布</a>
+				</li>
+				<li <if condition="$type eq '2'">class="active" </if> >
+					<a href="__CONTROLLER__/listPage?type=2">未发布</a>
+				</li>
+				<li <if condition="$type eq '3'">class="active" </if> >
+					<a href="__CONTROLLER__/listPage?type=3">待审核</a>
+				</li>
+				<li <if condition="$type eq '4'">class="active" </if> >
+					<a href="__CONTROLLER__/listPage?type=4">已拒绝</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="good_audit">
+					<!--课程列表开始-->
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+						<!--筛选栏开始-->
+						<div class="row">
+							<form action="__SELF__" method="get">
+								<input type="hidden" name="type" value="{$type}"/>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<div class="input-group width_10">
+											<input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="搜索问卷名">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-6">
+								<div id="example1_filter" class="dataTables_filter">
+									<if condition="$type eq 1">
+									<button type="button" class="btn btn-warning float_r" onclick="cancel_pub()"><i class="fa fa-trash mr5" ></i>取消发布</button>
+									</if>
+									<if condition="$type eq 2">
+									<button type="button" class="btn btn-warning float_r" onclick="yes_pub()"><i class="fa fa-check-square-o mr5" ></i>发布问卷</button>
+									</if>
+									<if condition="$type eq 4">
+									<button type="button" class="btn btn-warning float_r" onclick="cancel_pub2()"><i class="fa fa-trash mr5" ></i>删除全部记录</button>
+									</if>
+									<button type="button" class="btn btn-primary mr10 float_r" onclick="add_classify();"><i class="fa fa-cloud-upload mr5 " aria-hidden="true "></i>导入问卷</button>
+									<a href="__CONTROLLER__/createPage" class="btn btn-primary mr10 float_r"> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新建问卷</a>
+									<button type="button" class="btn btn-success mr10 float_r " onclick="add_Que_classify()"> <i class="fa fa-plus mr5 " aria-hidden="true "></i>分类管理</button>
+								</div>
+							</div>
+						</div>
+						<!--筛选栏结束-->
+						<!--内容开始-->
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+									<!-- 已发布 -->
+									<if condition="$type eq 1">
+										<thead>
+											<tr role="row">
+												<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+													<label style="margin-bottom: 0px;">
+															<input type="checkbox" class="passed_allcheck">
+														</label>
+												</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷分类</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">使用统计</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传人</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传时间</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+											</tr>
+										</thead>
+										<tbody id="tab" class="passed_table">
+											<foreach name="list" item="items">
+												<tr role="row" class="odd text-center">
+													<td>
+														<if condition="$items['isequality'] neq 1">
+															<input type="checkbox" name="checkbox[]" value="{$items.id}">
+														<else/>
+															<input type="checkbox" disabled="disabled">
+														</if>
+													</td>
+													<td>{$items['survey_name']}</td>
+													<td>{$items['cat_name']}</td>
+													<td>{$items['use_num']}</td>
+													<td>{$items['username']}</td>
+													<td>{$items['survey_upload_time']}</td>
+													<td class="operate">
+														<if condition="$items['isequality'] neq 1">
+															<if condition="$items['is_available'] eq 1">
+																<a data-id="{$items['id']}" href="#" class="forbidden color_or mr5">
+																	<i class="fa  fa-ban"></i>禁用
+																</a>
+															<else/>
+																<a data-id="{$items['id']}" href="#" class="open color_gree mr5">
+																	<i class="fa fa-check-square-o" ></i>启用
+																</a>
+															</if>
+														</if>
+														<a href="{:U('detail',array('id'=>$items['id']))}" class="bs-callout-info color_blue mr5">
+															<i class="fa fa-eye" ></i>查看
+														</a>
+													</td>
+												</tr>
+											</foreach>
+										</tbody>
+									</if>
+									<!-- 未发布 -->
+									<if condition="$type eq 2">
+										<thead>
+											<tr role="row">
+												<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+													<label style="margin-bottom: 0px;">
+															<input type="checkbox" class="passed_allcheck">
+														</label>
+												</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷分类</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传人</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传时间</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+											</tr>
+										</thead>
+										<tbody id="tab" class="passed_table">
+											<foreach name="list" item="items">
+												<tr role="row" class="odd text-center">
+													<td>
+														<if condition="$items['isequality'] neq 1">
+															<input type="checkbox" name="checkbox[]" value="{$items.id}">
+														<else/>
+															<input type="checkbox" disabled="disabled">
+														</if>
+													</td>
+													<td>{$items['survey_name']}</td>
+													<td>{$items['cat_name']}</td>
+													<td>{$items['username']}</td>
+													<td>{$items['survey_upload_time']}</td>
+													<td class="operate">
+														<if condition="$items['isequality'] neq 1">
+														<if condition="$items['is_available'] eq 1">
+															<a data-id="{$items['id']}" href="#" class="forbidden color_or mr5">
+																<i class="fa  fa-ban"></i>禁用
+															</a>
+														<else/>
+															<a data-id="{$items['id']}" href="#" class="open color_gree mr5">
+																<i class="fa fa-check-square-o" ></i>启用
+															</a>
+														</if>
+														<a href="{:U('editPage',array('id'=>$items['id']))}" class="bs-callout-info color_blue mr5">
+															<i class="fa fa-edit" ></i>编辑
+														</a>
+														<a href="javascript:void(0)" data-id="{$items['id']}" class="delSurvey bs-callout-info color_blue mr5">
+															<i class="fa fa-trash-o" ></i>删除
+														</a>
+														</if>
+														<a href="{:U('detail',array('id'=>$items['id']))}" class="bs-callout-info color_blue mr5">
+															<i class="fa fa-eye" ></i>查看
+														</a>
+													</td>
+												</tr>
+											</foreach>
+										</tbody>
+									</if>
+									<!-- 待审核 -->
+									<if condition="$type eq 3">
+										<thead>
+											<tr role="row">
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">单号</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷分类</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传人</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传时间</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+											</tr>
+										</thead>
+										<tbody id="tab" class="passed_table">
+											<foreach name="list" item="items">
+												<tr role="row" class="odd text-center">
+													<td>{$items['orderno']}</td>
+													<td>{$items['survey_name']}</td>
+													<td>{$items['cat_name']}</td>
+													<td>{$items['username']}</td>
+													<td>{$items['survey_upload_time']}</td>
+													<td class="operate">
+														<a href="{:U('detail',array('id'=>$items['id']))}" class="bs-callout-info color_blue mr5">
+															<i class="fa fa-eye" ></i>查看
+														</a>
+													</td>
+												</tr>
+											</foreach>
+										</tbody>
+									</if>
+									<!-- 审核拒绝 -->
+									<if condition="$type eq 4">
+										<thead>
+											<tr role="row">
+												<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+													<label style="margin-bottom: 0px;">
+															<input type="checkbox" class="passed_allcheck">
+														</label>
+												</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">单号</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">拒绝原因</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷分类</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传人</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传时间</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">终审人员</th>
+											</tr>
+										</thead>
+										<tbody id="tab" class="passed_table">
+											<foreach name="list" item="items">
+												<tr role="row" class="odd text-center">
+													<td>
+														<if condition="$items['isequality'] neq 1">
+															<input type="checkbox" name="checkbox[]" value="{$items.id}">
+														<else/>
+															<input type="checkbox" disabled="disabled">
+														</if>
+													</td>
+													<td>{$items['orderno']}</td>
+													<td>{$items['objection']}</td>
+													<td>{$items['survey_name']}</td>
+													<td>{$items['cat_name']}</td>
+													<td>{$items['username']}</td>
+													<td>{$items['survey_upload_time']}</td>
+													<td>{$items['audit_user']}</td>
+												</tr>
+											</foreach>
+										</tbody>
+									</if>
+								</table>
+							</div>
+						</div>
+						<!--内容結束-->
+						<!--分页开始-->
+						<div class="row">
+							<div class="float_r mr15">
+								<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+									{$pageNav}
+								</div>
+							</div>
+						</div>
+						<!--分页结束-->
+					</div>
+					<!--问卷列表结束-->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 导入问卷 -->
+<div id="categorys">
+	<form action="{:U('importQuestionNaire')}" method="post" id="addFileFrom" enctype="multipart/form-data">
+		<div class="mb10">一、请根据模板格式导入数据</div>
+		<div class="mb10">
+			<a href="/Upload/excelTmp/survey_tmp.xlsx" download class="btn btn-block btn-success">
+					<i class="fa fa-arrow-circle-down mr5" ></i>
+					下载模板</a>
+		</div>
+		<div class="mb10">注：导入文件请勿超过1M。</div>
+		<div class="mb10">二、请选择需要导入的Excel文件</div>
+		<input type="file" name="importFile" style="width:250px; font:300 1em PingFang SC;" />
+		<div style="display:none;">
+			<input type="submit" value="提交" >
+			<input type="reset" class="fromReset" value="重置表单" >
+		</div>
+	</form>
+</div>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+	//禁用操作
+	$(".tab-content").on("click", ".forbidden",function() {
+		var survey_id = $(this).attr('data-id');
+		var _this = $(this);
+		layer.confirm('您确定要禁用吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_id="+survey_id+"&is_available=0"
+				$.ajax({
+					type: "get",
+					url: "__CONTROLLER__/setAvailable",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							_this.addClass('open');
+							_this.addClass('color_gree');
+							_this.html('<i class="fa fa-check-square-o mr5" ></i>启用');
+							_this.removeClass('forbidden');
+							_this.removeClass('color_or');
+							layer.msg('操作成功',{icon: 1, time:1000});
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	});
+
+	//启用操作
+	$(".tab-content").on("click", ".open", function() {
+		var survey_id = $(this).attr('data-id');
+		var _this = $(this);
+		layer.confirm('您确定要启用吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_id="+survey_id+"&is_available=1"
+				$.ajax({
+					type: "get",
+					url: "__CONTROLLER__/setAvailable",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							_this.addClass('forbidden');
+							_this.addClass('color_or');
+							_this.html('<i class="fa fa-ban" ></i>禁用');
+							_this.removeClass('open');
+							_this.removeClass('color_gree');
+							layer.msg('操作成功',{icon: 1, time:1000});
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	})
+
+	//radio选中样式
+	$('input').iCheck({
+		labelHover: false,
+		cursor: true,
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_minimal-blue',
+		increaseArea: '20%'
+	});
+	
+	//删除问卷
+	$(".delSurvey").click(function(){
+		var survey_id = $(this).attr('data-id');
+		var _this = $(this);
+		layer.confirm('您确定要删除此问卷吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_id="+survey_id;
+				$.ajax({
+					type: "get",
+					url: "__CONTROLLER__/delSurvey",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							layer.msg('操作成功',{icon: 1, time:1000});
+							_this.closest("tr").remove();
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	});
+	
+	//取消发布
+	function cancel_pub(){
+		var checkedId = $("input[name='checkbox[]']");
+		var mess = new Array();
+		for(var i = 0, ress = 0; i < checkedId.length; i++) {
+			if(checkedId[i].checked) {
+				ress = ress + 1;
+				mess.push(checkedId[i].value);
+			}
+		}
+		var survey_ids = mess.toString();
+		if(!survey_ids){
+			layer.alert('请选择问卷');
+			return false;
+		}
+		layer.confirm('您确定要发布所选问卷吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_ids="+survey_ids;
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/cancelPub",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							layer.msg('操作成功',{icon: 1, time:1000});
+							location.href = "__CONTROLLER__/listPage?type={$type}";
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	//删除所选记录
+	function cancel_pub2(){
+		var checkedId = $("input[name='checkbox[]']");
+		var mess = new Array();
+		for(var i = 0, ress = 0; i < checkedId.length; i++) {
+			if(checkedId[i].checked) {
+				ress = ress + 1;
+				mess.push(checkedId[i].value);
+			}
+		}
+		var survey_ids = mess.toString();
+		if(!survey_ids){
+			layer.alert('请选择问卷');
+			return false;
+		}
+		layer.confirm('您确定要删除所选记录吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_ids="+survey_ids;
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/cancelPub",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							layer.msg('操作成功',{icon: 1, time:1000});
+							location.href = "__CONTROLLER__/listPage?type={$type}";
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	//立即发布
+	function yes_pub(){
+		var checkedId = $("input[name='checkbox[]']");
+		var mess = new Array();
+		for(var i = 0, ress = 0; i < checkedId.length; i++) {
+			if(checkedId[i].checked) {
+				ress = ress + 1;
+				mess.push(checkedId[i].value);
+			}
+		}
+		var survey_ids = mess.toString();
+		if(!survey_ids){
+			layer.alert('请选择问卷');
+			return false;
+		}
+		layer.confirm('您确定要发布所选问卷吗？', {
+			btn: ['确定', '取消'],
+			skin: 'layui-layer-lan',
+			yes: function() {
+				var formData = "survey_ids="+survey_ids;
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/yesPub",
+					data: formData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							layer.msg('操作成功',{icon: 1, time:1000});
+							location.href = "__CONTROLLER__/listPage?type={$type}";
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	//批量删除
+	function del_all(a) {
+		var news = document.getElementsByName('checkbox[]');
+		var mess = new Array();
+		for(var i = 0, ress = 0; i < news.length; i++) {
+			if(news[i].checked) {
+				ress = ress + 1;
+				mess.push(news[i].value);
+			}
+		}
+		layer.confirm('您确定要批量删除这些消息吗？', {
+				title: '批量删除',
+				btn: ['确定删除', '取消操作'],
+				shadeClose: true, //开启遮罩关闭
+				offset: ['20px'],
+				skin: 'layui-layer-lan'
+
+				//按钮
+			}, function() {
+				if(mess && mess.length == 0) {
+					layer.msg('请勾选一条消息', {
+						time: 1000
+					});
+				} else {
+					$.post('{:U('del_alls')}', {
+							id: mess
+						},
+						function($data) {
+
+							if($data == 1) {
+								layer.msg('删除成功', {
+									time: 1000,
+									icon: 1
+								}); //bootstrap框架确认弹窗
+								setTimeout("location.reload();", 1000); //刷新当前页面.
+							} else {
+								layer.msg('删除失败', {
+									time: 1000
+								});
+								setTimeout("location.reload();", 1000); //刷新当前页面. 
+							}
+						}, 'json');
+				}
+			}, function() {
+				layer.msg('取消操作', {
+					time: 1000
+				});
+			}
+
+		);
+	}
+	
+	//导入问卷
+	function add_classify() {
+		$("#addFileFrom .fromReset").click();
+		layer.open({
+			title: '问卷导入',
+			btn: ['确定', '取消'],
+			type:1,
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			area: ['340px', '360px'],
+			offset: ['50px'],
+			shadeClose: true, //开启遮罩关闭
+			content: $("#categorys"),
+			yes: function(index, layero) {
+				var cat = $("#questionNaireType").val();
+				var is_file = $("#addFileFrom input[type='file']").val();
+				if(cat == 0){
+					layer.msg('请选择分类', {
+						time: 1000
+					});
+					return false;
+				}
+				
+				if(is_file == '') {
+					layer.msg('请选择问卷文件', {
+						time: 1000
+					});
+					return false;
+				}
+				var pos = is_file.lastIndexOf(".");
+				var format = is_file.substring(pos + 1).toLowerCase();
+				if(format != 'xls' && format != 'xlsx'){
+					layer.msg('上传格式不正确', {
+						time: 1000
+					});
+					return false;
+				}
+				
+				var formData = new FormData($('#addFileFrom')[0]);
+				$.ajax({
+					type:"POST",
+					url:"{:U('import')}",
+					data:formData,
+					dataType:"json",
+					contentType: false,
+					processData: false,
+					success:function(data){
+						if(data.code == 1000){
+							layer.closeAll();
+							layer.msg('导入成功', {
+								time: 1000
+							},function(){
+								location.href = "__CONTROLLER__/listPage?type={$type}";
+							});
+						}else{
+							layer.msg(data.message, {
+								time: 2000
+							});
+						}
+					}
+				});//ajax end
+				return false;
+			}
+		});
+	}
+
+	//新增问卷分类
+	function add_Que_classify() {
+		layer.open({
+			title: '新增问卷分类',
+			btn: ['确定', '取消'],
+			type: 2,
+			yes: function(index, layero) {
+
+				var arr = new Array();
+
+				var body = layer.getChildFrame('body', index);
+
+				body.find("#addsurvey input").each(function(i) {
+					arr[i] = [$(this).attr("id"), $(this).val()];
+				});
+
+				$.ajax({
+					url: "{:U('Admin/ResourcesManage/questionNaireStyle')}",
+					type: "POST",
+					data: {
+						"list": arr
+					},
+					dataType: "JSON",
+					success: function(xhr) {
+						layer.msg('操作成功', {
+							time: 1500,
+							icon: 1
+						}, function() {
+							window.location.reload();
+						});
+					},
+				})
+			},
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			area: ['600px', '360px'],
+			offset: ['20px'],
+			shadeClose: true, //开启遮罩关闭
+			content: "{:U('Admin/ResourcesManage/classManagement','','',true)}"
+
+		});
+	}
+
+	//已通过全选checkbox
+	var $checkboxAll = $(".passed_allcheck"),
+		$checkbox = $(".passed_table").find("[type='checkbox']").not("[disabled]"),
+		length = $checkbox.length,
+		i = 0;
+
+	$checkboxAll.on("ifClicked", function(event) {
+		if(event.target.checked) {
+			$checkbox.iCheck('uncheck');
+			i = 0;
+		} else {
+			$checkbox.iCheck('check');
+			i = length;
+		}
+	});
+
+	//已拒绝全选checkbox
+	var $checkboxAlls = $(".refuse_allcheck"),
+		$checkboxs = $(".refuse_table").find("[type='checkbox']").not("[disabled]"),
+		length = $checkboxs.length,
+		i = 0;
+
+	$checkboxAlls.on("ifClicked", function(event) {
+		if(event.target.checked) {
+			$checkboxs.iCheck('uncheck');
+			i = 0;
+		} else {
+			$checkboxs.iCheck('check');
+			i = length;
+		}
+	});
+</script>

@@ -1,0 +1,246 @@
+<layout name="layout"/>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+                  供应商管理
+        <small>/编辑供应商</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+            <div class="box box-primary">
+            <div class="box-body">
+              <div class="dataTables_wrapper form-inline dt-bootstrap">
+                  
+              <!--内容开始-->
+              <div class="row">
+                  <div class="col-sm-12">
+                        <div class="box-header with-border">
+                          <h3 class="box-title text-light-blue">编辑供应商/{$list['sname']}</h3>
+                          <!--新增供应商时，显示“新增供应商”，编辑供应商时，显示供应商名称-->
+                        </div>
+                        <form id="editForm" action="{:U('Supplier/editSupplier')}" method="post" class="form-horizontal">
+                          <div class="box-body">
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">供应商名称：</label>
+                                <div class="col-sm-10">
+                                  <input type="hidden" name="sid" value="{$list['sid']}">
+                                  <input type="text" name="sname" class="form-control Supplier" maxlength="20" value="{$list['sname']}" placeholder="请输入供应商名称 ">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">类型：</label>
+                                <div class="col-sm-10">
+                                    <!-- <div class="btn-group">
+                                    <button type="button" id="btn-flat1" class="btn btn-default btn-flat">请选择供应商类型
+                                    </button>
+                                    <ul id="style" class="dropdown-menu " role="menu">
+                                      <li data-id="0"><a href="#">机构</a></li>
+                                      <li data-id="1"><a href="#">讲师</a></li>
+                                    </ul>
+                                    <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                    </button>
+                                  </div> -->
+                                   <select class="form-control" name="style">
+                                    <if condition="$list['style'] eq 2">
+                                    <option selected="selected" value="2">讲师</option>
+                                    <option value="1">机构</option>
+                                    <elseif condition="$list['style'] eq 1"/>
+                                    <option selected="selected" value="1">机构</option>
+                                    <option value="2">讲师</option>
+                                    <else />
+                                    <option selected="selected">请选择供应商类型</option>
+                                    <option value="1">机构</option>
+                                    <option value="2">讲师</option>
+                                    </if>  
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">擅长领域：</label>
+                                <div class="col-sm-10">
+                                  <!-- <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-flat good_style">请选择擅长的领域
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                    </button> -->
+                                   <!--  <ul  class="dropdown-menu" role="menu">
+                                      <foreach name="res" item="v">
+                                      <li class="good_styles" data-id="{$v['id']}"><a href="#">{$v['tname']}</a></li>
+                                      </foreach>
+                                    </ul> -->
+                                    <select class="form-control " name="sc_type">
+                                    <if condition="$list['tname'] eq true">
+                                    <option value="{$list['sc_type']}" selected="selected">{$list['tname']}</option>
+                                    <else />
+                                    <option selected="selected">请选择擅长的领域</option>
+                                    
+                                    </if>
+                                    <foreach name="res" item="v">
+                                    <option value="{$v['id']}">{$v['tname']}</option>
+                                    </foreach>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">核心产品：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" id="main_course"  class="form-control course" value="{$main_courses['0']}" placeholder="请输入主打的课程名称">
+                                  <input type="hidden"  name="main_course" class="form-control course" value="{$list['main_course']}" placeholder="请输入主打的课程名称">
+                                  <button type="button" class="btn btn-primary btn-sm ml5" onclick="add_course();">
+                                                                                                           添加
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                   <ul id="mb5">
+                                   <if condition="$main_courses neq ''">
+                                   <foreach name="main_courses" item="vo" key="i">
+                                   <li data="{$vo}" class="mb5 add_courses"><i class="fa fa-angle-double-right text-light-blue mr5" ></i><input type="hidden" name="tags[]" value="{$vo}">{$vo}<i class="fa fa-times-circle text-red ml20" onclick="del(this)"></i></li>
+                                   </foreach>
+                                   <else />
+                                      <span class="mb5 error_message">---当前还没添加主打的课程---</span> 
+                                      </if>  
+                                   </ul>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">联系人：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="linkman" class="form-control" maxlength="20" value="{$list['linkman']}" placeholder="请输入联系人">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">职位：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="position" class="form-control" maxlength="20" value="{$list['position']}" placeholder="请输入职位名称 ">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">电话：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="tel" class="form-control" maxlength="20" value="{$list['tel']}" placeholder="请输入电话" >
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">手机：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="phone_number" class="form-control" maxlength="20" value="{$list['phone_number']}" placeholder="请输入手机号码">
+                                </div>
+                              </div>
+                          <div class="box-footer">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                  <button  class="btn btn-info form-group_but" onclick="edit();">保存</button>
+                                  <!--点击保存后，提示保存成功，提示关闭后跳到供应商列表页面-->
+                                  <button class="btn btn-info form-group_but" onclick="javascript:history.back(-1);return false;">取消</button>
+                                </div>
+                              </div>
+                          </div>
+                       
+                        </form>
+                  </div>
+              </div>
+              <!--内容結束-->
+              </div>
+            </div>
+          </div>
+    </section>
+   <script src="/Public/plugins/jQuery/jquery-2.2.3.min.js"></script>  
+   <script type="text/javascript">
+  $(function(){
+	  
+	  $("#style").on('click','li',function(){
+		  console.log($(this).attr('data-id'));
+		  $("#btn-flat1").text($(this).find('a').text()); 
+	  })
+	  
+	  $('.good_styles').on('click',function(){
+		  $(".good_style").text($(this).find('a').text());
+		  
+		  
+		  
+	  })
+  })
+ 
+  
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+ 
+ 
+	   //点击删除课程
+		 function del(item){
+			 var parentNode=item.parentNode;
+			 parentNode.remove();	 
+		 }
+
+  //添加课程
+  function add_course(){
+    	
+	  var data = $("#main_course").val();
+	  
+	  if(data == '')
+	  {
+		  $(".error_message").css('display','block');
+	  }
+	  else
+	  {
+		  $(".error_message").css('display','none');
+		  $("#mb5").append('<li data="'+data+'" class="mb5 add_courses"><i class="fa fa-angle-double-right text-light-blue mr5"></i><input type=\"hidden\" name=\"tags[]\" value=\"'+data+'\">'+data+'<i class="fa fa-times-circle text-red ml20" onclick="del(this)"></i></li>');  
+	  } 
+} 
+ 
+
+         //新增供应商
+		  function edit()
+		    {
+        	 var str = '';
+			  var data = $("input[name='tags[]']").each(function(){
+				   str += $(this).val() +','; 
+			  });
+			  
+			  $("input[name='main_course']").val(str);
+			
+        	 $("#editForm").validate({
+		    		rules: {
+		    			sname: 'required',
+		    			style: 'required',
+		    			sc_type:'required',
+		    			main_course: 'required',
+		    			linkman: 'required',
+		    			position: 'required',
+		    			tel: 'required',
+		    			phone_number: 'required',
+		    		},
+		    		messages: {
+		    			sname:'供应商名称必填',
+		    			style:'供应商领域必填',
+		    			sc_type:'擅长领域必填',
+		    			main_course: '核心产品必填',
+		    			linkman:'联系人必填',
+		    			position:'联系人必填',
+		    			tel:'联系电话必填',
+		    			phone_number:'手机必填',
+		    		},
+		    		errorPlacement: function(error, element) { 
+		    			error.appendTo(element.parent()).css('color','red');  
+		    		},	
+		    	});
+		    	
+		    }
+</script>

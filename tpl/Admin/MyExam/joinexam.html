@@ -1,0 +1,382 @@
+<link rel="stylesheet" href="__PUBLIC__/plugins/layui/css/layui.css">
+<style type="text/css">
+	.time_con{
+		position: fixed;
+	}
+	.xuhaobj{
+		padding: 2px 5px;
+		border: 1px solid #00acd6;
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+	
+	.xuhaobj.active{
+		background-color: #00acd6;
+		color: white;
+	}
+</style>
+<body oncontextmenu=self.event.returnValue=false onselectstart="return false">
+<layout name="layout"/>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+    试题管理
+    <small>/参加考试</small>
+  </h1>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<form action="{:U('handelExam')}" method="post">
+	<section class="content">
+		<div class="box">
+			<div class="box-header with-border">
+				<h3 class="box-title ">{$xhr['test_name']}</h3>
+			</div>
+			<div class="ml10 mt10">
+				<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+					<!--内容开始-->
+					<div class="row mt10 mb5">
+						<div class="col-sm-12">
+							
+						
+						<input type="hidden" name="test_id" value="{$test_id}"/>
+						<input type="hidden" name="project_id" value="{$project_id}"/>
+						<input type="hidden" name="flag" value="{$flag}" />
+						<input type="hidden" name="examination_id" value="{$examination_id}">
+						<input type="hidden" name="questionsNum" value="{$questionsNum}">
+							<label class="text-aqua mt10 mr15">
+                                <i class="fa  fa-send-o mr5"></i>试卷总分： <span class="text-red">
+                                {$xhr['test_score']}
+                                </span> </label>
+						<if condition="empty($flag)">
+							
+								<label class="text-aqua mt10 mr15">
+                                    <i class="fa  fa-share-alt mr5"></i>试卷类别： <span class="text-red">{$xhr['cat_name']}</span> </label>
+							
+						</if>
+						<if condition="empty($flag)">
+							
+								<label class="text-aqua mt10 mr15">
+                                    <i class="fa  fa-tasks mr5"></i>关联项目： <span class="text-red">{$xhr['project_name']}</span> </label>
+							
+						</if>
+						
+							<label class="text-aqua mt10 mr15">
+                                <i class="fa  fa-calendar mr5"></i>考试时间： <span class="text-red">
+                                {$xhr['start_time']} - {$xhr['end_time']}
+                                </span> </label>
+						
+						
+							<label class="text-aqua mt10 float_r mr30">
+                                <i class="fa  fa-send-o mr5"></i>状态： <span class="text-green">进行中</span> </label>
+						</div>
+					</div>
+					<!--课程状态结束-->
+					<!--  分隔符开始-->
+					<div class="box-header with-border mt5 mb10"></div>
+					<!--  分隔符结束-->
+
+					<div class="row">
+						<!--左侧考试用时和提交试卷区域-->
+						<div class="col-sm-2" >
+							<div class="time_con">
+								<div class="text-center">
+									<div class="box-title" style="font-size: 3vmin;">考试剩余时间</div>
+									<h2 class="box-title font_bold" style="font-size: 5vmin;"><span id="day"></span><span id="hour"></span><span id="minute"></span><span id="second"></span></h2>
+									<div class="box-footer text-center"><input class="btn btn-info form-group_but" type="button" value="提交试卷" id="submitButton"/></div>
+								</div>
+							</div>
+						</div>
+						<!--右侧试卷主要信息区域开始-->
+						<div class="col-sm-10" style="border-left: 1px solid #00acd6;">
+					<!--试卷主要信息区域开始-->
+					<div class="box-header with-border mt10">
+						<h4 class="box-title">一、单选题（<span class="text-red">共 {$singleChoiceSum} 道，共 {$singleChoiceTotalScore}.00 分</span>）</h4>
+					</div>
+					<div class="box-body">
+						<volist name="singleChoice" id="vo">
+					    <div class="mb30">
+							<p class="mb15 mt10">
+								<span class="xuhaobj">{$i}</span>.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span>
+							</p>
+							<p class="mb15 mt10">
+								<input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="A">
+								<span class="ml10"> A.{$vo.optiona}</span>
+							</p> 
+	                        <p class="mb15 mt10">
+	                        	<input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="B" >
+	                        	<span  class="ml10"> B.{$vo.optionb}</span>
+	                        </p>
+							<p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="C"> <span class="ml10">C.{$vo.optionc}</span></p>
+							<p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="D"> <span class="ml10"> D.{$vo.optiond}</span></p>
+					    </div> 
+					  </volist> 
+					</div>
+					<!--多选题开始-->
+					<if condition="count($multipleChoice) neq 0">
+					<div class="box-header with-border mt10">
+						<h4 class="box-title">二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore}.00 分</span>）</h4>
+					</div>
+					 <volist name="multipleChoice" id="vo">
+					    <div class="box-body">
+						<p class="mb15 mt10"> <span class="xuhaobj">{$i}</span>.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span></p>
+						<p class="mb15 mt10"><input type="checkbox" alt="{$vo.id}" name="tag[{$vo.id}][]" value="A"> <span class="ml10"> A.{$vo.optiona}</span> </p>
+						<p class="mb15 mt10"><input type="checkbox" alt="{$vo.id}" name="tag[{$vo.id}][]" value="B"> <span class="ml10"> B.{$vo.optionb}</span> </p>
+						<p class="mb15 mt10"><input type="checkbox" alt="{$vo.id}" name="tag[{$vo.id}][]" value="C"> <span class="ml10"> C.{$vo.optionc}</span> </p>
+						<p class="mb15 mt10"><input type="checkbox" alt="{$vo.id}" name="tag[{$vo.id}][]" value="D"> <span class="ml10"> D.{$vo.optiond}</span> </p>
+					    <if condition="!empty($vo['optione'])">
+					    	<p class="mb15 mt10">
+					    		<input type="checkbox" alt="{$vo.id}" name="tag[{$vo.id}][]" value="E">
+					    		<span class="ml10"> E.{$vo.optione}</span>
+					    	</p>
+					    </if>
+					    </div>
+					  </volist> 
+					  </if>
+					<!--多选题结束-->
+					<if condition="count($descriPtive) neq 0">
+					<div class="box-header with-border">
+						<h4 class="box-title">三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore}.00 分</span>）</h4>
+					</div>
+				<volist name="descriPtive" id="vo">		         
+					<div class="box-body">
+						<p class="mb15 mt10"><span class="xuhaobj">{$i}</span>.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+						<p class="mb15 mt10">
+						<label>
+							<div class="radio mr30">
+								<input type="radio"  name="direction[{$vo.id}]" id="#" value="A">
+								<span class="ml10">A.{$vo.optiona}</span>
+							</div>
+							<div class="radio ">
+								<input type="radio" name="direction[{$vo.id}]" id="#" value="B" >
+								<span class="ml10">B.{$vo.optionb}</span>
+							</div>
+						</label>
+						</p>
+					</div>
+				</volist>
+				</if>
+				
+				<!--二期新增类型:简答题start-->
+	          	<if condition="count($wd) neq 0">
+	          	<div class="mt10">
+	            	<h4 class="box-title">
+	                	四、简答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）
+	            	</h4>
+	          	</div>
+	          	<div class="box-header with-border"></div>
+	          	<div class="mb30">
+				  	<volist name="wd" id="vo">
+		          	<p class="mb15 mt10"><span class="xuhaobj">{$i}</span>.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+		          	</p>
+		          	<!--简答题-->
+		          	<textarea name="wd[{$vo.id}]" cols="100" rows="10" class="layui-textarea" style="font-size: 14px;
+" <if condition="$status eq 0"></if>></textarea>
+		            </volist>
+	          	</div>
+	          	</if>
+	        </div>
+			<!--右侧试卷主要信息区域结束-->	
+			</div>
+		          	
+			<!--试卷主要信息区域结束-->
+			<!--内容結束-->
+		</div>
+		</div>
+		    <!-- <div class="box-footer text-center"><input class="btn btn-info form-group_but" type="submit" value="提交"/></div> -->
+		    <input type="hidden" name="times" id="times" value="{$times}">
+		    <input type="hidden" name="start_time" id="start_time" >
+		    <input type="hidden" name="end_time" id="end_time" value="{$xhr['end_time']}">
+		</div>
+	</section>
+</form>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+	document.oncontextmenu = function(){ 
+		return false; 
+	} 
+	document.onkeydown = function(){ 
+		if (event.ctrlKey && window.event.keyCode==67){ 
+			return false; 
+		} 
+	} 
+	document.body.oncopy = function (){ 
+		return false; 
+	} 
+	document.onselectstart = function(){ 
+		return false; 
+	}
+	function key() {
+		if(event.ctrlKey){
+			return false;
+		}
+	}
+
+document.onkeydown=key;
+/**
+ * 
+ * 获取当前时间
+ */
+function p(s) {
+    return s < 10 ? '0' + s: s;
+}
+
+function getNowTime(){
+	var myDate = new Date();
+	var year=myDate.getFullYear();
+	var month=myDate.getMonth()+1;
+	var date=myDate.getDate();
+	var h=myDate.getHours();
+	var m=myDate.getMinutes();
+	var s=myDate.getSeconds();
+	var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
+	return now;
+}
+
+var times = $('#times').val();
+var intDiff = parseInt(times);//倒计时总秒数量
+
+function timer(intDiff){
+    var timer1 = window.setInterval(function(){
+    	var end_time = $('#end_time').val();
+		var now = getNowTime();
+
+	    var day=0,
+	        hour=0,
+	        minute=0,
+	        second=0;//时间默认值        
+	    if(intDiff > 0){
+	        day = Math.floor(intDiff / (60 * 60 * 24));
+	        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+	        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+	        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+	    }
+	    if (minute <= 9) minute = '0' + minute;
+	    if (second <= 9) second = '0' + second;
+
+	    if(day > 0) $('#day').html(day+":");
+	    $('#hour').html(hour+':');
+	    $('#minute').html(minute+':');
+	    $('#second').html(second);
+	    intDiff--;
+
+	    if(now == end_time){
+    		window.clearInterval(timer1);
+    		layer.msg('已到考试截止时间,本次考试结束,即将为您提交试卷。', {
+			 	icon: 1,
+			 	time:3000
+			},function(){
+			 	$('form').submit();
+			});
+    	}
+    	
+    }, 1000);
+} 
+$(function(){
+    timer(intDiff);
+    var now = getNowTime();
+    console.log(now);
+    $('#start_time').val(now);
+}); 
+</script>
+
+<script type="text/javascript">
+	//radio选中样式
+	$('input').iCheck({
+		labelHover: false,
+		cursor: true,
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_minimal-blue',
+		increaseArea: '20%'
+	});
+
+	$('input[type=radio]').on('ifChecked', function(event){
+		$(this).parent().parent().siblings('p').find('span:first').addClass('active');
+	});
+
+	$('input[type=checkbox]').on('ifChecked', function(event){
+		$(this).parent().parent().siblings('p').find('span:first').addClass('active');
+	});
+
+	$('input[type=checkbox]').on('ifUnchecked', function(event){
+		var alt = $(this).attr('alt');
+		var len = $('input[alt='+alt+']').length;
+		var unCheckNum = 0;
+		$('input[alt='+alt+']').each(function(){
+			if($(this).prop('checked')==false){
+				unCheckNum += 1;
+			}
+		});
+		if(unCheckNum == len){
+			$(this).parent().parent().siblings('p').find('span:first').removeClass('active');
+		}
+	});
+
+	$(function(){
+		
+		//表单提交
+		$('#submitButton').click(function(){
+			var radios = $('input[type=radio]:checked').length;
+			var checkboxs = 0;
+			var textareas = 0;
+			var str = '';
+			$('input[type=checkbox]').each(function(){
+				if($(this).prop('checked')==true){
+					var name = $(this).attr('name');
+					if(str.indexOf(name) >= 0){
+						return true;
+					}else{
+						str += name;
+						checkboxs += 1;
+					}
+				}
+			});
+
+			$('.layui-textarea').each(function(){
+				var thisVal = $(this).val();
+				if($.trim(thisVal) != ''){
+					textareas += 1;
+				}
+			})
+			var totalNum = $('input[name=questionsNum]').val();
+			var finishedNum = radios + checkboxs + textareas;
+			var s = totalNum - finishedNum;
+			if(s == 0){
+				var content = '确定提交考卷吗？';
+			}else{
+				var content = '您还有' + s + '道题未做,确定提交考卷吗？';
+			}
+			layer.open({
+				content:content,
+				title:'温馨提示',
+				btn:['确定','继续答题'],
+				yes:function(){
+					$('form').submit();
+				},
+				btn2:function(){
+					layer.closeAll();
+				}
+			})
+		})
+
+		//计时
+		/*var ele = $('.font_bold');
+		var timeIndex = 0;
+		setTime();
+ 		times = setInterval(setTime, 1000);
+
+ 		function setTime(){
+ 			var day = parseInt(timeIndex / 86400);				//天
+			var hour = parseInt(timeIndex / 3600);				// 时 
+			var minutes = parseInt((timeIndex % 3600) / 60);    // 分 
+			var seconds = parseInt(timeIndex % 60);				// 秒  
+			hour = hour < 10 ? "0" + hour : hour;
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+			ele.html(day + ':' + hour + ":" + minutes + ":" + seconds);
+			timeIndex++;
+		}*/
+
+	})
+</script>

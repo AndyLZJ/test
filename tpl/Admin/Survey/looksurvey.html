@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>培训管理_调研预览</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+
+	<style type="text/css">
+		.box-title {
+			border-left: 6px solid #00c0ef;
+			padding-left: 5px;
+			font-size: 21px !important;
+		}
+		
+		.label {
+			padding: 5px;
+			font-weight: normal;
+		}
+		
+		.annotation {
+			border: 1px dashed #eee;
+			padding: 10px;
+			line-height: 25px;
+			color: #777;
+			background: #fdfdfd;
+		}
+		
+		.dy-tqa-list {
+			padding: 10px;
+			line-height: 25px;
+		}
+		
+		.dy-tqa-list dt {
+			color: #00c0ef;
+			border-bottom: 1px #ccc dashed;
+			padding: 10px 0px;
+		}
+		
+		.dy-tqa-list dd {
+			margin: 5px 0px;
+		}
+		
+		.dy-tqa-list dd label {
+			padding-top: 10px;
+			padding-left: 10px;
+			width: 60%;
+			color: #555;
+			line-height: 32px;
+		}
+		
+		.bg-aqua {
+			padding: 10px;
+		}
+		
+		textarea {
+			width: 80%;
+			height: 150px;
+			padding: 10px;
+			line-height: 25px;
+			font-size: 14px;
+		}
+		
+		.dy-tqa-list dd label {
+			line-height: 20px !important;
+		}
+		
+		.item_t{float:left; margin-top:30px; padding:15px 0; width:100%; border-top:2px dashed #ccc; }
+		.item_t p{font-size:20px; color:#444; }
+		.item_o{float:left; width:100%; }
+		.itemImg{width:150px; height:100px; margin:10px 0 0 70px; }
+		.optImg{width:100px; height:80px; margin-top:10px; }
+		.opt_v{float:left; width:250px; margin-bottom:20px; margin-right:30px;}
+		.opt_v p{margin:0; max-height:40px; line-height:20px; overflow:hidden; }
+		.opt_tip{float:left; font-size:16px; margin-right:15px; width:55px; font-weight:700; color:#bbb; }
+		.opt_fill{margin:10px 0 0 70px; }
+		.error_msg{font-size:16px; color:red; }
+	</style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+	<h1 class="info_title">
+		培训项目
+		<small>/问卷调研</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+			<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+		</li>
+	</ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">{$survey.survey_name}</h3>
+			<span class="ml5 float_r label label-warning">状态：<if condition="$status eq 1">已结束<else />进行中</if></span>
+			<if condition="$typeid eq 0"><span class="ml5 float_r label label-success">关联项目：{$survey.p_name}</span></if>
+			<span class="ml5 float_r label label-info">调研类别：{$survey.t_name}</span>
+		</div>
+		
+		<div class="box-body">
+			<div class="annotation">
+				{$survey.survey_desc}
+			</div>
+			<div class="dy-tqa-list">
+				<ul>
+					<foreach name="surveyItem" item="vo" key="key">
+						<li>
+							<div class="item_t">
+								<p>第{$key+1}题.&nbsp;&nbsp;{$vo.title} 
+								<if condition="$vo.classification eq 1">（单选:</if>
+								<if condition="$vo.classification eq 2">（多选:</if>
+								<if condition="$vo.classification eq 3">（简答:</if>
+								<if condition="$vo.is_must eq 1">必填<else/>选填</if>）
+								</p>
+								<if condition="$vo.img neq ''">
+								<img class="itemImg" src="{$vo.img}"/>
+								</if>
+							</div>
+							<div class="item_o">
+								<if condition="$vo.classification eq 1">
+									<div class="optCon">
+										<div class="opt_tip">选项：</div>
+										<div style="float:left; width:90%">
+										<foreach name="vo.option" item="optVal" >
+											<div class="opt_v">
+												<p><input class="mr5" type="radio" name="radio_list[{$vo.id}]" value="{$optVal.letter}"/>{$optVal.letter}.{$optVal.option}</p>
+												<if condition="$optVal.opt_img neq ''">
+													<img class="optImg" src="{$optVal.opt_img}"/>
+												</if>
+											</div>
+										</foreach>
+										</div>
+									</div>
+								</if>
+								<if condition="$vo.classification eq 2">
+									<div class="optCon">
+										<div class="opt_tip">选项：</div>
+										<div style="float:left; width:90%">
+										<foreach name="vo.option" item="optVal" >
+											<div class="opt_v">
+												<p><input class="mr5" type="checkbox" name="multiselect_list[{$vo.id}][list][]" value="{$optVal.letter}"/>{$optVal.letter}.{$optVal.option}</p>
+												<if condition="$optVal.opt_img neq ''">
+													<img class="optImg" src="{$optVal.opt_img}"/>
+												</if>
+											</div>
+										</foreach>
+										</div>
+									</div>
+								</if>
+								<if condition="$vo.classification eq 3">
+									<div class="opt_fill">
+										<textarea style="width:600px; height:80px; border:1px solid #ccc; " name="describe_list[{$vo.id}]" placeholder="请填写答案..."></textarea>
+									</div>
+								</if>
+							</div>
+						</li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+	//radio选中样式
+	$('input').iCheck({
+		labelHover: false,
+		cursor: true,
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_flat-blue',
+		increaseArea: '20%'
+	});
+</script>
+</body>
+</html>

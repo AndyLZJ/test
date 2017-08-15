@@ -1,0 +1,173 @@
+<layout name="layout"/>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+        考试管理
+        <small>/预览考试</small>
+      </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{$backUrl}"><i class="fa fa-mail-reply-all"></i>返回</a>
+                </li>
+            </ol>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        
+        <section class="content">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title ">
+                    <if condition="!empty($test_name)">{$test_name}
+                        <else/>
+                        {$xhr['test_name']}
+                    </if>
+                    </h3>
+                </div>
+                <div class="ml10 mt10">
+                    <if condition="$singleChoiceSum eq 0 AND $multipleChoiceSum eq 0 AND descriPtiveChoiceSum eq 0 AND wdSum eq 0">本试卷暂无试题
+                    <else/>
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <!--内容开始-->
+                        <div class="row mt10 mb5">
+                            <div class="col-sm-2">
+                            <input type="hidden" name="tid" value="{$t_id}"/>
+                            <input type="hidden" name="pid" value="{$p_id}"/>
+                                <label class="text-aqua mt10 mr30">
+                                    <i class="fa  fa-send-o mr5"></i>试卷总分： <span class="text-red">{$xhr['test_score']}</span> </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="text-aqua mt10 mr30">
+                                    <i class="fa  fa-share-alt mr5"></i>试卷类别： <span class="text-red">{$xhr['cat_name']}</span> </label>
+                            </div>
+                            <if condition="!empty($xhr['project_name'])">
+                                <div class="col-sm-4">
+                                    <label class="text-aqua mt10 ">
+                                        <i class="fa  fa-tasks mr5"></i>关联项目： <span class="text-red">{$xhr['project_name']}</span> </label>
+                                </div>
+                            </if>
+                            <div class="col-sm-3">
+                                <label class="text-aqua mt10 ">
+                                    <i class="fa  fa-calendar mr5"></i>考试时间： <span class="text-red">{$xhr['start_time']}</span> </label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label class="text-aqua mt10 float_r mr30">
+                                    <i class="fa  fa-send-o mr5"></i>状态： 
+                                    <span class="text-green">
+                                        <if condition="$xhr['t'] eq 1">进行中
+                                        </if>
+                                        <if condition="$test_status eq 1">进行中
+                                            <elseif condition="$test_status eq 2" />已结束
+                                            <else />未开始
+                                        </if>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <!--课程状态结束-->
+                        <!--试卷主要信息区域开始-->
+                        <div class="box-header with-border mt10">
+                            <h4 class="box-title">一、单选题（<span class="text-red">共 {$singleChoiceSum} 道，共 {$singleChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                        <div class="box-body">
+                            <volist name="singleChoice" id="vo">
+                            <div class="mb30">
+                            <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="A"> <span class="ml10"> A.{$vo.optiona}</span></p> 
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="B" > <span  class="ml10"> B.{$vo.optionb}</span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="C"> <span class="ml10">C.{$vo.optionc}</span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="D"> <span class="ml10"> D.{$vo.optiond}</span></p>
+                            </div> 
+                          </volist> 
+                        </div>
+                        <!--多选题开始-->
+                        <div class="box-header with-border mt10">
+                            <h4 class="box-title">二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                         <volist name="multipleChoice" id="vo">     
+                            <div class="box-body">
+                            <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span></p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="A"> <span class="ml10"> A.{$vo.optiona}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="B"> <span class="ml10"> B.{$vo.optionb}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="C"> <span class="ml10"> C.{$vo.optionc}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="D"> <span class="ml10"> D.{$vo.optiond}</span> </p>
+                            </div>
+                          </volist> 
+                        <!--多选题结束-->
+                        <div class="box-header with-border">
+                            <h4 class="box-title">三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                        <volist name="descriPtive" id="vo">              
+                            <div class="box-body">
+                                <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+                                <p class="mb15 mt10">
+                                <label>
+                                    <div class="radio mr30">
+                                        <label>
+                                            <input type="radio"  name="direction[{$vo.id}]" id="#" value="对">
+                                            <span class="ml10">A.{$vo.optiona}</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio ">
+                                        <label>
+                                            <input type="radio" name="direction[{$vo.id}]" id="#" value="错" >
+                                            <span class="ml10">B.{$vo.optionb}</span>
+                                        </label>
+                                    </div>
+                                </label>
+                                </p>
+                            </div>
+                        </volist>
+                        <!--二期新增类型:简答题start-->
+                        <if condition="count($wd) neq 0">
+                        <div class="mt10">
+                            <h4 class="box-title">
+                                四、简答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）
+                            </h4>
+                        </div>
+                        <div class="box-header with-border"></div>
+                        <div class="mb30">
+                            <volist name="wd" id="vo">
+                            <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+                            </p>
+                            <!--简答题-->
+                            <textarea name="wd" id="wd" cols="60" rows="2" <if condition="$status eq 0">readonly</if>></textarea>
+                            <!-- <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> -->
+                            </volist>
+                        </div>
+                        </if>
+                        <!--二期新增类型:简答题end-->
+                <!--试卷主要信息区域结束-->
+                <!--内容結束-->
+            </div>
+            </if>
+            </div>  
+            </div>
+        </section>
+        <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        
+        <script type="text/javascript">
+            //radio选中样式
+            $('input').iCheck({
+                labelHover: false,
+                cursor: true,
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_minimal-blue',
+                increaseArea: '20%'
+            });
+            function del_click() {
+                //删除分组
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['确定', '取消'],
+                    skin: 'layui-layer-lan'
+                        //按钮
+                }, function() {
+                    layer.msg('删除成功', {
+                        icon: 1
+                    });
+                }, function() {
+                    layer.msg('取消删除', {
+                        time: 2000, //2s后自动关闭
+                    });
+                });
+            }
+        </script>

@@ -1,0 +1,109 @@
+<layout name="layout"/>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+                             数据管理
+      <small>/员工学习统计</small>
+    </h1>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        <section class="content">
+            <!--学分流水-->
+            <div class="box-header with-border info_box_title">
+                <span>员工学习统计</span>
+            </div>
+            <!--筛选栏开始-->
+            <form action="__SELF__" method="get">
+            <div class="row mt15">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select class="form-control select2 width_10" name="tissueid">
+                            <option value="-1">
+                                <a>--选择总公司所属部门--</a>
+                            </option>
+                            <foreach name="tool_tree" item="items">
+                                <option value="{$items['id']}" <if condition="$data['tissueid'] eq $items['id']">selected="selected"</if>>{$items['name']}</option>
+                                <foreach name="items['_data']" item="v">
+                                    <option value="{$v['id']}" <if condition="$data['tissueid'] eq $v['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;|--{$v['name']}</option>
+                                    <foreach name="v['_data']" item="s">
+                                        <option value="{$s['id']}" <if condition="$data['tissueid'] eq $s['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$s['name']}</option>
+                                        <?php
+																		foreach($s['_data'] as $p){?>
+                                        <option value="{$p['id']}" <if condition="$data['tissueid'] eq $p['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$p['name']}</option>
+                                        <?php
+																		}
+																	?>
+                                    </foreach>
+                                </foreach>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group ">
+                        <input type="text" name="name" class="form-control pull-right" placeholder="搜索姓名" value="{$data.name}">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-lg-3 text-right">
+                        <a class="btn btn-info form-group_but" href="{:U('export')}">导出</a>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <!--筛选栏结束-->
+
+            <!--流水内容开始-->
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">部门</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">岗位</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学习课程</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">总学时</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">总积分</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">总学分</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab" class="passed_table">
+                            <foreach name="data.data" item="v" key="k">
+                                <tr role="row" class="odd text-center">
+                                    <td>{$k+1}</td>
+                                    <td>{$v.username}</td>
+                                    <td>{$v.tissue_name|default='---'}</td>
+                                    <td>{$v.job_name|default='---'}</td>
+                                    <td>{$v.course|default=0}</td>
+                                    <td>{$v.hours|default=0}</td>
+                                    <td>{$v.score|default=0}</td>
+                                    <td>{$v.credit|default=0}</td>
+                                    <td><a href="{:U('detail',array('id'=>$v['id']))}">查看详情<a></td>
+                                </tr>
+                            </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--内容結束-->
+            <!--分页开始-->
+            <div class="row">
+                <div class="float_r mr15">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        {$data.page}
+                    </div>
+                </div>
+            </div>
+            <!--分页结束-->
+        </section>
+    </body>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>融易点 首页</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="__ADMIN_ACEADMIN__/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="__PUBLIC__/statics/font-awesome-4.4.0/css/font-awesome.min.css" />
+  <link href="__ADMIN_ACEADMIN__/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!--顶栏区域开始-->
+  <header class="main-header">
+
+    <nav class="navbar navbar-static-top">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <ul class="nav navbar-nav">
+         <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="__PUBLIC__/Dist/img/logo.png" class="user-image" alt="User Image">
+              <span class="hidden-xs mr30">中国邮政储蓄银行股份有限公司新疆维吾尔自治区分行</span>
+            </a>
+            
+         </li>
+      </ul>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown  messages-menu">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    管理面板<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu panel_select">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">学员面板</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">讲师面板</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">培训主管</a></li>
+                </ul>
+          </li>
+      
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="hidden-xs">帮助</span>
+              <i class="fa fa-question-circle"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+  <!--顶栏结束-->
+  <!--左侧菜单开始-->
+  <aside class="main-sidebar">
+    <!--用户信息开始-->
+    <ul class="user_box_lg" >
+              <li class="user-header">
+                  <img src="{$_SESSION['user']['avatar']}" class="img-circle" alt="User Image">
+
+                  <p class="user_name">
+                    {$_SESSION['user']['username']}|{$_SESSION['user']['type']}
+                  </p>
+                  <p>
+                    <small>人事部主管</small>
+                  </p>
+              </li>
+    </ul>
+    <ul class="user_box_mini" >
+              <!-- User image -->
+              <li class="user-header">
+                  <img src="{$_SESSION['user']['avatar']}" class="img-circle" alt="User Image">
+              </li>
+    </ul>
+    <!--用户信息结束-->
+    <!--用户信息详情开始-->
+    
+    <!--用户信息详情结束-->
+    <!--左侧菜单开始 -->
+    <section class="sidebar">
+    <ul class="sidebar-menu">
+      <foreach name="data" item="v">
+        <empty name="v['_data']">
+          <if condition="$v.name eq '消息通知'">
+            <li>
+              <a target="Main" href="{:U($v['mca'])}"><i class="fa fa-{$v['ico']}"></i> <span>{$v['name']}</span>
+              <span class="pull-right-container">
+              <small class="label pull-right bg-red">{$messages|count}
+              </small>
+              </span>
+            </a>
+            </li>
+          <else/>
+            <li>
+              <a target="Main" href="{:U($v['mca'])}"><i class="fa fa-{$v['ico']}"></i> <span>{$v['name']}</span></a>
+            </li>
+          </if>
+        <else />
+        <li class="treeview">
+          <a target="Main">
+            <i class="fa fa-{$v['ico']}"></i>
+            <span>{$v['name']}</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <foreach name="v['_data']" item="n">
+            <li><a target="Main" href="{:U($n['mca'])}"><i class="fa fa-{$n['ico']}"></i>{$n['name']}</a></li>
+            </foreach>
+            
+          </ul>
+        </li>
+        </empty>
+      </foreach>
+    </ul>
+    </section>
+    <!--左侧菜单结束 -->
+  </aside>

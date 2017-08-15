@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+<!--设置管理员-->
+<div id="set_Admin">
+    <div class="box-body">
+        <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <!--筛选栏开始-->
+            <div class="col-sm-6 mb20 mt10">
+
+                <div class="box-tools">
+                    <form action="{:U('Jurisdiction/view_admin')}" method="get" enctype="multipart/form-data">
+                        <div class="input-group input-group-sm">
+                            <input type="text" name="keywords" class="form-control pull-right" placeholder="请输入要设置的员工名字">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--筛选栏结束-->
+            <!--内容开始-->
+            <div>
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">工号</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">手机</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所在组织</th>
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">岗位</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <foreach name="data['list']" item="items">
+                            <tr role="row" class="odd">
+                                <td>
+                                    <input type="radio" name="id" value="{$items['id']}"/>
+                                </td>
+                                <td>{$items['username']}</td>
+                                <td>{$items['job_number']}</td>
+                                <td>{$items['phone']}</td>
+                                <td>{$items.tissue_id|getTissue}</td>
+                                <td>{$items.job_id|getJob}</td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--内容結束-->
+            <!--分页开始-->
+            <div class="row">
+                <div class="float_r mr15">
+                    <div class="dataTables_paginate paging_simple_numbers" >
+                        {$data['pages']}
+                    </div>
+                </div>
+            </div>
+            <!--分页结束-->
+        </div>
+    </div>
+</div>
+<!--设置管理员-->
+</body>
+</html>

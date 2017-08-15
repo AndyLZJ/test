@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>前台培训项目总结</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<style type="text/css">
+			table {
+				width: 100%;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<section class="content">
+			<div class="box">
+
+				<div class="box-body">
+					<div class="dataTables_wrapper form-inline dt-bootstrap ">
+						<div class="box-header with-border">
+							<h3 class=" col-sm-8">{$project.project_name}项目总结</h3>
+						</div>
+						<div class="box-body">
+							<div class="form-group" id="supplier">
+								<label class="col-sm-2 control-label">培训班名称：{$project.class_name}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">项目时间：{$project.start_time}至{$project.end_time}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">项目预算：{$project.project_budget} 元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">参与人数：{$count} 人</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">学习考勤：</label>
+								<div class="col-sm-10">
+									<div class="box-body">
+										<div class="dataTables_wrapper form-inline dt-bootstrap">
+											<div class="row">
+												<div class="col-sm-12 tablestyle">
+													<table border="0" cellspacing="0" cellpadding="0" id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+														<thead>
+															<tr role="row">
+																<th class="sorting text-center" tabindex="0">
+																	课程名称
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	课程形式
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	应到
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	迟到
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	缺席
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	负责人
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															{$course}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">考试情况：</label>
+								<div class="col-sm-10">
+									<div class="box-body">
+										<div class="dataTables_wrapper form-inline dt-bootstrap">
+											<div class="row">
+												<div class="col-sm-12">
+													<table border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+														<thead>
+															<tr role="row">
+																<th class="sorting text-center" tabindex="0">
+																	考试名称
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	应到
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	旷考试
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	平均分
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	及格率
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	负责人
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															{$examination}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">问卷调研：</label>
+								<div class="col-sm-10">
+									<div class="box-body">
+										<div class="dataTables_wrapper form-inline dt-bootstrap">
+											<div class="row">
+												<div class="col-sm-12">
+													<table border="0" cellspacing="0" cellpadding="0" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+														<thead>
+															<tr role="row">
+																<th class="sorting text-center" tabindex="0">
+																	调研考称
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	应提交
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	未提交
+																</th>
+																<th class="sorting text-center" tabindex="0">
+																	负责人
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															{$survey}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{$budget}
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">合计费用：{$actual_expenses}元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">项目总结：{$actual_summary}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+
+</html>

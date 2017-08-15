@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>融易点——系统管理——组织架构</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	<style type="text/css">
+		.box-title {
+			margin-right: 20px !important;
+		}
+		.organization_box {
+			margin-bottom: 0px !important;
+		}
+		.no_employees {
+			height: 500px;
+		}
+		.no_employees p {
+			line-height: 50px;
+			padding-top: 160px;
+		}
+		.organ_input {
+			width: 250px;
+		}
+		.box-solid> .sidebar-menu> li.active> a,
+		.box-solid> .sidebar-menu> li> a:hover,
+		.box-solid> .sidebar-menu> li> a {
+			padding: 10px 5px 10px 15px;
+		}
+
+		.layui-layer-content> .form-horizontal> .box-body> .form-group {
+			margin-right: 0px!important;
+			margin-left: 0px!important;
+		}
+
+		.layui-layer-content> .form-horizontal> .box-body> .form-group> .col-sm-10 {
+			width: 300px!important;
+		}
+
+		.frim_line.active {
+			color: white;
+			background-color: #00acd6;
+		}
+	</style>
+</head>
+<body>
+<div id="PL_biaoji">
+	<div class="col-sm-12 mt10">
+		<foreach name="items" item="item">
+		<button type="button" class="btn mb10  mt10 frim_line btn-sm" data-widget="remove" style="margin-right:5px;" value="{$item['id']}">{$item['tag_title']}</button>
+		</foreach>
+	</div>
+</div>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+	//批量标签选中颜色
+	$(".frim_line").click(function() {
+		if($(this).attr("class").indexOf("active") >= 0) {
+			$(this).removeClass("active");
+		} else {
+			$(this).addClass("active");
+		}
+	});
+</script>
+</body>
+</html>

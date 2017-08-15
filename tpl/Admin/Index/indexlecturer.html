@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页——讲师面板</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/skins/_all-skins.min.css">
+
+    <!-- date_picker_css -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-jquery-ui-override.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-iconfont.css" />
+
+    <style type="text/css">
+        html {
+            background: #fbfbfb;
+        }
+
+        .content {
+            background: #fbfbfb;
+        }
+
+        .info_box {
+            background: #fff;
+            box-shadow: 0 0px 8px 0 rgba(0, 0, 0, .04);
+        }
+
+        .quick {
+            color: #fff;
+            background: url(__PUBLIC__/Dist/img/quick_bg.png);
+            padding-left: 20px;
+            width: 140px;
+            height: 58px;
+            line-height: 58px;
+            font-size: 18px;
+            display: block;
+            float: left;
+        }
+
+        .mark {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            line-height: 25px !important;
+            font-size: 14px;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2)
+        }
+
+        .products-list .product-title {
+            line-height: 30px;
+        }
+
+        .products-list .product-img {
+            width: 50px;
+            height: 50px;
+            background: #10b2da;
+            color: #fff;
+        }
+
+        .products-list .product-img .day {
+            font-size: 24px;
+            text-align: center;
+            line-height: 35px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .products-list .product-img .month {
+            font-size: 14px;
+            text-align: center;
+            display: block;
+        }
+
+        .products-list .product-title {
+            color: #6f6f6f;
+        }
+
+        .products-list .product-title:hover {
+            color: #10b2da;
+        }
+
+        .products-list > .item {
+            padding: 15px 0px;
+        }
+
+        .small-box {
+            background: #1f95d0;
+            color: #fff;
+        }
+
+        .small-box .icon {
+            color: rgba(255, 255, 255, 0.5)
+        }
+
+        .task_item {
+            padding: 10px 10px 30px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #fff;
+            color: #1f95d0;
+        }
+
+        .news_color {
+            color: #595959;
+        }
+
+        .news_color:hover {
+            color: #0288d1;
+        }
+
+        /*日历行程样式	*/
+
+        .dy-box {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            display: box;
+        }
+
+        .dy-flex {
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            box-flex: 1;
+            margin: 0;
+        }
+
+        .dy-header1 {
+            padding: 0 24px;
+            background-color: #fafafa;
+            color: #444f52;
+            font-size: 1.4rem;
+            line-height: 44px;
+        }
+
+        .dy-header1 i {
+            display: inline-block;
+            width: 22px;
+            color: #23b7e5;
+            line-height: 44px;
+        }
+
+        .dy-header1 i.dy-c1 {
+            color: #4eccc4;
+        }
+
+        .dy-mt18 {
+            margin-top: 18px;
+        }
+
+        .dy-idx2 {
+            margin-top: 10px;
+        }
+
+        .dy-date-h {
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: center;
+        }
+
+        .dy-date-h i {
+            color: #b1b0b0;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .dy-date-h em {
+            margin-right: 10px;
+        }
+
+        .dy-header1 {
+            border-radius: 4px 4px 0 0;
+            border: 1px solid #e3ebeb;
+        }
+
+        .dy-main1 {
+            padding: 0;
+            min-height: 0;
+            border-radius: 0 0 4px 4px;
+            border: 1px solid #e3ebeb;
+            border-top: 0;
+            display: flex;
+        }
+
+        .dy-dlist1 {
+            margin-bottom: 0px;
+        }
+
+        .dy-dlist1 li {
+            padding-top: 22px;
+            height: 62px;
+            color: #666;
+            text-align: center;
+            border-right: 1px solid #eef3f3;
+            border-top: 1px solid #eef3f3;
+            cursor: pointer;
+            display: list-item;
+        }
+
+        .dy-dlist1 li p {
+            margin: 0;
+        }
+
+        .dy-dlist1 li b {
+            font-size: 14px;
+            color: #4eccc4;
+        }
+
+        .dy-dlist1 li:nth-child(-n+3) {
+            border-top: 0;
+        }
+
+        .dy-dlist1 li:nth-child(3n+0) {
+            border-right: 0;
+        }
+
+        .dy-dlist1 li.on {
+            background-color: #4eccc4;
+            color: #fff;
+        }
+
+        .dy-dlist1 li.on b {
+            color: #fff;
+        }
+
+        .dy-date-bottom {
+            border-bottom: 1px solid #f4f4f4;
+            line-height: 30px;
+        }
+
+        .dy-date-bottom a:hover {
+            color: #10b2da;
+        }
+    </style>
+    <style type="text/css">
+        html{background:#fbfbfb; }
+        .content{background:#fbfbfb; }
+        .info_box{background:#fff; box-shadow:0 0px 8px 0 rgba(0, 0, 0, .04); }
+        .quick{color:#fff; background:url(__PUBLIC__/Dist/img/quick_bg.png); padding-left:20px; width:140px; height:58px; line-height:58px; font-size:18px; display:block; float:left; }
+        .mark{position:absolute; top:-5px; right:-5px; border-radius:50%; height:30px; width:30px; line-height:25px!important; font-size:14px; box-shadow:0 2px 8px 0 rgba(0, 0, 0, .2)}
+        .products-list .product-title{line-height:30px; }
+        .products-list .product-img{width:50px; height:50px; background:#10b2da; color:#fff; }
+        .products-list .product-img .day{font-size:24px; text-align:center; line-height:35px; margin-top:8px; display:block; }
+        .products-list .product-title{color:#6f6f6f; }
+        .products-list .product-title:hover{color:#10b2da; }
+        .products-list>.item{padding:15px 0px; }
+        .datetimepicker-inline{width:100%; }
+        .table-condensed{width:100%; }
+        .bg-teal:hover{background-color:#34b9b9!important; }
+        .bg-aqua-active:hover{background-color:#029abf!important; }
+        .bg-green:hover{background-color:#03904f!important; }
+        .bg-yellow:hover{background-color:#de8e10!important; }
+        .bg-red:hover{background-color:#cc4534!important; }
+        .news_color{color:#595959; }
+        .news_color:hover{color:#0288d1; }/*日历行程样式	*/
+        .dy-box{display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:box; }
+        .dy-flex{flex:1; -webkit-box-flex:1; -moz-box-flex:1; -webkit-flex:1; -ms-flex:1;  box-flex:1; margin:0; }
+        .dy-header1{padding:0 24px; background-color:#fafafa; color:#444f52; font-size:1.4rem;  line-height:44px;  }
+        .dy-header1 i{display:inline-block; width:22px; color:#23b7e5; line-height:44px; }
+        .dy-header1 i.dy-c1{color:#4eccc4; }
+        .dy-mt18{margin-top:18px; }
+        .dy-idx2{margin-top:10px; }
+        .dy-date-h{padding-left:10px; padding-right:10px; text-align:center; }
+        .dy-date-h i{color:#b1b0b0; font-size:20px; cursor:pointer; }
+        .dy-date-h em{margin-right:10px; }
+        .dy-header1{border-radius:4px 4px 0 0; border:1px solid #e3ebeb; }
+        .dy-main1{padding:0; min-height:0; border-radius:0 0 4px 4px; border:1px solid #e3ebeb; border-top:0; display:flex; }
+        .dy-dlist1{margin-bottom:0px; }
+        .dy-dlist1 li{padding-top:22px; height:62px; color:#666; text-align:center; border-right:1px solid #eef3f3; border-top:1px solid #eef3f3; cursor:pointer; display:list-item; }
+        .dy-dlist1 li p{margin:0; }
+        .dy-dlist1 li b{font-size:14px; color:#4eccc4; }
+        .dy-dlist1 li:nth-child(-n+3){border-top:0; }
+        .dy-dlist1 li:nth-child(3n+0){border-right:0; }
+        .dy-dlist1 li.on{background-color:#4eccc4; color:#fff; }
+        .dy-dlist1 li.on b{color:#fff; }
+        .dy-date-bottom{border-bottom:1px solid #f4f4f4; line-height:30px; }
+        .dy-date-bottom a:hover{color:#10b2da; }
+        .calendarContOuter{width: 100%;height: 300px;margin: 0px auto; font-size: 16px; }
+        .newScrollList{margin:0; height:20px; overflow:hidden; }
+        .newScrollList li{height:20px; }
+        .details_title{ padding: 15px 5px; font-weight: bold; border-bottom: #eee 1px dashed; }
+        .form-group{ padding-top: 15px; }
+        .form-group label{ text-align: right; }
+    </style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        首页
+        <small>/讲师面板</small>
+    </h1>
+    <ol class="breadcrumb">
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="info_box">
+                <!--
+                <div class="box-header with-border">
+                    <i class="fa fa-volume-up color_blue"></i>
+                    <a class="news_color" href="#">
+                        小王申请加入中国邮政储蓄银行股份有限公司新疆维吾尔自治区分行
+                    </a>
+                    <a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+                    <span class="text-grey float_r mr10">1/5</span>
+                    <a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+                    <span class="text-grey float_r mr50">2016年12月21号</span>
+                </div>-->
+                <div class="box-body">
+                    <div>
+                        <span class="quick">快捷方式</span>
+                        <a href="{:U('admin/teach/index')}">
+                            <div class="quick_but">
+                                <div><i class="fa fa-book"></i></div>
+                                <span>我的授课</span>
+                            </div>
+                        </a>
+                        <a href="{:U('admin/rs_course/addcourse')}">
+                            <div class="quick_but">
+                                <div><i class="fa fa-edit"></i></div>
+                                <span>制作课件</span>
+                            </div>
+                        </a>
+                        <a href="{:U('admin/rs_survey/listPage')}">
+                            <div class="quick_but">
+                                <div><i class="fa fa-question-circle"></i></div>
+                                <span>上传问卷</span>
+                            </div>
+
+
+
+                        </a>
+                        <a href="{:U('admin/resources_manage/passexam')}">
+                            <div class="quick_but">
+                                <div><i class="fa fa-map-o"></i></div>
+                                <span>上传考试</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>我的授课</span>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped text-center">
+                        <tbody>
+                        <tr>
+                            <th>课程名称</th>
+                            <th>项目</th>
+                            <th>开始时间</th>
+                        </tr>
+                        <foreach name="course_data" item="data">
+                            <tr>
+                                <td>
+                                    <a href="{:U('admin/my_course/detail',array('project_id'=>$data['project_id'],'course_id'=>$data['course_id']))}">{$data['course_name']}</a>
+                                </td>
+                                <td>
+                                    {$data['project_name']}
+                                </td>
+                                <td>{$data['start_time']}</td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>教学概况</span>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{$course_total}<span style="font-size: 20px">/门</span></h3>
+
+                                    <p>课件 数量</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-6 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{$curriculums_total}<span style="font-size: 20px">/门</span></h3>
+
+                                    <p>课程 数量</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- ./col -->
+                        <div class="col-lg-6 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{$duration_total}<span style="font-size: 20px">/分钟</span></h3>
+
+                                    <p>学员学习 时长</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-tachometer"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-6 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{$teaching_total}<span style="font-size: 20px">/小时</span></h3>
+
+                                    <p>授课 时长</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>统计</span>
+                </div>
+                <div class="box-body">
+                    <div id="chart-panel1" style="width: 30%;height:250px;float: left; margin-right: 5%;">
+                    </div>
+                    <div id="chart-panel2" style="width: 30%;height:250px;float: left; margin-right: 5%;">
+                    </div>
+                    <div id="chart-panel3" style="width: 30%;height:250px;float: left;">
+                    </div>
+                    <div id="chart-panel1" style="width: 30%;float: left; margin-right: 5%;">
+                        <div class="mt15 mb10 text-center">累计{$week_total}分钟</div>
+                    </div>
+                    <div id="chart-panel2" style="width: 30%;float: left; margin-right: 5%;">
+                        <div class="mt15 mb10 text-center">累计{$study_total}分钟</div>
+                    </div>
+                    <div id="chart-panel3" style="width: 30%;float: left;">
+                        <div class="mt15 mb10 text-center">累计{$curriculum_totals}门</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>日程计划</span>
+                </div>
+                <div class="calendarContOuter"></div>
+
+                <!-- 日程计划结束-->
+                <!--  行程事项内容关联区域-->
+                <div class="box-footer">
+                    <div id="norw" class="text-center" style="display: block">
+                        <img src="__PUBLIC__/Dist/img/renwuico.png" />当天没有任务
+                    </div>
+                    <div id="Journey" style="display: none;">
+                        <div class="dy-date-bottom">
+                            <a href="javascript:void(0)" class="product-title">
+                                【<span>课程</span>】：演讲与口才训练
+                                <span class="product-description pull-right">2017-03-15 14:35:54</span>
+                            </a>
+                        </div>
+
+                        <div class="dy-date-bottom">
+                            <a href="javascript:void(0)" class="product-title">
+                                【<span>考试</span>】：讲师的自我修养相关知识
+                                <span class="product-description pull-right">2017-03-14 14:16:24</span>
+                            </a>
+                        </div>
+                        <div class="dy-date-bottom">
+                            <a href="javascript:void(0)" class="product-title">
+                                【<span>问卷</span>】：银行大堂经理日常守则调研
+                                <span class="product-description pull-right">2017-03-13  10:20:00</span>
+                            </a>
+                        </div>
+                        <div class="dy-date-bottom">
+                            <a href="javascript:void(0)" class="product-title">
+                                【<span>课程</span>】：银行新员工培训
+                                <span class="product-description pull-right">2017-03-12 08:00:00</span>
+                            </a>
+                        </div>
+                        <div class="dy-date-bottom">
+                            <a href="javascript:void(0)" class="product-title">
+                                【<span>课程</span>】：职场人士健康指南
+                                <span class="product-description pull-right">2017-03-10  09:30:00</span>
+                            </a>
+                        </div>
+
+                        <div class="mt5">
+                            <a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+                            <span class="text-grey float_r mr10">1/5</span>
+                            <a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>新闻资讯</span>
+                    <a href="{:U('admin/news_show/index')}" class="product-description float_r">更多资讯>></a>
+                </div>
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <foreach name="data_news" item="list">
+                            <li class="item">
+                                <div class="product-img">
+                                    <span class="day">0{$key +1}</span>
+                                </div>
+                                <div class="product-info">
+                                    <div>
+                                        <a href="{:U('admin/news_show/detail',array('new_id'=>$list['id']))}" class="product-title">
+                                            <p>[{$list.type}]：{$list.title}</p>
+                                        </a>
+                                        <span class="label label-success pull-right">new</span>
+                                        <span class="product-description pull-left"> {$list.create_time}</span>
+                                    </div>
+                                    <a href="{:U('admin/news_show/detail',array('new_id'=>$list['id']))}" class="product-description float_r">查看详情>></a>
+                                </div>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/statics/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+<script src="__PUBLIC__/Js/js/app.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+
+<!-- CalenStyle js -->
+<script type="text/javascript" src="__PUBLIC__/CalenStyle/demo/js/jquery-ui-custom-1.11.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/CalenStyle/src/calenstyle.js"></script>
+<script type="text/javascript" src="__PUBLIC__/CalenStyle/src/i18n/calenstyle-i18n-zh-cn.js"></script>
+
+<script type="text/javascript">
+
+    //统计图表
+    //初始化chart-panel1
+    var myChart = echarts.init(document.getElementById('chart-panel1'));
+    //参数设置
+    option = {
+
+        tooltip: {    //提示框组件
+
+            trigger: 'axis'
+
+        },
+
+        legend: {     //图例组件
+
+            data: ['授课时长']
+
+        },
+
+        grid: {       //直角坐标系内绘图网格
+
+            left: '3%',
+
+            right: '4%',
+
+            bottom: '3%',
+
+            containLabel: true
+
+        },
+        xAxis: {       //直角坐标系 grid 中的 x 轴
+
+            type: 'category',
+
+            boundaryGap: false,
+
+
+            data: [{$month}]
+
+        },
+
+        yAxis: {       //直角坐标系 grid 中的 y 轴
+
+            type: 'value'
+
+        },
+
+        series: [      //系列列表
+
+            {
+
+                name: '授课时长',
+
+                type: 'line',
+
+                stack: '小时',
+
+                data: [{$week}],
+
+                color: ['#48c3aa']
+
+            },
+
+        ]
+
+    };
+    myChart.setOption(option);   //参数设置方法
+
+    //初始化chart-panel2
+    var myChart = echarts.init(document.getElementById('chart-panel2'));
+    //参数设置
+    option = {
+
+        tooltip: {    //提示框组件
+
+            trigger: 'axis'
+
+        },
+
+        legend: {     //图例组件
+
+            data: ['学员学习时长']
+
+        },
+
+        grid: {       //直角坐标系内绘图网格
+
+            left: '3%',
+
+            right: '4%',
+
+            bottom: '3%',
+
+            containLabel: true
+
+        },
+        xAxis: {       //直角坐标系 grid 中的 x 轴
+
+            type: 'category',
+
+            boundaryGap: false,
+
+            data: [{$study_month}]
+
+        },
+
+        yAxis: {       //直角坐标系 grid 中的 y 轴
+
+            type: 'value'
+
+        },
+
+        series: [      //系列列表
+
+            {
+
+                name: '学员学习时长',
+
+                type: 'line',
+
+                stack: '分',
+
+                data: [{$study}],
+
+                color: ['#1f95d0']
+
+            }
+
+        ]
+
+    };
+    myChart.setOption(option);   //参数设置方法
+
+    //初始化chart-panel3
+    var myChart = echarts.init(document.getElementById('chart-panel3'));
+    //参数设置
+    option = {
+
+        tooltip: {    //提示框组件
+
+            trigger: 'axis'
+
+        },
+
+        legend: {     //图例组件
+
+            data: ['课件数量']
+
+        },
+
+        grid: {       //直角坐标系内绘图网格
+
+            left: '3%',
+
+            right: '4%',
+
+            bottom: '3%',
+
+            containLabel: true
+
+        },
+        xAxis: {       //直角坐标系 grid 中的 x 轴
+
+            type: 'category',
+
+            boundaryGap: false,
+
+            data: [{$curriculum_month}]
+
+        },
+
+        yAxis: {       //直角坐标系 grid 中的 y 轴
+
+            type: 'value'
+
+        },
+
+        series: [      //系列列表
+
+            {
+
+                name: '课件数量',
+
+                type: 'line',
+
+                stack: '分',
+
+                data: [{$curriculum}],
+
+                color: ['#dd4b39']
+
+            }
+
+        ]
+
+    };
+    myChart.setOption(option);   //参数设置方法
+</script>
+
+<script>
+    $(function(){
+
+        //去除所有空格
+        function Trim(str, is_global) {
+            var result;
+            result = str.replace(/(^\s+)|(\s+$)/g, "");
+            if(is_global.toLowerCase() == "g")
+                result = result.replace(/\s/g, "");
+            return result;
+        }
+
+        //日程计划-年份-减
+        $("#dy-pre").click(function() {
+            $("#dy-year").html(parseInt($("#dy-year").html()) - 1);
+            buttons.removeClass();
+            buttons.each(function() {
+                if($(this).text() != "1月") {
+                    $("#dy-date").find("li").addClass("col-lg-4");
+                }
+            });
+            $("#January").addClass("col-lg-4 on");
+        });
+        //日程计划-年份-加
+        $("#dy-next").click(function() {
+
+            //年份加1
+            $("#dy-year").html(parseInt($("#dy-year").html()) + 1);
+            //清除li标签下面的类
+            buttons.removeClass();
+            //遍历li
+            buttons.each(function() {
+                if($(this).text() != "1月") {
+                    buttons.addClass("col-lg-4");
+                }
+            });
+            $("#January").addClass("col-lg-4 on");
+        });
+
+        var buttons = $("#dy-date").find("li"); //找到所有的li标签
+        buttons.on('click', function() {
+            buttons.removeClass(); //清除li标签下面的类
+            buttons.addClass("col-lg-4"); //添加li标签下面的类
+            $(this).addClass("col-lg-4 on"); //添加点击li标签下面的新类
+            if(Trim($(this).html(), "g").indexOf("●") > -1) { //判断选择月份是否有任务
+                $("#Journey").show();
+                $("#norw").hide();
+            } else {
+                $("#Journey").hide();
+                $("#norw").show();
+            }
+        });
+
+
+        $(".calendarContOuter").CalenStyle({
+            visibleView: "MonthView",
+            language:"zh-cn",
+            headerSectionsList:
+            {
+                left: ["PreviousButton"],
+                center:["HeaderLabel"],
+                right: ["NextButton"]
+            },
+            calDataSource: [
+                {
+                    sourceFetchType: "ALL",
+                    sourceType: "JSON",
+                    source:
+                    {
+                        eventSource:
+                                [
+                                    {$schedule}
+                                ]
+                    }
+                }
+            ]
+        });
+        $(".calendarContOuter").mouseup(function(){
+            setTimeout(function(){
+                var chooseDay = $(".cCurrentHighlightCircle").closest("td").attr("id");
+                getCalendarData(chooseDay);
+            },100);
+        });
+
+        getCalendarData();
+
+        /* 获取选择日期当天的任务
+         *  chooseDay 选中的日期
+         */
+        function getCalendarData(chooseDay){
+            if(!chooseDay || chooseDay==""){
+                //没有给参数，选择当天
+                chooseDay = $(".cTodayHighlightTextColor").attr("id");
+            }
+            var cmvEventContSmall = $("#"+chooseDay).find(".cmvEventContSmall").html();
+            var cmvEventContAllDay = $("#"+chooseDay).find(".cmvEventContAllDay").html();
+            if(cmvEventContSmall=="" && cmvEventContAllDay==""){
+                $("#norw").show();
+                $("#Journey").hide();
+            }else{
+                //异步请求任务数据
+                var reqUrl = "{:U('Admin/Index/dayTask')}"
+                $.ajax({
+                    type: "post",
+                    url: reqUrl,
+                    data: "chooseDay="+chooseDay,
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code==1000){
+                            var newHtml = "";
+                            var total_page = data.list.length;
+                            for(var i=0; i<total_page; i++){
+                                var mainData = data.list[i];
+                                var hideStatus = "";
+                                if(i != 0){
+                                    hideStatus = 'style="display:none;"';
+                                }
+                                newHtml += '<div class="data_slip" '+hideStatus+'>';
+                                for(var j=0; j<mainData.length; j++){
+                                    var subData = mainData[j];
+                                    var goHref = "";
+                                    if(subData.type=='考试'){
+                                        if(subData.subType == '项目考试'){
+                                            goHref += "{:U('Admin/MyExam/waitExam')}";
+                                        }else{
+                                            goHref += "{:U('Admin/MyExam/otherExam')}";
+                                        }
+                                        newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                        newHtml += '【<span>考试</span>】'+subData.test_name;
+                                        newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                    }else if(subData.type=='调研'){
+                                        if(subData.subType == '项目调研'){
+                                            goHref += "{:U('Admin/MySurvey/waitSurvey',array('typeid'=>0))}";
+                                        }else{
+                                            goHref += "{:U('Admin/MySurvey/researchList',array('typeid'=>1))}";
+                                        }
+                                        newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                        newHtml += '【<span>调研</span>】'+subData.name;
+                                        newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                    }else if(subData.type=='课程'){
+                                        goHref += subData.url ;
+                                        newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                        newHtml += '【<span>课程</span>】'+subData.course_name;
+                                        newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                    }
+                                }
+                                newHtml += '<div class="newPageNav mt5"><a href="javascript:void(0)" class="float_r showRight"><i class="fa fa-chevron-circle-right"></i></a>';
+                                newHtml += '<span class="text-grey float_r mr10">'+(i+1)+'/'+total_page+'</span>';
+                                newHtml += '<a href="javascript:void(0)" class="float_r mr10 showLeft"><i class="fa fa-chevron-circle-left"></i></a></div>';
+                                newHtml += '</div>';
+                            }
+                            $("#Journey").html(newHtml);
+                            if(total_page == 1){
+                                $(".newPageNav").remove();
+                            }
+                            $("#norw").hide();
+                            $("#Journey").show();
+                        }else{
+                            $("#Journey").html("");
+                            $("#norw").show();
+                            $("#Journey").hide();
+                        }
+                    }
+                });
+            }
+        }
+
+        $("#Journey").on("click", ".showLeft", function(){
+            var index = $(this).closest(".data_slip").index();
+            if(index > 0){
+                $(".data_slip").hide();
+                $(".data_slip").eq(index-1).show();
+            }
+        });
+
+        $("#Journey").on("click", ".showRight", function(){
+            var index = $(this).closest(".data_slip").index();
+            var max = $(".data_slip").length;
+            if(index == (max - 1)){
+                return false;
+            }
+            $(".data_slip").hide();
+            $(".data_slip").eq(index+1).show();
+        });
+
+        //cs-icon-Prev 上一月数据  cs-icon-Next 下一月数据，默认三个月数据，不再异步请求每月是否有任务，如有需要再添加、
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+MYSQL :120.77.57.26 账号:php 密码:Dysoft@@
+
+Xshell:120.77.57.26    用户名：root，密码：Dy!!!soft@@@
+/home/wwwroot/
+测试地址：http://sztp.occupationedu.com/
+
+服务器：公网IP：120.77.57.26，内网IP：10.27.190.43，用户名：root，密码：Dy!!!soft@@@ 
+数据库：账号 phplnmp密码 Dysoft@@123     账号 php密码 Dysoft@@  域名：sztp.occupationedu.com
+
+http://scorm.occupationedu.com/home/course/index   课件地址  账号  admin  adminryd123456
+
+oracle：用户： system  密码： saSA123
+用户：  scott  密码：123456
+  192.168.1.77
+  192.168.1.78
+oracle:192.168.1.201   端口 1521  用户system 密码a123456  用户scott  123456
+
+orcl11g:/u01/app/oracle/product/11.2.0:N

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看培训项目</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        {$project.project_name}
+        <small>/查看培训项目</small>
+    </h1>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <!--项目名称字段开始-->
+                    <div class="form-group" id="supplier">
+                        <label for="inputEmail3" class="col-sm-2 control-label">项目类别<span class="color_red"></span>：</label>
+                        <div class="col-sm-10">
+                            <label class="col-sm-12  pt10"><span class=""> <if condition="$project.training_category eq 0">内部培训<elseif condition="$project.training_category eq 1"/>外派培训<elseif condition="$project.training_category eq 2"/>外出授课<else />--</if></span></label>
+                        </div>
+                    </div>
+                    <!--项目名称字段开始-->
+                    <div class="form-group" id="supplier">
+                        <label for="inputEmail3" class="col-sm-2 control-label">项目时间：</label>
+                        <div class="col-sm-10">
+                            <label class="col-sm-8  pt10"><span>{$project.start_time} 至 {$project.end_time}</span></label>
+                        </div>
+                    </div>
+                    <!--项目名称字段结束-->
+                    <!--项目描述字段开始-->
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">项目描述：</label>
+
+                        <div class="col-sm-10">
+                            <label class="col-sm-8  pt10">
+												<span>													
+													{$project.project_description}
+												</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer"></div>
+            </form>
+            <!--内容結束-->
+            <div class="box-header with-border">
+                <label class="box-title col-sm-10"> <i class="fa fa-book text-blue mr5"></i>课程</label>
+            </div>
+            <!--添加课程开始-->
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <!--内容开始-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                   aria-describedby="example1_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">课程名称
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">授课方式
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="CSS grade: activate to sort column ascending">讲师
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">开始时间
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">结束时间
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">学分
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">学习地址
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">考勤
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">负责人
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="tab">
+                                <foreach name="course" item="vo">
+                                    <tr role="row" class="odd text-center">
+                                        <td>
+                                            {$vo.course_name}
+                                        </td>
+                                        <td>
+                                            <if condition="$vo['course_way'] eq 0">
+                                                在线
+                                                <else/>
+                                                面授
+                                            </if>
+                                        </td>
+                                        <td>
+                                            <if condition="$vo['course_way'] eq 0">
+                                                <if condition="!empty($vo['lecturer_name'])">{$vo.lecturer_name}
+                                                    <else/>
+                                                    {$vo.name}
+                                                </if>
+                                                <else/>
+                                                {$vo.name}
+                                            </if>
+                                        </td>
+                                        <td>{$vo.start_time}</td>
+                                        <td>{$vo.end_time}</td>
+                                        <td>{$vo.credit}</td>
+                                        <td>{$vo.location}</td>
+                                        <td>
+                                            <if condition="$vo['is_attachment'] eq 0">
+                                                关闭
+                                                <else/>
+                                                开启
+                                            </if>
+                                        </td>
+                                        <td>{$vo.username}</td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--内容結束-->
+                </div>
+            </div>
+            <!-- 添加课程结束-->
+            <div class="box-header with-border">
+                <label class="box-title col-sm-10"> <i class="fa fa-object-group text-blue mr5"></i>考试</label>
+            </div>
+            <!--添加考试开始-->
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <!--内容开始-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                   aria-describedby="example1_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">考试名称
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">考试方式
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">开始时间
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">结束时间
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">考试时长
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="tab">
+
+                                <foreach name="examination" item="vo">
+                                    <tr role="row" class="odd text-center">
+                                        <td>
+                                            {$vo.test_names}
+                                        </td>
+                                        <if condition="$vo['cacheid'] eq 1">
+                                            <td>线下</td>
+                                            <else/>
+                                            <td>线上</td>
+                                        </if>
+                                        <td>{$vo.username}</td>
+                                        <td>{$vo.start_time}</td>
+                                        <td>{$vo.end_time}</td>
+                                        <td>{$vo.test_length}</td>
+                                    </tr>
+                                </foreach>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--内容結束-->
+                </div>
+            </div>
+            <!-- 添加考试结束-->
+            <div class="box-header with-border">
+                <label class="box-title col-sm-10"> <i class="fa fa-bar-chart text-blue mr5"></i>调研</label>
+            </div>
+            <!--添加考试开始-->
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <!--内容开始-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                   aria-describedby="example1_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">调研名称
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">开始时间
+                                    </th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                        colspan="1" aria-label="Browser: activate to sort column ascending">结束时间
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="tab">
+                                <foreach name="survey" item="vo">
+                                    <tr role="row" class="odd text-center">
+                                        <td>
+                                            {$vo.survey_name}
+                                        </td>
+                                        <td>{$vo.username}</td>
+                                        <td>{$vo.start_time}</td>
+                                        <td>{$vo.end_time}</td>
+                                    </tr>
+
+                                </foreach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--内容結束-->
+                </div>
+            </div>
+            <!-- 添加考试结束-->
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+</body>
+
+</html>

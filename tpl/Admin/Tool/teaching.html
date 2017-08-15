@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>工具管理——授课目标</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+
+
+</head>
+<style type="text/css">
+	.caname,
+	.caname2 {
+		cursor: pointer;
+	}
+
+	.btn1 {
+		border: none;
+		height: 2.0em;
+		background-color: #3E8CD0;
+		color: white;
+		font-size: 1.2em;
+		margin-top: 0.5em;
+		width: 100%;
+		border-radius: 0.5em;
+	}
+
+	.btn2 {
+		border: none;
+		height: 2.0em;
+		background-color: #e1e2e4;
+		color: black;
+		font-size: 1.2em;
+		margin-top: 0.5em;
+		width: 100%;
+		border-radius: 0.5em;
+	}
+
+	.btn1:focus {
+		outline: none;
+		border: none;
+	}
+
+	.btn2:focus {
+		outline: none;
+		border: none;
+	}
+	.trstyle{
+		background-color: #d8cdb6 !important;
+	}
+
+	.bright{
+		background-color: #f1ebde!important;
+	}
+
+</style>
+
+<body>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">数据管理<small>/授课目标</small></h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+			</li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div>
+			<div class="dataTables_wrapper form-inline dt-bootstrap ">
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="{:U('Tool/target')}">学习目标</a>
+						</li>
+						<li class="active">
+							<a href="{:U('Tool/teaching')}">授课目标</a>
+						</li>
+						<li>
+							<a href="{:U('Tool/train')}">培训项目预算</a>
+						</li>
+					</ul>
+					<form action="{:U('Research/editor')}" method="post" enctype="multipart/form-data">
+					<div class="tab-content">
+						<div class="tab-pane active" id="learning">
+							<!--目标管理开始-->
+							<div class="box-body">
+								<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+									<div class="row mt10">
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select id="test0" onchange="changetext();" class="form-control select2 width_10">
+													<option value="0">
+														<a>--选择总公司所属部门--</a>
+													</option>
+													<foreach name="tool_tree" item="items">
+														<option value="{$items['id']}" <if condition="$tissue_id eq $items['id']">selected="selected"</if>>{$items['name']}</option>
+														<if condition="$level neq 4">
+															<foreach name="items['_data']" item="v">
+																<option value="{$v['id']}" <if condition="$tissue_id eq $v['id']">selected="selected"</if>>{$v['name']}</option>
+																<foreach name="v['_data']" item="s">
+																	<option value="{$s['id']}" <if condition="$tissue_id eq $s['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;{$s['name']}</option>
+																	<?php
+																			foreach($s['_data'] as $p){?>
+																	<option value="<?php echo $p['id'];?>" <if condition="$tissue_id eq $p['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $p['name'];?></option>
+																	<?php
+																			}
+																		?>
+																</foreach>
+															</foreach>
+														</if>
+													</foreach>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select id="test1" onchange="changetext();" class="form-control select2 width_10">
+													<option value="0">请选年份</option>
+													<foreach name="year_list" item="vo" key="k" >
+														<option <if condition="$year eq $vo">selected="selected"</if>>{$vo}</option>
+													</foreach>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select onchange="changetext();" class="form-control select2 width_10" id="test2">
+													<option value="0">请选择计划时长</option>
+													<option value="1" <if condition="$plan eq 1">selected="selected"</if>>年度</option>
+													<option value="2" <if condition="$plan eq 2">selected="selected"</if>>季度</option>
+													<option value="3" <if condition="$plan eq 3">selected="selected"</if>>月度</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!--所有岗位列表开始-->
+									<div class="row mt10 mb10" id="job">
+										<foreach name="lecturer_list" item="vo" >
+											<div class="col-sm-1">
+												<button type="button" onclick="target_click({$vo['id']})" name="btn_name" value="{$vo['id']}" class="<if condition="$vo.id eq $lecturer_id">btn1<else />btn2</if>">{$vo['name']}</button>
+											</div>
+										</foreach>
+									</div>
+									<!--内容开始-->
+									<div class="row text-center mt10 mb10" style="font-size: 1.4em;">
+										<span id="showtext0" class="font_bold ml10"></span>
+										<span id="showtext1" class="font_bold ml10"></span>
+										<span id="showtext2" class="font_bold ml10"></span>的授课目标设定
+									</div>
+
+										<if condition="$plan eq 1">
+											<div class="row">
+												<div class="col-sm-12">
+													<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+														<thead>
+														<tr role="row" class="trstyle">
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="50">序号</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类别</th>
+															<th class="sorting text-center january" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">{$year}</th>
+														</tr>
+														</thead>
+														<tbody id="tab" class="fromTable">
+															<foreach name="target_list" item="vo" key="k">
+																<tr role="row" class="odd text-center trstyle">
+																	<td>{$k+1}</td>
+																	<td><if condition="$k eq 0">授课目标 (次)<elseif condition="$k eq 1"/>授课时长 (小时)<else /> 课程开发目标 (节)</if></td>
+																	<td class="january"><span class="caname" month="0" typeid="{$k}">{$vo}</span></td>
+																</tr>
+															</foreach>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<elseif condition="$plan eq 2"/>
+
+												<div class="row">
+													<div class="col-sm-12">
+														<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+															<thead>
+															<tr role="row" class="trstyle">
+																<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="50">序号</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类别</th>
+																<th class="sorting text-center january" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">第一季</th>
+																<th class="sorting text-center february" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">第二季</th>
+																<th class="sorting text-center march" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">第三季</th>
+																<th class="sorting text-center april" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">第四季</th>
+															</tr>
+															</thead>
+															<tbody id="tab" class="fromTable">
+															<foreach name="target_list" item="vo" key="k">
+																<tr role="row" class="odd text-center trstyle">
+																	<td>{$k+1}</td>
+																	<td><if condition="$k eq 0">授课目标 (次)<elseif condition="$k eq 1"/>授课时长 (小时)<else /> 课程开发目标 (节)</if></td>
+																	<td class="january"><span class="caname" month="1" typeid="{$k}">{$vo['one_season']}</span></td>
+																	<td class="february"><span class="caname" month="2" typeid="{$k}">{$vo['tow_season']}</span></td>
+																	<td class="march"><span class="caname" month="3" typeid="{$k}">{$vo['three_season']}</span></td>
+																	<td class="april"><span class="caname" month="4" typeid="{$k}">{$vo['four_season']}</span></td>
+																</tr>
+															</foreach>
+															</tbody>
+														</table>
+														<!--
+														<div class="col-lg-12 text-center">
+															<a class="btn btn-info form-group_but">保存</a>
+														</div>-->
+													</div>
+												</div>
+
+
+											<else />
+												<div class="row">
+													<div class="col-sm-12">
+														<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+															<thead>
+															<tr role="row" class="trstyle">
+																<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="50">序号</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类别</th>
+																<th class="sorting text-center january" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">1月</th>
+																<th class="sorting text-center february" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">2月</th>
+																<th class="sorting text-center march" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">3月</th>
+																<th class="sorting text-center april" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">4月</th>
+																<th class="sorting text-center may" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">5月</th>
+																<th class="sorting text-center june" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">6月</th>
+																<th class="sorting text-center july"  tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">7月</th>
+																<th class="sorting text-center august" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">8月</th>
+																<th class="sorting text-center september" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">9月</th>
+																<th class="sorting text-center october" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">10月</th>
+																<th class="sorting text-center november" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">11月</th>
+																<th class="sorting text-center december" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">12月</th>
+															</tr>
+															</thead>
+															<tbody id="tab" class="fromTable">
+															<foreach name="target_list" item="vo" key="k">
+																<tr role="row" class="odd text-center trstyle">
+																	<td>{$k+1}</td>
+																	<td><if condition="$k eq 0">授课目标 (次)<elseif condition="$k eq 1"/>授课时长 (小时)<else /> 课程开发目标 (节)</if></td>
+																	<td class="january"><span class="caname" month="1" typeid="{$k}">{$vo['january']}</span></td>
+																	<td class="february"><span class="caname" month="2" typeid="{$k}">{$vo['february']}</span></td>
+																	<td class="march"><span class="caname" month="3" typeid="{$k}">{$vo['march']}</span></td>
+																	<td class="april"><span class="caname" month="4" typeid="{$k}">{$vo['april']}</span></td>
+																	<td class="may"><span class="caname" month="5" typeid="{$k}">{$vo['may']}</span></td>
+																	<td class="june"><span class="caname" month="6" typeid="{$k}">{$vo['june']}</span></td>
+																	<td class="july"><span class="caname" month="7" typeid="{$k}">{$vo['july']}</span></td>
+																	<td class="august"><span class="caname" month="8" typeid="{$k}">{$vo['august']}</span></td>
+																	<td class="september"><span class="caname" month="9" typeid="{$k}">{$vo['september']}</span></td>
+																	<td class="october"><span class="caname" month="10" typeid="{$k}">{$vo['october']}</span></td>
+																	<td class="november"><span class="caname" month="11" typeid="{$k}">{$vo['november']}</span></td>
+																	<td class="december"><span class="caname" month="12" typeid="{$k}">{$vo['december']}</span></td>
+																</tr>
+															</foreach>
+															</tbody>
+														</table>
+														<!--
+														<div class="col-lg-12 text-center">
+															<a class="btn btn-info form-group_but">保存</a>
+														</div>-->
+													</div>
+												</div>
+										</if>
+
+									</if>
+									<!--内容結束-->
+								</div>
+							</div>
+							<!--目标管理结束-->
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script type="text/javascript">
+
+		//radio选中样式
+		$('input').iCheck({
+			labelHover: false,
+			cursor: true,
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_minimal-blue',
+			increaseArea: '20%'
+		});
+
+		$("#test0").change(function(){
+
+			var tissue_id = $(this).val();
+
+			var html = '';
+
+			$.ajax({
+				type: "GET",
+				url: "{:U('Tool/getLecturer')}",
+				data: "tissue_id="+tissue_id,
+				success: function(data){
+
+					for(var i=0; i < data.length; i++){
+						html += '<div class="col-sm-1">';
+						html += '<button type="button" name="btn_name" class=" btn2" onclick="target_click('+data[i]['id']+')">'+data[i]['name']+'</button>';
+						html += '</div>';
+					}
+
+					$("#job").html(html);
+
+				}
+			});
+
+		});
+
+
+		function target_click(lecturer_id){
+
+			var tissue_id = $("#test0").val();
+
+			var year = $("#test1").val();
+
+			var plan = $("#test2").val();
+
+			if(year >0){
+
+				if(plan > 0){
+
+					var url = "{:U('Tool/teaching')}";
+
+					url += '?tissue_id='+tissue_id+'&year='+year+'&lecturer_id='+lecturer_id+'&plan='+plan;
+
+					window.location.href =	url;
+
+				}else{
+
+					layer.alert("请选择计划");
+					return;
+
+				}
+
+			}else{
+				layer.alert("请选择年份");
+				return;
+			}
+		}
+
+		(function($) { //输入数值宽度
+			$(".caname").click(function() {
+				var td = $(this);
+				var tissue_id = {$tissue_id};
+				var lecturer_id = {$lecturer_id};
+				var year = {$year};
+				var month = td.attr("month");
+				var typeid = td.attr("typeid");
+
+				var planid = {$plan};
+
+				var txt = $.trim(td.text());
+				var input = $("<input class='form-control' type='number' value='" + txt + "' style='width:80px;border-color:#0288d1;'/>");
+				td.html(input);
+				input.click(function() {
+					return false;
+				});
+				//获取焦点
+				input.trigger("focus");
+				//文本框失去焦点后提交内容，重新变为文本
+				input.blur(function() {
+					var newtxt = $(this).val();
+
+					if(newtxt == 0){
+						var newtxt = 0;
+					}else{
+						var newtxt = newtxt.replace(/\b(0+)/gi,"");
+					}
+
+					if(newtxt < 0){
+						layer.msg('请输入正确数值');
+						return false;
+					}else{
+
+						$.ajax({
+							type: "POST",
+							url: "{:U('tool/upteaching')}",
+							data: "month="+month+"&typeid="+typeid+"&v="+newtxt+"&tissue_id="+tissue_id+"&lecturer_id="+lecturer_id+"&year="+year+"&planid="+planid,
+							success: function(msg){
+
+								if(msg == 200){
+									td.html(newtxt);
+									layer.msg('修改成功', {time: 1500,icon: 1},function(){
+										//window.location.reload();
+									});
+								}else if(msg <= 3){
+									td.html(txt);
+									var mas = '';
+									if(msg == 1){
+										mas = '年度计划已设置';
+									}else if(msg == 2){
+										mas = '季度计划已设置';
+									}else{
+										mas = '月度计划已设置';
+									}
+
+									layer.msg(mas,function(){
+										//window.location.reload();
+									});
+
+								}else{
+									layer.msg('该项不可修改',function(){
+										//window.location.reload();
+									});
+								}
+							}
+						});
+
+					}
+
+				});
+
+			});
+
+			var test0 = $("#test0").find("option:selected").html().replace(/&nbsp;/ig,"");
+			var test2 = $("#test2").find("option:selected").html().replace(/&nbsp;/ig,"");
+			var btn1 = $(".btn1").html();
+
+			$("#showtext0").html(test0);
+			$("#showtext1").html(btn1);
+			$("#showtext2").html(test2);
+
+
+		})(jQuery);
+
+		//循环获取下拉框数据并传值到 对应的id
+		function changetext() {
+
+			var tissue_id = $("#test0").val();
+
+			var year = $("#test1").val();
+
+			var plan = $("#test2").val();
+
+			var lecturer_id = $(".btn1").val();
+
+			if(tissue_id <= 0){
+				$(".fromTable").hide();
+				layer.msg('请选择所属部门');
+			}else if(year <= 0){
+				$(".fromTable").hide();
+				layer.msg('请选择年份');
+			}else if(plan <=0){
+				$(".fromTable").hide();
+				layer.msg('请选择计划时长');
+			}else if(lecturer_id == undefined){
+				$(".fromTable").hide();
+				layer.msg('请选择讲师');
+			}else{
+
+				var url = "{:U('Tool/teaching')}";
+
+				url += '?tissue_id='+tissue_id+'&year='+year+'&plan='+plan;
+
+				window.location.href =	url;
+			}
+
+		}
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>前台课程考勤</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+				        培训项目
+				        <small>/线下考勤</small>
+				    </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+
+					<!--内容开始-->
+					<div class="box-header with-border">
+						<div class=" col-sm-6">
+							<h4> {$course_name}</h4></div>
+						<div class="col-sm-6">
+							<!--讲师身份已授课状态下显示考勤统计按钮-->
+							<!--<a href="Front_Attendance_course_statistics.html" type="button" class="btn btn-primary btn-sm pull-right "> <i class="fa fa-edit mr5" aria-hidden="true"></i>考勤统计</a>-->
+							<!--学员身份下是显示加入课程按钮，讲师身份则隐藏-->
+
+							<if condition="$course_way eq 0"><a href="#" onclick="add_Mycourse()" type="button" class="btn btn-primary btn-sm pull-right"> <i class="fa fa-tags mr5" aria-hidden="true"></i>加入我的课程</a></if>
+
+						</div>
+					</div>
+					<!--课程封面及主要信息区域开始-->
+					<div class="row box-body mt10">
+						<!--左侧封面课程区域-->
+						<div class="col-sm-3">
+							<video src="<if condition="!empty($media_src)">{$media_src}<else />/Upload/cat.mp4</if>" width="380" height="280" controls autobuffer></video>
+						</div>
+						<!--右侧课程信息及审核区域-->
+						<div class="col-sm-9">
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">培训讲师：<span id="#">{$lecturer_name}</span> </label>
+							</div>
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">培训时间：<span id="#">{$start_time}--{$start_time}</span></label>
+							</div>
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">面授地址：<span id="#">{$location}</span></label>
+							</div>
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">限制人数：<span id="#">{$restrictions}</span></label>
+							</div>
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">
+                                	<div id="startone" >
+                                	    <span class="float_l">课程评价：</span>
+								        <div class="star_score float_l"></div>
+								    </div>
+								</label>
+							</div>
+							<div class="row mb20">
+								<label class="col-sm-12 control-label">
+                                	<div id="startone2">
+                                	    <span class="float_l">讲师评价：</span>
+								        <div class="star_score float_l"></div>
+								    </div>
+								</label>
+							</div>
+
+						</div>
+						<!--右侧课程信息及审核区域区域-->
+					</div>
+					<!--课程封面及主要信息区域结束-->
+					<!--项目切换标签开始-->
+					<div class="box-body">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#referral" data-toggle="tab">介绍</a>
+								</li>
+								<li style="display: none;">
+									<a href="#FAQs" data-toggle="tab">问答</a>
+								</li>
+								<li style="display: none;">
+									<a href="#note" data-toggle="tab">笔记</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="referral">
+									<!--我的课程介绍列表开始-->
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">
+												<form class="form-horizontal">
+													<div class="box-body">
+														<!--内部讲师字段开始-->
+														<foreach name="chapter" item="vo" key="k">
+															<div class="form-group">
+																<!--<label for="" class="col-sm-1 ">章节：</label>-->
+																<div class="col-sm-11">
+																	<label for=""><a>{$k+1}.<span id="#"> {$vo.name}</span> </a></label>
+																</div>
+															</div>
+														</foreach>
+														<!--  分隔符开始-->
+														<div class="box-header with-border mb20"></div>
+														<!--  分隔符结束-->
+														<div class="form-group">
+															<label for="" class="col-sm-1 ">课程介绍：</label>
+
+															<div class="col-sm-6">
+																<label for=""><span id="#"> {$course_intro}</span></label>
+															</div>
+														</div>
+														<!--  分隔符开始-->
+														<div class="box-header with-border mb20"></div>
+														<!--  分隔符结束-->
+														<div class="form-group">
+															<label for="" class="col-sm-1 ">课程目标：</label>
+															<div class="col-sm-6">
+																<label for="" class=""><span id="#"> {$course_aim}</span></label>
+															</div>
+														</div>
+														<!--  分隔符开始-->
+														<div class="box-header with-border mb10"></div>
+														<!--  分隔符结束-->
+
+														<div class="form-group">
+															<label for="inputEmail3" class="col-sm-1 ">课程大纲：</label>
+
+															<div class="col-sm-10">
+																<!--编辑器开始-->
+																<textarea id="TextArea1" cols="20" rows="2" class="ckeditor" disabled="disabled">{$course_outline}</textarea>
+																<!--编辑器结束-->
+															</div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<!--我的列表结束-->
+								</div>
+								<div class="tab-pane " id="FAQs"  style="display: none;">
+									<!--公开课开始-->
+									<div class="box-body">
+										问答
+									</div>
+
+									<!--公开课結束-->
+								</div>
+
+								<div class="tab-pane " id="note"  style="display: none;">
+									<!--公开课开始-->
+									<div class="box-body">
+										笔记
+									</div>
+									<!--公开课結束-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--项目切换标签结束-->
+					<!--内容結束-->
+				</div>
+			</div>
+		</section>
+		<!--我的课程弹层-->
+		<div id="add_Mycourse" style="display: none;">
+			<div class="box-body">
+				<div class="col-sm-12 mt10">
+					<form class="form-horizontal">
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-3 control-label">课程名称：</label>
+
+							<div class="col-sm-9">
+								<label class=" control-label">{$course_name}</label>
+							</div>
+						</div>
+
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-3 control-label">学习时间：</label>
+
+							<div class="col-sm-9">
+								<div class="col-lg-5">
+									<div class="input-group date ">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+										</div>
+										<input class="datainp" id="datebut" type="text"   readonly name="start_time" style="height:36px;width: 140px;float: left;" value="{$currentTime}">
+									</div>
+								</div>
+								<div class="col-lg-1">
+									至
+								</div>
+								<div class="col-lg-5">
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar" onClick="jeDate({dateCell:'#datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+										</div>
+										<input class="datainp" id="datainps" type="text"   readonly name="end_time" style="height:36px;width: 140px;">
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!--我的课程弹层结束-->
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+		<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+		<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/Dist/js/startScore.js"></script>
+		<script src="__PUBLIC__/Js/js/html5media.min.js"></script>
+		<script src="__PUBLIC__/Js/js/join.js"></script>
+		<script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			function del_click() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+
+            //显示分数
+		    scoreFun($("#startone"))
+		    scoreFun($("#startone2"))
+
+		    $(".show_number li p").each(function(index, element) {
+		        var num=$(this).attr("tip");
+		        var www=num*2*11.5;//
+		        $(this).css("width",www);
+		        $(this).parent(".atar_Show").siblings("span").text(num+"分");
+		    });
+
+			function add_Mycourse() {
+				layer.open({
+					title: '加入我的课程',
+					btn: ['保存',],
+					yes:function(){
+
+						var start_time=document.getElementById('datebut').value;
+
+						var end_time=document.getElementById('datainps').value;
+
+						var res=check(start_time,end_time);
+
+						if(res){
+
+							var coure_id="{$id}";
+
+							var course_way='{$course_way}';
+
+							var url="{:U('Admin/Course/join',array())}";
+
+							var url="__APP__" + '/Admin/Course/join?course_id='+coure_id+'&&start_time='+start_time+'&&end_time='+end_time+'&&course_way='+course_way;
+
+							$.ajax({
+								type: "GET",
+								url: '/Admin/Course/join',
+								data: {"course_id":coure_id,"start_time":start_time,"end_time":end_time,"course_way":course_way},
+								traditional:true,
+								success: function(msg){
+
+									if(msg){
+										layer.msg('加入成功', {time: 1500,icon: 1},function(){
+											window.location.reload();
+										});
+									}else{
+
+										layer.msg('课程已加入', {
+											time: 2000, //2s后自动关闭
+										});
+									}
+								}
+							});
+						}
+					},
+					area: ['650px', '210px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_Mycourse")
+				});
+			}
+
+		</script>
+	</body>
+
+</html>

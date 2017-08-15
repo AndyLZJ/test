@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$location}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        系统设置
+        <small>/注册审核</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a class="text-grey" href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li <if condition="$type eq 0">class="active"</if>><a href="{:U('AuditUsers/registration',array('type'=>0))}">待审核</a></li>
+                  <li <if condition="$type eq 1">class="active"</if>><a href="{:U('AuditUsers/registration',array('type'=>1))}">已拒绝</a></li>
+                </ul>
+                <div class="tab-content">
+                   <div class="tab-pane active" id="Waiting">
+                       <div class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-12">
+                                  <if condition="$type eq 0">
+                                      <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                          <button type="button" class="btn btn-warning btn-sm float_r ml10" onclick="refuse_click();">
+                                              <i class="fa fa-close"></i>
+                                              批量拒绝</button>
+                                          <button type="button" class="btn btn-primary btn-sm float_r ml10" onclick="audit_click();">
+                                              <i class="fa fa-check-square-o"></i>
+                                              批量审核</button>
+                                      </div>
+                                   <else />
+                                      <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                          <button type="button" class="btn btn-warning btn-sm float_r ml10" onclick="del_click();">
+                                              <i class="fa fa-trash-o"></i>
+                                              批量删除</button>
+                                          <button type="button" class="btn btn-primary btn-sm float_r ml10" onclick="audit_click();">
+                                              <i class="fa fa-check-square-o"></i>
+                                              批量审核</button>
+                                      </div>
+                                  </if>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                          <!--内容开始-->
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info" id="table">
+                                      <thead>
+                                          <tr role="row">
+                                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                  <label style="margin-bottom: 0px;">
+                                                     <input type="checkbox" width="20" class="js-checkbox-all">
+                                                  </label>
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">工号</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">手机号</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">邮箱</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+
+                                      <foreach name="approved_list" item="vo" >
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox" value="{$vo.id}" name="ifChecked[]">
+                                            </td>
+                                            <td>{$vo.username}</td>
+                                            <td>{$vo.job_number}</td>
+                                            <td>{$vo.phone}</td>
+                                            <td>{$vo.email}</td>
+                                            <td>
+                                                <a href="#" class="mr20" onclick="audit_click({$vo.id});">
+                                                    <i class="fa fa-check-square-o mr5" aria-hidden="true"></i>审核通过
+                                                </a>
+                                                <if condition="$type eq 0">
+                                                        <a href="#" class="bs-callout-info color_or" onclick="refuse_click({$vo.id});">
+                                                            <i class="fa fa-close mr5" aria-hidden="true"></i>拒绝
+                                                        </a>
+                                                    <else />
+                                                        <a href="#" class="bs-callout-info color_or" onclick="del_click({$vo.id});">
+                                                            <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                                                        </a>
+                                                </if>
+
+                                            </td>
+                                          </tr>
+                                      </foreach>
+
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <!--内容結束-->
+                          <!--分页开始-->
+                          <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                        {$approved_page}
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                </div>
+                <!-- /.tab-content -->
+              </div>
+            </div>
+          </div>
+    </section>
+
+
+<!--移动组织窗口-->
+    <div id="move_org" style="display: none;">
+        <div class="col-xs-12">
+            <div class="box box-primary mt10">
+                <div class="box-header with-border">
+                    <h3 class="box-title">请勾选要移动到的组织架构：</h3>
+                    <!-- /.box-tools -->
+                </div>
+                <div class="box box-solid mt10 sidebar">
+                    <ul class="sidebar-menu">
+                        <li class="treeview active">
+                            <a href="#">
+                                <span>{$treeInfo['name']}</span>
+                              <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                            </a>
+                            <ul class="treeview-menu menu-open" style="display: block;">
+                                <foreach name="treeInfo['_data']" item="items">
+                                    <empty name="items['_data']">
+                                        <li>
+                                            <a href="#"><input type="radio" name="org" value="{$items['id']}" checked=""/>{$items['name']}</a>
+                                        </li>
+                                    </empty>
+                                    <notempty name="items['_data']">
+                                        <li class="active">
+                                            <a href="#"><input type="radio" name="org" value="org" checked="{$items['id']}"/> {$items['name']}
+                                      <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                      </span>
+                                            </a>
+                                            <ul class="treeview-menu menu-open" style="display: block;">
+                                                <foreach name="items['_data']" item="v">
+                                                    <li>
+                                                        <a href="#"><input type="radio" name="org" value="{$v['id']}" checked=""/> {$v['name']}
+                                                        </a>
+                                                    </li>
+                                                </foreach>
+                                            </ul>
+                                        </li>
+                                    </notempty>
+                                </foreach>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--移动组织窗口-->
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+
+<script type="text/javascript">
+  
+  //radio选中样式
+
+  $('input').iCheck({
+      labelHover : false,
+      cursor : true,
+      checkboxClass : 'icheckbox_square-blue',
+      radioClass : 'iradio_minimal-blue',
+      increaseArea : '20%'
+  });
+
+  var $checkboxAll = $(".js-checkbox-all"),
+          $checkbox = $("tbody").find("[type='checkbox']").not("[disabled]"),
+          length = $checkbox.length,
+          i=0;
+
+  $checkboxAll.on("ifClicked",function(event){
+      if(event.target.checked){
+          $checkbox.iCheck('uncheck');
+          i=0;
+      }else{
+          $checkbox.iCheck('check');
+          i=length;
+      }
+  });
+
+  function del_click(id){
+
+      if(id == undefined){
+          var txt = '您确定要删除所有选中的申请吗？';
+
+          var is_refuse = true;
+      }else{
+          var txt = '您确定要删除此申请吗';
+
+          var is_refuse = false;
+      }
+
+      //拒绝
+      layer.confirm(txt, {
+          btn: ['确定删除','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+      }, function(){
+
+          if(id == undefined){
+
+              var str="";
+              var ids="";
+
+              $("#table input").each(function(i){
+
+                  if($(this).is(':checked') == true){
+                      if($(this).val() != 'on'){
+                          str+=$(this).val()+",";
+                      }
+                  }
+
+              });
+
+              if(str.substr(str.length-1)== ','){
+                  ids = str.substr(0,str.length-1);
+              }
+
+          }else{
+
+              ids = id;
+          }
+
+          if(ids != ''){
+
+              $.ajax({
+                  type: "POST",
+                  url: "{:U('AuditUsers/statusUpdate')}",
+                  data: "status=3&ids="+ids,
+                  success: function(results){
+                      if(results.status > 0){
+
+                          layer.msg('删除成功', {time: 1500,icon: 1},function(){
+                              window.location.reload();
+                          });
+
+                      }else{
+                          layer.msg('删除失败');
+
+                      }
+                  }
+              });
+
+          }else{
+
+              layer.msg('请勾选拒绝会员');
+
+          }
+
+      }, function(){
+          layer.msg('取消操作', {
+              time: 1000, //1s后自动关闭
+          });
+      });
+
+  }
+
+  //单个拒绝事件确认弹窗
+  function refuse_click(id){
+
+      if(id == undefined){
+          var txt = '您确定要拒绝所有选中的申请吗？';
+
+          var is_refuse = true;
+      }else{
+          var txt = '您确定要拒绝此申请吗';
+
+          var is_refuse = false;
+      }
+
+    //拒绝
+    layer.confirm(txt, {
+      title: '批量拒绝',
+      btn: ['确定拒绝','取消操作'],
+      shadeClose: true, //开启遮罩关闭
+      skin: 'layui-layer-lan'
+      //按钮
+    }, function(){
+
+        if(is_refuse){
+
+            var str="";
+            var ids="";
+
+            $("#table input").each(function(i){
+
+                if($(this).is(':checked') == true){
+                    if($(this).val() != 'on'){
+                        str+=$(this).val()+",";
+                    }
+                }
+
+            });
+
+            if(str.substr(str.length-1)== ','){
+                ids = str.substr(0,str.length-1);
+            }
+
+        }else{
+
+            ids = id;
+        }
+
+        if(ids != ''){
+
+            $.ajax({
+                type: "POST",
+                url: "{:U('AuditUsers/statusUpdate')}",
+                data: "status=0&ids="+ids,
+                success: function(results){
+                    if(results.status > 0){
+                        layer.msg('拒绝成功', {time: 1500,icon: 1},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg('拒绝失败');
+
+                    }
+                }
+            });
+
+        }else{
+
+            layer.msg('请勾选拒绝会员');
+
+        }
+
+    }, function(){
+      layer.msg('取消操作', {
+        time: 1000, //1s后自动关闭
+      });
+    });
+  }
+
+  //审核
+  function audit_click(id){
+
+      if(id == undefined){
+          var txt = '您确定要通过所有选中的申请吗？';
+
+          var is_audit = true;
+      }else{
+          var txt = '您确定要通过此申请吗';
+
+          var is_audit = false;
+      }
+
+      layer.confirm(txt, {
+          title: '批量审核',
+          btn: ['确定通过','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+      }, function(){
+
+          if(is_audit){
+
+              var str="";
+              var ids="";
+
+              $("#table input").each(function(i){
+
+                  if($(this).is(':checked') == true){
+                      if($(this).val() != 'on'){
+                          str+=$(this).val()+",";
+                      }
+                  }
+
+              });
+
+              if(str.substr(str.length-1)== ','){
+                  ids = str.substr(0,str.length-1);
+              }
+
+          }else{
+
+              ids = id;
+          }
+
+          if(ids != ''){
+              $.ajax({
+                  type: "POST",
+                  url: "{:U('AuditUsers/statusUpdate')}",
+                  data: "status=1&ids="+ids,
+                  success: function(results){
+                      if(results.status > 0){
+                          layer.msg('审核成功',{
+                              icon: 1, //1s后自动关闭
+                              end:function(){
+                                  layer.open({
+                                      title: '请选择部门',
+                                      btn: ['移入','取消'],
+                                      yes:function(index, layero){
+
+                                          var tissue_Id = $(layero).find("input[type='radio']:checked").val();
+
+                                          if(tissue_Id > 0){
+
+                                              $.ajax({
+                                                  type: "POST",
+                                                  url: "{:U('Tissue/moveUser')}",
+                                                  data: {"ids":ids,"tissue_Id":tissue_Id},
+                                                  traditional:true,
+                                                  success: function(msg){
+
+                                                      if(msg.status > 0 ){
+                                                          layer.msg('移入成功', {time: 1500,icon: 1},function(){
+                                                              window.location.reload();
+                                                          });
+                                                      }else{
+
+                                                          layer.msg('移入失败', {
+                                                              time: 1000, //2s后自动关闭
+                                                          });
+                                                      }
+
+                                                  }
+                                              });
+
+                                          }else{
+                                              layer.msg('请选择移动组织');
+                                          }
+
+                                      },
+                                      area:['500px','500px'],
+                                      type: 1,
+                                      skin: 'layui-layer-lan', //样式类名
+                                      closeBtn: 1, //显示关闭按钮
+                                      anim: 2,
+                                      shadeClose: true, //开启遮罩关闭
+                                      content: $("#move_org")
+                                  });
+                              }//1s后自动关闭
+                          });
+                      }else{
+                          layer.msg('审核失败');
+                      }
+                  }
+              });
+          }else{
+              layer.msg('请勾选审核会员');
+          }
+
+      }, function(){
+          layer.msg('取消操作', {
+              time: 1000, //1s后自动关闭
+          });
+      });
+  }
+
+</script>
+</body>
+</html>

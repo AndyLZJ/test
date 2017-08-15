@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>学习目标</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+
+</head>
+<body>
+    <!--<header>
+       <div class="back"></div> 
+       <p>学习目标</p>
+       <div class="right h_calendar"></div>
+    </header>
+    <div class="my_blank"></div>-->
+    <div class="objective objective1">
+        <ul class="tabs">
+            <li id="bixiu" class="on">必修学时</li>
+            <li id="xuanxiu">选修学时</li>
+            <li id="xiudu">课程修读</li>
+        </ul>
+        <div class="ring">
+            <div class="content">
+                <p><span>{$items['data']['total']}</span>/{$items['data']['_total']}</p>
+                <div class="text">必修学时（小时）</div>
+            </div>
+            <input type="hidden" name="token" id="token" value="{$items.token}"/>
+            <input type="hidden" name="secret_key" id="secret_key" value="{$items.secret_key}"/>
+
+        </div>
+        <ol class="course">
+            <if condition="$items['data']['list'] eq null">
+                <li style="text-align: center">暂无数据返回</li>
+                <else />
+            <foreach name="items['data']['list']" item="val">
+                <li>
+                    <div class="name"><span>课程</span>{$val['course_name']}</div>
+                    <p>{$val['course_intro']}</p>
+                    <if condition="$val['_status'] eq 1">
+                        <div class="static static1">即将开始</div>
+                        <elseif condition="$val['_status'] eq 2"/>
+                            <div class="static static2">进行中</div>
+                        <else />
+                        <div class="static static3">已完成</div>
+                    </if>
+                </li>
+            </foreach>
+                </if>
+        </ol>
+    </div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/radialIndicator.min.js"></script>
+<script>
+    $(function(){
+       	$('.ring').radialIndicator({ 
+            displayNumber: false,
+            radius:$(".ring").width()/2-5,
+            barBgColor:"#E6E6E6",
+            barColor:"#32a91f",
+            maxValue:100,
+            initValue:{$items['data']["goalRate"]}
+        });
+        
+        $('#bixiu').click(function(){
+            $(this).attr('class','on');
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/learningTarget?typeId=1&token="+token+"&secret_key="+secret_key;
+        })
+
+        $('#xuanxiu').click(function(){
+            $(this).attr('class','on');
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/learningTarget?typeId=2&token="+token+"&secret_key="+secret_key;
+        })
+
+        $('#xiudu').click(function(){
+            $(this).attr('class','on');
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/learningTarget?typeId=3&token="+token+"&secret_key="+secret_key;
+        })
+
+        $('.h_calendar').click(function(){
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            var url="{:U('HFive/calendar')}";
+            location.href = url+"?token="+token+"&secret_key="+secret_key;
+        })
+    })
+</script>
+</html>

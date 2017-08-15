@@ -1,0 +1,393 @@
+<layout name="layout"/>
+<style type="text/css">
+    .error {
+        color: red;
+    }
+</style>
+<!--内容开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box-header with-border">
+            <h3 class="box-title ">添加课程</h3>
+        </div>
+        <form id="addForm" action="{:U('course/update')}" method="post" class="form-horizontal">
+            <div class="box-body">
+                <!--课程名称字段开始-->
+                <div class="form-group" id="supplier" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">课程名称<span
+                            class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="course_name" value="{$detail.course_name}" class="form-control mr30"
+                               id="course_name" placeholder=""> 
+                        <input type="text" class="form-control" value="{$detail.course_code}" name="course_code"
+                               id="course_code" placeholder="课程编码">
+                        <input type="hidden" class="form-control" value="{$detail.id}" name="id" id=""
+                               >
+                               <label id="course_name-error" class="error" for="course_name"></label>
+                    </div>
+                </div>
+                <!--课程名称字段结束-->
+
+                <!--课程分类字段开始-->
+                <div class="form-group" id="supplier" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">课程分类<span
+                            class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+
+                        <select class="form-control select2 " name="course_cat_id">
+                            <option selected="selected">选择课程分类</option>
+                            <foreach name="category" item="vo">
+                                <eq name="vo.id" value="$detail.course_cat_id">
+                                    <option value="{$vo.id}" selected>{$vo.cat_name}</option>
+                                    <else/>
+                                    <option value="{$vo.id}">{$vo.cat_name}</option>
+                                </eq>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <!--课程分类字段结束-->
+
+
+                <!--授课方式字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">授课方式<span
+                            class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <label>
+                            <div class="radio mr30">
+                                <label>
+ 			                     
+                                    <input type="radio" name="course_way" id="lecturer_inside" value="0" required>在线      
+                                </label>
+                            </div>
+                            <div class="radio mr30">
+                                <label>
+                                    <input type="radio" name="course_way" id="lecturer_exterior" value="1">面授
+                                </label>
+                            </div>
+                        </label>
+                        <div class="radio mr30">
+                          <label id="course_way-error" class="error" for="course_way"></label>
+                          </div>
+                    </div>
+
+                </div>
+                <!--授课方式字段结束-->
+
+                <!--课程时长字段开始-->
+                <div class="form-group" id="supplier" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">时长<span class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="course_time" value="{$detail.course_time}" class="form-control mr10"
+                               id="" placeholder="单位为分">
+                    </div>
+                </div>
+                <!--课程时长字段结束-->
+
+                <!--讲师字段开始-->
+                <div class="form-group" id="supplier" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">讲师：</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control select2 " name="lecturer">
+                            <option selected="selected">选择讲师</option>
+                            <foreach name="lecturer" item="vo">
+                                <option value="{$vo.id}"
+                                <eq name="vo.id" value="$detail.lecturer">selected</eq>
+                                >{$vo.name}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <!--讲师字段结束-->
+
+                <!--课程介绍字段开始-->
+                <div class="form-group" id="supplier" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">课程介绍：</label>
+
+                    <div class="col-sm-4">
+                        <textarea class="form-control width_10" name="course_intro" rows="5" placeholder="请输入课程简介…………">{$detail.course_intro}</textarea>
+                    </div>
+                </div>
+                <!--课程介绍字段结束-->
+                <!--课程目标字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程目标：</label>
+
+                    <div class="col-sm-10">
+                        <!--编辑器开始-->
+                        <textarea id="TextArea1" name="course_aim" cols="20" rows="2" class="ckeditor">{$detail.course_aim}</textarea>
+                        <!--编辑器结束-->
+                    </div>
+                </div>
+                <!--课程目标字段结束-->
+                <!--课程大纲字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程大纲：</label>
+
+                    <div class="col-sm-10">
+                        <!--编辑器开始-->
+                        <textarea id="TextArea1" name="course_summary" cols="20" rows="2" class="ckeditor">{$detail.course_summary}</textarea>
+                        <!--编辑器结束-->
+                    </div>
+                </div>
+                <!--课程大纲字段结束-->
+                <!--默认媒体地址字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">默认媒体地址：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="media_src" value="{$detail.media_src}" class="form-control"
+                               id="" placeholder="">
+                    </div>
+                </div>
+                <!--默认媒体地址字段结束-->
+                <!--课件上传字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课件上传：</label>
+
+                    <div class="col-sm-10">
+                        <button class="btn btn-info btn-flat"><i class="fa fa-folder-open"></i>上传</button>
+                        <span class="ml10">(支持：mp4，avi等视频格式，单个文件在500MB之内)</span>
+                    </div>
+                </div>
+                <!--课件上传字段结束-->
+                <!--制作人字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">制作人：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{$detail.maker}" name="maker" id=""
+                               placeholder="">
+                    </div>
+                </div>
+                <!--制作人字段结束-->
+                <!--章节添加字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">章节：</label>
+
+                    <div class="col-sm-10">
+                        <div class="">
+                            <div class="box-body" id="chapter">
+                            </div>
+                        </div>
+                        <input type="hidden" name="chapter" value="{$detail.chapter}" id="chapterId">
+
+                        <p class="btn btn-info btn-flat" onclick="add_chapter()"><i class="fa fa-folder-open"></i>添加</p>
+
+                        <span class="ml10">(支持：gif、jpg、jpeg、bmp、png格式　建议尺寸：220px*124px)</span>
+                    </div>
+                </div>
+                <!--章节添加字段结束-->
+                <!--课程封面字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程封面：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" value="{$detail.course_cover}" name="course_cover" id="filename">
+                        <input type="file" 　class="btn btn-info btn-flat" 　 id="file" name="file">
+
+                        <div id="image"></div>
+                    </div>
+                </div>
+            </div>
+            <!--课程封面字段结束-->
+
+            <!--学分字段开始-->
+            <div class="form-group" id="address" style="display: none;">
+                <label for="" class="col-sm-2 control-label">学分：</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{$detail.credit}" name="credit" id="" placeholder="">
+                </div>
+            </div>
+            <!--学分字段结束-->
+
+            <!--学分字段开始-->
+            <div class="form-group" id="address" style="display: none;">
+                <label for="" class="col-sm-2 control-label">启用：</label>
+
+                <div class="col-sm-10">
+                    <input type="checkbox" name="auditing"> <span class="ml20 ">打勾表示启用</span>
+                </div>
+            </div>
+            <!--学分字段结束-->
+
+
+    </div>
+    <div class="box-footer">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+
+            <div class="col-sm-10">
+                <button class="btn btn-info form-group_but">保存</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+<!--内容結束-->
+
+<script src="__PUBLIC__/Js/js/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/plugins/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+
+    function del_click() {
+        //删除分组
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan'
+            //按钮
+        }, function () {
+            layer.msg('删除成功', {
+                icon: 1
+            });
+        }, function () {
+            layer.msg('取消删除', {
+                time: 2000, //2s后自动关闭
+            });
+        });
+    }
+
+    function add_chapter() {
+        layer.open({
+            type: 1,
+            title: '添加章节',
+            skin: 'layui-layer-rim', //加上边框
+            content: '<br/>章节名：<input type="text" value="" id="name" 　required>&nbsp<br/><br/>地址&nbsp&nbsp&nbsp&nbsp：<input type="text" id="src" value="">&nbsp',
+            btn: ['确定'],
+            yes: function (index, layero) {
+                var name = $("#name").val();
+                var src = $("#src").val();
+                if (name && src) {
+                var chapterid = $('#chapterId').val();
+                if (chapterid) {
+                    var chapternew = JSON.parse(chapterid);
+                    var len = chapternew.length;
+                    var id = len;
+                    var one = {'name': name, 'src': src};
+                    chapternew[len] = one;
+                    var a = JSON.stringify(chapternew);
+                    $('#chapterId').val(a);
+
+                } else {
+                    var id = 0;
+                    var chapter = new Array();
+                    var one = {'name': name, 'src': src};
+                    chapter[0] = one;
+                    var a = JSON.stringify(chapter);
+                    $('#chapterId').val(a);
+                }
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                '<br>' + '</div>');}else {
+                    alert('章节或地址名称不能为空');
+                }
+                layer.close(index);
+            }
+        });
+    }
+
+    function del_chapter(src) {
+        //$("#div"+src).remove();
+        var chapterid = $('#chapterId').val();
+        var chapternew = JSON.parse(chapterid);
+        chapternew.splice(src, 1);
+        var a = JSON.stringify(chapternew);
+        $('#chapterId').val(a);
+        $("#chapter").html(' ');
+        var chapterid = $('#chapterId').val();
+        if (chapterid) {
+            var chapternew = JSON.parse(chapterid);
+            for (x in chapternew) {
+                var name = chapternew[x].name;
+                var id = x;
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                '<br>' + '</div>');
+            }
+        }
+    }
+    $(document).ready(function () {
+        load();
+        formval()
+    });
+
+    function load() {
+        Upload();
+        var src = $('#filename').val();
+        if (src) {
+            $("#image").html('<img style="width:100px;height:100px" src="__PUBLIC__/' + src + '" class="user-image" alt="User Image">');
+        }
+        var chapterid = $('#chapterId').val();
+        if (chapterid) {
+            var chapternew = JSON.parse(chapterid);
+            for (x in chapternew) {
+                var name = chapternew[x].name;
+                var id = x;
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                '<br>' + '</div>');
+            }
+        }
+    }
+
+    function Upload() {
+        $("#file").uploadify({
+            "height": 30,
+            "swf": "__PUBLIC__/plugins/uploadify/uploadify.swf",
+            "fileObjName": "download",
+            "buttonText": "上传附件",
+            "uploader": "{:U('File/upload')}",
+            "width": 120,
+            'removeTimeout': 1,
+            "onUploadSuccess": function (file, data) {
+                var url = JSON.parse(data);
+                var src = url.src;
+                $('#filename').val(src);
+                $("#image").html('<img style="width:100px;height:100px" src="__PUBLIC__/' + src + '" class="user-image" alt="User Image">');
+            },
+            'onFallback': function () {
+                alert('未检测到兼容版本的Flash.');
+            }
+        });
+    }
+
+    function formval()
+    {
+    	$("#addForm").validate({
+    		rules: {
+    			course_name: 'required',
+    			course_time: 'required',
+    			course_cat_id: 'required',
+    			media_src: {
+    				'required':true,
+    				'url':true
+    			}
+    		},
+    		messages: {
+    			course_name:'课程名字不能为空',
+    			course_cat_id: '课程分类不能为空',
+    			course_way:'课程方式不能为空',
+    			media_src:{
+    				'required': '媒体地址不能为空',
+    				'url':'媒体地址格式不正确'
+    			},
+    			course_time:'授课时长不能为空',
+    			
+
+    		},
+    		errorPlacement: function(error, element) {  
+    			error.appendTo(element.parent());  
+    		}
+
+
+    	});
+    }
+</script>
+</body>
+
+</html>

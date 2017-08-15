@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>个人中心_我的笔记</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+                             个人中心
+      <small>/我的笔记</small>
+    </h1>
+			<ol class="breadcrumb">
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box-header with-border info_box_title">
+				<span>我的笔记</span>
+			</div>
+			<!--  分隔符开始-->
+			<div class="box-header with-border no-padding"></div>
+			<!--  分隔符结束-->
+			<div class="row mt15">
+				<div class="col-sm-12">
+					<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+						<thead>
+							<tr role="row">
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程名称</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">笔记数量</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">笔记内容</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">更新时间</th>
+							</tr>
+						</thead>
+						<tbody id="tab" class="passed_table">
+							<foreach name="noteList" item="value" key="key">
+							<tr role="row" class="odd text-center">
+								<td><a  href="__MODULE__/myCourse/detail/type/3/project_id/{$value.project_id}/course_id/{$value.course_id}">{$value.course_name}</a></td>
+								<td>{$value.note_num}</td>
+								<td><a href="{$value.url}" class="text-blue">{$value.note_content|msubstr=###,0,10,'...'}</a></td>
+								<td>{$value.time}</td>
+							</tr>
+							</foreach>
+							<if condition="$noteList eq null">
+							<tr role="row" class="odd text-center">
+								<td></td>
+								<td style="padding-top:50px; font-size:30px; color:#ccc; ">您当前还没有笔记...</td>
+								<td></td>
+							</tr>
+							</if>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!--内容結束-->
+			<!--分页开始-->
+			<div class="row">
+				<div class="dataTables_paginate float_r mr15">
+					<!-- 分页html -->
+					{$pageNav}
+				</div>
+			</div>
+			<!--分页结束-->
+
+		</section>
+	</body>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/demo.js"></script>
+	<script>
+		$('.note_a').click(function(){
+			var href = $(this).attr('ref');
+			window.location.href = href;
+		});
+	</script>
+</html>

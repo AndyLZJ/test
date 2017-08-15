@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>添加培训项目列表</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="../../../Public/Dist/css/comm.css">
+		<link rel="stylesheet" href="../../../Public/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../../Public/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../../../Public/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="../../../Public/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="../../../Public/Dist/css/comm.css">
+		<link rel="stylesheet" href="../../../Public/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="../../../Public/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="../../../Public/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="../../../Public/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="../../../Public/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="../../../Public/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<link rel="stylesheet" href="../../../Public/plugins/iCheck/all.css">
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="../../../Public/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="../../../Public/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="../../../Public/plugins/select2/select2.min.css">
+<style type="text/css">
+	.normal{           /*显示样式*/
+		display: block;
+	}
+	.edit{              /*隐藏*/
+		display: none;
+	}
+</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        培训项目
+        <small>/新建培训项目列表</small>
+      </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="{$_SERVER['HTTP_REFERER']}"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+						<!--内容开始-->
+						<div class="box-header with-border">
+							<h3 class="box-title "><i class="fa fa-plus text-blue"></i>新建培训项目</h3>
+						</div>
+						<div class="box-header with-border">
+							<label class="box-title col-sm-10"> <i class="fa fa-book text-blue mr5"></i>课程</label>
+							<label class="box-title col-sm-2 "> <span class="pull-right">  <a onclick="add_course();"><i class="fa fa-plus mr5"></i>添加</a></span> </label>
+						</div>
+						<!--添加课程开始-->
+						<div class="box-body">
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<!--内容开始-->
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">授课方式</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">讲师</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学习地址</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考勤</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+												</tr>
+											</thead>
+											<tbody id="tab">
+												
+												<foreach name="projectCourses" item="vo" >
+													<tr role="row" class="odd text-center">
+														<td>
+													<span name="n" class="normal">$vo.course_name</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value="$vo.course_name"/></span>
+														</td>
+														<if condition="$vo['course_way'] eq 0 ">
+															<td>在线课程</td>
+														<else/>
+															<td>张老师</td>
+														</if>
+														<!--开始时间开始-->
+														<td>
+															<span name="n" class="normal">$vo.start_time</span>
+															<span class="edit">
+															<div class="input-group date">
+											<div class="input-group-addon" >
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="datebut" value="" name="start_time" onchange="upperCase()">
+											</div>
+											</span>
+														</td>
+														<!--结束时间开始-->
+											<td>
+												<span name="n" class="normal">$vo.end_time</span>
+												<span class="edit">
+												<div class="input-group date">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="datainps" value="" name="end_time" onchange="upperCase()">
+										</div> </span></td>
+										        
+														<td>
+															<span name="n" class="normal">5</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value=""/></span>
+														</td>
+														<td>
+														<span name="n" class="normal">$vo.location</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value="$vo.location"/></span>
+													</td>
+												
+														<td>
+															<span href="#" class="color_gree ">
+															<input type="checkbox">
+															</span>
+														</td>
+														<td>
+															
+														<span name="n" >
+														<a rel="edit" id="aliclk" onclick="aliclkshow(this)" href="javascript:void(0)"  class="bs-callout-info mr20">
+															<i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+														</a></span>
+														<a style="display: none;" rel="update" href="javascript:void(0)" onclick="aliclkhide(this)" class="bs-callout-info mr20" >
+															<i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													
+														</td>
+													</tr>
+												</foreach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--内容結束-->
+							</div>
+						</div>
+						<!-- 添加课程结束-->
+						<div class="box-header with-border">
+							<label class="box-title col-sm-10"> <i class="fa fa-object-group text-blue mr5"></i>考试</label>
+							<label class="box-title col-sm-2 "> <span class="pull-right">  <a onclick="add_exam();"><i class="fa fa-plus mr5"></i>添加线上考试</a></span> </label>
+						</div>
+						<!--添加考试开始-->
+						<div class="box-body">
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<!--内容开始-->
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试时长</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+												</tr>
+											</thead>
+											<tbody id="tbodys">
+											<foreach name="projectExamination" item="vo">
+												<tr role="row" class="odd text-center">
+													<td>
+													<span name="n" class="normal">$vo.test_name</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value="$vo.course_name"/></span>
+														</td>
+													<if condition="$vo['test_mode'] eq 0">
+													<td>线下</td>
+													<else />
+													</if>
+
+													<td>
+													<select class="form-control select2 width_10" id="course_category" name="test_principal">
+															<option value="0">
+															<a>--选择指定负责人--</a>
+															</option>
+														
+															<option value="">
+															<a></a>
+															</option>
+								
+													
+													</select>
+													</td>
+													
+													<!--开始时间开始-->
+														<td>
+															<span name="n" class="normal">$vo.start_time</span>
+															<span class="edit">
+															<div class="input-group date">
+											<div class="input-group-addon" >
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#test_datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="test_datebut" value="" name="start_time" onchange="upperCase()">
+											</div>
+											</span>
+														</td>
+														<!--结束时间开始-->
+											<td>
+												<span name="n" class="normal">$vo.end_time</span>
+												<span class="edit">
+												<div class="input-group date">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#test_datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="test_datainps" value="" name="end_time" onchange="upperCase()">
+										</div> </span></td>
+													<td>
+															<span name="n" class="normal">5</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value=""/></span>
+														</td>
+													<td> <span id="minutes">自动计算</span></td>
+													<td>
+														<span name="n" >
+														<a rel="edit" id="aliclk" onclick="aliclkshow(this)" href="javascript:void(0)"  class="bs-callout-info mr20">
+															<i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+														</a></span>
+														<a style="display: none;" rel="update" href="javascript:void(0)" onclick="aliclkhide(this,1)" class="bs-callout-info mr20" >
+															<i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+												</foreach>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--内容結束-->
+							</div>
+						</div>
+						<!-- 添加考试结束-->
+						<div class="box-header with-border">
+							<label class="box-title col-sm-10"> <i class="fa fa-bar-chart text-blue mr5"></i>调研</label>
+							<label class="box-title col-sm-2 "> <span class="pull-right">  <a onclick="add_diaoyan();"><i class="fa fa-plus mr5"></i>添加</a></span> </label>
+						</div>
+						<!--添加考试开始-->
+						<div class="box-body">
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<!--内容开始-->
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+												</tr>
+											</thead>
+											<tbody id="tab">
+												<foreach name="projectSurvey" item="vo" >
+												<tr role="row" class="odd text-center">
+													<td>
+														<span name="n" class="normal">$vo.survey_name</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value="$vo.survey_name;;;"/></span>
+													</td>
+													<td>
+													<select class="form-control select2 width_10" id="course_category" name="test_principal">
+															<option value="0">
+															<a>--选择指定负责人--</a>
+															</option>
+														
+															<option value="">
+															<a>张三</a>
+															</option>
+															<option value="">
+															<a>李四</a>
+															</option>
+															<option value="">
+															<a>王麻子</a>
+															</option>
+													
+													</select>
+													</td>
+				
+													<!--开始时间开始-->
+														<td>
+															<span name="n" class="normal">$vo.start_time</span>
+															<span class="edit">
+															<div class="input-group date">
+											<div class="input-group-addon" >
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#survey',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="survey" value="" name="start_time" onchange="upperCase()">
+											</div>
+											</span>
+														</td>
+														<!--结束时间开始-->
+											<td>
+												<span name="n" class="normal">$vo.end_time</span>
+												<span class="edit">
+												<div class="input-group date">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar" onClick="jeDate({dateCell:'#surveys',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+											</div>
+											<input type="text" class="form-control pull-right" id="surveys" value="" name="end_time" onchange="upperCase()">
+										</div> </span></td>
+													<td>
+													<span name="n" class="normal">5</span>
+													   <span name="e" class="edit"><input class="form-control" type="text" value=""/></span>
+													</td>
+													<td>
+														<span name="n" >
+														<a rel="edit" id="aliclk" onclick="aliclkshow(this)" href="javascript:void(0)"  class="bs-callout-info mr20">
+															<i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+														</a></span>
+														<a style="display: none;" rel="update" href="javascript:void(0)" onclick="aliclkhide(this)" class="bs-callout-info mr20" >
+															<i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+												</foreach>
+											
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--内容結束-->
+							</div>
+						</div>
+						<!-- 添加考试结束-->
+						<div class="box-header with-border" style="display: none;">
+							<label class="box-title col-sm-10"> <i class="fa fa-anchor text-blue mr5"></i>指派任务</label>
+							<label class="box-title col-sm-2 "> <span class="pull-right">  <a onclick="add_renwu();"><i class="fa fa-plus mr5"></i>添加</a></span> </label>
+						</div>
+						<!--指派任务开始-->
+						<div class="box-body" style="display: none;>
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<!--内容开始-->
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">任务名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">任务类型</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">任务形式</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">任务状态</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+												</tr>
+											</thead>
+											<tbody id="tab">
+												<tr role="row" class="odd text-center">
+													<td>
+														<a href="">任务名字金融服务礼仪</a>
+													</td>
+													<td> 课程</td>
+													<td> 刘老师</td>
+													<td> 线上</td>
+													<td>2016-11-25 14:20</td>
+													<td>2016-11-28 14:20</td>
+													<td>待提交</td>
+													<td>
+														<a href="#" class="bs-callout-info mr20">
+															<i class="fa fa-folder-open-o  mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="{:U('Admin/Manage/deleteSurvey',array('id'=>$vo['id']))}" class="color_or">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+												<tr role="row" class="odd text-center">
+													<td>
+														<a href="">任务名字金融服务礼仪</a>
+													</td>
+													<td> 课程</td>
+													<td> 刘老师</td>
+													<td> 线上</td>
+													<td>2016-11-25 14:20</td>
+													<td>2016-11-28 14:20</td>
+													<td>待提交</td>
+													<td>
+														<a href="#" class="bs-callout-info mr20">
+															<i class="fa fa-folder-open-o  mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+												<tr role="row" class="odd text-center">
+													<td>
+														<a href="">任务名字金融服务礼仪</a>
+													</td>
+													<td> 课程</td>
+													<td> 刘老师</td>
+													<td> 线上</td>
+													<td>2016-11-25 14:20</td>
+													<td>2016-11-28 14:20</td>
+													<td>待提交</td>
+													<td>
+														<a href="#" class="bs-callout-info mr20">
+															<i class="fa fa-folder-open-o  mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+												<tr role="row" class="odd text-center">
+													<td>
+														<a href="">任务名字金融服务礼仪</a>
+													</td>
+													<td> 课程</td>
+													<td> 刘老师</td>
+													<td> 线上</td>
+													<td>2016-11-25 14:20</td>
+													<td>2016-11-28 14:20</td>
+													<td>待提交</td>
+													<td>
+														<a href="#" class="bs-callout-info mr20">
+															<i class="fa fa-folder-open-o  mr5" aria-hidden="true"></i>保存
+														</a>
+														<a href="#" class="color_or ">
+															<i class="fa  fa-trash " aria-hidden="true"></i>删除
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--内容結束-->
+							</div>
+						</div>
+						<!-- 指派任务结束-->
+						<div class="box-footer">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="col-sm-6 text-center">
+										<button class="btn btn-info form-group_but">提交</button>
+									</div>
+									<div class="col-sm-6 text-center">
+										<button class="btn btn-default form-group_but">存为草稿</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--添加课程窗口-->
+		<div id="add_course" style="display: none;">
+			<div class="box-header with-border">
+				<h3 class="box-title">添加课程</h3>
+			</div>
+			<div class="box-body">
+				
+				<!--筛选栏开始-->
+				<div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<select class="form-control select2 width_10" id="course_way" name="course_way">
+								<option value="3">
+									<a>--授课方式--</a>
+								</option>
+								<option value="1">
+									<a>面授课程</a>
+								</option>
+								<option value="0">在线课程</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<select class="form-control select2 width_10" id="course_category" name="course_category">
+								<option value="0">
+									<a>--课程类别--</a>
+								</option>
+								<foreach name="courseCategory" item="vo">
+								<option value="{$vo.id}">
+									<a>{$vo.cat_name}</a>
+								</option>
+								
+								</foreach>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="input-group ">
+							<input type="text" name="course_name" class="form-control pull-right" placeholder="请输入课程名称" id="course_name">
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default" onclick="commit();" ><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--筛选栏结束-->
+				
+				<div class="col-sm-12">
+					<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+						<thead>
+							<tr role="row">
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程名称</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">授课方式</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">课程类别</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">公开课</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+							</tr>
+						</thead>
+						<tbody id="tabs" >
+							<foreach name="courses" item="vo">
+							<tr role="row" class="odd text-center">
+								<td>
+									<a href="">{$vo.course_name}</a>
+								</td>
+								<if condition="$vo['course_way'] eq 0 ">
+									<td>在线课程</td>
+								<else/>
+									<td>面授课程</td>
+								</if>
+								<td>{$vo.cat_name}</td>
+								<if condition="$vo['is_public'] eq 0 ">
+
+									<td>
+										<span href="#" class="text-red ">
+											<i class="fa  fa-close " aria-hidden="true">
+											</i>
+										</span>
+									</td>
+								<else/>
+									<td>
+										<span href="#" class="text-red ">
+											<i class="fa  fa-check" " aria-hidden="true">
+											</i>
+										</span>
+									</td>
+								</if>
+								<td><input class="course" type="checkbox"  value="{$vo.id}"></td>
+							</tr>
+						</foreach>
+						</tbody>
+					</table>
+				</div>
+				<!--分页开始-->
+				<div class="float_r mr15">
+					<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+						{$courseShow}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--添加课程窗口-->
+		<!--添加考试窗口-->
+		<div id="add_exam" style="display: none;">
+			<div class="box-header with-border">
+				<h3 class="box-title">添加线上考试</h3>
+			</div>
+			<div class="box-body">
+				<!--筛选栏开始-->
+				<div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<select class="form-control select2 width_10" id="test_category">
+								<option value="0">
+									<a>--试卷类别--</a>
+								</option>
+							<foreach name="examinationCategory" item="vo">
+								<option value="{$vo.id}">
+									<a>{$vo.cat_name}</a>
+								</option>
+							</foreach>	
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="input-group ">
+							<input type="text" id="test_name"  name="test_name" class="form-control pull-right" placeholder="请输入试卷名称">
+							<div class="input-group-btn" onclick="testSearch();">
+								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--筛选栏结束-->
+				<div class="col-sm-12">
+					<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+						<thead>
+							<tr role="row">
+
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷名称</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">试卷类别</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+
+							</tr>
+						</thead>
+						<tbody id="examinations">
+							<foreach name="examinations" item="vo">
+								<tr role="row" class="odd text-center">
+									<td>
+										<a href="">{$vo.test_name}</a>
+									</td>
+									<td>{$vo.cat_name}</td>
+									<td><input type="checkbox" class="testchecks" value="{$vo.id}"></td>
+								</tr>
+							</foreach>
+						
+
+						</tbody>
+					</table>
+				</div>
+				<!--分页开始-->
+				<div class="float_r mr15">
+					<div class="dataTables_paginate paging_simple_numbers" id="test">
+						{$examinationsShow}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--添加考试窗口结束-->
+		<!--添加调研窗口-->
+		<div id="add_diaoyan" style="display: none;">
+			<div class="box-header with-border">
+				<h3 class="box-title">添加调研问卷</h3>
+			</div>
+			<div class="box-body">
+				<!--筛选栏开始-->
+				<div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<select class="form-control select2 width_10" id="survey_category">
+								<option value="0">
+									<a>--问卷分类--</a>
+								</option>
+							<foreach name="surveyCategory" item="vo">
+								<option value="{$vo.id}">
+									<a>{$vo.cat_name}</a>
+								</option>
+							</foreach>
+								
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="input-group ">
+							<input type="text" id="survey_name" name="survey_name" class="form-control pull-right" placeholder="请输入问卷名称">
+							<div class="input-group-btn" onclick="surveySearch();">
+								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--筛选栏结束-->
+
+				<div class="col-sm-12 mt10">
+					<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+						<thead>
+							<tr role="row">
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">问卷类别</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+							</tr>
+						</thead>
+						<tbody id="surveysss">
+							<foreach name="surveys" item="vo">
+							<tr role="row" class="odd text-center">
+								<td>
+									<a href="">{$vo.survey_name}</a>
+								</td>
+								<td>
+									{$vo.cat_name}
+								</td>
+								<td>
+								 <input type="checkbox" value="{$vo.id}" class="surveychecks" >
+								</td>
+							</tr>
+							</foreach>
+						</tbody>
+					</table>
+				</div>
+				<!--分页开始-->
+				<div class="float_r mr15">
+					<div class="dataTables_paginate paging_simple_numbers" id="survey">
+						
+							{$surveyShow}
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--添加调研窗口结束-->
+		<!--指派任务窗口-->
+		<div id="add_renwu" style="display: none;">
+			<div class="box-header with-border">
+				<h3 class="box-title">添加任务</h3>
+			</div>
+			<div class="box-body">
+				<div class="col-sm-12 mt10">
+					<form class="form-horizontal">
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-2 control-label">名称<span class="color_red">*</span>：</label>
+
+							<div class="col-sm-6">
+								<input type="text" class="form-control mr30" id="inputEmail3" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">任务类型<span class="color_red">*</span>：</label>
+							<div class="col-sm-6">
+								<select class="form-control select2 ">
+									<option selected="selected">--请选择任务类型--</option>
+									<option>课程</option>
+									<option>试卷</option>
+									<option>问卷</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">任务形式<span class="color_red">*</span>：</label>
+							<div class="col-sm-6">
+								<select class="form-control select2 ">
+									<option selected="selected">--请选择任务形式--</option>
+									<option>线上</option>
+									<option>线下</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-2 control-label">负责人<span class="color_red">*</span>：</label>
+
+							<div class="col-sm-6">
+								<input type="text" class="form-control mr30" id="inputEmail3" placeholder="输入负责人">
+							</div>
+						</div>
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-2 control-label">任务时间<span class="color_red">*</span>：</label>
+
+							<div class="col-sm-4">
+								<div class="input-group date ">
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+									<input type="text" class="form-control pull-right" id="datepicker">
+								</div>
+							</div>
+							<label for="inputEmail3" class="col-sm-1 control-label">至</label>
+							<div class="col-sm-4">
+								<div class="input-group date">
+
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+									<input type="text" class="form-control pull-right" id="datepicker">
+								</div>
+							</div>
+						</div>
+						<div class="form-group" id="supplier">
+							<label for="inputEmail3" class="col-sm-2 control-label">任务简介：</label>
+
+							<div class="col-sm-10">
+								<textarea class="form-control width_10" rows="5" placeholder="请输入课程简介…………"></textarea>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!--指派任务窗口结束-->
+		<script src="../../../Public/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="../../../Public/Js/js/submit.js"></script>
+		<script src="../../../Public/Js/js/js/bootstrap.min.js"></script>
+		<script src="../../../Public/plugins/fastclick/fastclick.js"></script>
+		<script src="../../../Public/Dist/js/app.min.js"></script>
+		<script src="../../../Public/plugins/sparkline/jquery.sparkline.min.js"></script>
+		<script src="../../../Public/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="../../../Public/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<script src="../../../Public/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="../../../Public/plugins/chartjs/Chart.min.js"></script>
+		<script src="../../../Public/Dist/js/pages/dashboard2.js"></script>
+		<script src="../../../Public/plugins/iCheck/icheck.min.js"></script>
+		<script src="../../../Public/plugins/ckeditor/ckeditor.js"></script>
+		<script src="../../../Public/Dist/js/demo.js"></script>
+		<script src="../../../Public/Js/js/date/jedate/jedate.js"></script>
+		
+		<script src="../../../Public/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+		
+			
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			//添加课程
+			function add_course() {
+				layer.open({
+					title: '添加课程',
+					btn: ['确定', '取消'],
+					yes:function(){
+
+						var str="";
+
+						var id="";
+						$(".course").each(function(){
+
+    						if($(this).is(':checked') == true){
+		                        
+		                      	 str+=$(this).val()+",";
+
+                    		}
+
+                    		if(str.substr(str.length-1)== ','){
+                    			
+                    			id = str.substr(0,str.length-1);
+                			}
+
+
+
+       
+						});
+
+						
+
+						if(id==""){
+
+                			layer.alert("请至少勾选一门课程");
+
+                			return;
+                		}
+
+
+
+						var url="__APP__" + '/Admin/Manage/commit?id='+id;
+
+						
+						location.href =url;
+
+
+
+					},
+					area: ['700px', '500px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_course")
+				});
+			}
+			//添加考试
+			function add_exam() {
+				layer.open({
+					title: '添加线上考试',
+					btn: ['确定', '取消'],
+					yes:function(){
+						
+						var str="";
+
+						var id="";
+
+						 $(".testchecks").each(function(){
+
+    						if($(this).is(':checked') == true){
+		                        
+		                      	
+		                      	 str+=$(this).val()+",";
+
+                    		}
+
+                    		if(str.substr(str.length-1)== ','){
+                    			
+                    			id = str.substr(0,str.length-1);
+                			}
+
+
+
+       
+						});
+
+
+
+						if(id==""){
+
+                			layer.alert("请至少勾选一门试卷");
+
+                			return;
+                		}
+
+						var url="__APP__" + '/Admin/Manage/testCommit?id='+id;
+
+						
+						location.href =url;
+
+
+					},
+					area: ['700px', '500px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_exam")
+				});
+			}
+			//添加调研
+			function add_diaoyan() {
+				layer.open({
+					title: '添加调研问卷',
+					btn: ['确定', '取消'],
+								yes:function(){
+						
+						var str="";
+
+						var id="";
+
+						 $(".surveychecks").each(function(){
+
+						 	 
+
+    						if($(this).is(':checked') == true){
+		                        
+		                      	 str+=$(this).val()+",";
+
+                    		}
+
+
+
+                    		if(str.substr(str.length-1)== ','){
+                    			
+                    			id = str.substr(0,str.length-1);
+                			}
+
+
+
+       
+						});
+
+
+
+						if(id==""){
+
+                			layer.alert("请至少勾选一门问卷");
+
+                			return;
+                		}
+
+						var url="__APP__" + '/Admin/Manage/surveyCommit?id='+id;
+
+						
+						location.href =url;
+
+
+					},
+					area: ['700px', '520px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_diaoyan")
+				});
+			}
+			//添加任务
+			function add_renwu() {
+				layer.open({
+					title: '添加任务',
+					btn: ['确定', '取消'],
+					area: ['700px', '540px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_renwu")
+				});
+			}
+
+		function commit(){
+
+			 var url="{:U('Admin/Manage/search',array())}";
+
+			 var course_way=document.getElementById('course_way').value;
+
+			 var course_category=document.getElementById('course_category').value;
+
+			 var course_name=document.getElementById('course_name').value;
+
+			 var type=1;
+
+			 var data={'course_way':course_way,'course_category':course_category,'course_name':course_name,'type':type};
+
+
+			 ajax(data,url);
+			
+		}
+
+		function ajax(data,url){
+
+			    $.ajax({
+
+	                type: 'post',
+
+	                data:data,
+
+	                url:url,
+
+	                dataType:'json',
+
+	                success: function(data, textStatus){
+
+	                	var datas=eval(data.data.list);
+
+						var html=document.getElementById('tabs');
+
+	                	var courseShow=document.getElementById('example1_paginate');
+
+	                	var string="";
+
+						for(var i=0;i<datas.length;i++){
+							
+							string+="<tr role='row' class='odd text-center'><td><a href=''>"+datas[i]['course_name']+"</a></td>";
+
+							if(datas[i]['course_way']==1){
+
+								string+="<td>面授课程</td><td>"+datas[i]['cat_name']+"</td>";
+
+							}else{
+
+								string+="</td><td>在线课程</td><td>"+datas[i]['cat_name']+"</td>";
+
+							}
+
+							if(datas[i]['is_public']==0){
+
+								string+="<td><span href='#' class='text-red'><i class='fa fa-close' aria-hidden='true'></i></span></td><td><input class='course' type='checkbox' value='"+datas[i]['id']+"'></td></tr>";
+
+							}else{
+
+								string+="<td><span href='#' class='text-red'><i class='fa fa-check' aria-hidden='true'></i></span></td><td><input class='course' type='checkbox'value='"+datas[i]['id']+"''></td></tr>";
+							}
+
+							
+						}
+
+						
+
+						 
+						//alert(string);
+						html.innerHTML=string;
+
+						courseShow.innerHTML=data.data.show;
+					}
+                });
+		}
+
+		function curriculum(id){
+					
+					var id = id;
+
+					var course_way=document.getElementById('course_way').value;
+
+			 		var course_category=document.getElementById('course_category').value;
+
+			 		var course_name=$("input[name='course_name']").val().trim();
+
+			 		var type=1;
+
+			 		var datas={'p':id,'course_way':course_way,'course_category':course_category,'course_name':course_name,'type':type};
+                    
+                    $.get('search',datas,function(data){
+
+                    	var datas=eval(data.data.list);
+
+                    	var html=document.getElementById('tabs');
+
+                    	var courseShow=document.getElementById('example1_paginate');
+
+	                	var string="";
+
+	                	for(var i=0;i<datas.length;i++){
+							
+							string+="<tr role='row' class='odd text-center'><td><a href=''>"+datas[i]['course_name']+"</a></td>";
+
+							if(datas[i]['course_way']==1){
+
+								string+="<td>面授课程</td><td>"+datas[i]['cat_name']+"</td>";
+
+							}else{
+
+								string+="</td><td>在线课程</td><td>"+datas[i]['cat_name']+"</td>";
+
+							}
+
+							if(datas[i]['is_public']==0){
+
+								string+="<td><span href='#' class='text-red'><i class='fa fa-close' aria-hidden='true'></i></span></td><td><input class='course' type='checkbox' value='"+datas[i]['id']+"'></td></tr>";
+
+							}else{
+
+								string+="<td><span href='#' class='text-red'><i class='fa fa-check' aria-hidden='true'></i></span></td><td><input class='course' type='checkbox'value='"+datas[i]['id']+"''></td></tr>";
+							}
+
+							
+						}
+
+						 
+						
+						html.innerHTML=string;
+
+						courseShow.innerHTML=data.data.show;
+
+                    	
+
+                });
+        }
+        function  testSearch(){
+
+        	 var url="{:U('Admin/Manage/search',array())}";
+
+
+
+        	 testsSearch(url);
+        }
+
+        function test(id){
+
+        	var id=id;
+
+			var url="{:U('Admin/Manage/search',array())}";
+			 
+			 var test_category=document.getElementById('test_category').value;
+
+			 var test_name=document.getElementById('test_name').value;
+
+			 var type=2;
+
+			 var data={"p":id,'test_category':test_category,'test_name':test_name,'type':type};
+
+			$.ajax({
+
+	                type: 'post',
+
+	                data:data,
+
+	                url:url,
+
+	                dataType:'json',
+
+	                success: function(data, textStatus){
+
+						var datas=eval(data.data.list);
+
+						var html=document.getElementById('examinations');
+
+	                	var examinationShow=document.getElementById('test');
+
+	                	var string="";
+
+
+
+	                	for(var i=0;i<datas.length;i++){
+
+	                		string+="<tr role='row' class='odd text-center'><td><a href=''>"+datas[i]["test_name"]+"</a></td><td>"+datas[i]["cat_name"]+"</td><td><input class='testchecks' type='checkbox' value='"+datas[i]['id']+"'></td></tr>";
+	                	}
+
+
+
+	                	html.innerHTML=string;
+
+	                	examinationShow.innerHTML=data.data.show;
+	                }
+    		});
+			
+        }
+
+        function surveySearch(){
+
+        	var url="{:U('Admin/Manage/search',array())}";
+
+        	surveysSearch(url);
+        }
+
+       function survey(id){
+
+       		var url="{:U('Admin/Manage/search',array())}";
+
+
+
+       		surveys(url,id);
+
+       }
+
+
+            
+
+	
+	</script>
+	<script type="text/javascript">
+		  	jeDate({
+				dateCell:"#indate",
+				format:"YYYY-MM",
+				isTime:false,
+				minDate:"2015-10-19 00:00:00",
+				maxDate:"2016-11-8 00:00:00"
+			})
+
+		    jeDate({
+				dateCell:"#dateinfo",
+				format:"YYYY年MM月DD日 hh:mm:ss",
+				isinitVal:true,
+				isTime:true,
+				minDate:"2014-09-19 00:00:00",
+				okfun:function(val){alert(val)}
+			})
+	</script>
+
+	<script>
+
+		function courseSave(object){
+
+			var id=object.id;
+
+			if(id="edit"){
+
+				object.innerHTML="<a href='#' class='bs-callout-info mr20'><i class='fa fa-cloud-download mr5' aria-hidden='true' id='save' onclick='courseSave(this);'></i>保存</a>";
+			}
+
+			var location=object.parentNode.previousSibling.previousSibling;
+
+			console.log(location);
+
+			
+
+		}
+
+//编辑保存切换效果
+function aliclkshow(obj)//编辑
+			{
+				 $(obj).parent().parent().parent().find(".edit").show();//
+				 $(obj).parent().parent().parent().find(".normal").hide(); 
+				 
+				 $(obj).parent().parent().parent().find("a[rel='update']").show();
+				 $(obj).hide();
+				  
+			}
+			function aliclkhide(obj,type)//保存
+			{
+				var tr = $(obj).parent().parent().parent();
+				if(type!=1){
+				 $(tr).find(".edit").hide();
+
+				$(tr).find("td").each(function(){
+					var val =$(this).find(".edit").find("input").val();
+					$(this).find(".normal").text(val);
+				}); 
+
+				 $(tr).find(".normal").show();		
+				 
+				 
+				 $(tr).find("a[rel='edit']").show();
+				 $(obj).hide();
+				}else{ 
+				 var timeks =	$(tr).find("#test_datebut").val()
+				 var timejs =	$(tr).find("#test_datainps").val()
+				 if(timeks!="" && timejs!=""){
+				 	var date1=new Date(timeks);    //开始时间
+				 	var date2=new Date(timejs);    //结束时间
+				 	var date3=date2.getTime()-date1.getTime()  //时间差的毫秒数
+				 	 
+				 	if(date3>0){ 
+				 	var minutes=date3/1000/60   //计算相差分钟数 
+					$(tr).find("#minutes").text(parseInt(minutes));
+				 	}
+				 	else{
+				 		alert("开始时间不能大于结束时间");return;
+				 	}
+				 }
+				 else{
+				 	alert("开始与结束时间不能为空");return;
+				 }
+				 
+				  $(tr).find(".edit").hide();
+
+				$(tr).find("td").each(function(){
+					var val =$(this).find(".edit").find("input").val();
+					$(this).find(".normal").text(val);
+				}); 
+
+				 $(tr).find(".normal").show();		
+				  
+				 $(tr).find("a[rel='edit']").show();
+				 $(obj).hide();
+				 }
+			}
+
+	</script>
+
+	</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+	<meta name="author" content="RYD"/>
+	<title>时间控件用例</title>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jquery-timepicker/jquery-ui-timepicker-addon.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/jquery-timepicker/jquery-ui-sliderAccess.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jquery-timepicker/jquery-ui-timepicker-addon.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jquery-timepicker/jquery-ui.min.css" />
+	<style type="text/css">
+		#tabs, #ui-datepicker-div, .ui-datepicker{ font-size:85%; }
+		input[type='text']{width:200px; height:25px; font-size:16px; }
+	</style>
+</head>
+<body>
+	
+	<input type="text" id="time"/>
+	
+	<input type="text" id="time2"/>
+	
+	<input type="text" id="time3"/>
+	
+	<script type="text/javascript">
+		$(function(){
+			//年月日 时分秒
+			$('#time').datetimepicker({});
+			
+			//时分秒
+			$('#time2').timepicker({});
+			
+			//年月日
+			$('#time3').datetimepicker({
+				timeFormat: '',
+				separator: '',
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>组织管理-用户导入</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<style>
+#dataCon{overflow-x:auto;}
+#example1{width:2500px; }
+</style>
+</head>
+<body>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+			用户管理 <small>/导入结果</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="{:U('Admin/tissue/index')}" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div class="box">
+			<div class="box-body">
+				<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+					<!--筛选栏开始-->
+					<div class="row mb10">
+						<div class="col-sm-6">
+							<div class="mt10">
+								当前共导入 <span class="text-red font_bold">{$totalNum}</span> 条数据，其中有效数据 <span class="text-success font_bold">{$successNum}</span>条
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div id="example1_filter" class="dataTables_filter">
+								<button type="button" class="btn btn-default  ml10 float_r cancelImport">
+									<i class="fa fa-mail-reply-all  mr5 " aria-hidden="true "></i>取消导入
+								</button>
+								<button type="button" class="btn btn-info  ml10 float_r saveValid">
+									<i class="fa  fa-qrcode mr5 " aria-hidden="true "></i>保存有效结果
+								</button>
+								<button type="button" class="btn btn-warning float_r ml10 rmSelect" onclick="result_out();">
+									<i class="fa fa-close mr5 "></i>移除所选
+								</button>
+							</div>
+						</div>
+					</div>
+					<!--筛选栏结束-->
+					<!--内容开始-->
+					<div class="row">
+						<div class="" id="dataCon">
+							<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+								<thead>
+									<tr role="row">
+										<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45"><label style="margin-bottom: 0px;"> <input type="checkbox" class="audit_allcheck"></label></th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+										<select class="form-control select2 width_10 dataType">
+											<option value="0" <if condition="$type eq 0"> selected="selected" </if>>所有状态</option>
+											<option value="10" <if condition="$type eq 10"> selected="selected" </if> >有效</option>
+											<option value="1" <if condition="$type eq 1"> selected="selected" </if> >数据不完整</option>
+											<option value="2" <if condition="$type eq 2"> selected="selected" </if> >系统已存在</option>
+											<option value="3" <if condition="$type eq 3"> selected="selected" </if> >文件中重复</option>
+											<option value="4" <if condition="$type eq 4"> selected="selected" </if> >手机号有误</option>
+											<option value="5" <if condition="$type eq 5"> selected="selected" </if> >邮箱有误</option>
+										</select></th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">账号</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">分公司</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">部门</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">岗位</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">手机</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">区域</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">室</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">性别</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">生日</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序列</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">职级</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">用户组级别</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学历</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">入集团时间</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">入中心时间</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">办公电话</th>
+										<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">IP电话</th>
+									</tr>
+								</thead>
+								<tbody id="tab" class="audit_table userList">
+									<foreach name="list" item="data">
+									<tr role="row" class="odd text-center">
+										<td><input type="checkbox" value="{$data.id}"></td>
+										<td><a href="#" class="bs-callout-info mr20 text-success add_employees"><i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+											<input type="hidden" class="id" value="{$data.id}"/></a>
+											<a href="#" class="del_single bs-callout-info text-danger"><i class="fa fa-trash-o mr5" aria-hidden="true"></i>移除
+											<input type="hidden" class="user_id" value="{$data.id}"/></a>
+										</td>
+										<td>
+										<if condition="$data.status eq 1">
+										<span class="">
+										有效
+										<else/>
+										<span class="text-red">
+											<if condition="$data.error_type eq 1">数据不完善</if>
+											<if condition="$data.error_type eq 2">系统中已存在</if>
+											<if condition="$data.error_type eq 3">文件中重复</if>
+											<if condition="$data.error_type eq 4">手机号格式有误</if>
+											<if condition="$data.error_type eq 5">邮箱格式有误</if>
+											<if condition="$data.error_type eq 6">导入异常</if>
+										</if>
+										</span></td>
+										<td>{$data.email}</td>
+										<td>{$data.name}</td>
+										<td>{$data.company}</td>
+										<td>{$data.part}</td>
+										<td>{$data.job_name}</td>
+										<td>{$data.phone}</td>
+										<td>{$data.area}</td>
+										<td>{$data.room}</td>
+										<td>
+										<if condition="$data.sex eq 1">男</if>
+										<if condition="$data.sex eq 2">女</if>
+										</td>
+										<td>{$data.birthday}</td>
+										<td>{$data.sequence}</td>
+										<td>{$data.job_level}</td>
+										<td>{$data.user_level}</td>
+										<td>
+										<if condition="$data.edu eq 1">博士研究生</if>
+										<if condition="$data.edu eq 2">硕士研究生</if>
+										<if condition="$data.edu eq 3">本科</if>
+										<if condition="$data.edu eq 4">专科</if>
+										<if condition="$data.edu eq 5">专科以下</if>
+										</td>
+										<td>{$data.group_time}</td>
+										<td>{$data.center_time}</td>
+										<td>{$data.office_phone}</td>
+										<td>{$data.ip_phone}</td>
+									</tr>
+									</foreach>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+
+					<!--内容結束-->
+					<!--分页开始-->
+					<div class="row">
+						<div class="float_r mr15">
+							<div class="dataTables_paginate paging_simple_numbers">
+								{$pageNav}
+							</div>
+						</div>
+					</div>
+					<!--分页结束-->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!--编辑员工窗口-->
+	<div id="add_employees" style="display: none;">
+		
+
+			<div class="box-body">
+				<div class="form-group ">
+					<label class="col-sm-3 control-label ">账号：</label>
+					<div class="col-sm-9">
+						<input type="text" name="phone" class="form-control phone" placeholder="请输入员工手机号" />
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label ">姓名：</label>
+					<div class="col-sm-9">
+						<input type="text" name="name" class="form-control name" placeholder="请输入姓名" />
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label ">电子邮件：</label>
+					<div class="col-sm-9">
+						<input type="email" name="email" class="form-control email" placeholder="请输入电子邮件" />
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label ">分公司：</label>
+					<div class="col-sm-9">
+						<select class="companySel" style="width:275px; float:left; height:34px; border:1px solid #ccc; ">
+							<option value="">--选择分公司--</option>
+							<foreach name="company_list" item="thisData">
+								<option value="{$thisData.id}">{$thisData.name}</option>
+							</foreach>
+						</select>
+						<input type="text" name="company" class="form-control company" placeholder="请填写分公司" style="margin-top:-34px; width:250px; float:left; "/>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label ">部门：</label>
+					<div class="col-sm-9">
+						<select class="partSel" style="width:275px; float:left; height:34px; border:1px solid #ccc; ">
+							<option value="">--选择部门--</option>
+						</select>
+						<input type="text" name="part" class="form-control part" placeholder="请填写部门" style="margin-top:-34px; width:250px; float:left;"/>
+					</div>
+				</div>
+				<div style="display:none;">
+					<input type="submit" value="提交" >
+					<input type="reset" class="fromReset" value="重置表单">
+				</div>
+			</div>
+		</form>
+	</div>
+	<!--添加员工窗口-->
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script src="__PUBLIC__/Dist/js/demo.js"></script>
+
+	<script type="text/javascript">
+		//radio选中样式
+		$('input').iCheck({
+			labelHover: false,
+			cursor: true,
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'icheckbox_minimal-blue',
+			increaseArea: '20%'
+		});
+	
+		var $checkboxAllb = $(".audit_allcheck"),
+		$checkboxb = $(".audit_table").find("[type='checkbox']").not("[disabled]"),
+		length = $checkboxb.length,
+		i = 0;
+	
+		$checkboxAllb.on("ifClicked", function(event) {
+			if(event.target.checked) {
+				$checkboxb.iCheck('uncheck');
+				i = 0;
+			} else {
+				$checkboxb.iCheck('check');
+				i = length;
+			}
+		});
+		
+		//移除单个
+		$(".del_single").click(function(){
+			var _this = $(this);
+			var id = _this.find(".user_id").val();
+			layer.confirm('确定移除当前用户？', {
+				btn: ['确定', '取消'],
+				skin: 'layui-layer-lan'
+			}, function(){
+				var loading = layer.load(0);
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/delUser",
+					data:"ids="+id,
+					dataType: "json",
+					success: function(data){
+						layer.close(loading);
+						if(data.code == 1000){
+							layer.msg('用户移除成功', {
+								time: 800
+							}, function(){
+								_this.closest("tr").remove();
+							});
+						}else{
+							layer.msg(data.message, {
+								time: 1500,
+								icon: 1
+							});
+						}
+					}
+				});
+			});
+		});
+		
+		//移除所选
+		function result_out() {
+			var ids = "";
+			$(".userList input[type='checkbox']").each(function(){
+				var isCheck = $(this).is(':checked');
+				if(isCheck){
+					var id = $(this).val();
+					ids += id+",";
+				}
+			});
+			
+			if(ids == ""){
+				layer.alert("请选择用户");
+				return false;
+			}
+			
+			layer.confirm('确定移除所选择的结果？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+				}, function(){
+					var loading = layer.load(0);
+					$.ajax({
+						type: "post",
+						url: "__CONTROLLER__/delUser",
+						data:"ids="+ids,
+						dataType: "json",
+						success: function(data){
+							layer.close(loading);
+							if(data.code == 1000){
+								window.location.href = "{:U('Admin/user_import/importPage')}";
+							}else{
+								layer.msg(data.message, {
+									time: 1500,
+									icon: 1
+								});
+							}
+						}
+					});
+				}
+			);
+		}
+		
+		$(".companySel").change(function(){
+			var tid = $(this).val();
+			if(!tid || tid == ""){
+				return false;
+			}
+			
+			var option = $(this).find("option:selected").text();
+			$(this).siblings(".company").val(option);
+			$.ajax({
+				type: "get",
+				url: "__CONTROLLER__/getPart?tid="+tid+"&random="+Math.random(),
+				dataType: "json",
+				success: function(data){
+					if(data.code == 1000){
+						var ophtml = '<option value="">选择部门</option>';
+						for(var i=0; i<data.part_list.length; i++){
+							var thisData = data.part_list[i];
+							ophtml += '<option value="'+thisData.name+'">'+thisData.name+'</option>';
+						}
+						$(".partSel").html(ophtml);
+					}
+				}
+			});
+		});
+		
+		$(".partSel").change(function(){
+			var option = $(this).val();
+			$(this).siblings(".part").val(option);
+		});
+		
+		//编辑员工
+		$(".add_employees").click(function(){
+			var id = $(this).find(".id").val();
+			layer.open({
+				title: '编辑员工',
+				btn: ['确定', '取消'],
+				area: ['800px', '500px'],
+				offset: ['20px'],
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				//type: 1,
+				//content: $("#add_employees"),
+				type: 2,
+				content: "__CONTROLLER__/editPage?id="+id,
+				yes: function(index, layero) {
+					var saveLoad = layer.load(0);
+					var layerBody = layer.getChildFrame('body', index);
+					var formData = $(layerBody).find("#edit_form").serialize();
+					$.ajax({
+						type:"post",
+						url:"__CONTROLLER__/editData",
+						data:formData,
+						dataType:"json",
+						success:function(data){
+							layer.close(saveLoad);
+							if(data.code == 1000){
+								layer.closeAll();
+								layer.msg('修改成功', {
+									time: 1000
+								}, function(){
+									window.location.href = "{:U('Admin/user_import/importPage')}";
+								});
+							}else{
+								layer.msg(data.message, {
+									time: 2000
+								});
+							}
+						}
+					});//ajax end
+					return false;
+				}
+			});
+		});
+		
+		//保存有效数据
+		$(".saveValid").click(function(){
+			layer.confirm('确定保存有效数据？', {
+				btn: ['确定', '取消'],
+				skin: 'layui-layer-lan'
+			}, function(){
+				var saveLoad = layer.load(0);
+				$(".cancelImport").attr("disabled",true); 
+				$.ajax({
+					type: "get",
+					url: "__CONTROLLER__/saveValid?random="+Math.random(),
+					dataType: "json",
+					success: function(data){
+						layer.close(saveLoad);
+						if(data.code == 1000){
+							layer.msg('有效用户保存完毕', {
+								time: 800
+							}, function(){
+								window.location.href = window.location.href;
+							});
+						}else{
+							layer.msg(data.message, {
+								time: 1500,
+								icon: 1
+							});
+						}
+					}
+				});
+			}
+		);
+		});
+		
+		//取消导入
+		$(".cancelImport").click(function(){
+			layer.confirm('确定取消导入？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+				}, function() {
+					$.ajax({
+						type: "get",
+						url: "__CONTROLLER__/cancelImport?random="+Math.random(),
+						dataType: "json",
+						success: function(data){
+							if(data.code == 1000){
+								layer.msg('取消导入成功', {
+									time: 1500
+								}, function(){
+									window.location.href = "__CONTROLLER__/importpage";
+								});
+							}else{
+								layer.msg(data.message, {
+									time: 1500,
+									icon: 1
+								});
+							}
+						}
+					});
+				}
+			);
+		});
+		
+		//状态切换
+		$(".dataType").change(function(){
+			var type = $(this).val();
+			window.location.href = "__CONTROLLER__/importpage?type="+type;
+		});
+</script>
+</body>
+</html>

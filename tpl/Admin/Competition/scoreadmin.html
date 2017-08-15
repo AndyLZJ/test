@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>成绩管理</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<style type="text/css">
+			.tiku_map {
+				border-radius: 5px;
+				width: 100%;
+				color: white;
+				padding-top: 30px;
+				float: left;
+				margin-right: 15px;
+			}
+			
+			.tiku_number {
+				font-size: 1.6em;
+				margin-bottom: 30px;
+			}
+			
+			.tiku_check {
+				margin-top: -5px;
+				height: 40px;
+				line-height: 42px;
+				color: #6b6262;
+				font-weight: 600;
+				border-left: 1px solid #00c0ef;
+				border-right: 1px solid #00c0ef;
+				border-bottom: 1px solid #00c0ef;
+				text-indent: 3px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+			技能竞赛
+			<small>/成绩管理</small>
+		</h1>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div>
+				<div class="tab-content">
+					<div class="dataTables_wrapper form-inline dt-bootstrap">
+						<div class="row mt10" >
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4">
+								
+							<a href="{$bank_url}" target="_blank">
+								<div class="col-sm-12 mt30">
+									<div class="tiku_map bg-aqua text-center col-sm-12">
+										<div class="tiku_number">
+											<i class="fa fa-bank mr5 fa-2x" aria-hidden="true"></i>
+											银行综合技能成绩查看
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="{$insurance_url}" target="_blank">
+								<div class="col-sm-12 mt30">
+									<div class="tiku_map bg-green text-center col-sm-12">
+										<div class="tiku_number">
+											<i class="fa fa-shield mr5 fa-2x" aria-hidden="true"></i>保险综合技能成绩查看
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="{$security_url}" target="_blank">
+								<div class="col-sm-12 mt30">
+									<div class="tiku_map bg-yellow text-center col-sm-12">
+										<div class="tiku_number">
+											<i class="fa fa-language mr20 fa-2x" aria-hidden="true"></i>证券综合技能成绩查看
+										</div>
+									</div>
+								</div>
+							</a>	
+								
+							</div>
+							<div class="col-sm-4"></div>
+							
+							
+							
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+	</body>
+
+</html>

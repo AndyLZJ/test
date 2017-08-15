@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>积分中心</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		 <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+	     <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+         <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+         <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		 <link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/Huploadify.css"/>
+	</head>
+	<style>
+     .uploadify-button{
+			text-align: center;
+			line-height: 30px;
+			width: 86px;
+			height: 30px;
+			display: block;
+			background-color: #333;
+			color: #FFFFFF!important;
+		}
+
+		.uploadify-button:hover {
+			color: #FFFFFF!important;
+			background-color: #262626;
+			border-color: #204d74;
+		}
+
+
+	</style>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        积分中心
+        <small>/申请加分</small>
+     </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+		  <div>
+		    <div class="dataTables_wrapper form-inline dt-bootstrap ">
+				<div class="nav-tabs-custom">
+					<ul id="myTab" class="nav nav-tabs">
+						<li>
+							<a href="#awarded" name="tab1" data-toggle="">申请加分</a>
+						</li>
+						<li>
+							<a href="#record" name="tab2" data-toggle="">申请记录</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane " id="awarded">
+							<div class="box-body">
+							   <form action="{:U('Admin/Integration/myintegrationApply')}" method="post" class="form-horizontal">
+							   <div class="form-group" style="display: none;">
+	                                <label for="inputEmail3" class="col-sm-2 control-label">
+	                                    <span class="color_red">*</span>
+                                        申请标题：
+	                                </label>
+	                                <div class="col-sm-10">
+	                                  <input type="text" name="apply_title" class="form-control" placeholder="请输入标题名称" style="width: 500px;">
+	                                </div>
+	                              </div>
+	                               <div class="form-group">
+		                               <label for="inputEmail3" class="col-sm-2 control-label">
+		                                  <span class="color_red">*</span>申请说明：
+		                               </label>
+
+		                               <div class="col-sm-10">
+		                                   <!--编辑器开始-->
+		                                   <textarea id="TextArea1" name="apply_description" cols="20" rows="2" class="ckeditor"></textarea>
+		                                   <!--编辑器结束-->
+		                               </div>
+	                               </div>
+	                          
+								          	 <!--图片上传字段开始-->
+							                  	<div class="form-group">
+							                  		<label for="inputEmail3" class="col-sm-2 control-label">上传附件：</label>
+							                  		<div class="col-sm-10">
+							                  			<assign name="attachment" value="$data.attachment" />
+							                  			<div class="box box-success certificate_img"  <empty name="data.attachment">style="display:none"</empty>>
+							                  				<div class="box-tools pull-right">
+							                  					<button type="button" onclick="a()" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							                  				</div>
+							                  				<div class="box-body" id="Preview">
+							                  					<img id="image" src="{$data.attachment}" alt="课件预览" width="100%">
+							                  				</div>
+							                  			</div>
+							                  			<input type="hidden" name="attachment" value="{$data.attachment}" id="filename"/>
+							                  			<!--<input type="file" class="btn btn-primary" id="file" name="file"><i class="fa fa-folder-open"></i>上传文件</input>-->
+							                  			<div id="file" name="file"></div>
+														  <span class="ml10">(支持：word、jpg、jpeg、png文件格式　单个文件在2MB之内)</span>
+							                  		</div>
+							                  	</div>
+							                  	<!--图片上传字段结束-->
+	                               <div class="form-group" id="age" style="display: none;">
+		                               <label for="inputEmail3" class="col-sm-2 control-label">
+		                                  <span class="color_red">*</span>加分分值：
+		                               </label>
+
+		                               <div class="col-sm-10">
+		                                  <!--<input type="email" name="add_score" class="form-control mr5" placeholder="">分-->
+										  <input type="text" name="add_score" class="form-control mr5" placeholder="">分
+		                               </div>
+		                           </div>
+                              
+							
+							<div class="box-footer">
+                              <div class="form-group">
+                                <label  class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                  <button  class="btn btn-info form-group_but" style="margin-left: -10px;">申请</button>
+                                </div>
+                              </div>
+                            </div>
+							</div>
+							 </form>
+						</div>
+						<div class="tab-pane " id="record">
+							<!--课程审核开始-->
+							<div class="box-body">
+								<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+									<!--内容开始-->
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+												<thead>
+													<tr role="row">
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">申请时间</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">加分</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">审核状态</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">说明</th>
+													</tr>
+												</thead>
+												<tbody id="tab">
+													<foreach name="list2" item="v">
+													<tr role="row" class="odd text-center">
+														<td>{:date('Y-m-d H:i:s',$v['add_time'])}</td>
+														<td>{$v.add_score}</td>
+														<td>
+                                                          <switch name="v.status">
+                                                          <case value="0">待审核</case>
+                                                          <case value="1">已通过</case>
+                                                          <case value="2">已拒绝</case>
+                                                         </switch>
+														</td>
+														<td>{$v.apply_description}</td>
+													</tr>
+													</foreach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--内容結束-->
+									<!--分页开始-->
+									<div class="row">
+										<div class="float_r mr15">
+											<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+												<ul class="pagination">
+												{$page2}
+												</ul>
+											</div>
+										</div>
+									</div>
+									<!--分页结束-->
+								</div>
+							</div>
+							<!--课程审核結束-->
+						</div>
+					</div>
+				</div>
+		    </div>
+		  </div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		
+		<script  src="__PUBLIC__/uploadify/jquery.Huploadify.js"></script>
+		<script type="text/javascript">
+         $('#myTab a').click(function (e) {
+          e.preventDefault(); //阻止绑定事件的默认行为
+    	      var flag = $(e.target).attr("name");       // e.target表示被点击的目标
+    		  if(flag == 'tab1'){
+                location.href = "{:U('Admin/Integration/myintegrationApply',array('tabType'=>1))}";
+    		  }else if(flag == 'tab2'){
+                location.href = "{:U('Admin/Integration/myintegrationApplyhistory',array('tabType'=>2))}";
+    		  }
+            });
+
+            //传参定位tab
+            var i = "{:I('tabType')}";  //参数tabType是定位tab位置
+            var tabType = i ? "{:I('tabType')}" : '';
+
+               if(tabType == 1 || tabType == ''){  
+                  $('#myTab li:eq(0) a').tab('show'); //定位到第一个tab标签
+               }else if(tabType == 2){
+                  $('#myTab li:eq(1) a').tab('show'); //定位到第二个tab标签
+               }
+
+		   
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+            // $("#file").uploadify({
+			// 	"height": 30,
+			// 	"swf": "__PUBLIC__/plugins/uploadify/uploadify.swf",
+			// 	"fileObjName": "download",
+			// 	"buttonText": "上传附件",
+			// 	"uploader": "{:U('File/upload')}",
+			// 	"width": 120,
+			// 	'removeTimeout': 1,
+			// 	'fileTypeExts': "*.doc;*.docx;*.jpg;*.png",    //上传类型 
+			// 	'definedData.fileSizeLimit' : "2MB",  //上传大小  
+			// 	"onUploadSuccess": function (file, data) {
+			// 		// alert(file.type); 
+			// 		if(file.type == '.docx' ||　file.type == '.doc'){
+						
+            //             var url = JSON.parse(data);
+			// 			var src = url.src;
+			// 			var img_src = '__UPLOAD__/'+src; 
+			// 			$('#filename').val(img_src); 
+						
+			// 			$('#Preview').html(file.name);
+			// 			// alert(11);
+			// 			$(".certificate_img").removeAttr("style");
+			// 		}else{
+            //             var url = JSON.parse(data);
+			// 			var src = url.src;
+			// 			var img_src = '__UPLOAD__/'+src;
+			// 			$('#filename').val(img_src);
+			// 			$("#image").attr("src",img_src);
+			// 			$(".certificate_img").removeAttr("style");
+			// 		}
+
+					
+			// 	},
+			// 	'onFallback': function () {
+			// 		alert('未检测到兼容版本的Flash.');
+			// 	}
+			// });
+
+
+			$("#file").Huploadify({
+			buttonText:'选择文件',
+			auto:true,
+			method:'post',
+			fileTypeExts:'*.doc;*.docx;*.jpg;*.png;*.gif;*.jpeg',
+			multi:false,
+			formData:{key:123456,key2:'news'}, //banner是图片存放的目录
+			fileSizeLimit:10240,
+			itemTemplate:'',//进度条，若显示进度条用 'itemTemp'
+			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+			showUploadedSize:true,
+			removeTimeout:1000,
+			uploader: "{:U('File/upload',array('typeid'=>0))}",
+
+			onUploadSuccess: function (file, data) {
+			
+				var url = JSON.parse(data);
+				var src = url.src;
+			
+				var filetype = src.split('.')[1];
+				var fileName = src.split('.')[0];
+             
+               if(filetype == 'docx' || filetype == 'doc'){
+			
+						var img_src = '__UPLOAD__/'+src; 
+						$('#filename').val(img_src); 
+						
+						$('#Preview').html(src);
+						
+						$(".certificate_img").removeAttr("style");
+					}else{
+					
+						var img_src = '__UPLOAD__/'+src;
+						$('#filename').attr('value',img_src);
+						
+						$('#Preview').html('<img id="image" src="{$data.attachment}" alt="课件预览" width="100%">');
+						$("#image").attr("src",img_src);
+						$(".certificate_img").removeAttr("style");
+					}
+			},
+		});
+
+			function del_click() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+			//试卷导入
+			function add_classify() {
+				layer.open({
+					title: '试卷导入',
+					btn: ['导入', '取消'],
+
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: '<div class="mb10"><button type="button" class="btn btn-primary mr10 ">选择文件</button>暂未选择文件</div><div class="mb10"> <button type="button" class="btn btn-block btn-success "><i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</button></div> <div class="mb10">注：试卷导入后不可在线修改，修改需重新导入。</div>'
+				})
+			}
+
+
+			function a() {
+                 
+				$('#filename').val(''); 
+						
+				$('#Preview').html('');
+
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,26 @@
+<layout name="layout"/>
+<!--内容区域顶栏面包屑开始-->
+<section class="content">
+	<div id="categorys">
+		<form action="{:U('importQuestionNaire')}" method="post" enctype="multipart/form-data">
+			<div class="mb10">一、请选择问卷分类</div>
+			<div class="form-group">
+				<select name="questionNaireType" class="form-control select2 width_10">
+					<option selected="selected" value="0">--选择问卷分类--</option>
+					<foreach name="list" item="v">
+						<if condition="!empty($v['cat_name'])">
+							<option value="{$v['id']}">{$v['cat_name']}</option>
+						</if>
+					</foreach>
+				</select>
+			</div>
+			<div class="mb10">二、请根据模板格式导入数据</div>
+			<div class="mb10">
+				<a href="{:U('downloadSurvey')}"><button type="button" class="btn btn-block btn-success "><i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</button></a>
+			</div>
+			<div class="mb10">注：导入文件请勿超过1M。</div>
+			<div class="mb10">三、请选择需要导入的Excel文件</div>
+			<input type="file" name="importFile" style="font:300 1em PingFang SC;"/>
+		</form>
+	</div>
+</section>

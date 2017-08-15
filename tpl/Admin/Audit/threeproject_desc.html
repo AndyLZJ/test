@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>前台查看培训项目</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+		<style type="text/css">
+			.f28{ font-size: 28px; }
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+				<section class="content-header">
+					<h1 class="info_title">
+				        审核任务
+				        <small>/培训项目审核</small>
+				    </h1>
+					<ol class="breadcrumb">
+						<li>
+							<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+						</li>
+					</ol>
+				</section>
+				<!--内容区域顶栏面包屑结束-->
+				<section class="content">
+					<div class="box">
+						<div class="box-body">
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+								<!--内容开始-->
+								<div class="box-header with-border">
+									<div class=" text-center row">
+									     <span class="f28">{$pdesc['project_name']}</span>
+
+										 
+                                  <!--判断只有是待审核状态项目显示按钮       -->
+										 <if condition="$pdesc['type'] eq 2 ">  
+										 <button class="btn btn-warning ml10 float_r" onclick="refuse_click_one({$audit_id},{$audit_status});">
+										     <i class="fa fa-close mr5"></i>拒绝审核
+										 </button>
+									     <button class="btn btn-success ml10 float_r" onclick="audit_click_one({$audit_id},{$audit_status});">
+										     <i class="fa fa-check-square-o mr5"></i>审核通过
+										 </button>
+                                           <else /> 
+                                         </if>
+                                        
+
+									     <div class="float_r mt10 text-aqua">
+									         <i class="fa fa-send mr5"></i>状态：
+									         <span class="color_red">
+												 <switch name="pdesc['type']">
+                                                            <case value="0">已通过</case>
+                                                            <case value="1">草稿</case>
+															<case value="2">待审核</case>
+															<case value="3">拒绝</case>
+															<case value="4">已通过</case>
+                                                            <default />
+                                                 </switch>
+												 
+												 </span>
+									     </div>
+									</div>
+								</div>
+								<form class="form-horizontal">
+									<div class="box-body">
+										<!--封面上传字段开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label">项目封面：</label>
+											<div class="col-sm-10">
+												<div class="box box-success certificate_img">
+													<div class="box-body">
+														<img src="{$pdesc['project_covers']}" alt="暂无封面" width="100%" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<!--封面上传字段结束-->
+										<!--项目名称字段开始-->
+										<div class="form-group" id="supplier" style="display: none;">
+											<label for="inputEmail3" class="col-sm-2 control-label">项目名称<span class="color_red">*</span>：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-12  pt10"><span class=""> {$pdesc['project_name']}</span></label>
+											</div>
+										</div>
+										<!--项目名称字段结束-->
+										<!--培训班字段开始-->
+										<div class="form-group" id="supplier" style="display: none;">
+											<label for="inputEmail3" class="col-sm-2 control-label">培训班名称：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-12  pt10"><span > {$pdesc['class_name']}</span></label>
+											</div>
+										</div>
+										<!--培训班字段结束-->
+
+										<!--项目名称字段开始-->
+										<div class="form-group" id="supplier" style="display: none;">
+											<label for="inputEmail3" class="col-sm-2 control-label">项目时间：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-8  pt10"><span >{$pdesc['start_time']} &nbsp至   &nbsp{$pdesc['end_time']}</span></label>
+
+											</div>
+										</div>
+										<!--项目名称字段结束-->
+										<!--项目描述字段开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label">项目描述：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-8  pt10"><span>													
+                      {$pdesc['project_description']|htmlspecialchars_decode} 									
+												</span></label>
+											</div>
+										</div>
+										<!--项目描述字段结束-->
+
+										
+										<!--制作人字段开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label">项目预算：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-2  pt10"><span > {$pdesc['project_budget']}</span>元</label>
+											</div>
+										</div>
+										<!--制作人字段结束-->
+										<!--章节添加字段开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label">指定人员：</label>
+											<div class="col-sm-10">
+												<label class="col-sm-12  pt10">
+													<volist name="pdesc['uname']" id="v">
+														
+												    	<if condition="$i eq count($pdesc['uname'])"> 
+														 <span >{$v.username}</span>
+														 <else />
+                                                         <span >{$v.username}、</span>
+														 </if>	
+													  
+													</volist>
+													</label>
+											</div>
+										</div>
+										<!--章节添加字段结束-->
+
+										<!--学分字段开始-->
+										<div class="form-group" id="address" style="display: none;">
+											<label for="inputEmail3" class="col-sm-2 control-label">公开范围：</label>
+
+											<div class="col-sm-10">
+												<label class="col-sm-3  pt10"><span >
+													{$department}
+													</span></label>
+											</div>				
+										</div>
+										<!--学分字段结束-->	
+									</div>
+									<div class="box-footer"></div>
+								</form>
+								<!--内容結束-->
+								<div class="box-header with-border">
+									<label class="box-title col-sm-10"> <i class="fa fa-book text-blue mr5"></i>课程</label>
+								</div>
+								<!--添加课程开始-->
+								<div class="box-body">
+									<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+										<!--内容开始-->
+										<div class="row">
+											<div class="col-sm-12">
+												<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+													<thead>
+														<tr role="row">
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程名称</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">授课方式</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">讲师</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学习地址</th>
+															<!--<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考勤</th>-->
+														</tr>
+													</thead>
+													<tbody id="tab">
+
+
+														<foreach name="course" item="vo">
+														<tr role="row" class="odd text-center">
+															<td>
+																{$vo.course_name}
+															</td>
+															<td>
+																<switch name="vo.course_way" >
+                                                                <case value="0">线上</case>
+                                                                <case value="1">面授</case>
+                                                                </switch>	
+															</td>
+
+                                                             <!--讲师姓名判断-->
+                                                            <switch name="vo.lecturer" >
+															<case value="0"><td> {$vo.lecturer_name}</td></case>
+															<default/>
+															  <td> {$vo.name}</td>
+                                                            </switch>
+
+															<td>{$vo.start_time}</td>
+															<td>{$vo.end_time}</td>
+															<td>{$vo.credit}</td>
+															<td>{$vo.location}</td>
+															<td>
+                                                              <switch name="vo.checking" >
+                                                                <case value="0"> <span href="#" class="color_red "><i class="fa  fa-check " aria-hidden="true"></i></span></case>
+                                                                <case value="1"> <span href="#" class="color_gree "><i class="fa  fa-check " aria-hidden="true"></i></span></case>
+                                                                
+                                                                </switch>
+
+															</td>
+														</tr>
+                                                        </foreach>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<!--内容結束-->
+									</div>
+								</div>
+								<!-- 添加课程结束-->
+								<div class="box-header with-border">
+									<label class="box-title col-sm-10"> <i class="fa fa-object-group text-blue mr5"></i>考试</label>
+								</div>
+								<!--添加考试开始-->
+								<div class="box-body">
+									<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+										<!--内容开始-->
+										<div class="row">
+											<div class="col-sm-12">
+												<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+													<thead>
+														<tr role="row">
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试时长</th>
+														</tr>
+													</thead>
+													<tbody id="tab">
+
+
+														<foreach name="exam" item="vo">
+														<tr role="row" class="odd text-center">
+															<td>
+																{$vo.test_names}
+															</td>
+															<td>
+																<switch name="vo.cacheid" >                                                            
+                                                                <case value="1">线下</case>
+																<default/>
+																<case value="1">线上</case>
+                                                                </switch>
+															
+																
+															</td>
+															<td>{$vo.username}</td>
+															<td>{$vo.start_time}</td>
+															<td>{$vo.end_time}</td>
+															<td>{$vo.credits}</td>
+															<td>{$vo.test_length}</td>
+														</tr>
+                                                        </foreach>
+
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<!--内容結束-->
+									</div>
+								</div>
+								<!-- 添加考试结束-->
+								<div class="box-header with-border">
+									<label class="box-title col-sm-10"> <i class="fa fa-bar-chart text-blue mr5"></i>调研</label>
+								</div>
+								<!--添加考试开始-->
+								<div class="box-body">
+									<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+										<!--内容开始-->
+										<div class="row">
+											<div class="col-sm-12">
+												<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+													<thead>
+														<tr role="row">
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研名称</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+															<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分</th>
+														</tr>
+													</thead>
+													<tbody id="tab">
+
+
+														<foreach name="survey" item="vo">
+														<tr role="row" class="odd text-center">
+															<td>
+																{$vo.survey_name}
+															</td>
+															<td> {$vo.username}</td>
+															<td>{$vo.start_time}</td>
+															<td>{$vo.end_time}</td>
+															<td>{$vo.credit}</td>
+															
+														</tr>
+                                                        </foreach>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<!--内容結束-->
+									</div>
+								</div>
+								<!-- 添加考试结束-->
+							</div>
+						</div>
+					</div>
+				</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+
+
+
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+
+			 function audit_click_one(id,audit_status) {
+				var ids = new Array();	
+				var audit_statuses  = new Array();
+                ids.push(id);					   
+                audit_statuses.push(audit_status); 
+				layer.confirm('确定通过该条审批？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					
+					$.post('{:U('Admin/Audit/threebatchAudit')}',{ids:ids,type:'1',auditstyle:'pass',audit_statuses:audit_statuses}, function(data) {  
+                        
+                          if(data.status == 1){  
+							   layer.msg('审核通过成功!',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                               
+                             setTimeout(function(){
+                               location.href = data.url; 
+                              },1000);   
+							
+                          }else{  
+							   layer.msg(data.info, { time: 1000});
+                            //    location.href = data.url; 
+                          }     
+                      },'json');
+                
+
+				});
+			}
+
+			
+			function refuse_click_one(id,audit_status) {
+				var ids = new Array();
+				var audit_statuses  = new Array();
+				ids.push(id);	
+				audit_statuses.push(audit_status); 
+				layer.confirm('<div class="text-center">拒绝通过该条审批？</div><div class="mt5"><textarea id="refuseReason" class="form-control" rows="4" placeholder="你可输入拒绝原因  ..."></textarea></div>', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						// 按钮
+				}, function() {		
+				var refuseReason = $('#refuseReason').val();
+				
+					$.post('{:U('Admin/Audit/threebatchAudit')}',{ids:ids,type:'1',auditstyle:'denied',objection:refuseReason,audit_statuses:audit_statuses}, function(data) {  
+                        
+                          if(data.status == 1){  
+							   layer.msg('审核拒绝成功!',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                               
+                             setTimeout(function(){
+                               location.href = data.url; 
+                              },1000);   
+							
+                          }else{  
+							   layer.msg(data.info, { time: 1000});
+                            //    location.href = data.url; 
+                          }     
+                      },'json');
+                
+				});
+			}
+		</script>
+	</body>
+
+</html>

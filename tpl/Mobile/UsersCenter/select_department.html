@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>选择部门</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+</head>
+<body>
+    <div class="select_personnel">
+        <input type="hidden" name="token" id="token" value="{$items.token}"/>
+        <input type="hidden" name="secret_key" id="secret_key" value="{$items.secret_key}"/>
+        <div class="department">
+            {$tissue_name['name']}<br />
+        </div>
+            <foreach name="tree_items" item="vold">
+            <div class="personnel1" data-id="{$vold['id']}" data-name="{$vold['name']}">
+                <div class="department">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vold['name']}<br />
+                </div>
+                <foreach name="vold['_data']" item="vold1">
+                    <div class="personnel" data-id="{$vold1['id']}" data-name="{$vold1['name']}">
+                        <div class="department">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vold1['name']}<br />
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+           </foreach>
+    </div>
+    <div class="my_bottom_blank"></div>
+    <div class="bottom_button" data-ids="">确定</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script>
+    $(function(){
+        $(".personnel").click(function(){
+            //检查含有personnel的类选择器的元素，如果被选择就添加样式，去除该元素以外的元素的样式
+            /*
+            if($(this).hasClass("on")){
+                var id = $(this).attr('data-id');
+                //如果有被选中的
+                $(this).removeClass("on").siblings().addClass('on');
+                $(".bottom_button").attr('data-ids',id);
+            }else{
+                //如果没有被选中的
+                var id = $(this).attr('data-id');
+                $(this).addClass("on").siblings().removeClass('on');
+                $(".bottom_button").attr('data-ids',id);*/
+            var id = $(this).attr('data-id');
+
+                $(".personnel").removeClass("on");
+
+                $(this).addClass('on');
+            $(".bottom_button").attr('data-ids',id);
+
+            });
+
+            $(".bottom_button").click(function(){
+                //获取选定的部门，跳转链接
+
+                var token = $('#token').val();
+                var secret_key = $('#secret_key').val();
+                var dpk_id = $(this).attr('data-ids');
+                if(dpk_id == ''){
+                    return false;
+                }else{
+                    var newHref = "__CONTROLLER__/departmentPk?token="+token+"&secret_key="+secret_key+"&dpk_id="+dpk_id;
+                    window.location.href = newHref;
+                }
+            })
+    })
+</script>
+</html>

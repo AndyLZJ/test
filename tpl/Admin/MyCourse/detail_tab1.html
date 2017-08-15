@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>课程详情_介绍</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+	</head>
+	<body>
+		<section class="content">
+			<div class="col-sm-12">
+				<form class="form-horizontal">
+					<div class="box-body">
+						<if condition="$base.start_time neq ''">
+						<div class="form-group">
+							<label for="" class="pull-left ml15">培训时间：</label>
+							<div class="col-sm-6">
+								<label for=""><span id="#">{$base.start_time} 至  {$base.end_time}</span></label>
+							</div>
+						</div>
+						</if>
+						<div class="form-group">
+							<label for="" class="pull-left ml15">课程介绍：</label>
+							<div class="col-sm-6">
+								<label for=""><span id="#">{$detail.course_intro}</span></label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="" class="pull-left ml15">课程目标：</label>
+							<div class="col-sm-6">
+								<label for="" class=""><span id="#">{$detail.course_aim}</span></label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="pull-left ml15">课程大纲：</label>
+							<div class="col-sm-6">
+								<label for="" class=""><span id="#">{$detail.course_outline}</span></label>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+	</body>
+</html>

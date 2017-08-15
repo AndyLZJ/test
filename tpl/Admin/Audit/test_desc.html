@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>二期——审核管理——考试审核</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+		            考试审核
+		        <small>/考试详情</small>
+		      </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box pb5 box-primary">
+				<div class="box-header with-border">
+					<div class="col-sm-5">
+						<label class="text-aqua mt10 mr30">
+                                    <span class="text-bold text-black" style="font-size: 22px;">{$title.name}</span> </label>
+					</div>
+					
+					<div class="col-sm-7">
+						<if condition="$title['audit_status'] eq 1">
+						<button type="button" class="btn btn-warning pull-right mr15" onclick="refuse_click();">  
+		                              	    <i class="fa fa-calendar-times-o mr5" aria-hidden="true"></i>审核拒绝
+		                              	 </button>
+						<button type="button" class="btn btn-success pull-right mr15" onclick="audit_click();">  
+		                              	    <i class="fa fa-calendar-check-o mr5" aria-hidden="true"></i>审核通过
+		                              	 </button>
+						</if>
+						<label class="text-aqua mt10 float_r mr30">
+		                                      <i class="fa  fa-send-o mr5"></i>状态： 
+		                                      <span class="text-red">
+												 <switch name="title['audit_status']">
+								           			<case value="1">待审核</case>
+								           			<case value="0">已通过</case>
+								           			<case value="2">已拒绝</case>
+								           			<default />default
+									            </switch>  	  
+												</span> 
+		                  </label>
+					</div>
+				</div>
+
+				<div class="row pl15">
+					<div class="col-sm-2">
+						<label class="text-aqua mt10 ">
+			                                    <i class="fa  fa-send-o mr5"></i>学分： 
+			                                    <span class="text-red">{$title.score}分</span> 
+		                                    </label>
+					</div>
+					<if condition="$title.type eq 0">
+					<div class="col-sm-2">
+						<label class="text-aqua mt10 ">
+			                                    <i class="fa  fa-send-o mr5"></i>总分： 
+			                                    <span class="text-red">{$title.test_score}分</span> 
+		                                    </label>
+					</div>
+					</if>
+					<div class="col-sm-2">
+						<label class="text-aqua mt10 ">
+			                                    <i class="fa  fa-user mr5"></i>提交人： 
+			                                    <span class="text-red">{$title.username}</span> 
+		                                    </label>
+					</div>
+					<div class="col-sm-3">
+						<label class="text-aqua mt10 mr10">
+		                                       <i class="fa  fa-calendar mr5"></i>提交时间： 
+		                                       <span class="text-red"> {$title.create_time}</span> 
+		                                    </label>
+					</div>
+
+					<div class="col-sm-5">
+						<label class="text-aqua mt10 mr10">
+		                                       <i class="fa  fa-calendar mr5"></i>考试时间： 
+		                                       <span class="text-red"> {$title.start_time}  ——  {$title.end_time}</span> 
+		                                    </label>
+					</div>
+
+					<div class="col-sm-12">
+						<label class="text-aqua mt10 ">
+			                                    <i class="fa  fa-user mr5"></i>参与人员： 
+												<foreach name="designee" item="v">
+			                                    <span class="text-red ml15">{$v.designee}</span> 
+												</foreach>
+		                                    </label>
+					</div>
+				</div>
+
+				<!--  分隔符开始-->
+				<div class="box-header with-border no-padding"></div>
+				<!--  分隔符结束-->
+				<if condition="$title.type eq 0">
+				<div class="ml10 mt10">
+                    <if condition="$singleChoiceSum eq 0 AND $multipleChoiceSum eq 0 AND descriPtiveChoiceSum eq 0 AND wdSum eq 0">本试卷暂无试题
+                    <else/>
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    
+                        <!--试卷主要信息区域开始-->
+                        <div class="box-header with-border mt10">
+                            <h4 class="box-title">一、单选题（<span class="text-red">共 {$singleChoiceSum} 道，共 {$singleChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                        <div class="box-body">
+                            <volist name="singleChoice" id="vo">
+                            <div class="mb30">
+                            <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="A"> <span class="ml10"> A.{$vo.optiona}</span></p> 
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="B" > <span  class="ml10"> B.{$vo.optionb}</span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="C"> <span class="ml10">C.{$vo.optionc}</span></p>
+                            <p class="mb15 mt10"><input type="radio" name="singleChoiceAnswer[{$vo.id}]" id="#" value="D"> <span class="ml10"> D.{$vo.optiond}</span></p>
+                            </div> 
+                          </volist> 
+                        </div>
+                        <!--多选题开始-->
+                        <div class="box-header with-border mt10">
+                            <h4 class="box-title">二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                         <volist name="multipleChoice" id="vo">     
+                            <div class="box-body">
+                            <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）<span href="#" class="color_gree "></span></p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="A"> <span class="ml10"> A.{$vo.optiona}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="B"> <span class="ml10"> B.{$vo.optionb}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="C"> <span class="ml10"> C.{$vo.optionc}</span> </p>
+                            <p class="mb15 mt10"><input type="checkbox" name="tag[{$vo.id}][]" value="D"> <span class="ml10"> D.{$vo.optiond}</span> </p>
+                            </div>
+                          </volist> 
+                        <!--多选题结束-->
+                        <div class="box-header with-border">
+                            <h4 class="box-title">三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore}.00 分</span>）</h4>
+                        </div>
+                        <volist name="descriPtive" id="vo">              
+                            <div class="box-body">
+                                <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+                                <p class="mb15 mt10">
+                                <label>
+                                    <div class="radio mr30">
+                                        <label>
+                                            <input type="radio"  name="direction[{$vo.id}]" id="#" value="对">
+                                            <span class="ml10">A.{$vo.optiona}</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio ">
+                                        <label>
+                                            <input type="radio" name="direction[{$vo.id}]" id="#" value="错" >
+                                            <span class="ml10">B.{$vo.optionb}</span>
+                                        </label>
+                                    </div>
+                                </label>
+                                </p>
+                            </div>
+                        </volist>
+                        <!--二期新增类型:简答题start-->
+                        <if condition="count($wd) neq 0">
+                        <div class="mt10">
+                            <h4 class="box-title">
+                                四、简答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）
+                            </h4>
+                        </div>
+                        <div class="box-header with-border"></div>
+                        <div class="mb30">
+                            <volist name="wd" id="vo">
+                            <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+                            </p>
+                            <!--简答题-->
+                            <textarea name="wd" id="wd" cols="60" rows="2" <if condition="$status eq 0">readonly</if>></textarea>
+                            <!-- <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> -->
+                            </volist>
+                        </div>
+                        </if>
+                        <!--二期新增类型:简答题end-->
+              
+        
+            </div>  
+			
+					<!--内容結束-->
+				</div>
+            <else/>
+			{$testdetail}<br />
+			<div>考试名称：{$title.name}	</div>
+			<div>考试地点：{$address}	</div>
+            </if>
+			</div>
+		</section>
+
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			  function audit_click() {
+				layer.confirm('您确定要通过该审核吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					var $id = "{$title['id']}";
+					$ids = new Array($id);
+					var $tablenames = new Array('test');
+		         	 $.post('{:U('Admin/Audit/batchAudit')}',{ids:$ids,auditstyle:"pass",tablenames:$tablenames}, function($data) {   
+                          if($data.status == 1){  
+							  $data.info = '审核通过成功！';
+							  layer.msg($data.info,{time:1000,icon: 1});
+                               setTimeout(function(){
+                               location.href = $data.url; 
+							//    window.location.reload();
+                                },1000);   
+                          }else{  
+							  layer.msg($data.info, {
+						       time: 2000
+							  });
+                               setTimeout(function(){
+                               location.href = $data.url; 
+							     window.reload();
+                                },2000);  
+                          }     
+                      },'json'); 
+				});
+			}
+
+			function refuse_click() {
+				layer.confirm('您确定要拒绝该审核吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					//ajax请求
+					var $id = "{$title['id']}";
+					$ids = new Array($id);
+					var $tablenames = new Array('test');
+		            $.post('{:U('Admin/Audit/batchAudit')}',{ids:$ids,auditstyle:"denied",tablenames:$tablenames}, function($data) {  
+                        
+                          if($data.status == 1){  
+							  $data.info = '拒绝审核成功！';
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+
+                             setTimeout(function(){
+                               location.href = $data.url; 
+							// window.location.reload()
+                              },1000);   
+                          }else{  
+							  layer.msg($data.info, { time: 1000});
+                               location.href = $data.url; 
+                          }     
+                      },'json');
+				});
+			}
+		</script>
+	</body>
+
+</html>

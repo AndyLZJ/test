@@ -1,0 +1,52 @@
+/*培训项目下属课程列表页面样式*/
+
+.ulitem{
+	width: 100%;
+	border:1px solid #dddddd;
+	background-color: #ffffff;
+	padding: 3px;
+	cursor: pointer;
+}
+.ulitem:hover{
+	border:1px solid red;
+
+}
+
+.ulitem img{
+	width: 100%;
+	
+}
+/*.ulite_log{
+	background: url(../img/classbg.png) no-repeat;
+	width: 72px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	color: white;
+	position: absolute;
+    top: -4px;
+    left: 30px;
+    font-size: 14px;
+}*/
+
+.ulite_log{
+	background: url(../img/classbg2.png) no-repeat;
+    width: 90px;
+    height: 45px;
+    line-height: 38px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 14px;
+}
+
+
+.progress{
+	margin-bottom: 5px !important;
+}
+
+
+
+

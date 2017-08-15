@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>系统管理_组织架构</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+
+    <style type="text/css">
+        .box-title {
+            margin-right: 20px !important;
+        }
+
+        .organization_box {
+            margin-bottom: 0px !important;
+        }
+
+        .no_employees {
+            height: 500px;
+        }
+
+        .no_employees p {
+            line-height: 50px;
+            padding-top: 160px;
+        }
+
+        .organ_input {
+            width: 250px;
+        }
+
+        .box-solid > .sidebar-menu > li.active > a, .box-solid > .sidebar-menu > li > a:hover, .box-solid > .sidebar-menu > li > a {
+            padding: 10px 5px 10px 15px;
+        }
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group {
+            margin-right: 0px !important;
+            margin-left: 0px !important;
+        }
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group > .col-sm-10 {
+            width: 300px !important;
+        }
+
+        #userImportBox {
+            display: none;
+            width: 300px;
+            margin: 10px 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        系统设置
+        <small>/组织架构</small>
+    </h1>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="row mb10 pr15 pl15">
+        <form action="{:U('Tissue/index')}" enctype="multipart/form-data" method="get">
+            <div class="input-group ">
+                <input type="hidden" name="tissue_id" value="{$tissue_id}"/>
+                <input type="text" name="keywords" class="form-control pull-right" placeholder="搜索员工"
+                       style="width: 200px;">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <!--组织架构树图开始-->
+        <div class="col-md-3">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">组织架构</h3>
+                </div>
+                <div class="box box-solid mt10 sidebar">
+                    <ul class="sidebar-menu">
+                        <foreach name="tree_items" item="one" >
+                            <li class="treeview ">
+                                <a href="#">
+                                    <input type="radio" name="check" value="{$one['id']}" alt="{$one['name']}" <if condition="$tissue_id eq $one['id']">checked="checked"</if>/> {$one['name']}
+                                        <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <if condition="$level neq 4">
+                                    <ul class="treeview-menu menu-open" style="display: block;margin-left: 10px;">
+                                        <foreach name="one['_data']" item="two">
+                                            <li >
+                                                <a href="#">
+                                                    <input type="radio" name="check" value="{$two['id']}" alt="{$two['name']}" <if condition="$tissue_id eq $two['id']">checked="checked"</if>/> {$two['name']}
+
+                                                        <span class="pull-right-container">
+                                                        <i class="fa fa-angle-left pull-right"></i>
+                                                    </span>
+                                                </a>
+                                                <ul class="treeview-menu menu-open" <if condition="in_array($two['id'],$leveldata)">
+                                                style="display: block;margin-left: 10px;"
+                                                <else />
+                                                style="display: none;margin-left: 10px;"
+                                            </if>>
+                                                    <foreach name="two['_data']" item="three">
+                                                        <li>
+                                                            <a href="#">
+                                                                <input type="radio" name="check" value="{$three['id']}" alt="{$three['name']}" <if condition="$tissue_id eq $three['id']">checked="checked"</if>/> {$three['name']}
+                                                                        <span class="pull-right-container">
+                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                        </span></a>
+                                                            <ul class="treeview-menu menu-open" <if condition="in_array($three['id'],$leveldata)">
+                                            style="display: block;margin-left: 10px;"
+                                            <else />
+                                            style="display: none;margin-left: 10px;"
+                                        </if>>
+                                                                <?php
+                                                                foreach($three['_data'] as $five){?>
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <input type="radio" name="check" value="<?php echo $five['id'];?>" alt="<?php echo $five['name'];?>" <if condition="$tissue_id eq $five['id']">checked="checked"</if>/> <?php echo $five['name'];?>
+                                                                    </a>
+                                                                </li>
+                                                                <?php
+                                                                }
+                                                            ?>
+                                                            </ul>
+                                                        </li>
+                                                    </foreach>
+                                                </ul>
+                                            </li>
+                                        </foreach>
+                                    </ul>
+                                </if>
+                            </li>
+                        </foreach>
+                        <li class="treeview ">
+                            <a href="#">
+                                <input type="radio" name="check" value="administrator" <if condition="$type eq 'administrator'">checked="checked"</if>/> 管理员
+                                            <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        <li class="treeview ">
+                            <a href="#">
+                                <input type="radio" name="check" value="undistributed" <if condition="$type eq 'undistributed'">checked="checked"</if>/> 未分配人员({$tissue_group_total})
+                                            <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--组织架构树图结束-->
+        <!--组织架构员工表格开始-->
+        <div class="col-md-9">
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+
+
+                    <!--
+            <foreach name="setadmin" item="vo" >
+                <if condition="$vo['manage_id'] eq 1">
+                    <span class="text-muted mr30">管理员：{$vo.username}</span>
+                <else />
+                    <span class="text-muted">负责人：{$vo.username}</span>
+                </if>
+            </foreach>-->
+                    <div class="row">
+                        <div class="has-feedback">
+                            <button type="button" class="btn btn-warning float_r btn-sm ml10"
+                                    onclick="del_organ({$tissue_id});">
+                                <i class="fa fa-close"></i>
+                                删除组织
+                            </button>
+                            <button type="button" class="btn btn-primary float_r btn-sm ml10"
+                                    onclick="redact({$tissue_id});">
+                                <i class="fa fa-pencil"></i>
+                                编辑组织
+                            </button>
+                            <button type="button" class="btn btn-primary float_r btn-sm ml10"
+                                    onclick="add_employees({$tissue_id});">
+                                <i class="fa fa-user-plus"></i>
+                                添加员工
+                            </button>
+                            <if condition="$is_display lt 4">
+                                <button type="button" class="btn btn-primary float_r btn-sm ml10"
+                                        onclick="add_next_org({$tissue_id});">
+                                    <i class="fa fa-plus"></i>
+                                    新增下级组织
+                                </button>
+                            </if>
+                            <button type="button" class="btn btn-success ml10 float_r btn-sm" onclick="add_biaoqian()">
+                                <i class="fa fa-plus mr5 " aria-hidden="true "></i>新建标签
+                            </button>
+                            <button type="button" class="btn btn-info  ml10 float_r btn-sm" onclick="batch_marking()"><i
+                                    class="fa fa-bookmark-o mr5 " aria-hidden="true "></i>批量标记
+                            </button>
+                            <button type="button" class="btn btn-info  ml10 float_r btn-sm" onclick="user_import()"><i
+                                    class="fa fa-bookmark-o mr5 " aria-hidden="true "></i>批量导入
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-tools -->
+                    <if condition="$is_level eq 0">
+                        <div>
+                            <h4>{$tissue_id|getTissue}</h4>
+                        </div>
+                    </if>
+                </div>
+                <!--有员工表格开始-->
+                <div>
+                    <div class="box-body no-padding" style="margin-top: -15px;">
+                        <div class="mt10 mr10 ml10 ">
+                            <button type="button" class="btn btn-default btn-sm" onclick="redact_employees();">
+                                <i class="fa fa-pencil mr5"></i>编辑
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle" onclick="move_org();">
+                                <i class="fa fa-mouse-pointer mr5"></i>移动到组织
+                            </button>
+                            <if condition="count($leveldata) gt 1">
+                                <button type="button" class="btn btn-default btn-sm checkbox-toggle" onclick="set_Admin({$tissue_id},2);">
+                                    <i class="fa fa-address-book mr5"></i>设为负责人
+                                </button>
+                            </if>
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"
+                                    onclick="del_employees();">
+                                <i class="fa fa-trash-o mr5"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mailbox-messages mr10 ml10 mb10 mt10">
+                        <table class="table table-bordered table-striped dataTable organ_table" role="grid"
+                               aria-describedby="example1_info">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-sort="ascending"
+                                    aria-label="Rendering engine: activate to sort column descending" width="45">
+                                    <label style="margin-bottom: 0px;">
+                                        <input type="checkbox" width="20" class="js-checkbox-all"/>
+                                    </label>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="Browser: activate to sort column ascending">姓名
+                                </th>
+                                <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="Platform(s): activate to sort column ascending">工号
+                                </th> -->
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="Engine version: activate to sort column ascending">手机
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="CSS grade: activate to sort column ascending">邮箱
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="CSS grade: activate to sort column ascending">组织
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="CSS grade: activate to sort column ascending">岗位
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                    aria-label="CSS grade: activate to sort column ascending">标签
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            <foreach name="list" item="v">
+                                <tr role="row" class="odd">
+                                    <td>
+                                        <input type="checkbox" value="{$v.id}" name="ifChecked[]">
+                                    </td>
+                                    <td>{$v.username}</td>
+                                    <!-- <td>{$v.job_number}</td> -->
+                                    <td><notempty name="v['phone']">{$v.phone}</notempty></td>
+                                    <td>{$v.email}</td>
+                                    <td>{$v.tissue_id|getTissue}</td>
+                                    <td>{$v.job_id|getJob}</td>
+                                    <td>{$v.tag}</td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                        <!--分页开始-->
+                        <!--分页结束-->
+                    </div>
+                </div>
+                <!--有员工表格结束-->
+            </div>
+            <div>
+                <div class="float_r mr15">
+                    <div class="dataTables_paginate paging_simple_numbers">
+                        {$pages}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--组织架构员工表格开始-->
+    </div>
+</section>
+</div>
+
+<div id="userImportBox" style="display:none; ">
+    <form action="{:U('Admin/user_import/import')}" method="post" id="addFileFrom" enctype="multipart/form-data">
+        <div class="mb10">一、请选择导入范围</div>
+		<div class="form-group">
+			<select name="center_id" id="center_id" class="form-control select2 width_10">
+				<option value="0">--请选择导入范围--</option>
+				<foreach name="centerList" item="v">
+					<if condition="!empty($v['name'])">
+						<option value="{$v['id']}">{$v['name']}</option>
+					</if>
+				</foreach>
+			</select>
+		</div>
+        <div class="mb10">二、请根据模板格式导入数据</div>
+        <div class="mb10">
+            <a href="/Upload/excelTmp/user_import_tmp.xlsx" download="" class="btn btn-block btn-success "><i
+                    class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</a>
+        </div>
+        <div class="mb10">三、请选择需要导入的Excel文件</div>
+        <div class="mb10">注：导入文件请勿超过5M。</div>
+        <input type="file" name="userFile" style="width:250px; font:300 1em PingFang SC;"/>
+        <div style="display:none;">
+            <input type="submit" value="提交">
+            <input type="reset" class="fromReset" value="重置表单">
+        </div>
+    </form>
+</div>
+
+<!--设置负责人-->
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dst/js/demo.js"></script>
+
+<script type="text/javascript">
+    //radio选中样式
+    $('input').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'icheckbox_minimal-blue',
+        increaseArea: '20%'
+    });
+
+    //批量导入用户 20170512 Du
+    function user_import() {
+        $("#addFileFrom .fromReset").click();
+        layer.open({
+            title: '用户导入',
+            btn: ['确定', '取消'],
+            type: 1,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            area: ['340px', '360px'],
+            shadeClose: true, //开启遮罩关闭
+            content: $("#userImportBox"),
+            yes: function (index, layero) {
+                var center_id = $("#addFileFrom #center_id").val();
+                if (center_id == '' || center_id == '0') {
+                    layer.msg('请选择导入范围', {
+                        time: 1000
+                    });
+                    return false;
+                }
+                
+                var is_file = $("#addFileFrom input[type='file']").val();
+                if (is_file == '') {
+                    layer.msg('请选择导入文件', {
+                        time: 1000
+                    });
+                    return false;
+                }
+                var pos = is_file.lastIndexOf(".");
+                var format = is_file.substring(pos + 1).toLowerCase();
+                if (format != 'xls' && format != 'xlsx' && format != 'csv') {
+                    layer.msg('上传文件格式不正确', {
+                        time: 1000
+                    });
+                    return false;
+                }
+
+                var formData = new FormData($('#addFileFrom')[0]);
+                var saveLoad = layer.load(0);
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('Admin/user_import/import')}",
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        layer.close(saveLoad);
+                        if (data.code == 1000) {
+                            layer.closeAll();
+                            layer.msg('导入成功', {
+                                time: 1000
+                            }, function () {
+                                window.location.href = "{:U('Admin/user_import/importPage')}";
+                            });
+                        } else {
+                            layer.msg(data.message, {
+                                time: 2000
+                            });
+                        }
+                    }
+                });//ajax end
+                return false;
+            }
+        });
+    }
+
+    var $checkboxAll = $(".js-checkbox-all"),
+            $checkbox = $("tbody").find("[type='checkbox']").not("[disabled]"),
+            length = $checkbox.length,
+            i = 0;
+
+    $checkboxAll.on("ifClicked", function (event) {
+        if (event.target.checked) {
+            $checkbox.iCheck('uncheck');
+            i = 0;
+        } else {
+            $checkbox.iCheck('check');
+            i = length;
+        }
+    });
+
+    //删除组织事件
+    function del_organ(tissue_id) {
+        //删除分组
+
+        layer.confirm('您确定要删除吗？', {
+            title: '删除组织',
+            btn: ['确定', '取消'],
+            yes: function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('Admin/Tissue/delTissue')}",
+                    data: {
+                        "tissue_id": tissue_id
+                    },
+                    traditional: true,
+                    success: function (msg) {
+
+                        if (msg.status > 0) {
+                            layer.msg('删除成功', {
+                                time: 1500,
+                                icon: 1
+                            }, function () {
+                                location.href = "{:U('Admin/Tissue/index')}";
+                            });
+                        } else {
+                            layer.msg('该组织有会员不能删除');
+                        }
+                    }
+                });
+
+            },
+            skin: 'layui-layer-lan'
+            //按钮
+        }, function () {
+            layer.msg('删除成功', {
+                time: 1500,
+                icon: 1
+            }, function () {
+                window.location.reload();
+            });
+        }, function () {
+            layer.msg('取消删除');
+        });
+    }
+
+    //删除员工事件
+    function del_employees() {
+        //删除分组
+
+        layer.confirm('您确定要删除吗？', {
+            title: '删除成员',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var str = "";
+                var ids = "";
+                var arr = new Array();
+                var k = 0;
+
+                $("#tbody input").each(function (i) {
+
+                    if ($(this).is(':checked') == true) {
+                        if ($(this).val() != 'on') {
+                            str += $(this).val() + ",";
+                            arr[k] = $(this).val();
+                            k++;
+                        }
+                    }
+
+                });
+
+                if (str.substr(str.length - 1) == ',') {
+                    ids = str.substr(0, str.length - 1);
+                }
+
+                if (arr.length >= 1) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Admin/Tissue/delUser')}",
+                        data: {
+                            "ids": ids
+                        },
+                        traditional: true,
+                        success: function (msg) {
+
+                            if (msg.status > 0) {
+                                layer.msg('删除成功', {
+                                    time: 1500,
+                                    icon: 1
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+
+                                layer.msg('删除失败');
+                            }
+                        }
+                    });
+
+                } else {
+                    layer.msg('请选择删除选项');
+                }
+            },
+            skin: 'layui-layer-lan'
+            //按钮
+        }, function () {
+            layer.msg('删除成功', {
+                time: 1500,
+                icon: 1
+            }, function () {
+                window.location.reload();
+            });
+        }, function () {
+            layer.msg('取消删除');
+        });
+    }
+
+    //新增下级组织
+    function add_next_org(tissue_id) {
+        layer.open({
+            title: '新增下级组织',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var tissue_name = $(layero).find("input[name='tissue_name']").val();
+
+                if (tissue_name.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Admin/Tissue/addTissue')}",
+                        data: {
+                            "tissue_id": tissue_id,
+                            "tissue_name": tissue_name
+                        },
+                        traditional: true,
+                        success: function (msg) {
+
+                            if (msg.status > 0) {
+                                layer.msg('添加成功', {
+                                    time: 1500,
+                                    icon: 1
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+
+                                layer.msg('组织名称不能重复');
+                            }
+
+                        }
+                    });
+
+                } else {
+
+                    layer.msg('组织名称不能为空');
+
+                }
+
+            },
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: '<div class="mb10">上级组织名称：{$parentName} </div><div><input class="organ_input" type="text" name="tissue_name" placeholder="请输入下级组织名称"></div>'
+        });
+    }
+
+    //编辑组织
+    function redact(tissue_id) {
+        layer.open({
+            title: '编辑组织',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var redact = $(layero).find("input[name='redact']").val();
+
+                if (redact.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Admin/Tissue/editorTissue')}",
+                        data: {
+                            "tissue_id": tissue_id,
+                            "redact": redact
+                        },
+                        traditional: true,
+                        success: function (msg) {
+
+                            if (msg.status > 0) {
+                                layer.msg('编辑成功', {
+                                    time: 1500,
+                                    icon: 1
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+
+                                layer.msg('编辑失败');
+                            }
+
+                        }
+                    });
+
+                } else {
+
+                    layer.msg('请输入修改名称');
+                }
+            },
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: '<div class="mb10">当前组织名称：{$tissue_id|getTissue}</div><div><input class="organ_input" type="text" name="redact" placeholder="请输入组织修改的名称"></div>'
+        });
+    }
+
+    //新增员工
+    function add_employees(tissue_id) {
+        layer.open({
+            title: '新增员工',
+            btn: ['确定', '取消'],
+            type: 2,
+            yes: function (index, layero) {
+
+                var body = layer.getChildFrame('body', index);
+
+                //头像
+                var avatar = $(body).find("#use_img").attr("src");
+                var imgType = $(body).find("#imgType").val();
+
+                var phone = $(body).find("input[name='phone']").val();
+                var password = $(body).find("input[name='password']").val();
+                var passwords = $(body).find("input[name='passwords']").val();
+                var username = $(body).find("input[name='username']").val();
+                var birthday = $(body).find("input[name='birthday']").val();
+                var sex = $(body).find('input:radio[name="sex"]:checked').val();
+                var group_time = $(body).find("input[name='group_time']").val();
+                var center_time = $(body).find("input[name='center_time']").val();
+                var area = $(body).find("input[name='area']").val();
+                var age = $(body).find("input[name='age']").val();
+                var jobs_id = $(body).find("#jobs_id option:selected").val();
+                var tissue_id = $(body).find("#tissue_id option:selected").val();
+                var job_number = $(body).find("input[name='job_number']").val();
+                var room = $(body).find("input[name='room']").val();
+                var rank = $(body).find("input[name='rank']").val();
+                var sequence = $(body).find("input[name='sequence']").val();
+                var education = $(body).find("#education option:selected").val();
+                var mobilephone = $(body).find("input[name='mobilephone']").val();
+                var tel = $(body).find("input[name='tel']").val();
+                var email = $(body).find("input[name='email']").val();
+                var ip_phone = $(body).find("input[name='ip_phone']").val();
+
+
+
+                var arr = new Array();
+
+                $(body).find("#addsurvey input").each(function (i) {
+                    arr[i] = [$(this).attr("id"), $(this).val()];
+                });
+
+                if(email.length <= 0){
+                    layer.msg('账号不能为空');
+                    return false;
+                }else if (email.length > 0 && !email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)?((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+                    layer.msg('邮箱输入不正确');
+                    return false;
+                }else if (password.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length < 6) {
+                    layer.msg('密码不能小于六位数');
+                    return false;
+                } else if (password != passwords) {
+                    layer.msg('两次输入密码不正确');
+                    return false;
+                } else if (username.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length == 0) {
+                    layer.msg('名称不能为空');
+                    return false;
+                } else if (username.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length < 2) {
+                    layer.msg('名称长度不能小于二位');
+                    return false;
+                } else if (phone.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0 && phone.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length != 11) {
+                    layer.msg('手机号输入不正确');
+                    return false;
+                }
+
+                    $.ajax({
+                    type: "POST",
+                    url: "{:U('Tissue/addUser')}",
+                    dataType: "JSON",
+                    data: {
+                        "avatar": avatar,
+                        "imgType": imgType,
+                        "phone": phone,
+                        "password": password,
+                        "username": username,
+                        "birthday":birthday,
+                        "gender":sex,
+                        "group_time":group_time,
+                        "center_time":center_time,
+                        "area":area,
+                        "age":age,
+                        "jobs_id": jobs_id,
+                        "tissue_id": tissue_id,
+                        "job_number": job_number,
+                        "room":room,
+                        "rank":rank,
+                        "sequence": sequence,
+                        "education":education,
+                        "mobilephone":mobilephone,
+                        "tel":tel,
+                        "email": email,
+                        "ip_phone":ip_phone,
+                        "tag": arr,
+                    },
+                    success: function (msg) {
+
+                        if (msg.status == 200) {
+                            layer.msg('添加成功', {
+                                time: 1500,
+                                icon: 1
+                            }, function () {
+                                window.location.reload();
+                            });
+                        } else {
+
+                            if (msg.status == 401) {
+                                layer.msg('手机号已存在,请更换');
+                            } else if (msg.status == 402) {
+                                layer.msg('工号已存在,请更换');
+                            } else if(msg.status == 404){
+                                layer.msg('当前序列号已存在，请更换');
+                            }else if(msg.status == 405){
+                                layer.msg('头像上传失败');
+                            }else if(msg.status == 406){
+                                layer.msg('邮箱已存在,请更换');
+                            }else if(msg.status == 407){
+                                layer.msg('添加标签已存在,请修改');
+                            }else if(msg.status == 408){
+                                layer.msg('邮箱验证不正确,请修改');
+                            }else {
+                                layer.msg('添加失败');
+                            }
+
+                        }
+
+                    }
+                });
+
+            },
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            area: ['60%', '600px'],
+            offset: ['20px'],
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('Tissue/addusers','','',true)}",
+        });
+    }
+
+    //编辑
+    function redact_employees() {
+
+        var str = "";
+        var ids = "";
+        var user_id = new Array();
+        var k = 0;
+
+        $("#tbody input").each(function (i) {
+
+            if ($(this).is(':checked') == true) {
+                if ($(this).val() != 'on') {
+                    str += $(this).val() + ",";
+                    user_id[k] = $(this).val();
+                    k++;
+                }
+            }
+
+        });
+
+        if (str.substr(str.length - 1) == ',') {
+            ids = str.substr(0, str.length - 1);
+        }
+
+        if (user_id.length == 1) {
+
+            var url = "{:U('Tissue/addusers',array('typeid'=>1,'redact'=>1),'',true)}" + "/user_id/" + user_id;
+
+            layer.open({
+                title: '编辑员工',
+                btn: ['确定', '取消'],
+                type: 2,
+                yes: function (index, layero) {
+
+                    var body = layer.getChildFrame('body', index);
+
+                    //头像
+                    var avatar = $(body).find("#use_img").attr("src");
+                    var imgType = $(body).find("#imgType").val();
+
+                    var phone = $(body).find("input[name='phone']").val();
+                    var password = $(body).find("input[name='password']").val();
+                    var passwords = $(body).find("input[name='passwords']").val();
+                    var username = $(body).find("input[name='username']").val();
+                    var birthday = $(body).find("input[name='birthday']").val();
+                    var sex = $(body).find('input:radio[name="sex"]:checked').val();
+                    var group_time = $(body).find("input[name='group_time']").val();
+                    var center_time = $(body).find("input[name='center_time']").val();
+                    var area = $(body).find("input[name='area']").val();
+                    var age = $(body).find("input[name='age']").val();
+                    var jobs_id = $(body).find("#jobs_id option:selected").val();
+                    var tissue_id = $(body).find("#tissue_id option:selected").val();
+                    var job_number = $(body).find("input[name='job_number']").val();
+                    var room = $(body).find("input[name='room']").val();
+                    var rank = $(body).find("input[name='rank']").val();
+                    var sequence = $(body).find("input[name='sequence']").val();
+                    var education = $(body).find("#education option:selected").val();
+                    var mobilephone = $(body).find("input[name='mobilephone']").val();
+                    var tel = $(body).find("input[name='tel']").val();
+                    var email = $(body).find("input[name='email']").val();
+                    var ip_phone = $(body).find("input[name='ip_phone']").val();
+
+
+                    var arr = new Array();
+
+                    $(body).find("#addsurvey input").each(function (i) {
+                        arr[i] = [$(this).attr("id"), $(this).val()];
+                    });
+
+
+                    if (phone.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0 && phone.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length != 11) {
+                        layer.msg('手机号输入不正确');
+                        return false;
+                    } else  if (password.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length < 6 && password.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length != 0) {
+                        layer.msg('密码不能小于六位数');
+                        return false;
+                    } else if (password != passwords) {
+                        layer.msg('两次输入密码不正确');
+                        return false;
+                    } else if (username.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length == 0) {
+                        layer.msg('名称不能为空');
+                        return false;
+                    } else if (username.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length < 2) {
+                        layer.msg('名称长度不能小于二位');
+                        return false;
+                    } else if (email.length > 0 && !email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)?((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+                        layer.msg('邮箱输入不正确');
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Tissue/updateuser')}",
+                        dataType: "JSON",
+                        data: {
+                            "id": user_id[0],
+                            "avatar": avatar,
+                            "imgType": imgType,
+                            "phone": phone,
+                            "password": password,
+                            "username": username,
+                            "birthday":birthday,
+                            "gender":sex,
+                            "group_time":group_time,
+                            "center_time":center_time,
+                            "area":area,
+                            "age":age,
+                            "jobs_id": jobs_id,
+                            "tissue_id": tissue_id,
+                            "job_number": job_number,
+                            "room":room,
+                            "rank":rank,
+                            "sequence": sequence,
+                            "education":education,
+                            "mobilephone":mobilephone,
+                            "tel":tel,
+                            "email": email,
+                            "ip_phone":ip_phone,
+                            "tag": arr,
+                        },
+                        success: function (msg) {
+
+                            if (msg.status == 200) {
+                                layer.msg('操作成功', {
+                                    time: 1500,
+                                    icon: 1
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+
+                                if (msg.status == 401) {
+                                    layer.msg('手机号已存在,添加失败');
+                                } else if (msg.status == 402) {
+                                    layer.msg('工号已存在,添加失败');
+                                } else if(msg.status == 404){
+                                    layer.msg('当前序列号已存在，请更换');
+                                }else if(msg.status == 405){
+                                    layer.msg('头像上传失败');
+                                }else if(msg.status == 403){
+                                    layer.msg('邮箱已存在,请更换');
+                                }else if(msg.status == 407){
+                                    layer.msg('添加标签已存在,请修改');
+                                }else if(msg.status == 408){
+                                    layer.msg('邮箱格式不正确,请修改');
+                                }else {
+                                    layer.msg('添加失败');
+                                }
+
+                            }
+
+                        }
+                    });
+
+                },
+                skin: 'layui-layer-lan', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                area: ['60%', '600px'],
+                offset: ['20px'],
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+            });
+        } else {
+            layer.msg('请选择一个用户');
+        }
+
+    }
+
+    function move_org() {
+        layer.open({
+            title: '移动到组织',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var body = layer.getChildFrame('body', index);
+                var ids = new Array();
+                var k = 0;
+
+                $("#tbody input").each(function (i) {
+
+                    if ($(this).is(':checked') == true) {
+                        if ($(this).val() != 'on') {
+                            ids[k] = $(this).val();
+                            k++;
+                        }
+                    }
+
+                });
+
+                var ids = JSON.stringify(ids);
+
+                if (ids.length <= 0) {
+                    layer.msg('请选勾选用户');
+                } else {
+
+                    var arr = new Array();
+
+                    body.find("input:checked").each(function (i) {
+                        arr[i] = $(this).val();
+                    });
+
+                    var tissue_Id = JSON.stringify(arr);
+
+                    if (arr != '') {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{:U('Tissue/moveUser')}",
+                            data: {"ids": ids, "tissue_Id": tissue_Id, "typeid": 2},
+                            traditional: true,
+                            success: function (msg) {
+                                if (msg.status > 0) {
+                                    layer.msg('移入成功', {icon: 1}, function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    layer.msg('移入失败');
+                                }
+                            }
+                        });
+
+                    } else {
+                        layer.msg('请选择移动组织');
+                    }
+
+                }
+            },
+            area: ['500px', '500px'],
+            type: 2,
+            offset: ['20px'],
+            skin: 'layui-layer-lan', //样式类名
+            content: "{:U('Jurisdiction/authority',array('typeid'=>1),'',true)}"
+        });
+    }
+
+    //设置管理员
+    function set_Admin(tissue_id, type) {
+
+        var txt = '';
+
+        if (type == 1) {
+            txt = '您确定设置该用户为管理员吗？';
+        } else {
+            txt = '您确定设置该用户为负责人吗？';
+        }
+
+        var str = "";
+        var ids = "";
+        var arr = new Array();
+        var k = 0;
+
+        $("#tbody input").each(function (i) {
+
+            if ($(this).is(':checked') == true) {
+                if ($(this).val() != 'on') {
+                    str += $(this).val() + ",";
+                    arr[k] = $(this).val();
+                    k++;
+                }
+            }
+
+        });
+
+        if (str.substr(str.length - 1) == ',') {
+            ids = str.substr(0, str.length - 1);
+        }
+
+        if (arr.length == 1) {
+
+            layer.confirm(txt, {
+                title: '设为负责人',
+                btn: ['确定', '取消'],
+                yes: function (index, layero) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Admin/Tissue/setAdmin')}",
+                        data: {
+                            "user_id": ids,
+                            "tissue_id": tissue_id,
+                            "type": type
+                        },
+                        traditional: true,
+                        success: function (msg) {
+                            if (msg.status > 0) {
+                                layer.msg('设置成功', {
+                                    time: 1500,
+                                    icon: 1
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+
+                                layer.msg('设置失败');
+                            }
+                        }
+                    });
+
+                },
+                skin: 'layui-layer-lan'
+                //按钮
+            }, function () {
+                layer.msg('删除成功', {
+                    time: 1500,
+                    icon: 1
+                }, function () {
+                    window.location.reload();
+                });
+            }, function () {
+                layer.msg('取消设置');
+            });
+
+        } else {
+
+            layer.msg('请勾选一位用户');
+
+        }
+    }
+
+    //全选checkbox
+    var $checkboxAll = $(".checkbox-all"),
+            $checkbox = $(".organ_table > tbody > tr > td").find("[type='checkbox']").not("[disabled]"),
+            length = $checkbox.length,
+            i = 0;
+
+    $checkboxAll.on("ifClicked", function (event) {
+        if (event.target.checked) {
+            $checkbox.iCheck('uncheck');
+            i = 0;
+        } else {
+            $checkbox.iCheck('check');
+            i = length;
+        }
+    });
+
+    //新建标签
+    function add_biaoqian() {
+        layer.open({
+            title: '新建标签',
+            btn: ['确定', '取消'],
+            type: 2,
+            yes: function (index, layero) {
+
+                var arr = new Array();
+
+                var body = layer.getChildFrame('body', index);
+
+                body.find("#addsurvey input").each(function (i) {
+                    arr[i] = [$(this).attr("id"), $(this).val()];
+                });
+
+                $.ajax({
+                    url: "{:U('addtag')}",
+                    type: "POST",
+                    data: {
+                        "list": arr
+                    },
+                    dataType: "JSON",
+                    success: function (xhr) {
+
+                        if(xhr.code == 200){
+
+                            layer.msg('操作成功', {
+                                time: 1500,
+                                icon: 1
+                            }, function () {
+                                window.location.reload();
+                            });
+
+                        }else{
+                            layer.msg(xhr.info);
+                        }
+                    },
+                })
+            },
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            area: ['600px', '360px'],
+            offset: ['20px'],
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('Admin/Tissue/tag','','',true)}"
+
+        })
+    }
+
+    //批量标记
+    function batch_marking() {
+        layer.open({
+            title: '批量标记',
+            type: 2,
+            yes: function (index, layero) {
+
+                var body = layer.getChildFrame('body', index);
+
+                var tag_id = new Array();
+
+                body.find(".active").each(function (i) {
+                    tag_id[i] = $(this).val();
+                });
+
+                var ids = new Array();
+                var k = 0;
+
+                $("#tbody input").each(function (i) {
+
+                    if ($(this).is(':checked') == true) {
+                        if ($(this).val() != 'on') {
+                            ids[k] = $(this).val();
+                            k++;
+                        }
+                    }
+
+                });
+
+
+                if (ids.length <= 0) {
+
+                    layer.msg('请选勾选用户');
+
+                }else if(tag_id.length <= 0){
+
+                    layer.msg('请选择标签');
+
+                } else {
+
+                    var ids = JSON.stringify(ids);
+                    var tag_id = JSON.stringify(tag_id);
+
+                    $.ajax({
+                        url: "{:U('addbatchmarking')}",
+                        type: "POST",
+                        data: {
+                            "list": ids,
+                            "tag_id": tag_id
+                        },
+                        dataType: "JSON",
+                        success: function (xhr) {
+                            layer.msg('操作成功', {
+                                time: 1500,
+                                icon: 1
+                            }, function () {
+                                window.location.reload();
+                            });
+                        },
+                    })
+
+                }
+
+            },
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            area: ['350px', '360px'],
+            content: "{:U('Admin/Tissue/batchmarking','','',true)}"
+        })
+    }
+
+    function del_button(items, id) {
+
+        var parentNode = items.parentNode;
+
+        if (id == 0) {
+            parentNode.remove();
+        } else {
+
+            $.ajax({
+                url: "{:U('deltag')}",
+                type: "POST",
+                data: {"id": id},
+                dataType: "JSON",
+                success: function (xhr) {
+                    if (xhr.status > 0) {
+                        layer.msg('操作成功', {time: 1500, icon: 1});
+                        parentNode.remove();
+                    } else {
+                        layer.msg('该标签正在使用,删除失败', {time: 1500});
+                    }
+                },
+            });
+
+        }
+    }
+
+    $('input:radio').on('ifChecked', function(){
+
+        var tissue_id = $(this).val();
+
+        if(tissue_id == 'administrator' || tissue_id == 'undistributed'){
+            var url ="{:U('Admin/Tissue/index/type')}/"+tissue_id;
+        }else{
+            var url ="{:U('Admin/Tissue/index/tissue_id')}/"+tissue_id;
+        }
+
+        window.location.href = url;
+
+    });
+
+
+</script>
+</body>
+
+</html>

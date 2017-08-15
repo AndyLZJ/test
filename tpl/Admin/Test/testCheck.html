@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>下拉复选菜单</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	
+	<style>
+	/* 添加标签  */
+	.checkShowTags{float:left; margin:7px 0 0 20px; }
+	.checkShowTags a{margin-right:15px; padding:0 0 0 10px; background:#B5E0FB; color:#333333; display:block; float:left; height:22px; line-height:22px; border-radius:5px; }
+	.checkShowTags a span{float:left; height:22px; line-height:22px;}
+	.checkShowTags a span.delTags{padding:0 10px 0 7px;}
+	.checkShowTags a span.delTags:hover{color:red; }
+	.dropdown-menu span{ margin-left:10px; }
+	.dropdown-menu span.sub2{ margin-left:30px; }
+	.dropdown-menu span.sub3{ margin-left:50px; }
+	</style>
+</head>
+<body>
+<div class="btn-group">
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">擅长领域
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+		<li><a><input type="checkbox" value="123"><span>功能</span></a></li>
+		<li><a><input type="checkbox" value="456"><span>另一个功能</span></a></li>
+		<li><a><input type="checkbox" value="789"><span class="sub2">另一个功能AAA</span></a></li>
+		<li><a><input type="checkbox" value="111"><span class="sub3">另一个功能BBB</span></a></li>
+		<li><a><input type="checkbox" value="456"><span class="sub3">另一个功能CCC</span></a></li>
+		<li><a><input type="checkbox" value="789"><span>另一个功能AAA</span></a></li>
+		<li><a><input type="checkbox" value="111"><span>另一个功能BBB</span></a></li>
+	</ul>
+	<div class="checkShowTags" id="myTags"></div>
+</div>
+
+<script>
+//radio选中样式
+$('input').iCheck({
+	labelHover: false,
+	cursor: true,
+	checkboxClass: 'icheckbox_square-blue',
+	radioClass: 'iradio_flat-blue',
+	increaseArea: '20%'
+});
+
+//添加标签
+//参数：   obj容器;   text 文本内容;   value标签值;   name input名称
+var setTags = function(obj, text, value, name){
+	var apdHtml = '<a title="'+text+'" href="javascript:void(0);">';
+		apdHtml += '<span>'+text+'</span><span class="delTags">';
+		apdHtml += '<input type="hidden" name="'+name+'[]" value="'+value+'">x</span></a>';
+	obj.append(apdHtml);
+};
+//删除标签
+$(document).on('click', '.delTags', function(){
+	$(this).closest("a").remove();
+});
+
+//多选下拉框
+$(".dropdown-menu").mouseout(function(){
+	$("#myTags").html("");
+	$(".dropdown-menu li").each(function(index){
+		var text = $(this).text();
+		var isCheck = $(this).find("input").is(':checked');
+		if(isCheck){
+			var chooseId = $(this).val();
+			setTags($("#myTags"), text, chooseId, "lingyu");
+		}
+	});
+});
+
+</script>
+</body>
+</html>

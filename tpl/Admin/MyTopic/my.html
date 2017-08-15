@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>我的部落-操作部落</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+</head>
+<body>
+
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+			个人中心 <small>/部落</small> <small>/我的部落</small> <small>/操作部落</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a  href="{:U('Admin/MyTopic/index')}"  class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+			<div class="box-header with-border">
+				<h3 class="box-title ">
+					{$topicname}小组 <span class="text-blue">(当前组员数量{$count})</span>
+				</h3>
+			</div>
+			<!--筛选栏开始-->
+			<div class="row mt20">
+				<div class="col-sm-4">
+                     <form  action="__SELF__"  method="GET">
+					<div class="input-group width_10">
+						<input type="text" name="table_search" class="form-control pull-right" value="{$table_search}" placeholder="输入账号快速查找组员">
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-default">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+                     </form>
+				</div>
+				<div class="col-sm-8">
+					<div class="dataTables_filter">
+						<button type="button" class="btn btn-info mr10 float_r" onclick="add_employees({$id});">
+							<i class="fa fa-gears mr5 " aria-hidden="true "></i>解散该部落
+						</button>
+					</div>
+				</div>
+			</div>
+			<!--筛选栏结束-->
+			<!--内容开始-->
+			<div class="row mt10">
+				<div class="col-sm-12">
+					<table class="table table-bordered" role="grid" aria-describedby="example1_info">
+						<thead>
+							<tr role="row" style="background-color: #f4f4f4;">
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">用户名</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">账号</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">性别</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">所属部门</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">进组时间</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">最后一次发言时间</th>
+								<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">设置</th>
+
+							</tr>
+						</thead>
+						<tbody class="passed_table">
+                           <foreach name="data" item="v">
+							<tr role="row" class="odd text-center">
+								<td>{$v['username']}</td>
+								<td>{$v['email']}</td>
+								<td>{$v['gender']}</td>
+								<td>{$v['tissuename']}</td>
+								<td>{$v['add_time']}</td>
+								<td>{$v['lastTime']}</td>
+								<td>
+								<if condition="$v['group_leader'] EQ 0">
+                                 <a href="#" class="text-blue mr20" onclick="sz_zuzhang({$v['id']},1);"> <i class="fa fa-gears mr5" aria-hidden="true"></i>设置组长</a>
+								<else />
+								 <a href="#" class="text-red mr20" onclick="qxsz_zuzhang({$v['id']},0);"> <i class="fa fa-gears mr5" aria-hidden="true"></i>取消组长</a>
+								</if>
+								
+								 <a href="#" class="color_or" onclick="out_xiaozu({$v['id']})"> <i class="fa  fa-trash-o mr5" aria-hidden="true"></i>删除该成员</a>
+								</td>
+							</tr>
+                           </foreach>
+
+
+						</tbody>
+
+						
+					</table>
+				</div>
+			</div>
+
+			<div  class="mt15">
+	             <div class="box-header with-border info_box_title mt5">
+	               <span style="font-size: 22px;">产生的话题</span>
+	             </div>
+	             <div class="box-body">
+
+	                <foreach name="alltopic" item="v"> 
+				    <div class="col-sm-12 mt20">
+					<div class="box-header with-border">
+						<div class="pull-left  mr15">
+							<div class="ulitem">
+								<div class="course_img">
+									<img width="100%"  src="{$v.welfare_covers}"   onerror="this.src='__PUBLIC__/Dist/img/topic.jpg'" />
+								
+								</div>
+							</div>
+						</div>
+						<div class="">
+							<div class="fuli_name">
+								{$v.name}
+								<!--<a class="btn btn-success pull-right" onclick="exchange('{$v.name}','{$v.need_score}')">兑换福利</a>-->
+							</div>
+							<p class="text-gray mt10">
+								{$v.describe}
+							</p>
+							<div class="course_time">
+								 <spn class="color_red">作者</spn>{$v.username}  
+								 {$v.publish_time}
+							</div>
+						</div>
+					</div>
+				   </div>  
+	                </foreach>
+				</div>
+
+
+	         </div>
+			<!--内容結束-->
+			<!--分页开始-->
+			<div class="row">
+				<div class="float_r mr15">
+					<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+						<ul class="pagination">
+							{$page}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--分页结束-->
+
+		</div>
+
+	</section>
+	<!--banner设置-->
+	<div id="add_employees" style="display: none;">
+		<div class="col-sm-12 mt10 mt30">请输入验证码解散小组</div>
+		<form class="form-horizontal col-sm-12">
+			<div class="form-group mt20">
+				<div class="col-sm-12">
+					<input id="code" type="text" style="width:140px; height:40px; font-size:20px; " class="verifyCode form-control pull-left" name="verifyCode" value="" />
+					<img class="verifyImg" src="{:U('verify')}" alt="验证码" style="margin-left:15px; height:40px; "/>
+					<a class="refreshBtn" style="color:green; margin-left:15px; cursor:pointer; "><i class="fa fa-refresh"></i></a>
+				</div>
+			</div>
+		</form>
+		<div class="col-sm-12 text-center mt10">
+			<!--<a class="btn btn-info form-group_but">解散</a>-->
+		</div>
+	</div>
+	<!--banner设置结束-->
+
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			//刷新验证码
+			$(".refreshBtn,.verifyImg").click(function(){
+				$(".verifyImg").attr("src", "{:U('verify')}");
+			});
+			
+			function out_xiaozu($id) {
+				//
+				layer.confirm('您确定要删除该成员吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					 location.href = "{:U('Admin/MyTopic/del')}"  + "/id/" + $id + "/groupid/" + {$id};
+
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+
+			function sz_zuzhang($id,$type) { //$type==1设置组长 $type==0取消组长
+				//设置组长
+				layer.confirm('确定设置该成员为组长吗？', {
+						title: '设置组长',
+						btn: ['确定', '取消'],
+						skin: 'layui-layer-lan'
+							//按钮
+					},
+					function() {
+                        location.href = "{:U('Admin/MyTopic/setLeader')}"  + "/id/" + $id + "/type/" + $type + "/groupid/" + {$id};
+
+
+
+						layer.msg('设置成功', {
+							icon: 1
+						});
+					},
+
+					function() {
+						layer.msg('取消设置', {
+							time: 2000, //2s后自动关闭
+						});
+					});
+			}
+
+			function qxsz_zuzhang($id,$type) {
+				//取消组长
+				layer.confirm('确定取消该成员的组长身份吗？', {
+						title: '取消组长',
+						btn: ['确定', '取消'],
+						skin: 'layui-layer-lan'
+							//按钮
+					},
+					function() {
+						location.href = "{:U('Admin/MyTopic/setLeader')}"  + "/id/" + $id + "/type/" + $type + "/groupid/" + {$id};
+
+						layer.msg('取消成功', {
+							icon: 1
+						});
+					},
+
+					function() {
+						layer.msg('取消设置', {
+							time: 2000, //2s后自动关闭
+						});
+					});
+			}
+
+			//解散小组
+			function add_employees($id) {
+				$("#add_employees .verifyCode").val("");
+				$(".verifyImg").attr("src", "{:U('verify')}");
+				layer.open({
+					title: '你确定要解散该小组吗',
+					btn: ['确定', '取消'],
+					area: ['400px', '260px'],
+					offset: ['20px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_employees"),
+					yes:function(){
+                      var code = $('#code').val();
+                      
+                      location.href = "{:U('Admin/MyTopic/disband')}"  + "/id/" + $id  + "/code/" + code ;
+
+						// layer.closeAll();
+					}
+				});
+				
+			}
+
+			//速度按钮变色变
+			$(".frim_line").click(function() {
+				$(".frim_line").each(function() {
+					$(this).removeClass("active");
+				});
+				$(this).addClass("active");
+			});
+		</script>
+</body>
+
+</html>

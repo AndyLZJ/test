@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>二期试题管理——试题列表</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/style.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/searchSelect/chosen.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/autocomplete/jquery.autocomplete.css">
+    	<style type="text/css">
+		.tiku_map {
+				border-radius: 5px;
+				height: 120px;
+				width: 100%;
+				color: white;
+				padding-top: 30px;
+				float: left;
+				margin-right: 15px;
+			}
+			
+			.tiku_number {
+				font-size: 1.8em;
+			}
+			.tiku_check{
+				text-align: center;
+				margin-top: -5px;
+				height: 40px;
+				line-height: 42px;
+				color: #6b6262;
+				font-weight: 600;
+				border-left: 1px solid #00c0ef;
+				border-right: 1px solid #00c0ef;
+				border-bottom: 1px solid #00c0ef;
+				text-indent: 3px;
+			}
+	</style>
+    </head>
+
+    <body>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+            试题管理
+            <small>/试题列表</small>
+        </h1>
+            <ol class="breadcrumb">
+                <li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+            </ol>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        <section class="content">
+            <div class="tab-pane active" id="good_audit">
+                <!--试题列表开始-->
+                <div>
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <!--筛选栏开始-->
+                        <div class="row">
+                        <form action="__SELF__" method="GET" id="searchForm">
+                            <div class="col-sm-2">
+                                <div class="input-group width_10">
+                                    <input type="text" name="course" class="form-control pull-right" placeholder="搜索所属课程" id="course" value="{$course}" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <select class="form-control select2 width_6" name="type" onchange="search()">
+                                        <option value="0"><a>--选择试题类型--</a></option>
+                                        <option value="1" <if condition="$type eq 1">selected</if>>单选题</option>
+                                        <option value="2" <if condition="$type eq 2">selected</if>>多选题</option>
+                                        <option value="3" <if condition="$type eq 3">selected</if>>判断题</option>
+                                        <option value="4" <if condition="$type eq 4">selected</if>>简答题</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group ">
+                                    <input type="text" name="title" class="form-control pull-right" placeholder="搜索题目表述" value="{$title}" onfocus="searchTitle();">
+                                    <input type="hidden" name="p" value="1"/>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="col-sm-6">
+                                <div id="example1_filter" class="dataTables_filter" style="margin-right:5px;">
+                                    <button type="button" class="btn btn-warning   float_r" onclick="del_all()">  <i class="fa fa-trash mr5" aria-hidden="true"></i>删除所选</button>
+                                    <button type="button" class="btn btn-primary mr10 float_r" onclick="add_classify();"> <i class="fa fa-cloud-upload mr5 " aria-hidden="true " id="import"></i>批量导入</button>
+                                    
+                                    <button type="button" class="btn btn-success mr10 float_r"  onclick="export_ex();"><i class="fa fa-mail-forward mr5 " aria-hidden="true"></i>导出所选</button>
+									<button type="button" class="btn btn-info mr10 float_r" onclick="copy_to();"><i class="fa fa-clipboard mr5 " aria-hidden="true"></i>复制到</button>
+									<button type="button" class="btn btn-info mr10 float_r" onclick="add_employees();"> <i class="fa fa-external-link mr5" aria-hidden="true"></i>移动到</button>
+										
+                                    <a href="{:U('Admin/ResourcesManage/addQuestion',array('id'=>$id))}" type="button" class="btn btn-success mr10 float_r "> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新增题目</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--筛选栏结束-->
+                        <!--内容开始-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                <label style="margin-bottom: 0px;">
+                                                    <input type="checkbox" class="passed_allcheck">
+                                                </label>
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题目描述</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题型</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所属课程</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tab" class="passed_table">
+                                        <foreach name="list" item="v" key="k">
+                                            <tr role="row" class="odd text-center">
+                                                <td>
+                                                	<if condition="$v.isequality neq '1'">
+                                                    <input type="checkbox" name="checkbox[]" value="{$v.id}">
+                                                    <else/>
+                                                    <input type="checkbox" disabled="disabled"/>
+                                                    </if>
+                                                </td>
+                                                <td>{$k+1}</td>
+                                                <td>{$v.title|msubstr=###,0,35}</td>
+                                                <td width="15%">
+                                                    <if condition="$v['classification'] eq 1">单选题
+                                                    <elseif condition="$v['classification'] eq 2"/>多选题
+                                                    <elseif condition="$v['classification'] eq 3"/>判断题
+                                                    <else/>简答题
+                                                    </if>
+                                                </td>
+                                                <td width="15%">{$v['course_name']}</td>
+                                                <td width="15%">
+                                                    <a style="cursor:pointer;" onclick="show_details({$v.id});" class="bs-callout-info">
+                                                        <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </foreach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--内容結束-->
+                        <!--分页开始-->
+                        <div class="row">
+                            <div class="float_r mr15">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                        <!--分页结束-->
+                    </div>
+                </div>
+                <!--课程列表结束-->
+            </div>
+        </section>
+<!--导入试题start-->
+<div id="uploadexam" style="display:none">
+    <form action="{:U('importQuestion',array('id'=>$id))}" method="post" enctype="multipart/form-data">
+        <div class="mb10">请选择所属课程</div>
+        <div class="form-group">
+            <select class="form-control select2 width_10" name="belongcourse">
+            	<option value="">--请选择所属课程--</option>
+                <foreach name="allCourse" item="v">
+                    <option value="{$v.id}">{$v.course_name}</option>
+                </foreach>
+            </select>
+        </div>
+        <div  class="mb10 uploadify">
+            <input type="file" name="importQuestionUpload" style="width:85%;"/>
+            <input type="hidden" name="bank_id" value="{$id}"/>
+            <!-- <button  type="button" class="btn btn-primary mr10 ">一、选择文件</button>暂未选择文件 -->
+        </div>
+        
+        <div class="mb10"> 
+                <button type="button" class="btn btn-block btn-success " onclick="window.location.href='{:U('downloadQuestion')}'">
+                    <i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板
+                </button> 
+        </div>
+        <div class="mb10">注：试卷导入后不可在线修改，修改需重新导入。</div>
+        <input style="margin-buttom:-20px;margin-left:90px" class="btn btn-primary mr10" type="submit" value="提交"/>
+        <input type="button" value="取消" onclick="javascript:layer.closeAll();" class="btn btn-primary mr10">
+    </form>
+</div>
+<input type="hidden" name="course_name" id="course_name" value="{$course_name}">
+<input type="hidden" name="question_bank_id" value="{$id}"/>
+<input type="hidden" name="bank" value="0" id="bank"/>
+
+<!--导入试题end-->
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/searchSelect/chosen.jquery.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src='__PUBLIC__/plugins/autocomplete/jquery.autocomplete.js'></script>
+<script type="text/javascript">
+	
+	//移动到
+    function add_employees(){
+    	var s = $('input[type=checkbox]:checked').length;
+		if(s < 1){
+			layer.msg('尚未勾选',{time:2000});
+    		return false;
+		}
+		
+		var id = $('input[name=question_bank_id]').val();	//从哪移
+		
+		layer.open({
+			title: '移动到试题库',
+			btn: ['确定', '取消'],
+			area: ['1050px', '560px'],
+			offset: ['20px'],
+			type: 2,
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			shadeClose: true, //开启遮罩关闭
+			content: "{:U('Admin/QuestionBank/move')}" + "/id/" +id,
+			yes:function(){
+				var bank = $('#bank').val();
+				var news=document.getElementsByName('checkbox[]');   
+		        var ids  = new Array();
+				var target_id = bank;//移到哪
+				
+				if(bank == 0){
+					layer.msg('请选择想要移动到的试题库',{time:2000});
+    				return false;
+				}
+				
+		        for (var i = 0,ress=0; i < news.length; i++) {
+		            if(news[i].checked){
+		                ress=ress+1;
+		                ids.push(news[i].value);
+		            }
+		        }
+		        
+		        $.ajax({
+		            type:"post",
+		            url: "{:U('QuestionBank/moveto')}",
+		            data:"target_id="+target_id+"&id="+id+"&ids="+ids,
+		            success:function(s){
+		            	layer.msg(s.info,{time:2000},function(){
+		            		window.location.reload();
+		            	});
+		          	}
+		        });
+			}
+		});
+	}
+    
+    //复制到
+    function copy_to(){
+    	var s = $('input[type=checkbox]:checked').length;
+		if(s < 1){
+			layer.msg('尚未勾选',{time:2000});
+    		return false;
+		}
+		
+		var id = $('input[name=question_bank_id]').val();	//从哪复制
+        
+		layer.open({
+			title: '复制到试题库',
+			btn: ['确定', '取消'],
+			area: ['1050px', '560px'],
+			offset: ['20px'],
+			type: 2,
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			shadeClose: true, //开启遮罩关闭
+			content: "{:U('Admin/QuestionBank/move')}" + "/id/" +id,
+			yes:function(){
+				var bank = $('#bank').val();
+				var target_id = bank;//复制到哪
+				var news=document.getElementsByName('checkbox[]');   
+		        var ids  = new Array();	
+		        
+				if(bank == 0){
+					layer.msg('请选择想要复制到的试题库',{time:2000});
+    				return false;
+				}
+				
+		        for (var i = 0,ress=0; i < news.length; i++) {
+		            if(news[i].checked){
+		                ress=ress+1;
+		                ids.push(news[i].value);
+		            }
+		        }
+		       
+		        $.ajax({
+		            type:"post",
+		            url: "{:U('QuestionBank/copyto')}",
+		            data:"target_id="+target_id+"&id="+id+"&ids="+ids,
+		            success:function(s){
+		            	layer.msg(s.info,{time:2000},function(){
+		            		window.location.reload();
+		            	});
+		          	}
+		        });
+			}
+		});
+	}
+    
+    //导出
+    function export_ex(){
+    	var s = $('input[type=checkbox]:checked').length;
+    	var id = $('input[name=question_bank_id]').val();//题库ID
+		if(s < 1){
+			layer.msg('尚未勾选',{time:2000});
+    		return false;
+		}
+		var ids  = new Array();
+		var news=document.getElementsByName('checkbox[]');   
+        for (var i = 0,ress=0; i < news.length; i++) {
+            if(news[i].checked){
+                ress=ress+1;
+                ids.push(news[i].value);
+            }
+        }
+        
+        var u = "{:U('QuestionBank/export')}";
+        var ext = "?id="+id+"&ids="+ids;
+        u += ext;
+        window.location.href = u;
+	}
+    
+    $('#course').autocomplete({
+        lookup: {$search},
+        minChars: 1,
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: '未查到'
+    });
+
+    //radio选中样式
+    $('input').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_minimal-blue',
+        increaseArea: '20%'
+    });
+
+    function search(){
+        $('#searchForm').submit();
+    }
+
+    //导入试题
+    function add_classify() {
+        layer.open({
+            title: '试题导入',
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 0, //显示关闭按钮
+            offset:'100px',
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: $('#uploadexam').html(),
+            success:function(){
+                $('.layui-layer-btn').hide();
+            }
+        })
+    }
+
+    //已通过全选checkbox
+    var $checkboxAll = $(".passed_allcheck"),
+        $checkbox = $(".passed_table").find("[type='checkbox']").not("[disabled]"),
+        length = $checkbox.length,
+        i = 0;
+
+    $checkboxAll.on("ifClicked", function(event) {
+        if(event.target.checked) {
+            $checkbox.iCheck('uncheck');
+            i = 0;
+        } else {
+            $checkbox.iCheck('check');
+            i = length;
+        }
+    });
+
+    //查看 试题
+    function show_details(id) {
+        var url = "{:U('Admin/ResourcesManage/examDetails')}";
+        var data = "id=" + id;
+        $.ajax({
+            type:"post",
+            url: url,
+            data:data,
+            success:function(s){
+            layer.open({
+                title: '单题查看',
+                area: ['800px', '70vmin'],
+                // offset: ['50px','250px'],
+                type: 1,
+                closeBtn:0,
+                skin: 'layui-layer-lan', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: s
+            })
+          }
+        });
+    }
+
+    //批量删除
+    function del_all(a){
+        var news=document.getElementsByName('checkbox[]');   
+        var mess  = new Array();
+        for (var i = 0,ress=0; i < news.length; i++) {
+            if(news[i].checked){
+                ress=ress+1;
+                mess.push(news[i].value);
+            }
+        }
+        layer.confirm('确定要删除吗?', {
+            title: '删除试题',
+            offset:'150px',
+            btn: ['确定','取消'],
+            shadeClose: true, //开启遮罩关闭
+            skin: 'layui-layer-lan'
+        }, function(){
+            if(mess && mess.length == 0){
+                 layer.msg('请勾选一条试题', {time: 1000});
+                }else{
+                    $.post("{:U('delQuestion')}",{id:mess}, function(msg) {  
+                        if(msg.status == 1){  
+                            layer.msg('删除成功',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                            setTimeout("location.reload();",1000);//刷新当前页面.
+                        }else{
+                            layer.msg('删除失败', { time: 1000});
+                            setTimeout("location.reload();",1000);//刷新当前页面. 
+                        }  
+                    },'json');
+                }
+            },function(){
+              layer.msg('取消操作',{time: 1000});
+           }
+        
+        );
+    }
+    
+    
+
+
+
+</script>
+</body>
+</html>

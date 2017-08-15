@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心_内训师档案</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Js/js/date/jedateJquery/skin/jedate.css">
+</head>
+<style type="text/css">
+    .ulitem {
+        padding: 10px;
+        border: 1px #dcdcdc solid;
+    }
+
+    .ulitem:hover {
+        border: 1px #0288d1 solid;
+        box-shadow: 0 1px 3px rgba(3, 169, 244, .45);
+    }
+
+    .course_img {
+        position: relative;
+    }
+
+    .course_time {
+        padding: 7px;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999999;
+        color: #fff;
+        position: absolute;
+        right: 0px;
+        left: 0px;
+        bottom: 0px;
+    }
+
+    .integral_stati {
+        display: block;
+        margin: 0 auto;
+        border: 16px solid #fff;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 3.0rem;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, .2);
+        line-height: 180px;
+        overflow: hidden;
+        cursor: default;
+    }
+</style>
+
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        个人中心
+        <small>/内训师档案</small>
+    </h1>
+    <ol class="breadcrumb">
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div style="width:220px;">
+        <select class="form-control select2 width_10" id="chart">
+            <option value="1">柱状图显示</option>
+            <!-- 一级分类 -->
+            <option value="2">仪表盘显示</option>
+        </select>
+    </div>
+
+    <div class="chart" id="meter">
+        <div class="box-header with-border info_box_title">
+            <span>内训任务完成情况</span>
+        </div>
+        <div class="box-body">
+            <div class="col-sm-4 text-center mt10">
+                <div id="chart-teachgoal" style="height:280px;"></div>
+                <div class="float_l" style="margin-top: -55px;width: 100%;">
+                    <if condition="$typeid[0] eq 1">年度
+                        <elseif condition="$typeid[0] eq 2"/>
+                        季计划
+                        <elseif condition="$typeid[0] eq 3"/>
+                        月计划
+                        <else/>
+                        年度
+                    </if>
+                    授课目标完成率
+                </div>
+            </div>
+            <div class="col-sm-4 text-center">
+                <div id="chart-teachtime" style="height:280px;"></div>
+                <div class="float_l" style="margin-top: -55px;width: 100%;">
+                    <if condition="$typeid[1] eq 1">年度
+                        <elseif condition="$typeid[1] eq 2"/>
+                        季计划
+                        <elseif condition="$typeid[1] eq 3"/>
+                        月计划
+                        <else/>
+                        年度
+                    </if>
+                    授课时长完成率
+                </div>
+            </div>
+            <div class="col-sm-4 text-center mt10">
+                <div id="chart-exploit" style="height:280px;"></div>
+                <div class="float_l" style="margin-top: -55px;width: 100%;">
+                    <if condition="$typeid[2] eq 1">年度
+                        <elseif condition="$typeid[2] eq 2"/>
+                        季计划
+                        <elseif condition="$typeid[2] eq 3"/>
+                        月计划
+                        <else/>
+                        年度
+                    </if>
+                    课程开发目标完成率
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--学分流水-->
+    <div class="chart">
+        <div class="box-header with-border info_box_title">
+            <span>目标完成情况柱状图</span>
+        </div>
+        <div class="row mt15">
+            <div class="col-sm-4">
+                <div id="chart-contrast" style="width: 100%; height:430px;"></div>
+            </div>
+            <div class="col-sm-4">
+                <div id="chart-contrast2" style="width: 100%; height:430px;"></div>
+            </div>
+            <div class="col-sm-4">
+                <div id="chart-contrast3" style="width: 100%; height:430px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-tabs-custom" style="box-shadow: none;">
+        <ul class="nav nav-tabs">
+            <li><a href="{:U('MyGoal/goalPage')}" data-toggle="">全部</a></li>
+            <li class="active"><a href="{:U('MyGoal/goalPage',array('typeid'=>1))}">授课情况</a></li>
+            <li><a href="{:U('MyGoal/goalPage',array('typeid'=>2))}">课程开发情况</a></li>
+        </ul>
+
+    </div>
+    <!--  分隔符开始-->
+    <div class="box-header with-border no-padding"></div>
+    <div class="row mt15" style="margin:0px;">
+        <form action="{:U('Admin/MyGoal/goalPage',array('typeid'=>1))}" method="get">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select class="form-control select2 width_10 search" name="tissue_id">
+                        <option selected="selected" value="-1">选择主办部门</option>
+                        <foreach name="course_list.department_all" item="vo" >
+                            <option value="{$vo.user_id}" <if condition="$course_list['tissue_id'] eq $vo['user_id']">selected="selected"</if>>{$vo.name}</option>
+                        </foreach>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select class="form-control select2 width_10 search" name="training_category_id">
+                        <option selected="selected" value="-1">选择培训类别</option>
+                        <option value="0" <if condition="$course_list['training_category_id'] eq 0">selected="selected"</if>>内部培训</option>
+                        <option value="1" <if condition="$course_list['training_category_id'] eq 1">selected="selected"</if>>外派培训</option>
+                        <option value="2" <if condition="$course_list['training_category_id'] eq 2">selected="selected"</if>>外出授课</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+
+                    <div class="col-lg-12">
+                        <span class="float_l mt10">开始时间：</span>
+                        <div class="input-group date" style="float:left; width:25%;">
+                            <!-- <div class="input-group-addon">
+                                <i class="fa fa-calendar" onclick="jeDate({dateCell:'#start_time',isTime:false,isToday:false,format:'YYYY-MM'})"></i>
+                            </div> -->
+                            <input type="text" class="form-control pull-right" id="start_time" readonly name="start" value="{$course_list.start_time}">
+                        </div>
+                        <span class=" mt10" style="float:left;">&nbsp;至&nbsp;结束日期：</span>
+                        <div class="input-group date" style="">
+                            <!-- <div class="input-group-addon">
+                                <i class="fa fa-calendar" onclick="jeDate({dateCell:'#start_time',isTime:false,isToday:false,format:'YYYY-MM'})"></i>
+                            </div> -->
+                            <input type="text" class="form-control pull-right" id="end_time" readonly name="end" value="{$course_list.end_time}">
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="col-sm-4">
+                <div class="input-group " style="float:left;">
+                    <input type="text" name="keyword" class="form-control pull-right" placeholder="请输入培训班名称/课程名称" value="{$course_list.keyword}">
+                </div>
+                <div class="input-group " style="float:left; width:10px;">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left" style="float:left; width:15px;">
+                    <a class="btn btn-info form-group_but" href="{:U('Admin/MyGoal/export_teaching',array('typeid'=>1,'start'=>$course_list['start_time'],'end'=>$course_list['end_time'],'training_category_id'=>$course_list['training_category_id'],'tissue_id'=>$course_list['tissue_id'],'keyword'=>$course_list['keyword'],'classid'=>1))}">导出</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--费用统计分析内容开始-->
+    <div class="row mt15">
+        <div class="col-sm-12">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row">
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">主办部门</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训班名称</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训类别</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训课程名称</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训对象</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">授课课时</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程满意度</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+                </tr>
+                </thead>
+                <tbody id="tab" class="passed_table">
+                <foreach name="course_list.list" item="v" key="k">
+                    <tr role="row" class="odd text-center">
+                        <td>{$k+1}</td>
+                        <td>{$v.tissue_name|default='---'}</td>
+                        <td>{$v.project_name}</td>
+                        <td>
+                            <if condition="$v.training_category eq 0">内部培训<elseif condition="$v.training_category eq 1"/>外派培训<elseif condition="$v.training_category eq 2"/>外出授课<else />--</if>
+                        </td>
+                        <td>{$v.start_time}</td>
+                        <td>{$v.end_time}</td>
+                        <td>{$v.course_name}</td>
+                        <td>{$v.class_name|msubstr=0,30}</td>
+                        <td>{$v.course_time} 分钟</td>
+                        <td>{$v.percentage} % </td>
+                        <td class="text-red star"><a href="#" onclick="detail({$v['project_id']})">查看详情</a></td>
+                    </tr>
+                </foreach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--内容結束-->
+    <!--分页开始-->
+    <div class="row">
+        <div class="float_r mr15">
+            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                {$course_list.page}
+            </div>
+        </div>
+    </div>
+    <!--分页结束-->
+</section>
+</body>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/Js/js/date/jedateJquery/jquery.jedate.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+
+    $('#start_time').jeDate({
+        isTime:false,
+        format:'YYYY-MM'
+    });
+
+    $('#end_time').jeDate({
+        isTime:false,
+        format:'YYYY-MM'
+    });
+
+    //年度授课时长完成率仪
+    var myChart = echarts.init(document.getElementById('chart-teachgoal'));
+    option = { //年度授课目标完成率仪
+        legend: {
+            right: 10, // legend 放置在右侧中间。
+            top: '0%',
+            orient: 'vertical' // 纵向布局。
+        },
+        tooltip: {
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '',
+            type: 'gauge',
+            center: ['50%', '50%'], // 调整全局居中位置
+            radius: '90%', //整体内部大小控制
+            detail: {
+                formatter: '{value}%'
+            }, //仪表盘显示数据
+            axisLine: { //仪表盘轴线样式
+                lineStyle: {
+                    width: 20
+                }
+            },
+            splitLine: { //分割线样式
+                length: 20
+            },
+            data: [{
+                value: {$rateTeachNum},
+                name: '目标完成率'
+            }]
+        }]
+    };
+    myChart.setOption(option);
+
+    //年度授课时长完成率仪
+    var myChart = echarts.init(document.getElementById('chart-teachtime'));
+    option = { //年度授课时长完成率仪
+        legend: {
+            right: 10, // legend 放置在右侧中间。
+            top: '0%',
+            orient: 'vertical' // 纵向布局。
+        },
+        tooltip: {
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '',
+            type: 'gauge',
+            center: ['50%', '50%'], // 调整全局居中位置
+            radius: '90%', //整体内部大小控制
+            detail: {
+                formatter: '{value}%'
+            }, //仪表盘显示数据
+            axisLine: { //仪表盘轴线样式
+                lineStyle: {
+                    width: 20
+                }
+            },
+            splitLine: { //分割线样式
+                length: 20
+            },
+            data: [{
+                value: {$rateTeachTime},
+                name: '时长完成率'
+            }]
+        }]
+    };
+
+    myChart.setOption(option);
+
+    //年度课程开发目标完成率
+    var myChart = echarts.init(document.getElementById('chart-exploit'));
+    option = { //年度课程开发目标完成率
+        legend: {
+            right: 10, // legend 放置在右侧中间。
+            top: '0%',
+            orient: 'vertical' // 纵向布局。
+        },
+        tooltip: {
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '',
+            type: 'gauge',
+            center: ['50%', '50%'], // 调整全局居中位置
+            radius: '90%', //整体内部大小控制
+            detail: {
+                formatter: '{value}%'
+            }, //仪表盘显示数据
+            axisLine: { //仪表盘轴线样式
+                lineStyle: {
+                    width: 20
+                }
+            },
+            splitLine: { //分割线样式
+                length: 20
+            },
+            data: [{
+                value: {$rateCourseNum},
+                name: '开发目标完成率'
+            }]
+        }]
+    };
+
+    myChart.setOption(option);
+
+
+    //授课目标信息对比树状图
+    var myChart = echarts.init(document.getElementById('chart-contrast'));
+
+    // 授课目标信息对比树状图
+    var option = {
+        title: {},
+        tooltip: {},
+        legend: {
+            data: ['已完成次数', '目标次数']
+        },
+        xAxis: {
+            data: ["年度授课次数", "年度授课时长（小时）", "年度课程开发"]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '已完成次数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['green'],
+                data: [12, 20, 41]
+            },
+            {
+                name: '目标次数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#C23531'],
+                data: [25, 30, 50]
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+
+    //年度授课次数信息对比树状图
+    var myChart = echarts.init(document.getElementById('chart-contrast'));
+
+    // 年度授课次数信息对比树状图
+    var option = {
+        title: {},
+        tooltip: {},
+        legend: {
+            data: ['已完成次数', '目标次数']
+        },
+        xAxis: {
+            data: ["<if condition="$typeid[0] eq 1">年度<elseif condition="$typeid[0] eq 2"/>季计划<elseif condition="$typeid[0] eq 3" /> 月计划 <else />年度</if>授课次数"]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '已完成次数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['green'],
+                data: [{$realTeachNum}]
+            },
+            {
+                name: '目标次数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#C23531'],
+                data: [{$teachNum}]
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+
+    //年度授课时长（分钟）信息对比树状图
+    var myChart = echarts.init(document.getElementById('chart-contrast2'));
+
+    // 授课目标信息对比树状图
+    var option = {
+        title: {},
+        tooltip: {},
+        legend: {
+            data: ['已完成时长', '目标时长']
+        },
+        xAxis: {
+            data: ["<if condition="$typeid[1] eq 1">年度<elseif condition="$typeid[1] eq 2"/>季计划<elseif condition="$typeid[1] eq 3" /> 月计划 <else />年度</if>授课时长（小时）"]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '已完成时长',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#5DAFE6'],
+                data: [{$realTeachTime}]
+            },
+            {
+                name: '目标时长',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#C23531'],
+                data: [{$teachTime}]
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    //年度课程开发信息对比树状图
+    var myChart = echarts.init(document.getElementById('chart-contrast3'));
+
+    // 年度课程开发信息对比树状图
+    var option = {
+        title: {},
+        tooltip: {},
+        legend: {
+            data: ['已完成节数', '目标节数']
+        },
+        xAxis: {
+            data: ["<if condition="$typeid[2] eq 1">年度<elseif condition="$typeid[2] eq 2"/>季计划<elseif condition="$typeid[2] eq 3" /> 月计划 <else />年度</if>课程开发（节）"]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '已完成节数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#EDB157'],
+                data: [{$realCourseNum}]
+            },
+            {
+                name: '目标节数',
+                type: 'bar',
+                barWidth: 35,
+                color: ['#C23531'],
+                data: [{$courseNum}]
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    $("#meter").hide();
+
+    $("#chart").change(function(){
+
+        $(".chart").toggle();
+
+    })
+
+    function detail(id){
+
+        var url = "{:U('Admin/MyGoal/detail')}"+'/id/'+id;
+
+        layer.open({
+            title: '查看详情',
+            type: 2,
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            area: ['80%', '650px'],
+            content:url
+        })
+
+    }
+
+
+</script>
+</html>

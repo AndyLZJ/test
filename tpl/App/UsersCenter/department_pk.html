@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>部门PK</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+
+</head>
+<body>
+
+    <input type="hidden" name="token" id="token" value="{$items.token}"/>
+    <input type="hidden" name="secret_key" id="secret_key" value="{$items.secret_key}"/>
+    <div class="my_blank"></div>
+    <div class="pk1">
+        <if condition="$items['my_total'] gt $items['pk_total']">
+        <div class="wbg">
+            <h1>这次赢了，<br />下次也要赢哦！</h1>
+            <div id="main" ></div>
+            <div class="common_button">换个部门PK</div>
+        </div>
+           <elseif condition="$items['my_total'] eq $items['pk_total']"/>
+            <div class="wbg">
+                <h1>这次和了，<br />下次要赢哦！</h1>
+                <div id="main" ></div>
+                <div class="common_button">换个部门PK</div>
+            </div>
+            <else />
+        <div class="wbg">
+            <h1>这次输了，<br />下次加油哦！</h1>
+            <div id="main" ></div>
+            <div class="common_button">换个部门PK</div>
+        </div>
+        </if>
+        <div class="info">
+            <span>
+                <b>我们部门</b><br/>
+                {$items['my_total']}分
+            </span>
+            <span class="fr">
+                <b>对方部门</b><br/>
+                {$items['pk_total']}分
+            </span>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script src="__PUBLIC__/Mobile/js/echarts.min.js"></script>
+<script>
+    $(function(){
+        //选择部门
+        $(".common_button").click(function() {
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/pkDepartment?token="+token+"&secret_key="+secret_key;
+        });
+        var myChart = echarts.init($("#main")[0]);
+        var option = {
+            grid: {
+                left: '1%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['客服部人',"理赔部人"],
+                    axisTick :{show:false},
+                    axisLabel:{textStyle:{color:"#73909d"}}
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLine :{show:false},
+                    axisLabel:{show:false},
+                    axisTick :{show:false}
+                }
+            ],
+            series : [
+                {
+                    type:'bar',
+                    barWidth: '28%',
+                    data:[
+                    {
+                        //value:5,
+                        label:{
+                            normal : {
+                                show:true,
+                                position:"top",
+                                formatter:"{c}分",
+                                textStyle:{color:"#73909d"}
+                            }
+                        },
+                        itemStyle:{
+                            normal:{
+                                color:"#5867c3"
+                            }
+                        }
+                    }
+                    ,{
+                        value:3,
+                        label:{
+                            normal : {
+                                show:true,
+                                position:"top",
+                                formatter:"{c}分",
+                                textStyle:{color:"#73909d"}
+                            }
+                        },
+                        itemStyle:{
+                            normal:{
+                                color:"#ff525e"
+                            }
+                        }
+                    }]
+                }
+            ]
+        };
+
+        //option.legend['data'][0] = {$items['my_name']};
+        //option.legend['data'][1] = {$items['pk_name']};
+        option.xAxis[0]['data'][0] = '{$items['my_name']}';
+        option.xAxis[0]['data'][1] ='{$items['pk_name']}' ;
+        option.series[0]['data'][0]['value'] = {$items['my_total']};
+        option.series[0]['data'][1]['value'] = {$items['pk_total']};
+
+        myChart.setOption(option);
+    })
+</script>
+</html>

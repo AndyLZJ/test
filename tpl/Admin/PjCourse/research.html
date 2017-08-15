@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+
+<div id="add_diaoyan">
+    <div class="box-header with-border">
+        <h3 class="box-title">添加调研问卷</h3>
+    </div>
+    <div class="box-body">
+        <!--筛选栏开始-->
+        <div>
+            <!--
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <select class="form-control select2 width_10">
+                        <option>
+                            <a>--问卷分类--</a>
+                        </option>
+                        <option>
+                            <a>类别一</a>
+                        </option>
+                        <option>类别二</option>
+                    </select>
+                </div>
+            </div>-->
+            <form action="{:U('PjCourse/research')}" method="get">
+                <div class="col-sm-8">
+                    <div class="input-group " style="float:right;width:50%">
+                        <input type="text"  name="keywords" class="form-control pull-right" placeholder="请输入问卷名称" style="width:220px; float:left;">
+                        <if condition="$typeid eq 1"><input type="hidden" name="typeid" value="1"/></if>
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--筛选栏结束-->
+
+        <div class="col-sm-12 mt10">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row">
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">问卷类别</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+                </tr>
+                </thead>
+                <tbody id="tab">
+                    <foreach name="list" item="vo">
+                        <tr role="row" class="odd text-center">
+                            <td>
+                                <a href="#">{$vo.survey_name}</a>
+                            </td>
+                            <td> {$vo.cat_name}</td>
+                            <td>
+                                <if condition="$typeid eq 1"><input name="survey" type="radio" value="{$vo.id}" class="testchecks" alt="{$vo.survey_name}"><else /><input type="checkbox" value="{$vo.id}" class="testchecks"></if>
+                            </td>
+                        </tr>
+                    </foreach>
+                </tbody>
+            </table>
+        </div>
+        <!--分页开始-->
+        <div class="float_r mr15">
+            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                {$pages}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

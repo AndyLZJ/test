@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>直播首页</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/lunbo/easySlider.css"/>
+		<style type="text/css">
+			.course_img {
+				position: relative;
+			}
+			
+			.course_time {
+				padding: 7px;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 9999999;
+				color: #fff;
+				position: absolute;
+				right: 0px;
+				left: 0px;
+				bottom: 0px;
+			}
+			
+			.course_zt {
+				border-radius: 5px;
+				color: white;
+				padding: 8px 15px;
+				background-color: red;
+				position: absolute;
+				right: 5px;
+				top: 5px;
+			}
+			
+			.bg_green {
+				background-color: #00cc99;
+			}
+			
+			.col-sm-3 img{width:100%; }
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+				        课程直播
+				        <small>/直播首页</small>
+				    </h1>
+			<ol class="breadcrumb">
+				<li>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="dataTables_wrapper form-inline dt-bootstrap ">
+				<!--内容开始-->
+				<div class="box-header with-border info_box_title">
+					<span>直播</span>
+				</div>
+				<div id="slider" style="position:relative; margin:10px auto; overflow: hidden; width:100%; ">
+					<ul class="slides clearfix" style="position: relative; width: 400%;">
+						<li style="width: 25%; float: left;"><a><img class="responsive" src="__PUBLIC__/plugins/lunbo/1.jpg"></a></li>
+						<li style="width: 25%; float: left;"><a><img class="responsive" src="__PUBLIC__/plugins/lunbo/2.jpg"></a></li>
+						<li style="width: 25%; float: left;"><a><img class="responsive" src="__PUBLIC__/plugins/lunbo/3.jpg"></a></li>
+					</ul>
+					<ul class="controls" style="cursor: pointer;">
+						<li style="position: absolute; margin-top: -36px;"><img src="__PUBLIC__/plugins/lunbo/prev.png" alt="previous"></li>
+						<li style="position: absolute; margin-top: -36px;"><img src="__PUBLIC__/plugins/lunbo/next.png" alt="next"></li>
+					</ul>
+					<ul class="pagination">
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				
+				<div class="nav-tabs-custom  mb10">
+					<div class="box-header with-border info_box_title">
+						<span>直播列表</span>
+					</div>
+					<div class="tab-content">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="input-group width_10 ">
+									<input type="text" name="table_search" class="form-control pull-right" placeholder="请输入讲师名称或课程名称……">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--项目互动列表开始-->
+						<div class="row mt10">
+							<div class="col-sm-3 mb20">
+								<div class="ulitem">
+									<a href="__CONTROLLER__/livePage">
+										<div class="course_img">
+											<label class="course_zt bg-yellow">未开始</label>
+											<img src="__PUBLIC__/Dist/img/class1.png" />
+											<div class="course_time text-center">
+												当大数据用于治国我们应该了解什么？
+											</div>
+										</div>
+									</a>
+									<div class="box-title mt5 row text-center">
+										<label class="col-sm-12"> <i class="fa  fa-clock-o mr5 "></i>时间 ： 2017-6-23  16.00 ~ 2017-6-23 17.00</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3 mb20">
+								<div class="ulitem">
+									<a href="__CONTROLLER__/livePage">
+										<div class="course_img">
+											<label class="course_zt bg-green">进行中</label>
+											<img src="__PUBLIC__/Dist/img/class2.png" />
+											<div class="course_time text-center">
+												徐老师讲解世界历史
+											</div>
+										</div>
+									</a>
+									<div class="box-title mt5 row text-center">
+										<label class="col-sm-12"> <i class="fa  fa-clock-o mr5 "></i>时间 ： 2017-6-23  16.00 ~ 2017-6-23 17.00</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3 mb20">
+								<div class="ulitem">
+									<a href="__CONTROLLER__/livePage?status=end">
+										<div class="course_img">
+											<label class="course_zt bg-danger">已结束</label>
+											<img src="/Upload/cnm20170720151248.jpg" />
+											<div class="course_time text-center">
+												听袁腾飞老师讲中华文明起源
+											</div>
+										</div>
+									</a>
+									<div class="box-title mt5 row text-center">
+										<label class="col-sm-12"> <i class="fa  fa-clock-o mr5 "></i>时间 ： 2017-6-23  16.00 ~ 2017-6-23 17.00</label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!--分页开始-->
+						<div class="row">
+							<div class="float_r mr20">
+								<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+									
+								</div>
+							</div>
+						</div>
+						<!--分页结束	-->
+					</div>
+				</div>
+				<!--内容結束-->
+			</div>
+
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/lunbo/easySlider.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			
+			$(function() {
+				$("#slider").easySlider( {
+					slideSpeed: 500,
+					paginationSpacing: "15px",
+					paginationDiameter: "12px",
+					paginationPositionFromBottom: "20px",
+					slidesClass: ".slides",
+					controlsClass: ".controls",
+					paginationClass: ".pagination"					
+				});
+			});
+		</script>
+	</body>
+
+</html>

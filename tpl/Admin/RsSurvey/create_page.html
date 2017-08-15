@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>资源管理_新建问卷</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<!-- 图片预览插件 -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/dropify-v0.2.2/css/dropify.min.css"/>
+
+<style type="text/css">
+a {
+	color: #337ab7;
+}
+
+a:hover,a:active,a:focus {
+	outline: none;
+	text-decoration: none;
+	color: #03A9F4;
+}
+.itemOrder{
+	font-size:16px; 
+	color:#777; 
+    border-top: 2px dashed #ddd;
+    margin:30px 0 30px 30px;
+    padding-top:15px;
+}
+.itemOrder span {
+	font-size:20px; 
+	font-weight:700; 
+	padding-right:20px;
+}
+
+.optImg, .itemImg{
+	display:none; 
+	width:200px; height:150px; 
+}
+.dropify-wrapper{width:200px; height:150px; }
+.text-gray{color:#777 !important;}
+#defaultSetHtml{width:300px; }
+#defaultSetHtml button{float:left; margin:20px 0 0 30px; }
+</style>
+</head>
+<body>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+			资源管理 <small>/问卷管理</small> <small>/新建问卷</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="javascript:history.go(-1);"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div class="box">
+			<div class="box-body">
+				<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+					<div class="box-header with-border">
+						<div class="row">
+							<div class="dataTables_filter">
+								<button type="button" class="btn btn-info mr20 defaultSet">
+									<i class="fa fa-gears mr5 " aria-hidden="true "></i>预设表单
+								</button>
+								<button type="button" class="btn btn-success mr20 addChoose">
+									<i class="fa fa-plus mr5 " aria-hidden="true "></i>新增选择题
+								</button>
+								<button type="button" class="btn btn-info addFill">
+									<i class="fa fa-plus mr5 " aria-hidden="true "></i>新增填空题
+								</button>
+								<a class="btn btn-warning  float_r " href="__CONTROLLER__/listPage">
+									<i class="fa fa-close mr5 " aria-hidden="true "></i>取消
+								</a>
+								<button type="button" class="btn btn-info mr20  float_r saveFormB">
+									<i class="fa fa-paper-plane-o mr5 " aria-hidden="true "></i>保存并发布
+								</button>
+								<button type="button" class="btn btn-success mr20 float_r saveFromA">
+									<i class="fa fa-paper-plane-o mr5 " aria-hidden="true "></i>保存问卷
+								</button>
+
+							</div>
+						</div>
+					</div>
+					<div class="form-horizontal">
+						<div class="box-body">
+							<div class=" form-group mt10">
+								<label class="col-sm-2 control-label"><span class="color_red">*</span>分类：{$survey.survey_cat_id}</label>
+								<div class="col-sm-3">
+									<select name="survey_cat_id" class="survey_cat_id form-control select2 width_10">
+										<option value="">--请选择分类--</option>
+										<foreach name="cats" item="v">
+										<option value="{$v.id}"
+											<if condition="$v['id'] eq $survey['survey_cat_id']"> selected="seleceted" </if>
+											>{$v.cat_name}
+										</option>
+										</foreach>
+									</select>
+								</div>
+							</div>
+							<div class=" form-group">
+								<label class="col-sm-2 control-label"><span class="color_red">*</span>标题：</label>
+								<div class="col-sm-10">
+									<input style="width: 300px;" type="text" class="survey_name form-control mr30"  placeholder="请输入标题" value="{$survey.survey_name}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">简介：</label>
+								<div class="col-sm-6">
+									<textarea name="survey_desc" class="survey_desc form-control width_10" rows="4" placeholder="请输入简介  ...">{$survey.survey_desc}</textarea>
+								</div>
+							</div>
+							<div class="itemList">
+								<!-- 题目列表 -->
+							</div>
+						</div>
+						
+						<div class="form-group mt20">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-6">
+								<button type="button" class="btn btn-success mr20 addChoose">
+									<i class="fa fa-plus mr5 " aria-hidden="true "></i>新增选择题
+								</button>
+								<button type="button" class="btn btn-info addFill">
+									<i class="fa fa-plus mr5 " aria-hidden="true "></i>新增填空题
+								</button>
+							</div>
+						</div>
+					</div>
+					<!--内容結束-->
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- 新增选择题   -->
+	<div id="addChooseHtml" style="display:none;">
+		<div class="itemCon">
+			<form action="" method="post">
+			<p class="itemOrder"><span>第1题</span>选择题</p>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="color_red">*</span>题目：</label>
+				<div class="col-sm-6">
+					<textarea class="form-control width_10" rows="4" name="title" placeholder="请输入标题/题干  ..."></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">插图：</label>
+				<div class="col-sm-6">
+					<label class="mt5"><a href="javascript:void(0)" class="chooseItemImg">选择图片</a></label>
+					<div class="itemImg">
+						<input type="file" name="img" class="dropify">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">必填：</label>
+				<div class="col-sm-6">
+					<div class="mt5">
+						<span class="mr30"><input class="mr15" type="radio" name="is_must" value="1" checked="checked"/>是</span> 
+						<input class="mr5" type="radio" name="is_must" value="2"  />否
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">选项：</label>
+				<div class="col-sm-6">
+					<div class="mt5">
+						<span class="mr15"><input class="mr5" type="radio" name="classification" value="1" checked="checked"/>单选</span> 
+						<input class="mr5" type="radio" name="classification" value="2" />多选
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">类型：</label>
+				<div class="col-sm-6">
+					<div class="mt5">
+						<span class="mr15"><input class="mr5" type="radio" name="item_type" value="1" checked="checked"/>投票</span> 
+						<input class="mr5" type="radio" name="item_type" value="2"/>普通<span class="text-gray">（投票：用户提交后对其显示总体选项分布情况）</span>
+					</div>
+				</div>
+			</div>
+			<div class="optList">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span class="color_red">*</span>选项：</label>
+					<div class="col-sm-10">
+						<input style="width: 300px;" type="text" class="form-control mr30" name="option[]" placeholder="请输入选项文字">
+						<label class="mt5"><a href="javascript:void(0)" class="chooseOptImg">选择图片</a></label>
+						<span class="ml20">
+							<a href="javascript:void(0)" class="optUp"><i class="fa fa-lg fa-arrow-circle-o-up mr10 " aria-hidden="true "></i></a>
+							<a href="javascript:void(0)" class="optDown"><i class="fa fa-lg fa-arrow-circle-o-down mr10 " aria-hidden="true "></i></a>
+							<a href="javascript:void(0)" class="optDel"><i class="fa fa-lg fa-minus-circle mr10 " aria-hidden="true "></i></a>
+							<a href="javascript:void(0)" class="optAdd"><i class="fa fa-lg fa-plus-circle mr10 " aria-hidden="true "></i></a>
+						</span>
+						<div class="optImg">
+							<input type="file" name="opt_img[]" class="dropify"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">操作：</label>
+				<div class="col-sm-6">
+					<div class="text-left">
+						<a class="btn btn-social-icon btn-info mr10 moveUp" title="上移"><i class="fa fa-caret-up"></i></a><!-- 上移 -->
+						<a class="btn btn-social-icon btn-info mr10 moveDown" title="下移"><i class="fa fa-caret-down"></i></a><!-- 下移 -->
+						<a class="btn btn-social-icon btn-google mr10 delItem" title="删除"><i class="fa fa-trash-o"></i></a><!-- 删除 -->
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- 新增填空题 -->
+	<div id="addFillHtml" style="display:none;">
+		<div class="itemCon">
+			<form action="" method="post">
+				<input type="hidden" name="classification" value="3"/>
+				<p class="itemOrder"><span>第1题</span>简答题</p>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span class="color_red">*</span>题目：</label>
+					<div class="col-sm-6">
+						<textarea class="form-control width_10" rows="4" name="title" placeholder="请输入标题/题干  ..."></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">插图：</label>
+					<div class="col-sm-6">
+						<label class="mt5"><a href="javascript:void(0)" class="chooseItemImg">选择图片</a></label>
+						<div class="itemImg">
+							<input type="file" name="img" class="dropify">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">必填：</label>
+					<div class="col-sm-6">
+						<div class="mt5">
+							<span class="mr15">
+							<input class="mr5" type="radio" name="is_must" value="1" checked="checked"/> 是</span> 
+							<input class="mr5" type="radio" name="is_must" value="2"  /> 否 
+							<span style="float: right;"> 验证：<select style="width: 130px;" name="verify_type" class="form-control select2">
+									<option value="0">无</option>
+									<option value="1">只允许整数</option>
+									<option value="2">只允许数字</option>
+									<option value="3">只允许英文字母</option>
+									<option value="4">只允许汉字</option>
+									<option value="5">手机号</option>
+									<option value="6">固话</option>
+									<option value="7">邮件</option>
+									<option value="8">身份证号</option>
+							</select></span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">回答引导语：</label>
+					<div class="col-sm-8">
+						<input style="width: 300px;" type="text" class="form-control mr30" name="guser_ide_msg" placeholder="请输入引导语">
+						<span style="font-size:12px; color:#999">（示例：如文本框内提示请输入手机号）</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">操作：</label>
+					<div class="col-sm-6">
+						<div class="text-left">
+							<a class="btn btn-social-icon btn-info mr10 moveUp" title="上移"><i class="fa fa-caret-up"></i></a><!-- 上移 -->
+							<a class="btn btn-social-icon btn-info mr10 moveDown" title="下移"><i class="fa fa-caret-down"></i></a><!-- 下移 -->
+							<a class="btn btn-social-icon btn-google mr10 delItem" title="删除"><i class="fa fa-trash-o"></i></a><!-- 删除 -->
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- 新增题目选项 -->
+	<div id="addOptHtml" style="display:none;">
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><span class="color_red">*</span>选项：</label>
+			<div class="col-sm-10">
+				<input style="width: 300px;" type="text" class="form-control mr30" name="option[]" placeholder="请输入选项文字">
+				<label class="mt5"><a href="javascript:void(0)" class="chooseOptImg">选择图片</a></label>
+				<span class="ml20">
+					<a href="javascript:void(0)" class="optUp"><i class="fa fa-lg fa-arrow-circle-o-up mr10 " aria-hidden="true "></i></a>
+					<a href="javascript:void(0)" class="optDown"><i class="fa fa-lg fa-arrow-circle-o-down mr10 " aria-hidden="true "></i></a>
+					<a href="javascript:void(0)" class="optDel"><i class="fa fa-lg fa-minus-circle mr10 " aria-hidden="true "></i></a>
+					<a href="javascript:void(0)" class="optAdd"><i class="fa fa-lg fa-plus-circle mr10 " aria-hidden="true "></i></a>
+				</span>
+				<div class="optImg">
+					<input type="file" name="opt_img[]" class="dropify"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 预设表单 -->
+	<div id="defaultSetHtml" style="display:none;">
+		  <button type="button" class="btn btn btn-success def_name">姓名</button>
+		  <button type="button" class="btn btn btn-success def_sex">性别</button>
+		  <button type="button" class="btn btn btn-success def_age">年龄段</button>
+		  <button type="button" class="btn btn btn-success def_email">邮箱</button>
+		  <button type="button" class="btn btn btn-success def_date">日期</button>
+		  <button type="button" class="btn btn btn-success def_mobile">手机号</button>
+	</div>
+	
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/plugins/dropify-v0.2.2/js/dropify.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			/*
+			*--------------------------------------------------------------------------
+			*								预设表单
+			*--------------------------------------------------------------------------
+			*/
+			$(".defaultSet").click(function(){
+				layer.open({
+					title: '预设表单',
+					area: ['300px', '200px'],
+					offset: ['200px'],
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					type: 1,
+					content: $("#defaultSetHtml"),
+					
+				});
+			});
+			
+			$("#defaultSetHtml button").click(function(){
+				layer.closeAll();
+			});
+			
+			$(".def_name").click(function(){
+				addFill();
+				var title = "请填写您的姓名";
+				var guser_ide_msg = "请输入姓名";
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find("input[name='guser_ide_msg']").val(guser_ide_msg);
+				defSet.find("select[name='verify_type']").val(4);
+			});
+			
+			$(".def_sex").click(function(){
+				addChoose();
+				var title = "请选择您的性别";
+				var optHtml = '<div class="form-group"><label class="col-sm-2 control-label"><span class="color_red">*</span>选项：</label><div class="col-sm-10"><input style="width: 300px;" type="text" class="form-control mr30" name="option[]" placeholder="请输入选项文字" value="男"></div></div>';
+				optHtml += '<div class="form-group"><label class="col-sm-2 control-label"><span class="color_red">*</span>选项：</label><div class="col-sm-10"><input style="width: 300px;" type="text" class="form-control mr30" name="option[]" placeholder="请输入选项文字" value="女"></div></div>';
+				
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find(".optList").html(optHtml);
+			});
+			
+			$(".def_age").click(function(){
+				addChoose();
+				var title = "请选择您的年龄范围";
+				var optHtmlPre = '<div class="form-group"><label class="col-sm-2 control-label"><span class="color_red">*</span>选项：</label><div class="col-sm-10"><input style="width: 300px;" type="text" class="form-control mr30" name="option[]" placeholder="请输入选项文字" value="';
+				var optHtmlSuff = '"><label class="mt5"><a href="javascript:void(0)" class="chooseOptImg">选择图片</a></label><span class="ml20"><a href="javascript:void(0)" class="optUp"><i class="fa fa-lg fa-arrow-circle-o-up mr10 " aria-hidden="true "></i></a><a href="javascript:void(0)" class="optDown"><i class="fa fa-lg fa-arrow-circle-o-down mr10 " aria-hidden="true "></i></a><a href="javascript:void(0)" class="optDel"><i class="fa fa-lg fa-minus-circle mr10 " aria-hidden="true "></i></a><a href="javascript:void(0)" class="optAdd"><i class="fa fa-lg fa-plus-circle mr10 " aria-hidden="true "></i></a></span></div></div>';
+				var optHtml = "";
+				optHtml += optHtmlPre+'18岁以下'+optHtmlSuff;
+				optHtml += optHtmlPre+'18-25'+optHtmlSuff;
+				optHtml += optHtmlPre+'26-30'+optHtmlSuff;
+				optHtml += optHtmlPre+'31-40'+optHtmlSuff;
+				optHtml += optHtmlPre+'41-50'+optHtmlSuff;
+				optHtml += optHtmlPre+'51-60'+optHtmlSuff;
+				optHtml += optHtmlPre+'60岁以上'+optHtmlSuff;
+				
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find(".optList").html(optHtml);
+			});
+			
+			$(".def_email").click(function(){
+				addFill();
+				var title = "请输入您的电子邮箱";
+				var guser_ide_msg = "请输入邮箱";
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find("input[name='guser_ide_msg']").val(guser_ide_msg);
+				defSet.find("select[name='verify_type']").val(7);
+			});
+			
+			$(".def_date").click(function(){
+				addFill();
+				var title = "请输入日期";
+				var guser_ide_msg = "请输入日期";
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find("input[name='guser_ide_msg']").val(guser_ide_msg);
+			});
+			
+			$(".def_mobile").click(function(){
+				addFill();
+				var title = "请输入手机号";
+				var guser_ide_msg = "请输入手机号";
+				var length = $(".itemList .itemCon").length;
+				var defSet = $(".itemCon").eq(length-1);
+				defSet.find("textarea[name='title']").val(title);
+				defSet.find("input[name='guser_ide_msg']").val(guser_ide_msg);
+				defSet.find("select[name='verify_type']").val(5);
+			});
+			
+			/*
+			*--------------------------------------------------------------------------
+			*								选项操作部分
+			*--------------------------------------------------------------------------
+			*/
+			//选项图片
+			$(".itemList").on("click",".chooseOptImg",function(){
+				$('.itemList .dropify').dropify({
+	               messages: {
+	                    default: '选择图片',
+	                    replace: '点击更换图片',
+	                    remove:  '删除图片'
+	                }
+	            });
+				$(this).closest(".form-group").find(".dropify").click();
+				$(this).closest(".form-group").find(".optImg").show();
+			});
+			
+			//删除图片
+			$(".itemList").on("click",".dropify-clear",function(){
+            	$(this).closest(".optImg").hide();
+            });
+			
+			//添加选项
+			$(".itemList").on("click",".optAdd",function(){
+            	var htmlCon = $("#addOptHtml").html();
+            	$(this).closest(".itemCon").find(".optList").append(htmlCon);
+            });
+			
+			//删除选项
+			$(".itemList").on("click",".optDel",function(){
+				var length = $(this).closest(".optList").find(".form-group").length;
+				if(length == 1){
+					layer.alert("至少保留一个选项");
+					return false;
+				}
+            	$(this).closest(".form-group").remove();
+            });
+			
+			//上移选项
+			$(".itemList").on("click",".optUp",function(){
+				var index = $(this).closest(".form-group").index();
+				if(index == 0){
+					return false;
+				}
+				var htmlCon = $(this).closest(".form-group");
+				$(this).closest(".optList").find(".form-group").eq(index-1).before(htmlCon);
+            });
+			
+			//下移选项
+			$(".itemList").on("click",".optDown",function(){
+				var index = $(this).closest(".form-group").index();
+				var length = $(this).closest(".optList").find(".form-group").length;
+				if(index == (length - 1)){
+					return false;
+				}
+				var htmlCon = $(this).closest(".form-group");
+				$(this).closest(".optList").find(".form-group").eq(index+1).after(htmlCon);
+            });
+			
+			/*
+			*--------------------------------------------------------------------------
+			*								试题操作部分
+			*--------------------------------------------------------------------------
+			*/
+			//新增选择题
+			$(".addChoose").click(function(){
+				addChoose();
+			});
+			
+			function addChoose(){
+				var htmlCon = $("#addChooseHtml").html();
+				$(".itemList").append(htmlCon);
+				
+				$('.itemList input').iCheck({
+					labelHover : false,
+					cursor : true,
+					checkboxClass : 'icheckbox_square-blue',
+					radioClass : 'iradio_flat-blue',
+					increaseArea : '20%'
+				});
+				orderSet();
+			}
+			
+			//新增简答题
+			$(".addFill").click(function(){
+				addFill();
+			});
+			function addFill(){
+				var htmlCon = $("#addFillHtml").html();
+				$(".itemList").append(htmlCon);
+				
+				$('.itemList input').iCheck({
+					labelHover : false,
+					cursor : true,
+					checkboxClass : 'icheckbox_square-blue',
+					radioClass : 'iradio_flat-blue',
+					increaseArea : '20%'
+				});
+				orderSet();
+			}
+			
+			//上移题目
+			$(".itemList").on("click",".moveUp",function(){
+				var index = $(this).closest(".itemCon").index();
+				if(index == 0){
+					return false;
+				}
+				var htmlCon = $(this).closest(".itemCon");
+				$(".itemCon").eq(index-1).before(htmlCon);
+				orderSet();
+			});
+			
+			//下移题目
+			$(".itemList").on("click",".moveDown",function(){
+				var index = $(this).closest(".itemCon").index();
+				var length = $(".itemList .itemCon").length;
+				if(index == (length - 1)){
+					return false;
+				}
+				var htmlCon = $(this).closest(".itemCon");
+				$(".itemCon").eq(index+1).after(htmlCon);
+				orderSet();
+			});
+			
+			//选择图片
+			$(".itemList").on("click",".chooseItemImg",function(){
+				$('.itemList .itemImg .dropify').dropify({
+		               messages: {
+		                    default: '选择图片',
+		                    replace: '点击更换图片',
+		                    remove:  '删除图片'
+		                }
+		            });
+				$(this).closest("div").find(".dropify").click();
+				$(this).closest("div").find(".itemImg").show();
+			});
+			
+			//预览
+			$(".previewItem").on("click",function(){
+			});
+			//编辑
+			$(".editItem").on("click",function(){
+			});
+			//复制
+			$(".itemList").on("click",".copyItem",function(){
+			});
+			
+			//删除
+			$(".itemList").on("click",".delItem",function(){
+				$(this).closest(".itemCon").remove();
+			});
+			
+			//计算题目序号
+			function orderSet(){
+				$(".itemList .itemOrder").each(function(index,element){
+					$(element).find("span").text("第"+(index+1)+"题");
+				});
+			}
+			
+			/*
+			*--------------------------------------------------------------------------
+			*								保存部分
+			*--------------------------------------------------------------------------
+			*/
+			//保存问卷不发布 saveFormA
+			$(".saveFromA").click(function(){
+				saveSurvey(5);
+			});
+			
+			//保存并发布 saveFormB
+			$(".saveFormB").click(function(){
+				saveSurvey(0);
+			});
+			
+			function saveSurvey(status){
+				var auth = formAuth();
+				if(!auth){
+					return false;
+				}
+				var loading = layer.load(0);
+				var survey_cat_id = $(".survey_cat_id").val();
+				var survey_name = $(".survey_name").val();
+				var survey_desc = $(".survey_desc").val();
+				survey_cat_id = $.trim(survey_cat_id);
+				survey_name = $.trim(survey_name);
+				survey_desc = $.trim(survey_desc);
+				var surveyData = "survey_cat_id="+survey_cat_id+"&survey_name="+survey_name+"&survey_desc="+survey_desc+"&status="+status;
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/createSurvey",
+					data: surveyData,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							//保存试题
+							var surveyId = data.lastId;
+							saveSurveyItem(surveyId);
+							
+							layer.msg('添加完成',{icon: 1});
+							setTimeout(function(){
+								if(status == 5){
+									location.href = "__CONTROLLER__/listPage?type=2";
+								}else{
+									location.href = "__CONTROLLER__/listPage?type=3";
+								}
+							}, 2000);
+						}else{
+							layer.close(loading);
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+			
+			//保存试题
+			function saveSurveyItem(surveyId){
+				$(".itemList .itemCon").each(function(index,element){
+					var formObj = $(element).find("form");
+					var formData = new FormData(formObj[0]);
+					formData.append("survey_id", surveyId);
+					formData.append("orders", index);
+		         	$.ajax({
+						type: "post",
+						url: "__CONTROLLER__/createItem",
+						data: formData,
+						dataType: "json",
+						contentType: false,
+						processData: false,
+						success: function(data){
+							//循环保存试题，不再提示
+							/* if(data.code == 1000){
+								layer.alert("操作成功");
+							}else{
+								layer.alert(data.message);
+							} */
+						}
+					});
+				});
+			}
+			
+			//表单验证
+			function formAuth(){
+				var survey_cat_id = $(".survey_cat_id").val();
+				var survey_name = $(".survey_name").val();
+				var survey_desc = $(".survey_desc").val();
+				survey_cat_id = $.trim(survey_cat_id);
+				survey_name = $.trim(survey_name);
+				survey_desc = $.trim(survey_desc);
+				if(survey_cat_id == ''){
+					layer.alert("请选择问卷分类");
+					return false;
+				}
+				if(survey_name == ''){
+					layer.alert("请填写问卷标题");
+					return false;
+				}
+				
+				var itemNum = $(".itemList .itemCon").length;
+				if(itemNum == 0){
+					layer.alert("请添加问卷题目");
+					return false;
+				}
+				
+				var itemStatus = true;
+				$(".itemList .itemCon").each(function(index,element){
+					var formObj = $(element).find("form");
+					var formData = new FormData(formObj[0]);
+					//var formData = formObj.serialize();
+					
+					var title = formObj.find("textarea[name='title']").val();
+					title = $.trim(title);
+					if(!title || title==""){
+						layer.alert('第'+(index+1)+'题题目不能为空');
+						itemStatus = false;
+						return false;
+					}else{
+						var strLen = title.length;
+						if(strLen > 1000){
+							layer.alert('第'+(index+1)+'题题目最多1000字');
+							itemStatus = false;
+							return false;
+						}
+					}
+					
+					var itemImg = formObj.find("input[name='img']").val();
+					if(itemImg){
+						var lastIndex = itemImg.lastIndexOf(".");
+						var imgFomat = itemImg.substring(lastIndex + 1).toLowerCase();
+						if(imgFomat != 'png' && imgFomat != 'jpg' && imgFomat != 'jpeg' && imgFomat != 'gif' && imgFomat != 'bmp'){
+							layer.alert('第'+(index+1)+'题题目插图格式不正确');
+							itemStatus = false;
+							return false;
+						}
+					}
+					
+					var classification = formObj.find("input[name='classification']").val();
+					if(classification == "1" || classification == "2"){
+						var optNum = formObj.find(".optList .form-group").length;
+						if(optNum < 2 || optNum > 20){
+							layer.alert('第'+(index+1)+'题选项个数必须在2-20之间');
+							itemStatus = false;
+							return false;
+						}
+						formObj.find(".optList .form-group").each(function(optIndex,optObj){
+							var imgFile = $(optObj).find("input[name='opt_img[]']").val();
+							var opt = $(optObj).find("input[name='option[]']").val();
+							opt = $.trim(opt);
+							if(imgFile){
+								var lastIndex = imgFile.lastIndexOf(".");
+								var imgFomat = imgFile.substring(lastIndex + 1).toLowerCase();
+								if(imgFomat != 'png' && imgFomat != 'jpg' && imgFomat != 'jpeg' && imgFomat != 'gif' && imgFomat != 'bmp'){
+									layer.alert('第'+(index+1)+'题选项上传图片格式不正确');
+									itemStatus = false;
+									return false;
+								}
+							}else{
+								if(!opt || opt==""){
+									layer.alert('第'+(index+1)+'题选项文本、选项图片至少填写一个');
+									itemStatus = false;
+									return false;
+								}
+							}
+							if(opt){
+								var strLen = opt.length;
+								if(strLen > 500){
+									layer.alert('第'+(index+1)+'题选项最多500字');
+									itemStatus = false;
+									return false;
+								}
+							}
+						});
+					}
+				});
+				if(itemStatus){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

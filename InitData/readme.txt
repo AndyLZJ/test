@@ -1,0 +1,18 @@
+需要初始化数据的表：
+think_admin_message_type 消息类型表
+think_admin_nav 菜单表
+think_audit_condition 审核条件表
+think_audit_rule 审核规则表
+think_auth_group 用户组表
+think_auth_group_access 用户组明细表
+think_auth_rule 权限规则表 
+think_integration_rule 积分规则表
+think_tissue_group_access 组织用户关联表，只要超级管理员信息
+think_users 用户表 ，只要超级管理员信息
+think_province_city_area 地区表
+
+注意表结构的差异，开发环境 VS 线上环境表结构可能不一致，需要对比更新此处的sql文件
+
+目前仅支持MYSQL操作
+
+有效文件为sql文件，其他文件会过滤掉

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>融易点-修改导入用户</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jquery-timepicker/jquery-ui-timepicker-addon.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/jquery-timepicker/jquery-ui.min.css" />
+</head>
+<body>
+<!--内容区域顶栏面包屑结束-->
+<!--添加员工窗口-->
+<div id="add_employees" style="float:left;">
+       <form class="form-horizontal col-sm-12" id="edit_form" method="post">
+		<input type="hidden" name="id" class="id" value="{$id}" />
+		<!--基本信息开始-->
+		<div class="box-header with-border info_box_title mb15">
+			<span>基本信息</span>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label "><span class="text-red">*</span>账号：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入员工电子邮箱" value="{$email}" name="email"/>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label "><span class="text-red">*</span>密码：</label>
+				<div class="col-sm-8">
+					<p style="line-height:30px;">123456（默认）</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label "><span class="text-red">*</span>姓名：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入姓名" name="name" value="{$name}" />
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">出生日期：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" value="{$birthday}" id="birthday" name="birthday" />
+				</div>
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">性别：</label>
+				<div class="col-sm-8">
+					<div class="mt5">
+						<span class="mr15"> <input class="mr5" type="radio" name="sex" value="1" <if condition="$sex eq 1"> checked="checked" </if>/> 男</span>
+						 <input class="mr5" type="radio" name="sex" value="2" <if condition="$sex eq 2"> checked="checked" </if>/> 女
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">年龄：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入年龄" value="{$age}" name="age"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="box-header with-border info_box_title mb15">
+			<span>岗位信息</span>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">入集团时间：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="" id="group_time" name="group_time" value="{$group_time}"/>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">入中心时间：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="" id="center_time" name="center_time" value="{$center_time}"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">区域：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入区域" name="area" value="{$value}"/>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">岗位：</label>
+				<div class="col-sm-8" style="width:211px; ">
+					<select class="jobSel" style="width:211px; float:left; height:34px; border:1px solid #ccc; ">
+						<option value="">--选择岗位--</option>
+						<foreach name="job_list" item="thisData">
+							<option value="{$thisData.name}">{$thisData.name}</option>
+						</foreach>
+					</select>
+					<input type="text" name="job_name" class="form-control company" placeholder="请填写岗位" value="{$job_name}" style="margin-top:-34px; width:185px; float:left; "/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">分公司：</label>
+				<div class="col-sm-8" style="width:211px; ">
+					<select class="companySel" style="width:211px; float:left; height:34px; border:1px solid #ccc; ">
+						<option value="">--选择分公司--</option>
+						<foreach name="company_list" item="thisData">
+							<option value="{$thisData.id}">{$thisData.name}</option>
+						</foreach>
+					</select>
+					<input type="text" name="company" class="form-control company" placeholder="请填写分公司" value="{$company}" style="margin-top:-34px; width:185px; float:left; "/>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">部门：</label>
+				<div class="col-sm-8" style="width:211px; ">
+					<select class="partSel" style="width:211px; float:left; height:34px; border:1px solid #ccc; ">
+						<option value="">--选择部门--</option>
+					</select>
+					<input type="text" name="part" class="form-control part" placeholder="请填写部门" value="{$part}" style="margin-top:-34px; width:185px; float:left;"/>
+				</div>
+			</div>
+			<!-- <div class="col-sm-6">
+				<label class="col-sm-4 control-label ">工号：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入工号" name="job_number" value="{$job_number}" />
+				</div>
+			</div> -->
+		</div>
+
+		<div class="form-group ">
+
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">室：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入科室" name="room" value="{$room}" />
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">职级：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="" name="job_level" value="{$job_level}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">序列：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入序列" name="sequence" value="{$sequence}" />
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">用户组级别：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入组级别" name="user_level" value="{$user_level}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="box-header with-border info_box_title mb15">
+			<span>个人信息</span>
+		</div>
+
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">学历：</label>
+				<div class="col-sm-8">
+					<select class="form-control select2 width_10" name="edu" id="edu">
+						<option value="">选择学历</option>
+						<option value="1" <if condition="$education eq 1">selected="selected"</if> >博士研究生</option>
+						<option value="2" <if condition="$education eq 2">selected="selected"</if> >硕士研究生</option>
+						<option value="3" <if condition="$education eq 3">selected="selected"</if> >本科</option>
+						<option value="4" <if condition="$education eq 4">selected="selected"</if> >专科</option>
+						<option value="5" <if condition="$education eq 5">selected="selected"</if> >专科以下</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label "><span class="text-red">*</span>手机号码：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入手机号" name="phone" value="{$phone}"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">办公电话：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入办公电话" value="{$office_phone}" name="office_phone"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="col-sm-6">
+				<label class="col-sm-4 control-label ">IP电话：</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="请输入IP电话" value="{$ip_phone}" name="ip_phone"/>
+				</div>
+			</div>
+		</div>
+    </form>
+</div>
+<!--添加员工窗口-->
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/plugins/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/jquery-timepicker/jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+	//radio选中样式
+	$('input').iCheck({
+		labelHover: false,
+		cursor: true,
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'icheckbox_minimal-blue',
+		increaseArea: '20%'
+	});
+
+	$(function(){
+		$('#birthday,#group_time,#center_time').datetimepicker({
+			showHour: false,
+			showMinute: false,
+			showSecond: false,
+			timeFormat: '',
+			separator: '',
+		});
+	});
+	
+	$(".companySel").change(function(){
+		var tid = $(this).val();
+		if(!tid || tid == ""){
+			return false;
+		}
+		
+		var option = $(this).find("option:selected").text();
+		$(this).siblings(".company").val(option);
+		$.ajax({
+			type: "get",
+			url: "__CONTROLLER__/getPart?tid="+tid+"&random="+Math.random(),
+			dataType: "json",
+			success: function(data){
+				if(data.code == 1000){
+					var ophtml = '<option value="">选择部门</option>';
+					for(var i=0; i<data.part_list.length; i++){
+						var thisData = data.part_list[i];
+						ophtml += '<option value="'+thisData.name+'">'+thisData.name+'</option>';
+					}
+					$(".partSel").html(ophtml);
+				}
+			}
+		});
+	});
+	
+	$(".partSel").change(function(){
+		var option = $(this).val();
+		$(this).siblings(".part").val(option);
+	});
+	
+	$(".jobSel").change(function(){
+		var option = $(this).val();
+		$(this).siblings(".job_name").val(option);
+	});
+	
+	$("#birthday").change(function(){
+		var birth = $(this).val();
+		var birthYear = birth.substr(0, 4);
+		birthYear = parseInt(birthYear);
+		var date=new Date;
+		var nowYear = date.getFullYear();
+		var age = nowYear - birthYear;
+		if(age > 0){
+			$("input[name='age']").val(age);
+		}
+	});
+	
+	$("#birthday").mouseover(function(){
+		$('html, body').animate({  
+            scrollTop: $(this).offset().top - 20
+        }, 200);
+	});
+	
+</script>
+</body>
+</html>

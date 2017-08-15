@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>课程详情_评价</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+		<!-- video player -->
+		<link rel="stylesheet" href="__PUBLIC__/videoPlayer/video-js.css">
+		<style type="text/css">
+			.course_img{height:100%; }
+			body,fieldset,legend,button,input,textarea{margin:0; padding:0; border:0; outline:0}
+			a:hover,a:visited,a:link,a:active{text-decoration:none}
+			sup{vertical-align:text-top}
+			sub{vertical-align:text-bottom}
+			legend{color:#000}
+			fieldset,img{border:0}
+			button,input,select,textarea{font-size:100%}
+			table{border-collapse:collapse; border-spacing:0}
+			.clear{clear:both; float:none; height:0; overflow:hidden}
+			#pn{height:auto; background:#fff; margin:0 auto; padding:20px; padding-top:0}
+			.list0{padding:20px 0; position:relative; border-top:1px solid #eee}
+			.head{width:60px; float:left}
+			.head img{width:60px; height:60px; border-radius:50%}
+			.close{width:20px; height:20px; position:absolute; top:0; right:0; color:#696e78; font-size:14px; text-align:center; line-height:20px}
+			.close:hover{color:#eb7350}
+			.HF_content{line-height:20px; font-size:14px; margin-left:70px}
+			.name{color:#eb7350}
+			.pic{margin:5px 0}
+			.good:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.good{*zoom:1; margin-top:5px}
+			.date{float:left; color:#808080}
+			.good a{float:right; color:#808080}
+			.people{background:#f7f7f7; height:28px; line-height:28px; padding-left:10px; margin:5px 0}
+			.comment:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.comment{*zoom:1; padding:10px 0; border-top:1px solid #eee}
+			.comment-left{width:30px; float:left; display:inline; margin-right:10px}
+			.comment-left img{width:30px; height:30px; border-radius:50%; border:1px solid #e0dddd; padding:2px}
+			.comment-text{line-height:18px}
+			.comment-text span{color:#eb7350}
+			.comment-date{font-size:12px; line-height:14px; color:#ccc; position:relative}
+			.comment-zan{position:absolute; right:95px; bottom:0; color:#808080}
+			.comment-dele{position:absolute; right:0; bottom:0; color:#808080}
+			.hf:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.hf{*zoom:1; margin-top:5px}
+			.hf-text{border:1px solid #eee; display:block; height:35px; width:100%; padding:5px; resize:none; color:#ccc; font-size:12px}
+			.hf-on .hf-text{height:60px; color:#333; border:1px solid #ff8140}
+			.hf-btn{float:right; width:65px; height:26px; background:#f7f7f7; color:#ccc; font-size:12px; display:none}
+			.hf-btn-on{background:#ff8140; color:#fff}
+			.hf-nub{float:right; padding:3px 5px; color:#666; display:none}
+			.hf-on .hf-btn{display:inline}
+			.hf-on .hf-nub{display:inline}
+			.huifu{right:45px}
+			.FBmap{margin:auto}
+			.FBmap textarea{resize:none; border:1px solid #c7c3c3; width:100%; min-height:100px; margin:auto; margin-top:5px}
+			.FBmap textarea:focus{resize:none; border:1px solid #ff8140; width:100%; min-height:100px; margin:auto; margin-top:5px; padding:3px; font-size:16px}
+			.FBbtn{float:right; color:white; cursor:pointer; height:35px; width:75px; margin-top:-5px; background-color:orangered}
+			.course_cover{padding:1px; margin:0; width:706px; height:406px; border:2px solid #ccc;}
+			.kejianFullScreen{position: absolute; right: 20px; margin-top: -35px; cursor:pointer; }
+			.kejianSetFull{margin:0; border:0; padding:0; clear:both; position:fixed; right:0; top:0; left:0; bottom:0; z-index:99999; }
+			
+			/*课程问答*/
+			.btn1{border: none; height: 2.0em; background-color: #3E8CD0; color: white; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn2{border: none; height: 2.0em; background-color: #e1e2e4; color: black; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn1:focus{outline: none; border: none; }
+			.btn2:focus{outline: none; border: none; }
+			.que_map{border: 1px solid #00acd6; padding: 0px 5px; border-radius: 5px; position: absolute; top: 0px; width: 100%; }
+			.que_gundong{border: 1px solid #00acd6; padding: 0px 5px; border-radius: 5px; position: fixed; top: 0px; width: 32%; background:#fff; }
+			.chap_string{padding:0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+			
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<!---课程评价开始-->
+			<div class="row">
+				<if condition="$base.joinStatus eq 0">
+				<p style="font-size:20px; color:#bbb; ">加入到我的课程后才可以评价哦~~</p>
+				</if>
+				
+				<if condition="$base.joinStatus eq 1">
+				<div class="course_comment_editor FBmap">
+					<!--富文本编辑器-->
+					<script id="container" name="content" type="text/plain" style="height: 160px;width:100%;margin: 10px 0px 10px 0px;">
+					这里写你的初始化内容
+					</script>
+					<div style="height: 45px;">
+						<button class="FBbtn" onclick="FaBu()">添加评价</button>
+					</div>
+				</div>
+				<ul id="pn">
+					<!-- 初始文本框区域-->
+					<!-- 初始文本框区域结束-->
+					<foreach name="commentList.list" item="clist">
+					<li class="list0">
+						<if condition="($clist.del_status eq 1) OR ($manager eq 'true')"><a class="close" href="javascript:;" style="opacity: 0.6;">X</a></if>
+						<input type="hidden" value="{$clist.id}" class="comment_id"/>
+						<div class="head"><img src="{$clist.avatar}" onerror="this.src='__PUBLIC__/Dist/img/avatar5.png'"/></div>
+						<div class="HF_content">
+							<p class="text"><span class="name">{$clist.username}：</span>{$clist.comment_content}</p>
+							<div class="good"><span class="date">{$clist.comment_time}</span>
+								<if condition="$clist.zan_status eq 1">
+								<a class="dzan" href="javascript:;">取消赞</a>
+								<else/>
+								<a class="dzan" href="javascript:;">赞</a>
+								</if>
+								<notempty name="clist.sub_list">
+									<a href="javascript:void(0);" style="color: red;float:right; margin-right: 50px;"><span class="closeSub" >收起回复▲</span></a>
+								</notempty>
+							</div>
+							<div class="people" <if condition="$clist.zan == 0"> style="display:none;" </if> total="{$clist.zan}">{$clist.zan}人觉得很赞</div>
+							<div class="comment-list">
+								<!-- 子评论开始 -->
+								<foreach name="clist.sub_list" item="sublist">
+								<div class="comment" user="self">
+									<div class="comment-left"><img src="{$sublist.avatar}" onerror="this.src='__PUBLIC__/Dist/img/avatar5.png'"/></div>
+									<div class="comment-right">
+										<div class="comment-text"><span class="user">{$sublist.username}：</span><notempty name="sublist.reply_user">回复 {$sublist.reply_user}：</notempty>{$sublist.comment_content}</div>
+										<div class="comment-date">{$sublist.comment_time}
+											<if condition="($sublist.del_status eq 1) OR ($manager eq 'true')">
+											<a style="right:0px;" class="comment-dele" rel="{$sublist.id}" href="javascript:;">删除</a>
+											<else/>
+											<a style="right:0px;" class="comment-dele" rel="{$sublist.id}" href="javascript:;">回复</a>
+											</if>
+										</div>
+									</div>
+								</div>
+								</foreach>
+								<!-- 子评论结束 -->
+							</div>
+							<div class="hf">
+								<textarea type="text" class="hf-text" autocomplete="off" maxlength="100">请输入您的评论…</textarea>
+								<button class="hf-btn">回复</button>
+							</div>
+						</div>
+					</li>
+					</foreach>
+
+				</ul>
+				</if>
+			</div>
+			<!--分页-->
+			<div class="row">
+				<div class="dataTables_paginate float_r mr15">
+					<!-- 分页html -->
+					{$commentList.pageNav}
+				</div>
+			</div>
+		</section>
+		<input type="hidden" id="pd" value="1" />
+		<input type="hidden" id="course_score" value="{$base.course_score}"/>
+		<input type="hidden" id="lecturer_score" value="{$base.lecturer_score}"/>
+		<input type="hidden" id="joinStatus" value="{$base.joinStatus}"/>
+		<input type="hidden" id="ogtype" value="{$ogtype}"/>
+		<input type="hidden" id="sub_comment_id" value=""/>
+		<input type="hidden" id="newReplyId" value=""/>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<!-- 编辑器 -->
+		<script src="__PUBLIC__/Dist/js/utf8-php/ueditor.config.js"></script>
+		<script src="__PUBLIC__/Dist/js/utf8-php/ueditor.all.js"></script>
+		<script src="__PUBLIC__/Dist/js/utf8-php/lang/zh-cn/zh-cn.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			
+			if($("#joinStatus").val() == "0"){
+				$(".dzan").remove();
+				$(".comment-dele").remove();
+				$(".hf-text").remove();
+			}
+			
+			//获取当前时间
+			function getTime() {
+				var t = new Date();
+				var y = t.getFullYear();
+				var m = t.getMonth() + 1;
+				var d = t.getDate();
+				var h = t.getHours();
+				var mi = t.getMinutes();
+				m = m < 10 ? "0" + m : m;
+				d = d < 10 ? "0" + d : d;
+				h = h < 10 ? "0" + h : h;
+				mi = mi < 10 ? "0" + mi : mi;
+				return y + "-" + m + "-" + d + " " + h + ":" + mi;
+			}
+			
+			//富文本框
+			var ue = UE.getEditor('container', {
+				toolbars: [
+					['emotion', '|', 'bold', '|' ,'forecolor']//定义要显示的工具栏图标
+				],
+				autoHeightEnabled: false, //高度固定出现滚动条
+				autoFloatEnabled: false,
+				wordCount:false,//字符统计隐藏
+				elementPathEnabled: false,//元素路径隐藏 true为显示
+				autoClearinitialContent: true//初始内容点击后消失
+			});
+			
+			//课程评价js
+			//在页面加载完后立即执行多个函数。
+			function addloadEvent(func) {
+				var oldonload = window.onload;
+				if(typeof window.onload != "function") {
+					window.onload = func;
+				} else {
+					window.onload = function() {
+						if(oldonload) {
+							oldonload();
+						}
+						func();
+					}
+				}
+			}
+			addloadEvent(b);
+
+			function b(){
+				var pn = document.getElementById("pn");
+				var lists = pn.children;
+				//删除当前节点
+				function remove(node) {
+					node.parentNode.removeChild(node);
+				}
+				//上面的点赞
+				function praisebox(box, el) {
+					//获取赞数量容器
+					var praise = box.getElementsByClassName("people")[0];
+					//获取容器当前total值
+					var total = parseInt(praise.getAttribute("total"));
+					//获取点击的innerHTML
+					var txt = el.innerHTML;
+					//创建一个新的total存储用
+					var newtotal;
+					//判断点击的文字内容
+					if(txt == "赞") {
+						//total值+1 因为我还没点击赞，所以要点击的时候就多了一个人 total+1
+						newtotal = total + 1;
+						//判断赞数量 把相应文字放到赞容器里
+						praise.innerHTML = newtotal == 1 ? "我觉得很赞" : "我和" + total + "个人觉得很赞";
+						el.innerHTML = "取消赞";
+					} else {
+						//反之total值-1
+						newtotal = total - 1;
+						praise.innerHTML = newtotal == 0 ? "" : newtotal + "个人觉得很赞";
+						el.innerHTML = "赞";
+					}
+					//更新total值
+					praise.setAttribute("total", newtotal);
+					//如果没有人点赞容器隐藏
+					praise.style.display = (newtotal == 0) ? "none" : "block";
+				}
+				
+				//回复评论
+				function reply(box) {
+					//获取评论框
+					var textarea = box.getElementsByTagName("textarea")[0];
+					//return false;
+					//获取包含所有评论的容器
+					var comment = box.getElementsByClassName("comment-list")[0];
+					//创建新的评论div
+					var div = document.createElement("div");
+					//赋类名
+					div.className = "comment";
+					//设置属性
+					div.setAttribute("user", "self");
+					var del_sub_id = $("#newReplyId").val();
+					//获取每条评论的innerHTML结构，每次只替换textarea的输入内容和 当前发送时间
+					var html = '<div class="comment-left">' + '<img src="{$avatar}" alt=""/>' + '</div>' +
+						'<div class="comment-right">' +
+						'<div class="comment-text"><span class="user">{$username}：</span>' + textarea.value + '</div>' +
+						'<div class="comment-date">' +
+						getTime() +
+						'<a class="comment-dele" rel="'+del_sub_id+'" href="javascript:;">删除</a>' +
+						//'<a style="right:45px;" class="comment-dele" href="javascript:;">回复</a>' +
+						'</div>' +
+						'</div>';
+					//插入到新建的评论div
+					div.innerHTML = html;
+					//把新评论插入到评论列表
+					comment.appendChild(div);
+					//评论后初始化textarea输入框
+					textarea.value = "请输入您的评论…";
+					textarea.parentNode.className = "hf";
+				}
+
+				//操作回复
+				function operateReply(el) {
+					//每条评论
+					var comment = el.parentNode.parentNode.parentNode;
+					//整个状态
+					var box = comment.parentNode.parentNode.parentNode;
+					//评论框
+					var textarea = box.getElementsByTagName("textarea")[0];
+					//名字
+					var user = comment.getElementsByClassName("user")[0];
+					//点击的innerHTML
+					var txt = el.innerHTML;
+					//判断当前点击的是否为回复
+					if(txt == "回复") {
+						//评论框触发焦点事件 也就是变高
+						textarea.onfocus();
+						//内容变为回复+当前人的名字
+						textarea.value = "回复 " + user.innerHTML;
+						//调用键盘事件
+						textarea.onkeyup();
+					} else {
+						//否则就是删除节点
+						remove(comment);
+					}
+				}
+				
+				$(".comment-right").on("click",".comment-dele", function(){
+					var sub_comment_id = $(this).attr("rel");
+					$("#sub_comment_id").val(sub_comment_id);
+				});
+				
+				//遍历所有状态消息
+				for(var i = 0; i < lists.length; i++) {
+					//全部事件代理
+					lists[i].onclick = function(e) {
+						//获取当前点击事件
+						var e = e || window.event;
+						var el = e.srcElement;
+						if(!el) {
+							el = e.target; //兼容火狐
+						}
+						//判断点击的类名
+						switch(el.className) {
+							//关闭整个状态
+							case "close":
+								//主评论删除
+								$(this).closest(".list0").addClass("is_del_main");
+								layer.confirm("是否删除该评论？");
+								$(".layui-layer-btn0").click(function(){
+									var comment_id = $(".is_del_main").find(".comment_id").val();
+									$.ajax({
+										type: "post",
+										url: "__CONTROLLER__/delComment",
+										data: "comment_id="+comment_id,
+										dataType: "json",
+										success: function(data){
+											if(data.code == 1000){
+												remove(el.parentNode);
+												$(".course_comment_editor").show();
+											}else{
+												layer.alert(data.message);
+											}
+										}
+									});
+								});
+								break;
+								//上面的点赞
+							case "dzan":
+								var comment_id = $(this).closest(".list0").find(".comment_id").val();
+								if(!comment_id){
+									layer.alert("未获取到评价id");
+									return false;
+								}
+								
+								var opText = $(this).closest(".list0").find(".dzan").text();
+								var praise_status = 1;
+								if(opText == "取消赞"){
+									praise_status = 0;
+								}
+								$.ajax({
+									type: "post",
+									url: "__CONTROLLER__/makePraise",
+									data: "comment_id="+comment_id+"&praise_status="+praise_status,
+									dataType: "json",
+									success: function(data){
+										if(data.code == 1000){
+											praisebox(el.parentNode.parentNode.parentNode, el);
+										}else{
+											layer.alert(data.message);
+										}
+									}
+								});
+								break;
+								//回复评论
+							case "hf-btn hf-btn-on":
+								var content = $(this).closest(".list0").find("textarea").val();
+								content = $.trim(content);
+								if(!content || content == ""){
+									layer.alert("请填写回复内容");
+									return false;
+								}
+								
+								//回复内容去掉：回复 xxx
+								//没有回复人，说明是直接回复一级评论
+								var comment_id = $(this).closest(".list0").find(".comment_id").val();
+								if(content.indexOf("回复") > -1){
+									//使用二级回复人的评论id
+									comment_id = $("#sub_comment_id").val();
+									
+									var dealCon = content.split("：");
+									content = dealCon[1];
+								}
+								
+								if(!comment_id){
+									layer.alert("未获取到评价id");
+									return false;
+								}
+								
+								$.ajax({
+									type: "post",
+									url: "__CONTROLLER__/reply",
+									data: "comment_id="+comment_id+"&content="+encodeURIComponent(content),
+									dataType: "json",
+									success: function(data){
+										if(data.code == 1000){
+											$("#newReplyId").val(data.last_id);
+											reply(el.parentNode.parentNode.parentNode);
+										}else{
+											layer.alert(data.message);
+										}
+									}
+								});
+								break;
+								//回复子评论 or 删除子评论
+							case "comment-dele":
+								if(el.innerHTML == "删除"){
+									var comment_id = $("#sub_comment_id").val();
+									$.ajax({
+										type: "post",
+										url: "__CONTROLLER__/delComment",
+										data: "comment_id="+comment_id,
+										dataType: "json",
+										success: function(data){
+											if(data.code == 1000){
+												operateReply(el);
+											}else{
+												layer.alert(data.message);
+											}
+										}
+									});
+								}else{
+									operateReply(el);
+								}
+								break;
+						}
+					}
+					var textarea = lists[i].getElementsByClassName("hf-text")[0];
+					//焦点事件
+					textarea.onfocus = function() {
+							this.parentNode.className = 'hf hf-on';
+							this.value = this.value == '请输入您的评论…' ? '' : this.value;
+						}
+					//失焦事件
+					textarea.onblur = function() {
+							if(this.value == '') {
+								this.parentNode.className = 'hf';
+								this.value = '请输入您的评论…';
+							}
+						}
+					//键盘事件
+					textarea.onkeyup = function() {
+						var len = this.value.length;
+						var textParentNode = this.parentNode;
+						var textBtn = textParentNode.children[1];
+						//var textNub = textParentNode.children[2];
+						if(len == 0 /*|| len>100*/ ) {
+							textBtn.className = "hf-btn";
+						} else {
+							textBtn.className = "hf-btn hf-btn-on";
+							//this.style.color="#333";
+						}
+						//textNub.innerHTML = len + "/100";
+					}
+				}
+				//遍历结束
+			}
+
+			function BJ() {
+				var pnBJ = document.getElementById("pnBJ");
+				var listBJ = pnBJ.children;
+				//删除当前节点
+				function remove(node) {
+					node.parentNode.removeChild(node);
+				}
+				//遍历所有状态消息
+				for(var i = 0; i < listBJ.length; i++) {
+					//全部事件代理
+					listBJ[i].onclick = function(e) {
+						//获取当前点击事件
+						var e = e || window.event;
+						var el = e.srcElement;
+						if(!el) {
+							el = e.target; //兼容火狐
+						}
+						//判断点击的类名
+						switch(el.className) {
+							//关闭整个状态
+							case "close":
+								remove(el.parentNode);
+								break;
+						}
+					}
+				}
+				//遍历结束
+			}
+			
+			//评论收缩
+			$(".list0").on("click", ".closeSub", function(){
+				var status = $(this).html();
+				if(status == "收起回复▲"){
+					$(this).closest(".HF_content").find(".comment-list").hide();
+					$(this).html("展开回复▼");
+				}else{
+					$(this).closest(".HF_content").find(".comment-list").show();
+					$(this).html("收起回复▲");
+				}
+			});
+
+			//发布评论
+			function FaBu() {
+				var NOWTime = getTime();
+				var UserName = "{$username}"; //用户名
+				var html = ue.getContent();
+				var Centont = html; //发布内容
+				if(!Centont || Centont.indexOf("在这里畅所欲言吧") > 0){
+					layer.alert("请填写评价内容");
+					return false;
+				}
+				//异步提交评论
+				var course_id = $("#course_id").val();
+				
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/addComment",
+					data: "course_id={$course_id}&content="+encodeURIComponent(Centont),
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							/* var html = '<li class="list0"><a class="close" href="javascript:;" style="opacity: 0.6;">X</a>';
+							html += '<input type="hidden" value="'+data.last_id+'" class="comment_id"><div class="head"><img src="/Public/Dist/img/avatar5.png" onerror="this.src=' + "/Public/Dist/img/avatar5.png" + '"></div>';
+							html += '<div class="HF_content"><p class="text"><span class="name">'+UserName+'：</span></p><p>'+Centont+'</p><p></p>';
+							html += '<div class="good"><span class="date">'+NOWTime+'</span><a class="dzan" href="javascript:;">赞</a></div>';
+							html += '<div class="people" style="display:none;" total="0">0人觉得很赞</div><div class="comment-list"><!-- 子评论开始 --><!-- 子评论结束 --></div>';
+							html += '<div class="hf"><textarea type="text" class="hf-text" autocomplete="off" maxlength="100">请输入您的评论…</textarea>';
+							html += '<button class="hf-btn">回复</button></div></div></li>';
+							$("#pn").append(html);
+							parent.iFrameHeight(); */
+							window.location.href = "__CONTROLLER__/detailTab?tab=3&project_id={$project_id}&course_id={$course_id}"
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>查看问卷</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<style type="text/css">
+.box-title {
+	border-left: 6px solid #00c0ef;
+	padding-left: 5px;
+	font-size: 21px !important;
+}
+
+.label {
+	padding: 5px;
+	font-weight: normal;
+}
+
+.annotation {
+	border: 1px dashed #eee;
+	padding: 10px;
+	line-height: 25px;
+	color: #777;
+	background: #fdfdfd;
+}
+
+.dy-tqa-list {
+	padding: 10px;
+	line-height: 25px;
+}
+
+.dy-tqa-list dt {
+	color: #00c0ef;
+	border-bottom: 1px #ccc dashed;
+	padding: 10px 0px;
+}
+
+.dy-tqa-list dd {
+	margin: 5px 0px;
+}
+
+.dy-tqa-list dd label {
+	padding-top: 10px;
+	padding-left: 10px;
+	width: 60%;
+	color: #555;
+	line-height: 32px;
+}
+
+.bg-aqua {
+	padding: 10px;
+}
+
+textarea {
+	width: 80%;
+	height: 150px;
+	padding: 10px;
+	line-height: 25px;
+	font-size: 14px;
+}
+
+.dy-tqa-list dd label {
+	line-height: 20px !important;
+}
+
+.item_t{float:left; margin-top:30px; padding:15px 0; width:100%; border-top:2px dashed #ccc; }
+.item_t p{font-size:20px; color:#444; }
+.item_o{float:left; width:100%; }
+.itemImg{width:150px; height:100px; margin:10px 0 0 70px; }
+.optImg{width:100px; height:80px; margin-top:10px; }
+.opt_v{float:left; width:250px; margin-bottom:20px; margin-right:30px;}
+.opt_v p{margin:0; max-height:40px; line-height:20px; overflow:hidden; }
+.opt_tip{float:left; font-size:16px; margin-right:15px; width:55px; font-weight:700; color:#bbb; }
+.opt_fill{margin:10px 0 0 70px; }
+		</style>
+	</head>
+
+	<body>
+
+				<!--内容区域顶栏面包屑开始-->
+				<section class="content-header">
+					<h1 class="info_title">
+				        审核管理
+				        <small>/问卷审核</small>
+				    </h1>
+					<ol class="breadcrumb">
+						<li>
+							<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+						</li>
+					</ol>
+				</section>
+				<!--内容区域顶栏面包屑结束-->
+				<section class="content">
+					<div class="box">
+						<div class="box-header with-border">
+							<h3 class="box-title ">{$qdesc.survey_name}</h3>
+						</div>
+						<div class="box-body pr10 pl10">
+		                         <!--内容开始-->                        
+		                         <div class="row mb30">
+										 <div class="col-sm-2">
+											<!--<label class="text-aqua mt10 mr10">
+			                                    <i class="fa  fa-send-o mr5"></i>试卷总分： 
+			                                    <span class="text-red">{$qdesc.survey_score}</span> 
+		                                    </label>		-->
+										 </div>
+										 <div class="col-sm-2">
+											<label class="text-aqua mt10 mr10">
+			                                    <i class="fa  fa-user mr5"></i>上传人： 
+			                                    <span class="text-red">{$qdesc.survey_heir}</span> 
+		                                    </label>		
+										 </div>
+										 <div class="col-sm-4">
+											<label class="text-aqua mt10 mr10">
+		                                       <i class="fa  fa-calendar mr5"></i>上传时间： 
+		                                       <span class="text-red">{$qdesc.survey_upload_time}</span> 
+		                                    </label>		
+										 </div>	
+		                              	 <if condition="$qdesc['status'] eq 0 "> 
+		                              	 <button type="button" class="btn btn-warning pull-right mr15" onclick="refuse_click_one({$audit_id},{$audit_status});">  
+		                              	    <i class="fa fa-calendar-times-o mr5" aria-hidden="true"></i>审核拒绝
+		                              	 </button>	
+		                              	 <button type="button" class="btn btn-success pull-right mr15" onclick="audit_click_one({$audit_id},{$audit_status});">  
+		                              	    <i class="fa fa-calendar-check-o mr5" aria-hidden="true"></i>审核通过
+		                              	 </button>	
+										    <else /> 
+                                          </if>
+
+										 <label class="text-aqua mt10 float_r mr30">
+		                                      <i class="fa  fa-send-o mr5"></i>状态： 
+		                                      <span class="text-red">
+											   <switch name="qdesc['status']">
+								           			<case value="0">待审核</case>
+								           			<case value="1">已通过</case>
+								           			<case value="3">已拒绝</case>
+								           			
+								           			<default />default
+									            </switch>  	  
+												  
+											  </span> 
+		                                 </label>	
+								 </div>
+		                         <!--课程状态结束-->
+		                           <div class="box box-info">
+			<div class="box-header with-border">
+				<h3 class="box-title">名称：{$survey.survey_name}</h3>
+				<span class="ml5 float_r label label-info">类别：{$survey.cat_name}</span>
+			</div>
+			<div class="box-body">
+				<div class="annotation">描述：{$survey.survey_desc}</div>
+			</div>
+			<div class="dy-tqa-list">
+				<ul>
+					<foreach name="item" item="vo" key="key">
+						<li>
+							<div class="item_t">
+								<p>第{$key+1}题.&nbsp;&nbsp;{$vo.title} <if condition="$vo.classification eq 1">（单选）</if><if condition="$vo.classification eq 2">（多选）</if><if condition="$vo.classification eq 3">（简答）</if></p>
+								<if condition="$vo.img neq ''">
+								<img class="itemImg" src="{$vo.img}"/>
+								</if>
+							</div>
+							<div class="item_o">
+								<if condition="$vo.classification eq 1">
+									<div class="optCon">
+										<div class="opt_tip">选项：</div>
+										<div style="float:left; width:90%">
+										<foreach name="vo.option" item="optVal" >
+											<div class="opt_v">
+												<p><input class="mr5" type="radio" name="opt{$vo.id}"/>{$optVal.letter}.{$optVal.option}</p>
+												<if condition="$optVal.opt_img neq ''">
+													<img class="optImg" src="{$optVal.opt_img}"/>
+												</if>
+											</div>
+										</foreach>
+										</div>
+									</div>
+								</if>
+								<if condition="$vo.classification eq 2">
+									<div class="optCon">
+										<div class="opt_tip">选项：</div>
+										<div style="float:left; width:90%">
+										<foreach name="vo.option" item="optVal" >
+											<div class="opt_v">
+												<p><input class="mr5" type="checkbox" name="opt{$vo.id}"/>{$optVal.letter}.{$optVal.option}</p>
+												<if condition="$optVal.opt_img neq ''">
+													<img class="optImg" src="{$optVal.opt_img}"/>
+												</if>
+											</div>
+										</foreach>
+										</div>
+									</div>
+								</if>
+								<if condition="$vo.classification eq 3">
+									<div class="opt_fill">
+										<textarea style="width:300px; height:80px; border:1px solid #ccc; " disabled>答题区域...</textarea>
+									</div>
+								</if>
+							</div>
+						</li>
+					</foreach>
+					<div class="item_t">
+					</div>
+				</ul>
+			</div>
+		</div>
+		              </div>
+					</div>
+					<!-- /.tab-content -->
+				 </div>
+			    </section>
+
+
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+            
+            function audit_click_one(id,audit_status) {
+				var ids = new Array();	
+				var audit_statuses  = new Array();
+                ids.push(id);					   
+                audit_statuses.push(audit_status); 
+				layer.confirm('确定通过该条审批？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					
+					$.post("{:U('Admin/Audit/threebatchAudit')}",{ids:ids,type:'4',auditstyle:'pass',audit_statuses:audit_statuses}, function(data) {  
+                        
+                          if(data.status == 1){  
+							   layer.msg('审核通过成功!',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                               
+                             setTimeout(function(){
+                               location.href = data.url; 
+                              },1000);   
+							
+                          }else{  
+							   layer.msg(data.info, { time: 1000});
+                            //    location.href = data.url; 
+                          }     
+                      },'json');
+                
+
+				});
+			}
+
+			
+			function refuse_click_one(id,audit_status) {
+				var ids = new Array();
+				var audit_statuses  = new Array();
+				ids.push(id);	
+				audit_statuses.push(audit_status); 
+				layer.confirm('<div class="text-center">拒绝通过该条审批？</div><div class="mt5"><textarea id="refuseReason" class="form-control" rows="4" placeholder="你可输入拒绝原因  ..."></textarea></div>', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						// 按钮
+				}, function() {		
+				var refuseReason = $('#refuseReason').val();
+				
+					$.post("{:U('Admin/Audit/threebatchAudit')}",{ids:ids,type:'4',auditstyle:'denied',objection:refuseReason,audit_statuses:audit_statuses}, function(data) {  
+                        
+                          if(data.status == 1){  
+							   layer.msg('审核拒绝成功!',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                               
+                             setTimeout(function(){
+                               location.href = data.url; 
+                              },1000);   
+							
+                          }else{  
+							   layer.msg(data.info, { time: 1000});
+                            //    location.href = data.url; 
+                          }     
+                      },'json');
+                
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

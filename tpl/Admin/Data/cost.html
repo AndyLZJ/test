@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>费用统计分析</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/bootstrap-datetimepicker.css">
+<style>
+	#pageNav a{font-size:15px; margin-left:-1px; padding:8px 15px; background:#eee; border:1px solid #ccc; }
+	#pageNav span{font-size:15px; margin-left:-1px; padding:8px 15px; background:#337AB7; color:#fff; border:1px solid #337AB7; }
+	#pageNav a:hover{background:#6CB8E6; border:1px solid #6CB8E6; color:#fff; }
+</style>
+</head>
+<body>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">数据管理<small>/费用统计分析</small>
+		</h1>
+		<ol class="breadcrumb"></ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div class="box-header with-border info_box_title">
+			<span>费用统计分析</span>
+		</div>
+		<div class="col-sm-2 pull-left" style="margin-top:15px;">
+			<select class="form-control select2 width_10" id="tissue_id">
+				<option value="0">
+					<a>--选择总公司所属部门--</a>
+				</option>
+				<foreach name="tool_tree" item="items">
+					<option value="{$items['id']}" <if condition="$tissue_id eq $items['id']">selected="selected"</if>>{$items['name']}</option>
+					<foreach name="items['_data']" item="v">
+						<option value="{$v['id']}" <if condition="$tissue_id eq $v['id']">selected="selected"</if>>{$v['name']}</option>
+						<foreach name="v['_data']" item="s">
+							<option value="{$s['id']}" <if condition="$tissue_id eq $s['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;{$s['name']}</option>
+							<?php
+								foreach($s['_data'] as $p){?>
+							<option value="<?php echo $p['id'];?>" <if condition="$tissue_id eq $p['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $p['name'];?></option>
+							<?php
+								}
+							?>
+						</foreach>
+					</foreach>
+				</foreach>
+			</select>
+		</div>
+		<div class="col-sm-2 pull-left" style="margin-top:15px;">
+			<select class="arrangement form-control select2 width_10" id="plan" onchange="Trainingproject(this.value)">
+				<option value="-1">请选择培训项目</option>
+			</select>
+		</div>
+		<div class="box-body">
+
+			<div class="col-sm-12 mt15 text-center">
+				<div id="chart-studytime" style="width: 100%; height:480px;"></div>
+			</div>
+		</div>
+		<!--  分隔符开始-->
+		<div class="box-header with-border no-padding"></div>
+		<!--  分隔符结束-->
+		<div class="row mt15">
+			<div class="col-sm-3">
+				<span class="float_l mt10">培训日期：</span>
+				<div class="input-group date">
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<input type="text" class="startTime form-control pull-right" value="{$startTime}" />
+					<input type="hidden" name="currPage" id="currPage" value="1"/>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<span class="float_l mt10 mr10">至</span>
+				<div class="input-group date">
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<input type="text" class="endTime form-control pull-right" value="{$endTime}" />
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group ">
+					<input type="text" name="table_search" class="keyword form-control pull-right" placeholder="请输入计划名称">
+					<div class="input-group-btn">
+						<button type="submit" id="submitBtn" class="btn btn-default"><i class="fa fa-search"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3 text-right">
+				<a id="dataDownload" class="btn btn-info form-group_but">导出</a>
+			</div>
+		</div>
+		<!--费用统计分析内容开始-->
+		<div class="row mt15">
+			<div class="col-sm-12">
+				<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+					<thead>
+						<tr role="row">
+							<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+							<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训项目</th>
+							<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训周期</th>
+							<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+						</tr>
+					</thead>
+					<tbody id="tab" class="passed_table">
+						<tr><td>没有数据</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!--内容結束-->
+		<!--分页开始-->
+		<div class="row">
+			<div class="dataTables_paginate float_r mr15">
+			<!-- 	页码html	 -->
+			</div>
+		</div>
+		<!--分页结束-->
+	</section>
+	<input type="hidden" name="webServer" id="webServer" value="__URL__"/>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- <script src="__PUBLIC__/Js/js/data.js"></script> -->
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/demo.js"></script>
+	<script src="__PUBLIC__/plugins/datepicker/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript">
+		//请求数据列
+		$("#submitBtn").click(function(){
+			getData();
+		});
+		
+		$("#dataDownload").click(function(){
+			var startTime = $(".startTime").val();
+			var endTime = $(".endTime").val();
+			var keyword = $(".keyword").val();
+			keyword = encodeURIComponent(keyword);
+			window.location.href = $("#webServer").val()+"/download?startTime="+startTime+"&endTime="+endTime+"&keyword="+keyword+"&radom="+Math.random();
+		});
+		
+		$(".dataTables_paginate").on("click","a",function(){
+			var page = $(this).attr("href");
+			page = page.split("/p/");
+			page = page[1];
+			$("#currPage").val(page);
+			getData();
+			return false;
+		});
+		
+		getData();
+		function getData(){
+			var startTime = $(".startTime").val();
+			var endTime = $(".endTime").val();
+			var keyword = $(".keyword").val();
+			var page = $("#currPage").val();
+			keyword = encodeURIComponent(keyword);
+			var	url = $("#webServer").val()+"/getData/p/"+page;
+
+			var jump = $("#webServer").val()+'/article/id/';
+
+			$.ajax({
+				type: "post",
+				url: url,
+				data: "startTime="+startTime+"&endTime="+endTime+"&keyword="+keyword+"&page="+page,
+				dataType: "json",
+				success: function(data){
+					if(data.code == "1000"){
+						var listHtml = "";
+						if(data.list.length > 0){
+							for(var i=0; i<data.list.length ; i++){
+								var thisData = data.list[i];
+								listHtml += '<tr role="row" class="odd text-center"><td>'+(i+1)+'</td><td>'+thisData["project_name"]+'</td>';
+								listHtml += '<td>'+thisData["start_time"]+' ~ '+thisData["end_time"]+'</td>';
+								listHtml += '<td><a href="'+jump+thisData["id"]+'">详情</a></td></tr>';
+							}
+						}
+						$(".passed_table").html(listHtml);
+						var pageHtml = data.page;
+						$(".dataTables_paginate").html(pageHtml);
+					}else{
+						alert(data.message);
+					}
+				}
+			});
+		}
+		
+		//时间插件
+		$.fn.datetimepicker.dates['zh'] = {
+				days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+				daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+				daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+				months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+				monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+				meridiem: ["上午", "下午"],
+				//suffix:      ["st", "nd", "rd", "th"],  
+				today: "本月"
+			};
+
+			$(function(){
+				var date = new Date;
+				var currYear = date.getFullYear() - 1; 
+				$('.startTime').datetimepicker({
+					language: 'zh',
+					format: 'yyyy-mm',
+					weekStart: 1,
+					todayBtn: 1,
+					autoclose: 1,
+					todayHighlight: 1,
+					startView: 3, //这里就设置了默认视图为年视图
+					minView: 3, //设置最小视图为年视图
+					forceParse: 0,
+					autoclose: true,
+	                   todayBtn: true,
+	                   startDate: currYear+"-01",
+				});
+				
+				$('.endTime').datetimepicker({
+					language: 'zh',
+					format: 'yyyy-mm',
+					weekStart: 1,
+					todayBtn: 1,
+					autoclose: 1,
+					todayHighlight: 1,
+					startView: 3, //这里就设置了默认视图为年视图
+					minView: 3, //设置最小视图为年视图
+					forceParse: 0,
+					autoclose: true,
+	                   todayBtn: true,
+	                   startDate: currYear+"-01",
+				});
+			});
+
+			$("#tissue_id").change(function(){
+
+				var tissue_id = $(this).val();
+
+				$.ajax({
+					type: "POST",
+					url: "{:U('Data/getPlanName')}",
+					data: "tissue_id="+tissue_id,
+					success: function(items){
+
+						var html = '<option value="-1">请选择培训项目</option>';
+
+						for(var i=0; i<items.length; i++){
+
+							html += "<option value=\""+items[i]['id']+"\">"+items[i]['project_name']+"</option>";
+
+						}
+
+						$("#plan").html(html);
+
+					}
+				});
+
+			});
+
+			//部门学时统计柱状图和折线图混合
+			var myChart = echarts.init(document.getElementById('chart-studytime'));
+
+			var option = {
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['实际费用','预算费用']
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: ['内部讲师费','外部讲师费','课程开发费','外部培训费','培训咨询费','培训器材费','场地费','食宿费','交通差旅费','其他费用']
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: [
+					{
+						name:'实际费用',
+						type:'line',
+						stack: '总量',
+						data:[0,0,0,0,0,0,0,0,0,0]
+					},
+					{
+						name:'预算费用',
+						type:'line',
+						stack: '总量',
+						data:[0,0,0,0,0,0,0,0,0,0]
+					}
+				]
+			};
+
+			//执行费用分析
+			Trainingproject();
+
+			function Trainingproject(project_id){
+
+				$.ajax({
+					type: "POST",
+					url: "{:U('Data/itemParameter')}",
+					data: "project_id="+project_id,
+					success: function(items){
+
+						/**
+                         * 统计报表
+						 */
+
+						option.series[0].data = items.actual_amount_data;
+						option.series[1].data = items.amount_data;
+						// 指定图表的配置项和数据
+
+						// 使用刚指定的配置项和数据显示图表。
+						myChart.setOption(option);
+
+
+					}
+				});
+
+
+
+			}
+
+		
+	</script>
+	</body>
+</html>

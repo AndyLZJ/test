@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>我的课程_课程详情</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+		<!-- video player -->
+		<link rel="stylesheet" href="__PUBLIC__/videoPlayer/video-js.css">
+		<style type="text/css">
+			.course_img{height:100%; }
+			body,fieldset,legend,button,input,textarea{margin:0; padding:0; border:0; outline:0}
+			a:hover,a:visited,a:link,a:active{text-decoration:none}
+			sup{vertical-align:text-top}
+			sub{vertical-align:text-bottom}
+			legend{color:#000}
+			fieldset,img{border:0}
+			button,input,select,textarea{font-size:100%}
+			table{border-collapse:collapse; border-spacing:0}
+			.clear{clear:both; float:none; height:0; overflow:hidden}
+			#pn{height:auto; background:#fff; margin:0 auto; padding:20px; padding-top:0}
+			.list0{padding:20px 0; position:relative; border-top:1px solid #eee}
+			.head{width:60px; float:left}
+			.head img{width:60px; height:60px; border-radius:50%}
+			.close{width:20px; height:20px; position:absolute; top:0; right:0; color:#696e78; font-size:14px; text-align:center; line-height:20px}
+			.close:hover{color:#eb7350}
+			.HF_content{line-height:20px; font-size:14px; margin-left:70px}
+			.name{color:#eb7350}
+			.pic{margin:5px 0}
+			.good:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.good{*zoom:1; margin-top:5px}
+			.date{float:left; color:#808080}
+			.good a{float:right; color:#808080}
+			.people{background:#f7f7f7; height:28px; line-height:28px; padding-left:10px; margin:5px 0}
+			.comment:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.comment{*zoom:1; padding:10px 0; border-top:1px solid #eee}
+			.comment-left{width:30px; float:left; display:inline; margin-right:10px}
+			.comment-left img{width:30px; height:30px; border-radius:50%; border:1px solid #e0dddd; padding:2px}
+			.comment-text{line-height:18px}
+			.comment-text span{color:#eb7350}
+			.comment-date{font-size:12px; line-height:14px; color:#ccc; position:relative}
+			.comment-zan{position:absolute; right:95px; bottom:0; color:#808080}
+			.comment-dele{position:absolute; right:0; bottom:0; color:#808080}
+			.hf:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.hf{*zoom:1; margin-top:5px}
+			.hf-text{border:1px solid #eee; display:block; height:35px; width:100%; padding:5px; resize:none; color:#ccc; font-size:12px}
+			.hf-on .hf-text{height:60px; color:#333; border:1px solid #ff8140}
+			.hf-btn{float:right; width:65px; height:26px; background:#f7f7f7; color:#ccc; font-size:12px; display:none}
+			.hf-btn-on{background:#ff8140; color:#fff}
+			.hf-nub{float:right; padding:3px 5px; color:#666; display:none}
+			.hf-on .hf-btn{display:inline}
+			.hf-on .hf-nub{display:inline}
+			.huifu{right:45px}
+			.FBmap{margin:auto}
+			.FBmap textarea{resize:none; border:1px solid #c7c3c3; width:100%; min-height:100px; margin:auto; margin-top:5px}
+			.FBmap textarea:focus{resize:none; border:1px solid #ff8140; width:100%; min-height:100px; margin:auto; margin-top:5px; padding:3px; font-size:16px}
+			.FBbtn{float:right; color:white; cursor:pointer; height:35px; width:75px; margin-top:-5px; background-color:orangered}
+			
+			/*课程封面及播放区域*/
+			.course_cover{padding:1px; margin:0; width:960px; height:540px; border:2px solid #ccc;}
+			.kejianFullScreen{position: absolute; right: 20px; margin-top: -35px; cursor:pointer; }
+			.kejianSetFull{margin:0; border:0; padding:0; clear:both; position:fixed; right:0; top:0; left:0; bottom:0; z-index:99999; }
+			
+			/*课程问答*/
+			.btn1{border: none; height: 2.0em; background-color: #3E8CD0; color: white; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn2{border: none; height: 2.0em; background-color: #e1e2e4; color: black; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn1:focus{outline: none; border: none; }
+			.btn2:focus{outline: none; border: none; }
+			.que_map{border: 1px solid #00acd6; padding: 0px 5px; border-radius: 5px; position: absolute; top: 0px; width: 100%; }
+			.que_gundong{border: 1px solid #00acd6; padding: 0px 5px; border-radius: 5px; position: fixed; top: 0px; width: 32%; background:#fff; }
+			.chap_string{padding:0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+				 <if condition="$project_id neq 'true' and $project_id neq 'false'">必修课程<else/>选修课程</if>
+				        <small>/<if condition="$base.course_way eq 0">在线课程详情<else/>面授课程详情</if></small>
+				    </h1>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box-body">
+				<!--内容开始-->
+				<div class="box-header with-border">
+					<div style="float:left; width:100%;">
+						<h4 class="float_l">{$base.course_name}</h4>
+						<span class="ml10 label label-info">课程分类：{$base.cat_name}</span>
+						<span class="ml5 label label-success">授课讲师：{$base.lecturer_name}</span>
+						<span class="ml5 label label-warning">课程时长：{$base.course_time}分钟</span>
+						
+						<if condition="$project_id eq 'true'">
+							<if condition="$base.status eq 0">
+								<label class="control-label float_r mr10" >
+									<div>
+										<span class="float_l"><a href="{:U('admin/rs_course/addcourse',array('id'=>$base['id']))}">编辑</a></span>
+									</div>
+								</label>
+							</if>
+
+							<label class="control-label float_r mr10" style="margin-left:10px;">
+								<div>
+									<if condition="empty($course_bak) ">
+										<span class="float_l"><a class="btn btn-success btn-xs" href="#" onclick="HistoryVersion()">历史版本</a></span>
+									<else />
+										<span class="float_l"><a class="btn btn-success btn-xs" href="{:U('admin/rs_course/HistoryVersion',array('id'=>$base['id']))}">历史版本</a></span>
+									</if>
+								</div>
+							</label>
+
+							<label class="control-label float_r">
+								<div>
+									<span class="float_l">状态：</span>
+									<div class=" float_l" ><if condition="$base.status eq 0">待审核<elseif condition="$base.status eq 1"/>已通过<else />已拒绝</if></div>
+								</div>
+							</label>
+						</if>
+					</div>
+					
+					<div style="float:left; width:100%; margin-top:20px; ">
+						<!--公开课程显示该按钮-->
+						<label class="control-label mr20">
+							<div>
+								<span class="float_l">学分：</span>
+								<div class="float_l">
+									{$base.credit|default='0'}
+								</div>
+							</div>
+						</label>
+						<label class="control-label mr20">
+							<div>
+								<span class="float_l">课程分类：</span>
+								<div class="float_l">
+									{$base.cat_name|default='0'}
+								</div>
+							</div>
+						</label>
+						<label class="control-label mr20">
+							<div>
+								<span class="float_l">授课讲师：</span>
+								<div class="float_l">
+									{$base.lecturer_name|default='0'}
+								</div>
+							</div>
+						</label>
+						<label class="control-label mr20">
+							<div>
+								<span class="float_l">课程时长：</span>
+								<div class="float_l">
+									{$base.course_time|default='0'}分钟
+								</div>
+							</div>
+						</label>
+						<label class="control-label mr20">
+							<div id="startone3">
+								<span class="float_l">课程评价：</span>
+								<div class="star_score float_l" data-param="3"></div>
+							</div>
+						</label>
+						<label class="control-label mr20">
+							<div id="startone4">
+								<span class="float_l">讲师评价：</span>
+								<div class="star_score float_l" data-param="3"></div>
+							</div>
+						</label>
+						
+						<!--加入我的课程按钮-->
+						<if condition="$base.is_public eq 1">
+							<if condition="$base.joinStatus eq 0">
+								<div class="float_r ml20">
+									<a type="button" class="addCourse btn btn-primary btn-xs"> 
+									    <i class="fa fa-tags" aria-hidden="true"></i>加入我的课程
+									</a>
+								</div>
+							</if>
+						</if>
+						
+						<if condition="$whetherteach eq 1">
+							<a href="__MODULE__/{$kaoqin}" type="button" class="btn btn-primary btn-xs pull-right "> <i class="fa fa-edit mr5" aria-hidden="true"></i>考勤统计</a>
+						</if>
+					</div>
+				</div>
+				
+				<!--课程封面及主要信息区域开始-->
+				<div class="row box-body mt10">
+					<!--左侧封面课程区域-->
+					<!-- 课程封面 -->
+					<div class="col-sm-3 course_cover" id="cover_box" <if condition="$base.media_src neq ''"> style="display:none; " <else/> style="display:block; " </if>>
+						<img class="width_10 course_img" src="{$base.course_cover}" onerror="this.src='__PUBLIC__/Dist/img/class2.png'"/>
+					</div>
+					
+					<!-- 视频播放 -->
+					<div class="col-sm-3 course_cover" id="video_box" style="display:none; ">
+						<video id="my-video" class="video-js vjs-big-play-centered" controls 
+						width="953" height="533" 
+						data-setup='{}'>
+						    <p class="vjs-no-js">要查看此视频，请启用JavaScript</p>
+						</video>
+					</div>
+					
+					<!-- 课件播放 -->
+					<div class="col-sm-3 course_cover" id="kejian_box" style="display:none;">
+						<iframe src="" width="100%" height="100%"></iframe>
+						<div class="kejianFullScreen"><img src="__PUBLIC__/Images/full_screen_ico.png"/></div>
+					</div>
+				</div>
+					
+				<!--课程封面及主要信息区域结束-->
+				<!--项目切换标签开始-->
+				<div class="box-body">
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs tabBtn">
+							<li class="active">
+								<a href="javascript:void(0);" ref="__CONTROLLER__/detailTab?tab=1&project_id={$project_id}&course_id={$course_id}">介绍</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">目录</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" ref="__CONTROLLER__/detailTab?tab=3&project_id={$project_id}&course_id={$course_id}">评价</a>
+							</li>
+							<li id="note">
+								<a href="javascript:void(0);" ref="__CONTROLLER__/detailTab?tab=4&project_id={$project_id}&course_id={$course_id}">笔记</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" ref="__CONTROLLER__/detailTab?tab=5&project_id={$project_id}&course_id={$course_id}">问答</a>
+							</li>
+						</ul>
+						<div id="tab2" style="display:none">
+							<div class="col-sm-6">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th style="width: 10px"></th>
+											<th>名称</th>
+											<th width="80">进度</th>
+											<th width="200">操作</th>
+										</tr>
+										<if condition="$base.chapter eq ''">
+										<tr>
+											<td></td>
+											<td><p style="margin-top:60px; font-size:30px; color:#bbb; ">当前课程没有目录~~</p><td>
+											<td></td>
+											<td></td>
+										</tr>
+										</if>
+										
+										<foreach name="base.chapter" item="chap" key="k">
+											<tr>
+												<td>{$key + 1}.</td>
+												<if condition="$chap['fileType'] eq video">
+												<td><i class="mr5 fa fa-file-video-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq audio"/>
+												<td><i class="mr5 fa fa-file-audio-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq ppt"/>
+												<td><i class="mr5 fa fa-file-powerpoint-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq doc"/>
+												<td><i class="mr5 fa fa-file-word-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq xls"/>
+												<td><i class="mr5 fa fa-file-excel-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq pdf"/>
+												<td><i class="mr5 fa fa-file-pdf-o"></i>{$chap.name}</td>
+												
+												<elseif condition="$chap['fileType'] eq kejian"/>
+												<td><i class="mr5 fa fa-cubes"></i>{$chap.name}</td>
+												
+												<else/>
+												<td><i class="mr5 fa fa-file-image-o"></i>{$chap.name}</td>
+												</if>
+												<td><span class="jindu">{$chap.jindu}%</span></td>
+												<td>
+													<input type="hidden" class="timelen" value="{$chap.timelen}"/>
+													<input type="hidden" class="fileName" value="{$chap.name}"/>
+													<input type="hidden" class="fileType" value="{$chap.fileType}"/>
+													<input type="hidden" class="fileSrc" value="{$chap.src}"/>
+													
+													<if condition="($chap['fileType'] eq video) or ($chap['fileType'] eq audio)">
+													<button class="startStudy btn btn-primary btn-sm">开始学习</button>
+													
+													<elseif condition="$chap['fileType'] eq kejian"/>
+													<button class="startStudyKejian btn btn-primary btn-sm">开始学习</button>
+													
+													<else/>
+														<a class="startStudy btn btn-primary btn-sm" href="javascript:void(0)" target="_blank">点击下载</a>
+														<if condition="$chap.show_doc eq 'true'">
+															<a class="btn btn-primary btn-sm" href="__MODULE__/office/showDoc?course_id={$course_id}&chapter_id={$k}" target="_blank">点击预览</a>
+														</if>
+													</if>
+												</td>
+											</tr>
+										</foreach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div id="tabOther">
+							<iframe id="iframeCon" onload="iFrameHeight()" src="__CONTROLLER__/detailTab?tab=1&project_id={$project_id}&course_id={$course_id}" width="100%" height="100%"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div id="downframe" style="display:none;"></div>
+		<input type="hidden" id="pd" value="1" />
+		<input type="hidden" id="course_score" value="{$base.course_score}"/>
+		<input type="hidden" id="lecturer_score" value="{$base.lecturer_score}"/>
+		<input type="hidden" id="joinStatus" value="{$base.joinStatus}"/>
+		<input type="hidden" id="ogtype" value="{$ogtype}"/>
+		<input type="hidden" id="sub_comment_id" value=""/>
+		<input type="hidden" id="newReplyId" value=""/>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/startScore.js"></script><!-- 星星打分 -->
+		<!-- video player -->
+		<script src="__PUBLIC__/videoPlayer/videojs-ie8.min.js"></script>
+		<script src="__PUBLIC__/videoPlayer/video.min.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			
+			//tab切换  
+			$(".tabBtn li").click(function(){
+				$(".tabBtn li").removeClass("active");
+				$(this).addClass("active");
+				var rel = $(this).find("a").attr("ref");
+				if(rel){
+					$("#tabOther").show();
+					$("#tab2").hide();
+					$("#iframeCon").attr("src", rel);
+					iFrameHeight();
+				}else{
+					$("#tabOther").hide();
+					$("#tab2").show();
+				}
+			});
+			
+			function iFrameHeight() {
+				var ifm= document.getElementById("iframeCon");
+				ifm.height = 0;
+				var subWeb = document.frames ? document.frames["iframeCon"].document : ifm.contentDocument;
+				if(ifm != null && subWeb != null) {
+					ifm.height = subWeb.body.scrollHeight;
+				}
+			}
+			
+			//判断是否可以评分
+			var ogtype = $("#ogtype").val();
+			$("#startone1").on("click",".star_score",function(){
+				if(ogtype == 1){
+					layer.alert("您不能给自己打分");
+					setTimeout(function(){
+						showScore();
+					},100);
+				}else{
+					giveScore($(this), 1);
+				}
+			});
+			$("#startone2").on("click",".star_score",function(){
+				if(ogtype == 1){
+					layer.alert("您不能给自己打分");
+					setTimeout(function(){
+						showScore();
+					},100);
+				}else{
+					giveScore($(this), 2);
+				}
+			});
+			$("#startone3").on("click",".star_score",function(){
+				if(ogtype == 1){
+					layer.alert("您不能给自己打分");
+					setTimeout(function(){
+						showScore();
+					},100);
+				}else{
+					giveScore($(this), 1);
+				}
+			});
+			$("#startone4").on("click",".star_score",function(){
+				if(ogtype == 1){
+					layer.alert("您不能给自己打分");
+					setTimeout(function(){
+						showScore();
+					},100);
+				}else{
+					giveScore($(this), 2);
+				}
+			});
+			
+			function giveScore(ele, type){
+				var joinStatus = $("#joinStatus").val();
+				if(joinStatus == 0){
+					layer.alert("请先添加课程再评价");
+					setTimeout(function(){
+							showScore();
+					},100);
+				}else{
+					var score = ele.find(".clibg").index() + 1;
+					var course_id = "{$course_id}";
+					$.ajax({
+						type: "post",
+						url: "__CONTROLLER__/giveScore",
+						data: "course_id="+course_id+"&score="+score+"&type="+type,
+						dataType: "json",
+						success: function(data){
+							if(data.code == 1000){
+								layer.alert("已打分");
+								if(type == 1){
+									$("#course_score").val(data.avgScore);
+								}else{
+									$("#lecturer_score").val(data.avgScore);
+								}
+								setTimeout(function(){
+										showScore();
+								},100);
+							}else{
+								layer.alert(data.message);
+								setTimeout(function(){
+										showScore();
+								},100);
+							}
+						}
+					});
+				}
+			}
+			
+			//显示分数
+			scoreFun($("#startone1"),{fen_d:23,ScoreGrade:5});
+			scoreFun($("#startone2"),{fen_d:23,ScoreGrade:5});
+			scoreFun($("#startone3"),{fen_d:23,ScoreGrade:5});
+			scoreFun($("#startone4"),{fen_d:23,ScoreGrade:5});
+			showScore();
+			function showScore(){
+				var courseComment = $("#course_score").val();
+				$("#startone1 .star_score  a").removeClass("clibg");
+				$("#startone3 .star_score  a").removeClass("clibg");
+				if(courseComment > 0){
+					courseComment = courseComment - 1;
+					$("#startone1 .star_score  a").eq(courseComment).addClass("clibg");
+					$("#startone3 .star_score  a").eq(courseComment).addClass("clibg");
+				}
+				
+				var lecturerComment = $("#lecturer_score").val();
+				$("#startone2 .star_score  a").removeClass("clibg");
+				$("#startone4 .star_score  a").removeClass("clibg");
+				if(lecturerComment > 0){
+					lecturerComment = lecturerComment - 1;
+					$("#startone2 .star_score  a").eq(lecturerComment).addClass("clibg");
+					$("#startone4 .star_score  a").eq(lecturerComment).addClass("clibg");
+				}
+			}
+
+			//添加课程
+			$(".addCourse").click(function(){
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/addCourse",
+					data: "course_id={$course_id}",
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							window.location.href = window.location.href;
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			});
+			
+			//初始化视频播放器
+			$(function(){
+				var myPlayer = videojs('my-video',{
+					controlBar: {
+						volumeMenuButton: false,
+						progressControl: false,
+						remainingTimeDisplay: false,
+					}
+				});
+				
+				var seeTime;
+				myPlayer.on('play', function() {
+					seeTime = setInterval(function(){
+						var whereYouAt = myPlayer.currentTime();//获取播放进度（单位秒）
+						var timeLeft = myPlayer.remainingTime();
+						var seePrecent = whereYouAt / (whereYouAt + timeLeft);
+						seePrecent = Math.floor(seePrecent * 100);
+						seePrecent = seePrecent.toFixed(2);
+						$(".vjs-play-progress").css("width",seePrecent+"%");
+						$(".playing .jindu").html(seePrecent+"%");
+						var fileType = $(".playing .fileType").val();
+						var fileSrc = $(".playing .fileSrc").val();
+						var fileName = $(".playing .fileName").val();
+						$(".playing .timelen").val(whereYouAt);
+						$.ajax({
+							type: "post",
+							url: "__CONTROLLER__/chapter",
+							data: "course_id={$course_id}&project_id={$project_id}&fileName="+fileName+"&fileSrc="+fileSrc+"&fileType="+fileType+"&status=2&time_percent="+seePrecent+"&timeLen="+whereYouAt,
+							dataType: "json",
+							success: function(data){}
+						});
+					}, 1000);
+					
+					var progressHtml = '<div class="vjs-progress-control vjs-control"><div tabindex="0" class="vjs-progress-holder vjs-slider vjs-slider-horizontal" role="slider" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" aria-label="progress bar" aria-valuetext=""><div class="vjs-play-progress vjs-slider-bar" style="width:0%;"><span class="vjs-control-text"><span>Progress</span>: 0%</span></div></div></div>';
+					if($(".vjs-progress-control").length == 0){
+						$(".vjs-current-time").after(progressHtml);
+					}
+				});
+				
+				//暂停播放
+				myPlayer.on('pause', function() {  
+					clearInterval(seeTime);
+				});
+				
+				//播放结束
+				myPlayer.on('ended', function(){
+					clearInterval(seeTime);
+					$(".playing .jindu").html("100%");
+					var whereYouAt = myPlayer.currentTime();//获取播放进度（单位秒）
+					var fileType = $(".playing .fileType").val();
+					var fileSrc = $(".playing .fileSrc").val();
+					var fileName = $(".playing .fileName").val();
+					$.ajax({
+						type: "post",
+						url: "__CONTROLLER__/chapter",
+						data: "course_id={$course_id}&project_id={$project_id}&fileName="+fileName+"&fileSrc="+fileSrc+"&fileType="+fileType+"&time_percent=100&status=3&timeLen="+whereYouAt,
+						dataType: "json",
+						success: function(data){}
+					});
+				});
+				
+				//开始学习
+				$(".startStudy").click(function(){
+					 var fileType = $(this).siblings(".fileType").val();
+					 var fileSrc = $(this).siblings(".fileSrc").val();
+					 var fileName = $(this).siblings(".fileName").val();
+					 var timelen = $(this).siblings(".timelen").val();
+					 var _this = $(this);
+					 if(fileType == "video" || fileType == "audio"){
+						//视频 、 音频播放
+						$("#cover_box").hide();
+						$("#kejian_box").hide();
+						$("#video_box").show();
+						$(".chapterList .playing").removeClass("playing");
+						_this.closest("tr").addClass("playing");
+						myPlayer.src(fileSrc);  //重置video的src
+					    myPlayer.load(fileSrc);  //使video重新加载
+					   	setTimeout(function(){
+							myPlayer.currentTime(timelen);//断点续播（单位秒）
+						}, 500);
+					 }else{
+						//文档下载
+						$("#cover_box").show();
+						$("#video_box").hide();
+						$("#kejian_box").hide();
+						fileSrc = encodeURIComponent(fileSrc);
+						fileName = encodeURIComponent(fileName);
+						window.open("__MODULE__/myCourse/download?file="+fileSrc+"&fileName="+fileName);
+						
+						$.ajax({
+							type: "post",
+							url: "__CONTROLLER__/chapter",
+							data: "course_id={$course_id}&project_id={$project_id}&fileName="+fileName+"&status=3&fileSrc="+fileSrc+"&fileType="+fileType,
+							dataType: "json",
+							success: function(data){
+								if(data.code != 1000){
+									layer.alert(data.message);
+								}else{
+									_this.closest("tr").find(".jindu").html("100%");
+								}
+							}
+						});
+					 }
+				});
+				
+				//默认媒体地址处理
+				var media_type = "{$base.media_type}";
+				if(media_type == "video"){
+					$("#cover_box").hide();
+					$("#kejian_box").hide();
+					$("#video_box").show();
+					myPlayer.src("{$base.media_src}");  //重置video的src
+				    myPlayer.load("{$base.media_src}");  //使video重新加载
+				}
+			});
+			
+			//课件播放
+			$(".startStudyKejian").click(function(){
+				var fileType = $(this).siblings(".fileType").val();
+				var fileSrc = $(this).siblings(".fileSrc").val();
+				var fileName = $(this).siblings(".fileName").val();
+				var _this = $(this);
+				$("#cover_box").hide();
+				$("#video_box").hide();
+				
+				$("#kejian_box iframe").attr("src",fileSrc);
+				fileSrc = encodeURIComponent(fileSrc);
+				$("#kejian_box").show();
+				//定时回传数据
+				scormSeeTime = setInterval(function(){
+					$.ajax({
+						type: "post",
+						url: "__CONTROLLER__/chapter",
+						data: "course_id={$course_id}&project_id={$project_id}&fileName="+fileName+"&status=3&fileSrc="+fileSrc+"&fileType="+fileType,
+						dataType: "json",
+						success: function(data){
+							if(data.code == 1000){
+								_this.closest("tr").find(".jindu").html(data.percent+"%");
+							}
+						}
+					});
+				}, 5000);
+			});
+			
+			$(".kejianFullScreen").click(function(){
+				var fullStatus = $("#kejian_box").attr("class");
+				if(fullStatus.indexOf("kejianSetFull") > -1){
+					//已全屏
+					$("#kejian_box").removeClass("kejianSetFull");
+					$("#kejian_box").css({"width":"700px","height":"400px"});
+				}else{
+					//未全屏
+					var pageX = $(window).width();
+					var pageY = $(window).height();
+					$("#kejian_box").addClass("kejianSetFull");
+					$("#kejian_box").css({"width":pageX+"px","height":pageY+"px"});
+				}
+			});
+
+			function HistoryVersion(){
+				layer.alert("该课程无历史版本");
+			}
+			
+			//默认媒体地址处理
+			var media_type = "{$base.media_type}";
+			if(media_type == "kejian"){
+				$("#cover_box").hide();
+				$("#video_box").hide();
+				$("#kejian_box iframe").attr("src","{$base.media_src}");
+				$("#kejian_box").show();
+			}
+			
+			if(media_type == "img"){
+				$("#cover_box").show();
+				$("#video_box").hide();
+				$("#kejian_box").hide();
+			}
+			
+			<if condition="$typeid eq 1">
+				$('#note').click();
+			</if>
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,312 @@
+<layout name="layout"/>
+  <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/validform.css">
+    <section class="content-header">
+      <h1 class="info_title">
+        考试管理
+        <small>/人工阅卷</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>
+          <a href="javascript:window.history.back(1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+        </li>
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title ">{$xhr['test_name']}</h3>
+        </div>
+        <div class="ml10 mt10">
+          <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <!--内容开始-->
+            <div class="row mt10 mb5">
+              <div class="col-sm-2">
+                <label class="text-aqua mt10 mr30">
+                  <i class="fa fa-send-o mr5"></i>学员: <span class="text-red">{$uInfo['username']}</span> </label>
+              </div>
+              <div class="col-sm-2">
+                <label class="text-aqua mt10 mr30">
+                  <i class="fa fa-share-alt mr5"></i>总分： <span class="text-red">{$uInfo['test_score']|default=0}</span> </label>
+              </div>
+              <div class="col-sm-3">
+                <label class="text-aqua mt10 ">
+                  <i class="fa fa-tasks mr5"></i>得分： <span class="text-red">{$uInfo['total_score']|default=0}</span> </label>
+              </div>
+              <div class="col-sm-2">
+                <label class="text-aqua mt10 float_r mr30">
+                  <i class="fa fa-send-o mr5"></i>状态：
+                  <if condition="$uInfo['attendance_status'] eq 1"><span class="text-green">已考试
+                  <else/><span class="text-red">未考试
+                  </if>
+                </label>
+              </div>
+            </div>
+            <!--课程状态结束-->
+            <!--试卷主要信息区域开始-->
+            <if condition="(count($singleChoice) eq 0) AND (count($multipleChoice) eq 0) AND (count($descriPtive) eq 0) AND (count($wd) eq 0)">
+              本试卷暂无试题
+            </if>
+            
+            <if condition="count($singleChoice) neq 0"> 
+              <div class="box-header with-border mt10">
+                <h4 class="box-title">一、单选题（<span class="text-red">共{$singleChoiceSum}道，共{$singleChoiceTotalScore}分</span>）</h4>
+              </div>
+              <foreach name="singleChoice" item="vo" key="k">
+                <div class="box-body">
+                  <p class="mb15 mt10"> {$k+1}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+                  <if condition="($uInfo['attendance_status'] eq 0) OR empty($answerInfo['dan'][$k]['correct_answer'])">
+                    <span href="#" class="color_red">
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                      </span>
+                  <elseif condition="$answerInfo['dan'][$k]['exam_answer'] eq $answerInfo['dan'][$k]['correct_answer']"/>
+                        <span href="#" class="color_gree">
+                        <i class="fa  fa-check mr5" aria-hidden="true"></i>
+                      </span>
+                  <else/>
+                    <span href="#" class="color_red">
+                      <i class="fa fa-close" aria-hidden="true"></i>
+                    </span>
+                  </if>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="radio" name="radio{$k}" disabled <if condition="$answerInfo['dan'][$k]['exam_answer'] eq 'A'">checked</if>> 
+                    <span class="ml10"> A.{$vo.optiona}</span>
+                  </p> 
+                  <p class="mb15 mt10">
+                    <input type="radio" name="radio{$k}" disabled <if condition="$answerInfo['dan'][$k]['exam_answer'] eq 'B'">checked</if>>
+                    <span  class="ml10">B.{$vo.optionb}</span>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="radio" name="radio{$k}" disabled <if condition="$answerInfo['dan'][$k]['exam_answer'] eq 'C'">checked</if>>
+                    <span class="ml10"> B.{$vo.optionc}</span>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="radio" name="radio{$k}" disabled <if condition="$answerInfo['dan'][$k]['exam_answer'] eq 'D'">checked</if>>
+                    <span class="ml10"> D.{$vo.optiond}</span>
+                  </p>
+                  <p class="mb15 mt10">正确答案：{$vo['right_option']}</p>
+                </div>
+              </foreach>
+            </if>
+
+            <!--多选题开始-->
+            <if condition="count($multipleChoice) neq 0">
+              <div class="box-header with-border mt10">
+                <h4 class="box-title">二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore} 分</span>）</h4>
+              </div>
+              <foreach name="multipleChoice" item="vo" key="k">
+                <div class="box-body">
+                  <p class="mb15 mt10"> {$k+1}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+                    <if condition="($uInfo['attendance_status'] eq 0) OR empty($answerInfo['duo'][$k]['correct_answer'])">
+                    <span href="#" class="color_red">
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                      </span>
+                  <elseif condition="$answerInfo['duo'][$k]['exam_answer'] eq $answerInfo['duo'][$k]['correct_answer']"/>
+                        <span href="#" class="color_gree">
+                        <i class="fa  fa-check mr5" aria-hidden="true"></i>
+                      </span>
+                  <else/>
+                    <span href="#" class="color_red">
+                      <i class="fa fa-close" aria-hidden="true"></i>
+                    </span>
+                  </if>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="checkbox" name="cc{$k}" autocomplete="off" disabled <if condition="in_array('A',explode(',',$answerInfo['duo'][$k]['exam_answer']))">checked</if>>
+                    <span class="ml10"> A.{$vo.optiona}</span>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="checkbox" name="cc{$k}" autocomplete="off" disabled <if condition="in_array('B',explode(',',$answerInfo['duo'][$k]['exam_answer']))">checked</if>>
+                    <span class="ml10"> B.{$vo.optionb}</span>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="checkbox" name="cc{$k}" autocomplete="off" disabled <if condition="in_array('C',explode(',',$answerInfo['duo'][$k]['exam_answer']))">checked</if>>
+                    <span class="ml10"> C.{$vo.optionc}</span>
+                  </p>
+                  <p class="mb15 mt10">
+                    <input type="checkbox" name="cc{$k}" autocomplete="off" disabled <if condition="in_array('D',explode(',',$answerInfo['duo'][$k]['exam_answer']))">checked</if>>
+                    <span class="ml10"> D.{$vo.optiond}</span>
+                  </p>
+                  <if condition="!empty($vo['optione'])">
+                    <p class="mb15 mt10">
+                      <input type="checkbox" name="cc{$k}" autocomplete="off" disabled <if condition="in_array('E',explode(',',$answerInfo['duo'][$k]['exam_answer']))">checked</if>>
+                      <span class="ml10"> E.{$vo.optione}</span>
+                    </p>
+                  </if>
+                  <p class="mb15 mt10">正确答案：{$vo['right_option']}</p>
+                </div>
+              </foreach>
+              <!--多选题结束-->
+            </if>
+
+            <if condition="count($descriPtive) neq 0">
+				<div class="box-header with-border">
+					<h4 class="box-title">三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore} 分</span>）</h4>
+				</div>
+				<foreach name="descriPtive" item="vo" key="k">
+					<div class="box-body">
+						<p class="mb15 mt10"> {$k+1}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+							<if condition="($uInfo['attendance_status'] eq 0) OR empty($answerInfo['pan'][$k]['correct_answer'])">
+                <span href="#" class="color_red">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                  </span>
+              <elseif condition="$answerInfo['pan'][$k]['exam_answer'] eq $answerInfo['pan'][$k]['correct_answer']"/>
+                    <span href="#" class="color_gree">
+                    <i class="fa  fa-check mr5" aria-hidden="true"></i>
+                  </span>
+              <else/>
+                <span href="#" class="color_red">
+                  <i class="fa fa-close" aria-hidden="true"></i>
+                </span>
+              </if>
+						</p>
+						<p class="mb15 mt10">
+							<label>
+								<div class="radio mr30">
+									<label>
+									<input type="radio" name="pan{$k}" disabled <if condition="$answerInfo['pan'][$k]['exam_answer'] eq 'A'">checked</if>>
+										<span class="ml10">A:对</span>
+									</label>
+								</div>
+								<div class="radio ">
+									<label>
+									<input type="radio" name="pan{$k}" disabled <if condition="$answerInfo['pan'][$k]['exam_answer'] eq 'B'">checked</if>>
+										<span class="ml10">B:错</span>
+									</label>
+								</div>
+							</label>
+						</p>
+						<p class="mb15 mt10">正确答案：{$vo['right_option']}</p>
+					</div>
+				</foreach>
+              </if>
+			  
+<form action="{:U('Admin/TestManage/saveAudit')}" method="POST">
+            <!--简答题-->
+            <if condition="count($wd) neq 0">
+            <div class="box-header with-border  mt10">
+                <h4 class="box-title">四、简答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）</h4>
+              </div>
+            <foreach name="wd" item="vo" key="k">
+            <div class="box-body">
+              <p class="mb15 mt10">{$k+1}.{$vo.title}（<span class="text-red">该小题<span class="score{$k}">{$vo.score|default=0}</span>分</span>） 
+                <!-- <span class="text-blue edit" style="font-weight: 800; cursor: pointer;" >单击修改得分</span> -->
+                <span class="wdSpan">得分:{$wdscore[$k]['wdscore']|default=0}</span> 分
+                <input class="form-control ml10 mr10 readonlyinput" style="width: 120px;" readonly type="text" datatype="zs" nullmsg="请输入分值" sucmsg=" " errormsg="分值必须为正整数,且小数点不超过1位" name="scores[]"  placeholder="单击修改得分" onclick="defen()" ischecked="{$wdscore[$k]['checked']}"/>
+                <input type="hidden" name="ids[]" value="{$vo.id}">
+              </p>
+              <p class="mb15 mt10">答案:{$answerInfo['wen'][$k]['exam_answer']}</p><br>
+              <p class="mb15 mt10">正确答案：{$vo.right_option}</p>
+              <p class="mb15 mt10">得分关键字:{$vo.keywords}</p>
+            </div>
+            </foreach>
+            </if>
+        <!--试卷主要信息区域结束-->
+        <!--内容結束-->
+      </div>
+      <div class="box-footer">
+        <div class="col-sm-12 mt10 text-center">
+          <input type="hidden" name="user_id" value="{$user_id}">
+          <input type="hidden" name="test_id" value="{$test_id}">
+          <input type="hidden" name="examination_id" value="{$examination_id}">
+          <input type="hidden" name="wdscore" value="{$wdscore}">
+          <button id="btn_Save" style="display:none;" class="btn btn-info form-group_but" type="button">提交</button>
+        </div>
+        <span id="msgdemo2" style="margin-left:15px;"></span>                  
+      </div>
+      </div>
+      </div>
+</form>
+    </section>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Js/js/Validform_v5.3.2.js"></script>
+    <script type="text/javascript">
+      $('.readonlyinput').each(function(){
+        var val = $(this).attr('ischecked');
+        if(!val){
+          $(this).show();
+        }else{
+          $(this).hide();
+        }
+      })
+      var validform = $("form").Validform({
+        datatype:{
+          'zs':function(gets,obj,curform,regxp){ //验证规则定义
+            var reg1 = /^0\.[0-9]{1}$/,
+                reg2 = /^[1-9][0-9]{0,5}$/,
+                // reg3 = /^0$/,
+                reg4 = /^[1-9][0-9]{0,5}\.[0-9]{1}$/;
+              if(!reg1.test(gets) && !reg2.test(gets) && !reg4.test(gets)){
+                  return false;
+              }
+              gets = parseFloat(gets);
+              if(gets>9999.99 || gets <0){
+                  return false;
+              }
+              return true;
+          }
+        }
+      });
+    validform.config({
+      tiptype:function(msg,o,cssctl){
+        var objtip=$("#msgdemo2");
+        cssctl(objtip,o.type);
+        objtip.text(msg);
+      }
+    });
+    </script>
+    <script>
+      //手动评分功能
+      function defen(){
+        $(".readonlyinput").removeAttr("readonly");
+        $("#btn_Save").show();
+      }
+
+      $('#btn_Save').click(function(){
+        if(!$('#msgdemo2').text()){
+          layer.msg('请输入正确格式的分值');
+          return false;
+        }
+
+        var f = true;
+        var score = $('.score0').text();
+        var input = $('.readonlyinput').val();
+        $('.readonlyinput').each(function(i){
+          console.log($(this).val());console.log(score);
+          if(parseInt($(this).val()) > parseInt(score)){
+            layer.msg('得分不能超过该小题总分');
+            f = false;
+            return false;
+          }
+        })
+
+        if(!f){
+          return false;
+        }
+
+        $.ajax({
+          url:"{:U('Admin/TestManage/saveAudit')}",
+          type:'POST',
+          data:$('form').serialize(),
+          success:function(msg){
+            if(msg.status==1){
+              $('#msgdemo2').text('保存成功');
+              setTimeout(function(){
+                window.location.href="{:U('Admin/TestManage/index')}";
+              },2000)
+            }else{
+              $('#msgdemo2').text('保存失败');
+              setTimeout(function(){
+                $('#msgdemo2').text(' ');
+              },2000)
+            }
+          }
+        })
+      });
+    </script>
+  </body>
+
+</html>

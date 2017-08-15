@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>个人中心——找人PK</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	<!-- bootstrap datepicker -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+
+	<style type="text/css">
+		.profile-user-img {
+			margin: 0 auto;
+			width: 150px;
+			padding: 3px;
+			border: 3px solid #d2d6de;
+	</style>
+</head>
+
+<body>
+<!--找人PK-->
+<div id="bumen_pk">
+	<div class="col-xs-12">
+		<div class="box box-primary mt10">
+			<div class="box-header with-border">
+				<h3 class="box-title">本人所在部门：{$tissue_name['name']}</h3>
+			</div>
+			<div class="box box-solid mt10 sidebar">
+				<ul class="sidebar-menu">
+					<li class="treeview active">
+						<ul class="treeview-menu menu-open" style="display: block;">
+							<foreach name="tree_items" item="items">
+								<empty name="items['_data']">
+									<li>
+										<a href="#">
+											<if condition="$tree_items['pid'] gt 0">
+												<input type="radio" name="org" value="{$items['id']}" checked=""/>
+											</if>
+											{$items['name']}
+										</a>
+									</li>
+								</empty>
+								<notempty name="items['_data']">
+									<li class="active">
+										<a href="#"> {$items['name']}
+                                      <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                      </span>
+										</a>
+										<ul class="treeview-menu menu-open" style="display: block;">
+											<foreach name="items['_data']" item="v">
+												<li>
+													<a href="#"><input type="radio" name="org" value="{$v['id']}" checked=""/> {$v['name']}
+													</a>
+												</li>
+											</foreach>
+										</ul>
+									</li>
+								</notempty>
+							</foreach>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--部门PK窗口结束-->
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+
+<script type="text/javascript">
+	//radio选中样式
+	$('input').iCheck({
+		labelHover: false,
+		cursor: true,
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_minimal-blue',
+		increaseArea: '20%'
+	});
+
+</script>
+</body>
+</html>

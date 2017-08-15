@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>融易点——岗位管理</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/statics/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <style type="text/css">
+    	.layui-layer-input{
+    		height: 35px!important;
+    	}
+    	
+		#jobImportBox{
+			display: none;
+			width:300px; 
+			margin:10px 20px;
+		}
+    </style>
+
+</head>
+<body>
+
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        岗位管理
+        <small>/岗位列表</small>
+    </h1>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <!--筛选栏开始-->
+                <div class="row mb10">
+                    <div class="col-sm-6">
+
+                        <div class="box-tools">
+                            <form action="{:U('AuditUsers/jobsmanage')}" enctype="multipart/form-data">
+                            <div class="input-group ">
+                                    <input type="text" name="keywords" class="form-control pull-right" placeholder="搜索">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="example1_filter" class="dataTables_filter">
+                            <button type="button" class="btn btn-warning   float_r" onclick="del_click()"><i
+                                    class="fa fa-trash mr5" aria-hidden="true"></i>删除
+                            </button>
+                            <button type="button" style="margin-right: 10px;" class="btn btn-primary float_r"
+                                    onclick="add_click()"><i class="fa fa-plus mr5" aria-hidden="true"></i>添加岗位
+                            </button>
+                            <button type="button" class="btn btn-primary mr10 float_r " onclick="job_import()"> <i class="fa fa-bookmark-o mr5" aria-hidden="true "></i>批量导入</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!--筛选栏结束-->
+                <!--内容开始-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table" class="table table-bordered table-striped dataTable" role="grid"
+                               aria-describedby="example1_info">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1" aria-sort="ascending"
+                                    aria-label="Rendering engine: activate to sort column descending" width="45">
+                                    <label style="margin-bottom: 0px;">
+                                        <input type="checkbox" class="js-checkbox-all">
+                                    </label>
+                                </th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1" aria-label="Browser: activate to sort column ascending">岗位名称
+                                </th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1" aria-label="CSS grade: activate to sort column ascending">操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tab">
+
+                            <foreach name="gangwei_list" item="vo" >
+                                <tr role="row" class="odd text-center">
+                                    <td>
+                                        <input type="checkbox" value="{$vo.id}">
+                                    </td>
+                                    <td>{$vo.name}</td>
+                                    <td>
+                                        <a href="#" onclick="redact({$vo.id},'{$vo.name}')" class="bs-callout-info">
+                                            <i class="fa fa-edit mr5" aria-hidden="true" ></i>编辑
+                                        </a>
+                                    </td>
+                                </tr>
+                            </foreach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--内容結束-->
+                <!--分页开始-->
+                <div class="row">
+                    <div class="float_r mr15">
+                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                            {$gangwei_page}
+                        </div>
+                    </div>
+                </div>
+                <!--分页结束-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="jobImportBox" style="display:none; ">
+	<form action="{:U('Admin/audit_users/import')}" method="post" id="addFileFrom" enctype="multipart/form-data">
+		<div class="mb10">一、请根据模板格式导入数据</div>
+		<div class="mb10">
+			<a href="/Upload/excelTmp/job_tmp.xlsx" download="" class="btn btn-block btn-success "><i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</a>
+		</div>
+		<div class="mb10">二、请选择需要导入的Excel文件</div>
+		<div class="mb10">注：导入文件请勿超过5M。</div>
+		<input type="file" name="excelFile" style="width:250px; font:300 1em PingFang SC;" />
+		<div style="display:none;">
+			<input type="submit" value="提交" >
+			<input type="reset" class="fromReset" value="重置表单">
+		</div>
+	</form>
+</div>
+		
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+
+<script type="text/javascript">
+    //radio选中样式
+    $('input').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_minimal-blue',
+        increaseArea: '20%'
+    });
+	
+    
+  	//批量导入岗位 20170512 Du
+	function job_import(){
+		$("#addFileFrom .fromReset").click();
+		layer.open({
+			title: '岗位批量导入',
+			btn: ['确定', '取消'],
+			type:1,
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			area: ['340px', '360px'],
+			shadeClose: true, //开启遮罩关闭
+			content: $("#jobImportBox"),
+			yes: function(index, layero) {
+				var is_file = $("#addFileFrom input[type='file']").val();
+				if(is_file == '') {
+					layer.msg('请选择导入文件', {
+						time: 1000
+					});
+					return false;
+				}
+				var pos = is_file.lastIndexOf(".");
+				var format = is_file.substring(pos + 1).toLowerCase();
+				if(format != 'xls' && format != 'xlsx' && format != 'csv'){
+					layer.msg('上传文件格式不正确', {
+						time: 1000
+					});
+					return false;
+				}
+				
+				var formData = new FormData($('#addFileFrom')[0]);
+				var saveLoad = layer.load(0);
+				$.ajax({
+					type:"POST",
+					url:"{:U('Admin/audit_users/import')}",
+					data:formData,
+					dataType:"json",
+					contentType: false,
+					processData: false,
+					success:function(data){
+						layer.close(saveLoad);
+						if(data.code == 1000){
+							layer.closeAll();
+							layer.msg('导入成功', {
+								time: 1000
+							}, function(){
+								window.location.href = "{:U('Admin/audit_users/importPage')}";
+							});
+						}else{
+							layer.msg(data.message, {
+								time: 2000
+							});
+						}
+					}
+				});//ajax end
+				return false;
+			}
+		});
+	}
+
+    var $checkboxAll = $(".js-checkbox-all"),
+            $checkbox = $("tbody").find("[type='checkbox']").not("[disabled]"),
+            length = $checkbox.length,
+            i=0;
+
+    $checkboxAll.on("ifClicked",function(event){
+        if(event.target.checked){
+            $checkbox.iCheck('uncheck');
+            i=0;
+        }else{
+            $checkbox.iCheck('check');
+            i=length;
+        }
+    });
+
+
+    function del_click() {
+        //删除分组
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定', '取消'],
+            yes:function(){
+
+                var str="";
+                var ids="";
+
+                $("#table input").each(function(i){
+
+                    if($(this).is(':checked') == true){
+                        if($(this).val() != 'on'){
+                            str+=$(this).val()+",";
+                        }
+                    }
+
+                });
+
+                if(str.substr(str.length-1)== ','){
+                    ids = str.substr(0,str.length-1);
+                }
+
+                if(ids.length > 0){
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('AuditUsers/delJobs')}",
+                        data: "ids="+ids,
+                        success: function(msg){
+
+                            if(msg.status > 0 ){
+
+                                layer.msg('删除成功',{time: 1500,icon: 1},function(){
+                                    window.location.reload();
+                                });
+
+                            }else{
+
+                                layer.msg('该岗位用户在使用', {
+                                    time: 2000, //2s后自动关闭
+                                });
+                            }
+                        }
+                    });
+
+                }else{
+
+                    layer.msg('请勾选删除选项');
+
+                }
+            },
+            skin: 'layui-layer-lan'
+//按钮
+        }, function () {
+            layer.msg('删除成功', {time: 1500,icon: 1},function(){
+                window.location.reload();
+            });
+        }, function () {
+            layer.msg('取消删除', {
+                time: 2000, //2s后自动关闭
+            });
+        });
+    }
+    function add_click() {
+		//新增分组prompt
+        layer.prompt({title:'添加岗位'},function (val, index) {
+
+            if(val.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0){
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('AuditUsers/addJobs')}",
+                    data: "name="+val,
+                    height:"35px",
+                    success: function(msg){
+
+                        if(msg.status){
+                            layer.msg('新增成功', {time: 1500,icon: 1},function(){
+                                window.location.reload();
+                            });
+                        }else{
+                            layer.msg('该岗位已存在,添加失败');
+                        }
+                    }
+                });
+
+
+            }else{
+
+                layer.msg('岗位名称不能为空');
+
+            }
+
+        });
+    }
+
+    //编辑岗位
+    function redact(id,name){
+
+        layer.open({
+            title: '编辑岗位',
+            btn: ['保存修改','取消'],
+            yes:function(){
+
+                var editorName = $("#editorName").val();
+
+                if(editorName.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length > 0){
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('AuditUsers/editorJobs')}",
+                        data: "id="+id+"&name="+editorName,
+                        success: function(msg){
+                            if(msg.status > 0){
+                                layer.msg(msg.info, {time: 1500,icon: 1},function(){
+                                    window.location.reload();
+                                });
+                            }else{
+                                layer.msg(msg.info, {time: 1500,icon: 1});
+                            }
+                        }
+                    });
+
+
+                }else{
+
+                    layer.msg('请输入编辑内容');
+
+                }
+
+            },
+            area:['400px','190px'],
+            type: 1,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: '<input type=\"text\" class=\"mt30 ml15\" style=\"line-height:35px; height:35px; width:370px;margin-left:15px;\" value=\"'+name+'\" id=\"editorName\"/>'
+        });
+    }
+
+
+</script>
+</body>
+</html>

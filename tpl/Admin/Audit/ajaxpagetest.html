@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Ajax无刷新分页</title>
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script type="text/javascript">
+            function user1(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                 var id = id;
+                    $.get('test', {'p':id}, function(data){  //用get方法发送信息到UserAction中的user方法
+                     $("#auditlist1").replaceWith("<div  id='auditlist1'>"+data+"</div>"); //user一定要和tpl中的一致
+                });
+             }
+            
+             function user2(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                 var id = id;
+                    $.get('test2', {'p':id}, function(data){  //用get方法发送信息到UserAction中的user方法
+                     $("#auditlist2").replaceWith("<div  id='auditlist2'>"+data+"</div>"); //user一定要和tpl中的一致
+                });
+             }
+        </script>
+    </head>
+
+
+    <body>
+            <div id='auditlist1'>   <!--这里的user和下面js中的test要一致-->
+                 <div>
+                    <volist id='list1' name='list1'>   <!--内容输出-->
+                   {$list1['id']}&nbsp;&nbsp;{$list1['username']}<br/>
+            </volist>
+             </div>
+            {$page1} <!--分页输出-->
+        </div>
+
+
+
+
+
+        <div id='auditlist2'>   <!--这里的user和下面js中的test要一致-->
+                 <div>
+  
+                    <volist id='list2' name='list2'>   <!--内容输出-->
+                    	<table width="300" border="1" >
+                    		<tr>
+                    			<td width="150">{$list2['project_name']}</td>
+                    			<td width="150">{$list2['class_name']}</td>
+                    		</tr>
+                    	</table>
+                   &nbsp;&nbsp;<br/>
+            </volist>
+             </div>
+            {$page2} <!--分页输出-->
+
+        </div>        
+    </body>
+</html>

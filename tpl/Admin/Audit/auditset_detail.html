@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>三期审核条件设置</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+			<link rel="stylesheet" href="__PUBLIC__/Css/selectUser.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+	
+		<style type="text/css">
+			a {
+				cursor: pointer;
+				color: #337ab7;
+			}
+			
+			a:hover {
+				text-decoration: underline;
+				color: #03A9F4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+                            审核流程设置
+        <small>/审核流程设置详情</small>
+      </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="avaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div class="dataTables_wrapper form-inline dt-bootstrap">
+						 
+							<div class="box-body">
+								<!--授课方式字段开始-->
+								<form class="form-horizontal">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="text-align: right;"><span class="color_red">*</span>审批条件：</label>
+									<div class="col-sm-10">
+										<label>
+												<div class="radio mr30">
+													<label >
+														
+                                                        <input   type="radio" name="examfs" id="examfs1" value="1" />
+														
+														无条件审批流程
+													</label>
+									</div>
+                                    
+                                    <if condition="($type eq  1) OR ($type eq 2) OR ($type eq 6) OR ($type eq 7) OR ($type eq 8)">
+									<div class="radio mr30">
+										<label>
+											            
+														<input  type="radio" name="examfs" id="examfs2" value="2"/>
+														
+														
+														条件审批流程
+													</label>
+									</div>
+									<else />
+									当前流程暂不支持条件审批
+                                    </if>
+
+
+									</label>
+								</div>
+							</div>
+								</form>
+							<!--授课方式字段结束-->
+                            <!--无条件审核开始-->
+							
+							<form action="{:U('Admin/Audit/save')}" method="POST" id="wutiaojianFrom" class="form-horizontal">
+							<div id="wutiaojian">
+								<input type="hidden" name="is_condition" value="0"/>
+								<input type="hidden" name="type" value="{$type}"/>
+
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>一审人员：</label>
+									<div class="col-sm-10">
+										<select name="oneaudit_role" id="wulevel1" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+												<if condition="$detailData['oneaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>一审人员：</label>
+									<div class="col-sm-10">
+										<label>
+									<div class="radio mr30">
+									<label ><input   type="radio" name="one_level_type" id="check_btn1" value="1" /> 选择人员</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="one_level_type" id="check_btn2" value="2" /> 选择角色</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="one_level_type" id="check_btn3" value="3" /> 负责人审核</label>
+									</div>
+									<div class="radio mr30">
+										<!--<label><input  type="radio" name="one_level_type" id="check_btn4" value="0" /> 不选择</label>-->
+									</div>
+									</label>
+
+									<div class="mt10" id="check_person" style="display: none;">
+										<a class="" onclick="section_zhiding('oneaudit_user_id')">选择人员</a>
+										<!--指定人-->
+                                     <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="oneaudit_user_id">
+			
+											</div>
+										</div>
+									</div>
+									</div>
+
+
+									<div class="mt10" id="check_juese" style="display: none;">
+										<select name="oneaudit_role" id="wulevel1" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+												<if condition="$detailData['oneaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>	
+								</div>
+							</div>
+
+
+
+                             <div class="box-header with-border no-padding mt5 mb5"></div>
+
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">二审人员：</label>
+									<div class="col-sm-10">
+									<select name="twoaudit_role" id="wulevel2" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['twoaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+                                
+                                <!--二审人员开始-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">二审人员：</label>
+									<div class="col-sm-10">
+										<label>
+														<div class="radio mr30">
+														<label ><input   type="radio" name="two_level_type" id="checktwo_btn1" value="1" /> 选择人员</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="checktwo_btn2" value="2" /> 选择角色</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="checktwo_btn3" value="3" /> 负责人审核</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="checktwo_btn4" value="0" /> 不选择</label>
+									</div>
+									</label>
+
+									<div class="mt10" id="checktwo_person" style="display: none;">
+										<div class="mt10" id="checktwo_person">
+										<a class="" onclick="section_zhiding('twoaudit_user_id')">选择人员</a>
+                                        </div> 
+										<!--指定人-->
+                                      <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="twoaudit_user_id">
+			
+											</div>
+										</div>
+								      </div>
+									</div>
+
+									<div class="mt10" id="checktwo_juese" style="display: none;">
+										<select name="twoaudit_role" id="wulevel2" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['twoaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>
+								</div>
+								</div>
+
+                              <div class="box-header with-border no-padding mt5 mb5"></div>
+                            
+
+
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">三审人员：</label>
+									<div class="col-sm-10">
+										<select name="threeaudit_role" id="wulevel3" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['threeaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+
+								<!--三审人员开始-->
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">三审人员：</label>
+									<div class="col-sm-10">
+										<label>
+														<div class="radio mr30">
+														<label ><input   type="radio" name="three_level_type" id="checkthree_btn1" value="1" /> 选择人员</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="three_level_type" id="checkthree_btn2" value="2" /> 选择角色</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="three_level_type" id="checkthree_btn3" value="3" /> 负责人审核</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="three_level_type" id="checkthree_btn4" value="0" /> 不选择</label>
+									</div>
+									</label>
+
+									<div class="mt10" id="checkthree_person" style="display: none;">
+										<!--<a class="">选择人员</a>-->
+										<a class="" onclick="section_zhiding('threeaudit_user_id')">选择人员</a>
+										<!--指定人-->
+                                     <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="threeaudit_user_id">
+			                                
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<div class="mt10" id="checkthree_juese" style="display: none;">
+										<select name="threeaudit_role" id="wulevel3" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['threeaudit_role'] eq $v['id']">	
+													<option value="{$v['id']}" selected>{$v['title']}</option>
+												<else />
+													<option value="{$v['id']}">{$v['title']}</option>
+												</if>
+											</foreach>
+										</select>
+									</div>
+								</div>
+								</div>
+
+                            <div class="box-footer" id="tijiao">
+								<div class="form-group">
+									<label class="col-sm-2 control-label"></label>
+									<div class="col-sm-10">
+										<div class="col-sm-6">
+											<!--<a href="#" class="btn btn-info form-group_but">保存并启用</a>-->
+											<button type="submit" class="btn btn-info form-group_but">保存并启用</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+							</form>
+                            <!--无条件审核结束-->
+								
+							<form action="{:U('Admin/Audit/save')}" method="POST" id="tianjianForm" class="form-horizontal">
+
+							<!--有条件审核-->
+							<div class="" id="tiaojian" style="display: none;">
+								<input type="hidden" name="is_condition" value="1" />
+								<input type="hidden" name="type" value="{$type}"/>
+								<!--判断条件-->
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>所选判断条件：</label>
+ 
+									<div class="col-sm-10">
+										<div class="mt5">
+											<span id="GKFW">{$detailData['name']}</span>
+											<input type="hidden" name="condition_id" id="condition_id" value="{$detailData['condition_id']}"/>
+											<a onclick="move_org();" class="">更改</a>
+										</div>
+									</div>
+								</div>
+								<!--判断条件结束结束-->
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>一审人员：</label>
+									<div class="col-sm-10">
+										<select name="oneaudit_role" id="level1" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['oneaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+
+                                 <!--一审人员开始-->
+                                 <div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>一审人员：</label>
+									<div class="col-sm-10">
+										<label>
+									<div class="radio mr30">
+									<label ><input   type="radio" name="one_level_type" id="have_check_btn1" value="1" /> 选择人员</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="one_level_type" id="have_check_btn2" value="2" /> 选择角色</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="one_level_type" id="have_check_btn3" value="3" /> 负责人审核</label>
+									</div>
+									<div class="radio mr30">
+										<!--<label><input  type="radio" name="one_level_type" id="have_check_btn4" value="0" /> 不选择</label>-->
+									</div>
+									</label>
+
+									<div class="mt10" id="have_check_person" style="display: none;">
+										<a class="" onclick="section_zhiding('haveoneaudit_user_id')">选择人员</a>
+										<!--指定人-->
+                                     <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="haveoneaudit_user_id">
+			                                 <!--<if condition="$detailData['oneaudit_user_id'] neq 0">
+
+                                             <a  href="javascript:void(0);">
+												<span>张三</span>
+												<em class="myTags">
+													<input type="hidden" name="oneaudit_user_id" value="695">
+												</em>
+											</a>  
+
+											 </if>-->
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<div class="mt10" id="have_check_juese" style="display: none;">
+										<select name="oneaudit_role" id="level1" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['oneaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+									</div>	
+							 	 </div>
+						    	</div>
+
+								<div class="box-header with-border no-padding mt5 mb5"></div>
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">条件值 <span class="color_red">≥</span>：</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control mr10 " name="conditiona" placeholder="" value="{$detailData['conditiona']}">需要二审
+									</div>
+								</div>
+
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">二审人员：</label>
+									<div class="col-sm-10">
+										<select name="twoaudit_role" id="level2" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['twoaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+
+                                   <!--二审人员开始-->
+									<div class="form-group">
+									<label class="col-sm-2 control-label">二审人员：</label>
+									<div class="col-sm-10">
+										<label>
+										<div class="radio mr30">
+										<label ><input   type="radio" name="two_level_type" id="have_checktwo_btn1" value="1" /> 选择人员</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="have_checktwo_btn2" value="2" /> 选择角色</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="have_checktwo_btn3" value="3" /> 负责人审核</label>
+									</div>
+									<div class="radio mr30">
+										<label><input  type="radio" name="two_level_type" id="have_checktwo_btn4" value="0" /> 不选择</label>
+									</div>
+									</label>
+
+									<div class="mt10" id="have_checktwo_person" style="display: none;">
+										<a class="" onclick="section_zhiding('havetwoaudit_user_id')">选择人员</a>
+										<!--指定人-->
+                                     <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="havetwoaudit_user_id">
+			
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<div class="mt10" id="have_checktwo_juese" style="display: none;">
+										<select name="twoaudit_role" id="level2" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['twoaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+									</div>
+									</div>
+								</div>
+
+
+								<div class="box-header with-border no-padding mt5 mb5"></div>
+                                  
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">条件值 <span class="color_red">≥</span>：</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control mr10 " name="conditionb" placeholder="" value="{$detailData['conditionb']}">需要三审
+									</div>
+								</div>
+
+								<!--<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">三审人员：</label>
+									<div class="col-sm-10">
+										<select name="threeaudit_role" id="level3" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['threeaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+									</div>
+								</div>-->
+                                
+								<!--三审人员开始-->
+								<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">三审人员：</label>
+								<div class="col-sm-10">
+									<label>
+											<div class="radio mr30">
+											<label ><input   type="radio" name="three_level_type" id="have_checkthree_btn1" value="1" /> 选择人员</label>
+								</div>
+								<div class="radio mr30">
+									<label><input  type="radio" name="three_level_type" id="have_checkthree_btn2" value="2" /> 选择角色</label>
+								</div>
+								<div class="radio mr30">
+									<label><input  type="radio" name="three_level_type" id="have_checkthree_btn3" value="3" /> 负责人审核</label>
+								</div>
+								<div class="radio mr30">
+										<label><input  type="radio" name="three_level_type" id="have_checkthree_btn4" value="0" /> 不选择</label>
+									</div>
+								</label>
+
+								<div class="mt10" id="have_checkthree_person" style="display: none;">
+									<a class="" onclick="section_zhiding('havethreeaudit_user_id')">选择人员</a>
+										<!--指定人-->
+                                     <div class=" class="mt10"" >
+										<label for="inputEmail3" class="pull-left  control-label">指定人员：</label>
+										<div class="col-sm-10">
+
+											<div class="plus-tag tagbtn clearfix mt5" id="havethreeaudit_user_id">
+			
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="mt10" id="have_checkthree_juese" style="display: none;">
+									<select name="threeaudit_role" id="level3" class="form-control select2">
+											<option value="">
+												<a>--请选择角色--</a>
+											</option>
+											<foreach name="roles" item="v">
+											<if condition="$detailData['threeaudit_role'] eq $v['id']">	
+												<option value="{$v['id']}" selected>{$v['title']}</option>
+											<else />
+												<option value="{$v['id']}">{$v['title']}</option>
+											</if>
+											</foreach>
+										</select>
+								</div>
+							</div>
+						</div>
+
+
+								<div class="box-footer" id="tijiao">
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<div class="col-sm-6">
+									<!--<a href="#" class="btn btn-info form-group_but">保存并启用</a>-->
+									<button type="submit" class="btn btn-info form-group_but">保存并启用</button>
+								</div>
+							</div>
+						</div>
+					</div>
+							</div>
+							<!--有条件审核结束-->
+                            
+							
+					
+					
+					</form>
+					</div>
+					<!--内容結束-->
+				</div>
+			</div>
+			</div>
+		</section>
+		<!--审批条件弹窗-->
+		<div id="move_org" style="display: none;">
+			<foreach name="conditions" item="vo" >
+			<div class="mt10 mb10 col-sm-12">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-8">
+					<div class="mt5">
+						<span><input type="radio" name="check" cid="{$vo.id}" value="{$vo.name}" /><span class="ml10">{$vo.name}</span>
+					</div>
+				</div>
+			</div>
+			</foreach>
+
+			<div class="col-sm-12 mt10 text-center">
+				<a class="btn btn-info form-group_but" onclick="queding()">确认</a>
+
+			</div>
+
+		</div>
+		<!--审批条件弹窗结束-->
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+		<script src="__PUBLIC__/Js/js/selectUser.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//无条件审核
+			$("#wutiaojianFrom").submit(function(){
+				var level1 = $("#wulevel1").val();
+				var level2 = $("#wulevel2").val();
+				var level3 = $("#wulevel3").val();
+				level1 = parseInt(level1);
+				level2 = parseInt(level2);
+				level3 = parseInt(level3);
+				if(isNaN(level1)) level1 = "";
+				if(isNaN(level2)) level2 = "";
+				if(isNaN(level3)) level3 = "";
+				
+                var check_btn1= $('input:radio[id="check_btn1"]:checked').val();
+				var check_btn2= $('input:radio[id="check_btn2"]:checked').val();
+				var check_btn3= $('input:radio[id="check_btn3"]:checked').val();
+				var check_btn4= $('input:radio[id="check_btn4"]:checked').val();
+				// alert(check_btn1);
+				// alert(check_btn2);
+				if(check_btn1==null &&　check_btn2==null&& check_btn3==null ){
+					alert("一审人员请选中一个!");
+					return false;
+				} 
+                if(check_btn1 == 1){
+					// alert($('#oneaudit_user_id').find("input[name='oneaudit_user_id']").val());
+                   if($('#oneaudit_user_id').find("input[name='oneaudit_user_id']").val()  == null){
+					alert("请选择一审指定审核人员");
+					return false;
+				  }
+				}else if(check_btn2 == 2){
+                  if(level1 == ""){
+					alert("请选择一审角色");
+					return false;
+				  }
+				}
+			     
+
+				var checktwo_btn1= $('input:radio[id="checktwo_btn1"]:checked').val();
+				var checktwo_btn2= $('input:radio[id="checktwo_btn2"]:checked').val();
+				var checktwo_btn3= $('input:radio[id="checktwo_btn3"]:checked').val();
+				var checktwo_btn4= $('input:radio[id="checktwo_btn4"]:checked').val();
+				if(checktwo_btn1==null &&checktwo_btn2==null&& checktwo_btn3==null &&checktwo_btn4==null){
+					alert("二审人员请选中一个!");
+					return false;
+				}
+                if(checktwo_btn1 == 1){
+					// alert($('#twoaudit_user_id').find("input[name='twoaudit_user_id']").val());
+					if($('#twoaudit_user_id').find("input[name='twoaudit_user_id']").val()  == null){
+					alert("请选择二审指定审核人员");
+					return false;
+				    }
+				}else if(checktwo_btn2 == 2){
+                    if(level2 == ""){
+					alert("请选择二审角色");
+					return false;
+				    }
+				}
+
+
+
+				var checkthree_btn1= $('input:radio[id="checkthree_btn1"]:checked').val();
+				var checkthree_btn2= $('input:radio[id="checkthree_btn2"]:checked').val();
+				var checkthree_btn3= $('input:radio[id="checkthree_btn3"]:checked').val();
+				var checkthree_btn4= $('input:radio[id="checkthree_btn4"]:checked').val();
+				if(checkthree_btn1==null &&checkthree_btn2==null&& checkthree_btn3==null &&checkthree_btn4==null){
+					alert("三审人员请选中一个!");
+					return false;
+				}
+                if(checkthree_btn1 == 1){
+					if($('#threeaudit_user_id').find("input[name='threeaudit_user_id']").val()  == null){
+					alert("请选择三审指定审核人员");
+					return false;
+				    }
+				}else if(checkthree_btn2 == 2){
+                    if(level3 == ""){
+					alert("请选择三审角色");
+					return false;
+				    }
+				}
+
+                if((checkthree_btn1!=null ||checkthree_btn2!=null|| checkthree_btn3!=null)&&checktwo_btn4==0){
+                    alert("请选择二审人员"); 
+					return false;
+				}
+
+
+
+            //   return false;
+               
+				// if(level1 == ""){
+				// 	layer.alert("请选择一审人员");
+					
+				// 	return false;
+				// }
+				
+				// if(level2 != ""){
+				// 	// if(level2 == level1){
+				// 	// 	layer.alert("二审人员不能和一审人员相同");
+				// 	// 	return false;
+				// 	// }
+				// }
+				
+				// if(level3 != ""){
+				// 	if(level2 == ""){
+				// 		layer.alert("请选择二审人员");
+				// 		return false;
+				// 	}else{
+				// 		// if(level3 == level1){
+				// 		// 	layer.alert("三审人员不能和一审人员相同");
+				// 		// 	return false;
+				// 		// }
+				// 		// if(level3 == level2){
+				// 		// 	layer.alert("三审人员不能和二审人员相同");
+				// 		// 	return false;
+				// 		// }
+				// 	}
+				// }
+			});
+			
+			//条件审核控制
+			$("#tianjianForm").submit(function(){
+				var condition_id = $("#condition_id").val();
+				var level1 = $("#level1").val();
+				var level2 = $("#level2").val();
+				var level3 = $("#level3").val();
+				level1 = parseInt(level1);
+				level2 = parseInt(level2);
+				level3 = parseInt(level3);
+				if(isNaN(level1)) level1 = "";
+				if(isNaN(level2)) level2 = "";
+				if(isNaN(level3)) level3 = "";
+				var condition1 = $("input[name='conditiona']").val();
+				var condition2 = $("input[name='conditionb']").val();
+				condition1 = Number(condition1);
+				condition2 = Number(condition2);
+				if(isNaN(condition1)) condition1 = 0;
+				if(isNaN(condition2)) condition2 = 0;
+                if(condition_id == "0"){
+					layer.alert("请选择判断条件", {offset: '30%'});
+					return false;
+				}
+
+
+				var check_btn1= $('input:radio[id="have_check_btn1"]:checked').val();
+				var check_btn2= $('input:radio[id="have_check_btn2"]:checked').val();
+				var check_btn3= $('input:radio[id="have_check_btn3"]:checked').val();
+				// alert(check_btn1);
+				// alert(check_btn2);
+				if(check_btn1==null &&　check_btn2==null&& check_btn3==null ){
+					alert("一审人员请选中一个!");
+					return false;
+				} 
+                if(check_btn1 == 1){
+					// alert($('#oneaudit_user_id').find("input[name='oneaudit_user_id']").val());
+                   if($('#haveoneaudit_user_id').find("input[name='oneaudit_user_id']").val()  == null){
+					alert("请选择一审指定审核人员");
+					return false;
+				  }
+				}else if(check_btn2 == 2){
+                  if(level1 == ""){
+					alert("请选择一审角色");
+					return false;
+				  }
+				}
+			     
+
+				var checktwo_btn1= $('input:radio[id="have_checktwo_btn1"]:checked').val();
+				var checktwo_btn2= $('input:radio[id="have_checktwo_btn2"]:checked').val();
+				var checktwo_btn3= $('input:radio[id="have_checktwo_btn3"]:checked').val();
+				var checktwo_btn4= $('input:radio[id="have_checktwo_btn4"]:checked').val();
+				if(checktwo_btn1==null &&checktwo_btn2==null&& checktwo_btn3==null &&checktwo_btn4==null){
+					alert("二审人员请选中一个!");
+					return false;
+				}
+                if(checktwo_btn1 == 1){
+					// alert($('#twoaudit_user_id').find("input[name='twoaudit_user_id']").val());
+					if($('#havetwoaudit_user_id').find("input[name='twoaudit_user_id']").val()  == null){
+					alert("请选择二审指定审核人员");
+					return false;
+				    }
+				}else if(checktwo_btn2 == 2){
+                    if(level2 == ""){
+					alert("请选择二审角色");
+					return false;
+				    }
+				}
+
+
+				var checkthree_btn1= $('input:radio[id="have_checkthree_btn1"]:checked').val();
+				var checkthree_btn2= $('input:radio[id="have_checkthree_btn2"]:checked').val();
+				var checkthree_btn3= $('input:radio[id="have_checkthree_btn3"]:checked').val();
+				var checkthree_btn4= $('input:radio[id="have_checkthree_btn4"]:checked').val();
+				if(checkthree_btn1==null &&checkthree_btn2==null&& checkthree_btn3==null &&checkthree_btn4==null){
+					alert("三审人员请选中一个!");
+					return false;
+				}
+                if(checkthree_btn1 == 1){
+					if($('#havethreeaudit_user_id').find("input[name='threeaudit_user_id']").val()  == null){
+					alert("请选择三审指定审核人员");
+					return false;
+				    }
+				}else if(checkthree_btn2 == 2){
+                    if(level3 == ""){
+					alert("请选择三审角色");
+					return false;
+				    }
+				}
+                   
+			    if((checkthree_btn1!=null ||checkthree_btn2!=null|| checkthree_btn3!=null)&&checktwo_btn4==0){
+                    alert("请选择二审人员"); 
+					return false;
+				}
+
+                // exit;
+				
+				// if(level1 == ""){
+				// 	layer.alert("请选择一审人员", {offset: '30%'});
+				// 	return false;
+				// }
+				
+				if(checktwo_btn1 != null || checktwo_btn2 != null || checktwo_btn3 != null){
+					// if(level2 == level1){
+					// 	layer.alert("二审人员不能和一审人员相同");
+					// 	return false;
+					// }
+					if(condition1 <= 0){
+						layer.alert("二审审核条件必须是大于0的数字", {offset: '30%'});
+						return false;
+					}
+				}
+				
+				if(checkthree_btn1 != null || checkthree_btn2 != null || checkthree_btn3 != null){
+					if(checktwo_btn4 == 0){
+						layer.alert("请选择二审人员", {offset: '30%'}, {offset: '30%'});
+						return false;
+					}else{
+						// if(level3 == level1){
+						// 	layer.alert("三审人员不能和一审人员相同");
+						// 	return false;
+						// }
+						// if(level3 == level2){
+						// 	layer.alert("三审人员不能和二审人员相同");
+						// 	return false;
+						// }
+					}
+					if(condition2 <= 0){
+						layer.alert("三审审核条件必须是大于0的数字", {offset: '30%'});
+						return false;
+					}
+				}
+				
+				if(condition1 != "" && checktwo_btn4 == 0){
+					layer.alert("请选择二审人员", {offset: '30%'});
+					return false;
+				}
+				if(condition2 != "" && checkthree_btn4 == 0){
+					layer.alert("请选择三审人员", {offset: '30%'});
+					return false;
+				}
+
+
+
+
+                
+				// if(condition1 != "" && level2 == ""){
+				// 	layer.alert("请选择二审人员", {offset: '30%'});
+				// 	return false;
+				// }
+				// if(condition2 != "" && level3 == ""){
+				// 	layer.alert("请选择三审人员", {offset: '30%'});
+				// 	return false;
+				// }
+				if(condition1 != "" && condition2 != ""){
+					if(condition2 <= condition1){
+						layer.alert("三审条件值必须大于二审条件值", {offset: '30%'});
+						return false;
+					}
+				}
+				// if(condition1 == "" && level2 != ""){
+				// 	layer.alert("请填写二审条件值", {offset: '30%'});
+				// 	return false;
+				// }
+				// if(condition2 == "" && level3 != ""){
+				// 	layer.alert("请填写三审条件值", {offset: '30%'});
+				// 	return false;
+				// }
+				if(condition1 != "" && condition1 > 9999999999.99){
+					layer.alert("二审条件值不能超过10位", {offset: '30%'});
+					return false;
+				}
+				if(condition2 != "" && condition2 > 9999999999.99){
+					layer.alert("三审条件值不能超过10位", {offset: '30%'});
+					return false;
+				}
+			});
+			
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			$("#examfs1").on('ifChecked', function(event) { //ifCreated 事件应该在插件初始化之前绑定 
+				$("#tiaojian").hide();
+				$("#wutiaojian").show()
+			});
+			$("#examfs2").on('ifChecked', function(event) { //ifCreated 事件应该在插件初始化之前绑定
+				$("#tiaojian").show();
+				$("#wutiaojian").hide();
+				// move_org();
+
+			});
+            
+
+			//无条件一审条件判断
+			$("#check_btn1").on('ifChecked', function(event) {
+				$("#check_person").show();
+				$("#check_juese").hide()
+			});
+
+			$("#check_btn2").on('ifChecked', function(event) {
+				$("#check_person").hide();
+				$("#check_juese").show()
+			});
+
+			$("#check_btn3").on('ifChecked', function(event) {
+				$("#check_person").hide();
+				$("#check_juese").hide()
+			});
+            
+			$("#check_btn4").on('ifChecked', function(event) {
+				$("#check_person").hide();
+				$("#check_juese").hide()
+			});
+			//无条件二审条件判断
+			$("#checktwo_btn1").on('ifChecked', function(event) {
+				$("#checktwo_person").show();
+				$("#checktwo_juese").hide()
+			});
+
+			$("#checktwo_btn2").on('ifChecked', function(event) {
+				$("#checktwo_person").hide();
+				$("#checktwo_juese").show()
+			});
+
+			$("#checktwo_btn3").on('ifChecked', function(event) {
+				$("#checktwo_person").hide();
+				$("#checktwo_juese").hide()
+			});
+			$("#checktwo_btn4").on('ifChecked', function(event) {
+				$("#checktwo_person").hide();
+				$("#checktwo_juese").hide()
+			});
+
+			//无条件三审条件判断
+			$("#checkthree_btn1").on('ifChecked', function(event) {
+				$("#checkthree_person").show();
+				$("#checkthree_juese").hide()
+			});
+
+			$("#checkthree_btn2").on('ifChecked', function(event) {
+				$("#checkthree_person").hide();
+				$("#checkthree_juese").show()
+			});
+
+			$("#checkthree_btn3").on('ifChecked', function(event) {
+				$("#checkthree_person").hide();
+				$("#checkthree_juese").hide()
+			});
+
+            $("#checkthree_btn4").on('ifChecked', function(event) {
+				$("#checkthree_person").hide();
+				$("#checkthree_juese").hide()
+			});
+			//有条件一审条件判断
+			$("#have_check_btn1").on('ifChecked', function(event) {
+				// alert(465515);
+				$("#have_check_person").show();
+				$("#have_check_juese").hide()
+			});
+
+			$("#have_check_btn2").on('ifChecked', function(event) {
+				$("#have_check_person").hide();
+				$("#have_check_juese").show()
+			});
+
+			$("#have_check_btn3").on('ifChecked', function(event) {
+				$("#have_check_person").hide();
+				$("#have_check_juese").hide()
+			});
+            
+			$("#have_check_btn4").on('ifChecked', function(event) {
+				$("#have_check_person").hide();
+				$("#have_check_juese").hide()
+			});
+			//有条件二审条件判断
+			$("#have_checktwo_btn1").on('ifChecked', function(event) {
+				$("#have_checktwo_person").show();
+				$("#have_checktwo_juese").hide()
+			});
+
+			$("#have_checktwo_btn2").on('ifChecked', function(event) {
+				$("#have_checktwo_person").hide();
+				$("#have_checktwo_juese").show()
+			});
+
+			$("#have_checktwo_btn3").on('ifChecked', function(event) {
+				$("#have_checktwo_person").hide();
+				$("#have_checktwo_juese").hide()
+			});
+            
+			$("#have_checktwo_btn4").on('ifChecked', function(event) {
+				$("#have_checktwo_person").hide();
+				$("#have_checktwo_juese").hide()
+			});
+			//无条件三审条件判断
+			$("#have_checkthree_btn1").on('ifChecked', function(event) {
+				$("#have_checkthree_person").show();
+				$("#have_checkthree_juese").hide()
+			});
+
+			$("#have_checkthree_btn2").on('ifChecked', function(event) {
+				$("#have_checkthree_person").hide();
+				$("#have_checkthree_juese").show()
+			});
+
+			$("#have_checkthree_btn3").on('ifChecked', function(event) {
+				$("#have_checkthree_person").hide();
+				$("#have_checkthree_juese").hide()
+			});
+ 
+            $("#have_checkthree_btn4").on('ifChecked', function(event) {
+				$("#have_checkthree_person").hide();
+				$("#have_checkthree_juese").hide()
+			});
+			//选择审批条件弹窗
+			function move_org() {
+				layer.open({
+					title: '请选择审批条件',
+					//btn: ['确定','取消'],
+					area: ['320px', '320px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#move_org")
+				});
+			}
+
+
+
+
+
+			//点击进入详情页定位radio选项
+			var is_condition = "{$detailData['is_condition']}";
+			var one_level_type = "{$detailData['one_level_type']}";
+			var two_level_type = "{$detailData['two_level_type']}";
+			var three_level_type = "{$detailData['three_level_type']}";
+
+            var oneaudit_user_id = "{$detailData['oneaudit_user_id']}";
+			var oneaudit_username = "{$detailData['oneaudit_username']}";
+			var twoaudit_user_id = "{$detailData['twoaudit_user_id']}";
+			var twoaudit_username = "{$detailData['twoaudit_username']}";
+			var threeaudit_user_id = "{$detailData['threeaudit_user_id']}";
+			var threeaudit_username = "{$detailData['threeaudit_username']}";
+			if(is_condition == 0){
+				$("#examfs1").iCheck('check');
+				if(one_level_type == 1){
+				 $("#check_btn1").iCheck('check');
+                 $('#oneaudit_user_id').html("<a href='javascript:void(0);' ><span>"+oneaudit_username+"</span><input type='hidden' name='oneaudit_user_id' value='" + oneaudit_user_id +"'/></a>");
+				}else if(one_level_type == 2){
+                 $("#check_btn2").iCheck('check');
+				}else if(one_level_type == 3){
+                  $("#check_btn3").iCheck('check');
+				}else if(one_level_type == 0){
+                  $("#check_btn4").iCheck('check');
+				}
+
+				if(two_level_type == 1){
+				 $("#checktwo_btn1").iCheck('check');
+				 $('#twoaudit_user_id').html("<a href='javascript:void(0);' ><span>"+twoaudit_username+"</span><input type='hidden' name='twoaudit_user_id' value='" + twoaudit_user_id +"'/></a>");
+				}else if(two_level_type == 2){
+                 $("#checktwo_btn2").iCheck('check'); 
+				}else if(two_level_type == 3){
+                 $("#checktwo_btn3").iCheck('check');
+				}else if(two_level_type == 0){
+                  $("#checktwo_btn4").iCheck('check');
+				}
+
+				if(three_level_type == 1){
+				  $("#checkthree_btn1").iCheck('check');
+				  $('#threeaudit_user_id').html("<a href='javascript:void(0);' ><span>"+threeaudit_username+"</span><input type='hidden' name='threeaudit_user_id' value='" + threeaudit_user_id +"'/></a>");
+			 	}else if(three_level_type == 2){
+			  	  $("#checkthree_btn2").iCheck('check');
+				}else if(three_level_type == 3){
+				  $("#checkthree_btn3").iCheck('check');
+				}else if(three_level_type == 0){
+                  $("#checkthree_btn4").iCheck('check');
+				}
+
+			}else{
+				$("#examfs2").iCheck('check');
+
+				if(one_level_type == 1){
+				 $("#have_check_btn1").iCheck('check');
+				  $('#haveoneaudit_user_id').html("<a href='javascript:void(0);' ><span>"+threeaudit_username+"</span><input type='hidden' name='oneaudit_user_id' value='" + threeaudit_user_id +"'/></a>");
+				}else if(one_level_type == 2){
+                 $("#have_check_btn2").iCheck('check');
+				}else if(one_level_type == 3){
+                  $("#have_check_btn3").iCheck('check');
+				}else if(one_level_type == 0){
+                  $("#have_check_btn4").iCheck('check');
+				}
+
+				if(two_level_type == 1){
+				 $("#have_checktwo_btn1").iCheck('check');
+				  $('#havetwoaudit_user_id').html("<a href='javascript:void(0);' ><span>"+threeaudit_username+"</span><input type='hidden' name='twoaudit_user_id' value='" + threeaudit_user_id +"'/></a>");
+				}else if(two_level_type == 2){
+                 $("#have_checktwo_btn2").iCheck('check'); 
+				}else if(two_level_type == 3){
+                 $("#have_checktwo_btn3").iCheck('check');
+				}else if(two_level_type == 0){
+                  $("#have_checktwo_btn4").iCheck('check');
+				}
+
+
+				if(three_level_type == 1){
+				  $("#have_checkthree_btn1").iCheck('check');
+				   $('#havethreeaudit_user_id').html("<a href='javascript:void(0);' ><span>"+threeaudit_username+"</span><input type='hidden' name='threeaudit_user_id' value='" + threeaudit_user_id +"'/></a>");
+			 	}else if(three_level_type == 2){
+			  	  $("#have_checkthree_btn2").iCheck('check');
+				}else if(three_level_type == 3){
+				  $("#have_checkthree_btn3").iCheck('check');
+				}else if(three_level_type == 0){
+                  $("#have_checkthree_btn4").iCheck('check');
+				}
+
+			}
+            
+            //提交表单error后返回详情页定位radio选项
+             var flag = '{$is_condition}';
+			 var flag = flag ? '{:I("tabType")}' : 0;
+            if(flag == 1){
+				$("#examfs2").iCheck('check');
+			}
+			//选择审批条件弹窗
+			function move_org() {
+				layer.open({
+					title: '请选择审批条件',
+					//btn: ['确定','取消'],
+					area: ['320px', '320px'],
+					offset: ['20px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#move_org")
+				});
+			}
+
+			function queding() {
+				var str = "";
+				var str2 = "";
+				var c = document.getElementsByName("check")
+				for(var i = 0; i < c.length; i++) {
+					if(c[i].checked == true) {
+						str += c[i].value;
+						str2 += c[i].getAttribute('cid');
+					}
+				}
+				$("#GKFW").html(str);
+				$("#condition_id").val(str2);
+				layer.closeAll();
+			}
+
+			function xianshi(huoqu) {
+				if(huoqu == 1) {
+					$("#yincang").show()
+				} else {
+					alert(nihao)
+					$("#yincang").hide()
+				}
+
+			}
+
+
+          //选择指定人员的显示
+           function userShow(user_name,user_id,auditusertag){
+            //   alert(auditusertag);
+                // $("#myTags1").html(1);
+				var  areg = "#"+auditusertag;
+                if(auditusertag.indexOf("have") >= 0){
+                   auditusertag = auditusertag.substring(4);
+				}
+
+				// alert(areg);
+                  $(areg).html("<a value='"+user_id+"' title='"+user_name+" 'href='javascript:void(0);' ><span>"+user_name+"</span><input type='hidden' name='"+auditusertag+"' value='" + user_id+"'/></a>");
+		   }
+
+
+
+			//选择指定人员
+		function section_zhiding(auditusertag) {
+			layer.open({
+				title: '指定人员',
+				yes: function (index, layero) {
+					var body = layer.getChildFrame('tbody', index);
+                        
+					var user_name = new Array();
+
+					var user_id = new Array();
+                    // alert(body.html());
+					body.find("input[type='radio']:checked").each(function(i){
+
+                       
+						user_name = $(this).attr("alt");
+						user_id = $(this).val();
+
+						// alert(user_name);
+						// return false;
+
+						if(user_name == undefined){
+							return true;
+						}
+						//setTips(user_name,user_id);
+                         
+                          userShow( user_name,user_id,auditusertag);
+
+					});
+
+					layer.closeAll();
+
+					$('.number').html($('#myTags a').length);
+				},
+				btn: ['保存','取消'],
+				area: ['900px', '480px'],
+				offset: ['20px'],
+				type: 2,
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				content: "{:U('admin/tissue/designee',array('typeid'=>1),'',true)}"
+			});
+		}
+		</script>
+	</body>
+
+</html>

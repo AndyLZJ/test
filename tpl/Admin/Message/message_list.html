@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>融易点——消息通知</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+  <style type="text/css">
+      .details_title{
+        padding: 15px 5px;
+        font-weight: bold;
+        border-bottom: #eee 1px dashed;
+      }
+      .form-group{
+        padding-top: 15px;
+      }
+      .form-group label{
+          text-align: right;
+      }
+  </style>
+</head>
+<body>
+
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        消息通知
+        <small>/消息列表</small>
+      </h1>
+      <ol class="breadcrumb">
+        <!--<li><a class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>-->
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="nav-tabs-custom">
+                <ul id="myTab" class="nav nav-tabs" style="display:none;">
+                  <li><a href="#all" data-toggle="tab">全部</a></li>
+                  <li><a href="#unread" data-toggle="tab">未读</a></li>
+                  <li><a href="#read" data-toggle="tab">已读</a></li>
+                </ul>
+                <div class="tab-content">
+                   <div class="tab-pane fade" id="all">
+                       <div class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-12">
+                                  <form action="{:U('Admin/Message/messageList',array('searchType'=>1,'tabType'=>1))}" method="get">
+                                  <div class="input-group ">
+                                    <input type="text" name="table_search" class="form-control pull-right"  value="{$list4}" placeholder="请输入标题或任务类型搜索">
+                                    <div class="input-group-btn">
+                                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                  </div>
+                                  </form>
+
+                                  <button type="button" class="btn btn-warning btn-sm float_r ml10" onclick="del_all(1);">
+                                       <i class="fa fa-trash-o "></i>
+                                       批量删除
+                                  </button>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                          <!--内容开始-->
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                      <thead>
+                                          <tr role="row">
+                                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                      <label style="margin-bottom: 0px;">
+                                                           <input type="checkbox" width="20" class="all_allcheck">
+                                                      </label>
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">标题
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">状态</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">发布时间</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">来源</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody class="allmess_table">
+                                       
+                                       <form method="post" action="{:U('Message/multidel')}">
+                                          <volist name="list1" id="vo">
+                                          <tr role="row" class="odd" id="msg{$vo.id}">
+                                            <td>
+                                               <input type="checkbox" name="checkbox[]"  value="{$vo.id}">
+                                            </td>
+                                            <td  <if condition="$vo['type_id'] eq 16">onclick="topicdetails('{$vo.id}');"<else />onclick="details('{$vo.id}');"</if>><a href="javascript::void(0)"><span class="mr5 text-yellow">[{$vo.type_name}]</span>{$vo.title}</a>
+                                            </td>
+                                            <switch name="vo.status" >
+                                            <case value="0"><td><span class="text-red">未读</span></td></case>
+                                            <case value="1"><td><span class="text-green">已读</span></td></case>
+                                            <default />默认情况
+                                            </switch>
+                                            
+                                            <td>{$vo.newstime}</td>
+                                            <td>{$vo.fromname}</td>
+                                            <td>
+                                                <if condition="$vo['type_id'] eq 16">
+                                                <a href="javascript::void(0)" class="mr20" onclick="topicdetails('{$vo.id}');">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                             <else />
+                                                <a href="javascript::void(0)" class="mr20" onclick="details('{$vo.id}');">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                              </if>
+                                                <a href="javascript::void(0)" class="bs-callout-info color_or" onclick="del_click('{$vo.id}');">
+                                                    <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                                                </a>
+                                            </td>
+                                          </tr>
+                                         </volist> 
+                                         </form>
+                                         
+                                         
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <!--内容結束-->
+                          <!--分页开始-->
+                          
+                          <div class="row">
+                             
+                                <div class="float_r mr15">
+                                <div class="dataTables_paginate paging_simple_numbers">
+                                     {$list7}
+                                    <!--<div class="dataTables_paginate paging_simple_numbers" >
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous">
+                                               <span style="padding: 6px 30px!important;">共68</span>
+                                            </li>
+                                            <li class="paginate_button previous disabled" id="example1_previous">
+                                               <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                               <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+                                            </li>
+                                            <li class="paginate_button next" id="example1_next">
+                                               <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                   <div class="tab-pane" id="unread">
+                       <div class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-12">
+                                   <form action="{:U('Admin/Message/messageList',array('searchType'=>2,'tabType'=>2))}" method="get">
+                                  <div class="input-group float_l" style="width: 300px;">
+                                        <input type="text" name="table_search" class="form-control pull-right"  value="{$list5}" placeholder="请输入标题或任务类型搜索">
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default">
+                                               <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                  </div>
+                                   </form>
+
+                                  <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                       <button type="button" class="btn btn-warning btn-sm float_r ml10" onclick="del_all(2);">
+                                       <i class="fa fa-trash-o"></i>
+                                       批量删除</button>
+                                       
+                                  </div>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                          <!--内容开始-->
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                      <thead>
+                                          <tr role="row">
+                                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                      <label style="margin-bottom: 0px;">
+                                                           <input type="checkbox" width="20" class="unread_check">
+                                                      </label>
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">标题
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">状态</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">发布时间</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">来源</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody class="unread_table">
+
+                                          <volist name="list2" id="vo"> 
+                                          <tr role="row" class="odd" id="msg{$vo.id}"> 
+                                            <td>
+                                               <input type="checkbox"  name="checkbox[]"  value="{$vo.id}">
+                                            </td>
+                                            <td  onclick="details('{$vo.id}');"><a href="javascript::void(0)"><span class="mr5 text-yellow">[{$vo.type_name}]</span>{$vo.title}</a>
+                                            </td>
+                                            <td><span class="text-red">未读</span></td>
+                                            <td>{$vo.newstime}</td>
+                                            <td>{$vo.fromname}</td>
+                                            <td>
+                                                <a href="javascript::void(0)" class="mr20" onclick="details('{$vo.id}');">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="javascript::void(0)" class="bs-callout-info color_or" onclick="del_click({$vo.id});">
+                                                    <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          </volist>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <!--内容結束-->
+                          <!--分页开始-->
+                          <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers">
+                                     {$list8}
+                                    <!--<div class="dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous">
+                                               <span style="padding: 6px 30px!important;">共68</span>
+                                            </li>
+                                            <li class="paginate_button previous disabled" id="example1_previous">
+                                               <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                               <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+                                            </li>
+                                            <li class="paginate_button next" id="example1_next">
+                                               <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                   <div class="tab-pane" id="read">
+                       <div class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-12">
+                                  <form action="{:U('Admin/Message/messageList',array('searchType'=>3,'tabType'=>3))}" method="get">
+                                  <div class="input-group float_l" style="width: 300px;">
+                                        <input type="text" name="table_search" class="form-control pull-right"  value="{$list6}" placeholder="请输入标题或任务类型搜索">
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default">
+                                               <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                  </div>
+                                  </form>
+                                  <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                       <button type="button" class="btn btn-warning btn-sm float_r ml10" onclick="del_all(3);">
+                                       <i class="fa fa-trash-o"></i>
+                                       批量删除</button>
+                                       
+                                  </div>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                          <!--内容开始-->
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                      <thead>
+                                          <tr role="row">
+                                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                      <label style="margin-bottom: 0px;">
+                                                           <input type="checkbox" width="20" class="read_check">
+                                                      </label>
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">标题
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">状态</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">发布时间</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">来源</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody class="read_table">
+
+                                          <volist name="list3" id="vo">
+                                          <tr role="row" class="odd" id="msg{$vo.id}">
+                                            
+                                            <td>
+                                               <input type="checkbox" name="checkbox[]"  value="{$vo.id}">
+                                            </td>
+                                            <td <if condition="$vo['type_id'] eq 16">onclick="topicdetails('{$vo.id}');"<else />onclick="details('{$vo.id}');"</if>><a href="javascript::void(0)"><span class="mr5 text-yellow">[{$vo.type_name}]</span>{$vo.title}</a>
+                                            </td>
+                                            <td><span class="text-green">已读</span></td>
+                                            <td>{$vo.newstime}</td>
+                                            <td>{$vo.fromname}</td>
+                                            <td>
+                                              <if condition="$vo['type_id'] eq 16">
+                                                <a href="javascript::void(0)" class="mr20" onclick="topicdetails('{$vo.id}');">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                             <else />
+                                                <a href="javascript::void(0)" class="mr20" onclick="details('{$vo.id}');">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                              </if>
+                                                <a href="javascript::void(0)" class="bs-callout-info color_or" onclick="del_click({$vo.id});">
+                                                    <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          </volist>
+                                  
+
+                                          
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <!--内容結束-->
+                          <!--分页开始-->
+                          <div class="row">
+                                <div class="float_r mr15">
+                                 <div class="dataTables_paginate paging_simple_numbers">
+                                     {$list9}
+                                    <!--<div class="dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous">
+                                               <span style="padding: 6px 30px!important;">共68</span>
+                                            </li>
+                                            <li class="paginate_button previous disabled" id="example1_previous">
+                                               <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                               <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+                                            </li>
+                                            <li class="paginate_button next" id="example1_next">
+                                               <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                </div>
+                <!-- /.tab-content -->
+              </div>
+            </div>
+          </div>
+    </section>
+
+<!--课程制作、试卷制作、问卷制作消息详情窗口-->
+<div id="details_making" style="display: none;">
+    <div class="col-sm-12">
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+             你有课程制作的任务，任务信息如下：
+        </div>
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+             你有试卷制作的任务，任务信息如下：
+        </div>
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+             你有问卷制作的任务，任务信息如下：
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">名称：</label>
+                <div class="col-sm-10  control-label">制作“某某课程”</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">任务类型：</label>
+                <div class="col-sm-10  control-label">课程</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">任务形式：</label>
+                <div class="col-sm-10  control-label">线上</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">开始时间：</label>
+                <div class="col-sm-10  control-label">2016-07-11 19:30</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">结束时间：</label>
+                <div class="col-sm-10  control-label">2016-07-11 19:30</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">任务简介：</label>
+                <div class="col-sm-10  control-label">  
+                  提升金融业从业人员素质；树立正确的服务观念；加强礼仪学习，规范服务；塑造金融企业良好形象
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--课程制作、试卷制作、问卷制作消息详情窗口-->
+
+<!--授课任务消息详情窗口-->
+<div id="details_teaching" style="display: none;">
+    <div class="col-sm-12">
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+             你有面授课程即将开始开讲，信息如下：
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">课程名称：</label>
+                <div class="col-sm-10  control-label">金融服务礼仪</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">授课地址：</label>
+                <div class="col-sm-10  control-label">公司大会议室</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">开始时间：</label>
+                <div class="col-sm-10  control-label">2016-07-11 19:30</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">结束时间：</label>
+                <div class="col-sm-10  control-label">2016-07-11 19:30</div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">课程简介：</label>
+                <div class="col-sm-10  control-label">  
+                  提升金融业从业人员素质；树立正确的服务观念；加强礼仪学习，规范服务；塑造金融企业良好形象
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--授课任务消息详情窗口-->
+
+<!--成绩发布、调研结果、审批任务、课程学习、参加考试、参与调研、计划总结、消息详情窗口-->
+<div id="details" style="display: none;">
+    <div class="col-sm-12">
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+            <span id="cat_detail"></span>
+      
+        </div>
+        <div>
+           
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">名称：</label>
+                <div id="titlename" class="col-sm-10  control-label"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">时间：</label>
+                <div id="ctime" class="col-sm-10  control-label">{$detail.contents_time}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--话题小组消息详情窗口-->
+<div id="topicdetails" style="display: none;">
+    <div class="col-sm-12">
+        <div class="details_title">
+             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+            <span id="topic_cat_detail"></span>
+      
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">消息：</label>
+                <div id="topictitle" class="col-sm-10  control-label"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">小组名称：</label>
+                <div id="topicname" class="col-sm-10  control-label"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">小组主题：</label>
+                <div id="topictheme" class="col-sm-10  control-label"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">时间：</label>
+                <div id="topicctime" class="col-sm-10  control-label">{$detail.contents_time}</div>
+            </div>
+            <span id="buttonok"></span> 
+            <span id="buttonno"></span>
+        </div>
+    </div>
+</div>
+
+<!--成绩发布、调研结果、审批任务、课程学习、参加考试、参与调研、计划总结、消息详情窗口-->
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+ 
+<script type="text/javascript">
+         //传参定位tab
+        var i = "{:I('tabType')}";  //参数tabType是定位tab位置
+        var tabType = i ? "{:I('tabType')}" : "";
+
+           if(tabType == 1 || tabType == ''){  
+              $('#myTab li:eq(0) a').tab('show'); //定位到第一个tab标签
+           }else if(tabType == 2){
+              $('#myTab li:eq(1) a').tab('show'); //定位到第二个tab标签
+           }else if(tabType == 3){
+              $('#myTab li:eq(2) a').tab('show'); //定位到第三个tab标签
+           }
+
+        //     $("#all1").click(function(){
+        //          $('input[type="checkbox"]').prop("checked",this.checked);
+        //     });
+  
+  
+        
+        //bootstrap tab切换后退记住当前，从而定位tab
+      $(document).ready(function() {
+       if(location.hash) {
+
+       $('a[href=' + location.hash + ']').tab('show');       
+        }
+       $(document.body).on("click", "a[data-toggle]", function(event) {
+       location.hash = this.getAttribute("href");
+       });
+       });
+       $(window).on('popstate', function() {
+       var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+       $('a[href=' + anchor + ']').tab('show');
+       });
+
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+
+  //全部全选checkbox
+      var $checkboxAll = $(".all_allcheck"),
+                  $checkbox = $(".allmess_table").find("[type='checkbox']").not("[disabled]"),
+                  length = $checkbox.length,
+                  i=0;
+
+          $checkboxAll.on("ifClicked",function(event){
+              if(event.target.checked){
+                  $checkbox.iCheck('uncheck');
+                  i=0;
+              }else{
+                  $checkbox.iCheck('check');
+                  i=length;
+              }
+            });
+
+
+            //未读全选checkbox
+      var $checkboxAlls = $(".unread_check"),
+                  $checkboxs = $(".unread_table").find("[type='checkbox']").not("[disabled]"),
+                  length = $checkboxs.length,
+                  i=0;
+
+          $checkboxAlls.on("ifClicked",function(event){
+              if(event.target.checked){
+                  $checkboxs.iCheck('uncheck');
+                  i=0;
+              }else{
+                  $checkboxs.iCheck('check');
+                  i=length;
+              }
+            });
+
+      //已读全选checkbox
+      var $checkboxAllb = $(".read_check"),
+                  $checkboxb = $(".read_table").find("[type='checkbox']").not("[disabled]"),
+                  length = $checkboxb.length,
+                  i=0;
+
+          $checkboxAllb.on("ifClicked",function(event){
+              if(event.target.checked){
+                  $checkboxb.iCheck('uncheck');
+                  i=0;
+              }else{
+                  $checkboxb.iCheck('check');
+                  i=length;
+              }
+            });
+      
+      //批量删除
+      function del_all(a){
+        layer.confirm('您确定要批量删除这些消息吗？', {
+          title: '批量删除',
+          btn: ['确定删除','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+        }, function(){
+                 var news=document.getElementsByName('checkbox[]');
+                 
+                //  alert(news);
+                var mess  = new Array();
+                  for (var i = 0,ress=0; i < news.length; i++) {
+                      if(news[i].checked){
+                       ress=ress+1;
+                       mess.push(news[i].value);
+                      }
+
+                  }
+                //   console.log(mess);
+                //   alert(ress);             
+                if(ress>=1){
+                //   $("form").submit();
+
+                //    var $id = mess;
+                // var parm = a;
+                // alert(parm);
+					$.post("{:U('Admin/message/multidel')}",{id:mess}, function($data) {  
+                        
+                          if($data.status == 1){  
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+
+                             setTimeout(function(){
+                               location.href = $data.url; 
+                              },1000);   
+                          }else{  
+							  layer.msg($data.info, { time: 1000});
+                               location.href = $data.url; 
+                          }     
+                      },'json');
+                //   layer.msg('删除成功', {time: 1000,icon: 1});
+                }else{
+                  layer.msg('请勾选一条消息', {time: 1000}); 
+                }
+                
+            },
+      function(){
+      layer.msg('取消操作',{time: 1000});
+    }
+        
+        );}
+
+      //删除
+      function del_click(id){
+        layer.confirm('您确定要删除此消息吗？', {
+          title: '删除',
+          btn: ['确定删除','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+        }, function(){
+            // var id = id;
+            // alert(id);exit;
+          location.href = "{:U('Admin/Message/delone',array(id=>$vo['id']))}";
+          layer.msg('删除成功',{time: 1000});
+        },
+        function(){
+      layer.msg('取消操作',{time: 1000});
+       }
+        );
+      }
+ 
+      //课程制作、试卷制作、问卷制作消息详情窗口
+      function details_making(){
+         layer.open({
+            title: '设置负责人',
+            btn: ['设置','取消'],
+            area:['800px','410px'],
+            offset: ['20px'],
+            type: 1,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: $("#details_making").html()
+          });
+         
+      }
+
+      //授课任务消息详情窗口
+      function details_teaching(){
+         layer.open({
+            title: '设置负责人',
+            btn: ['设置','取消'],
+            area:['800px','410px'],
+            offset: ['20px'],
+            type: 1,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: $("#details_teaching").html()
+          });
+      }
+
+      //成绩发布、调研结果、审批任务、课程学习、参加考试、参与调研、计划总结、消息详情窗口
+      function details(id){
+        //   var $id = "";
+        
+                    $.post("{:U('Admin/Message/detail')}",{id:id}, function($data) { 
+                          if($data.status == 1){  
+                                // alert($data.title); 
+                                // alert($data.cat_detail);
+                                $('#titlename').html($data.title);
+                                $('#cat_detail').html($data.cat_detail);
+                                $('#ctime').html($data.contents_time);
+                     layer.open({
+                     title: '消息详情',
+                     btn: ['点击前往','取消'],
+                     area:['800px','410px'],
+                     offset: ['20px'],
+                     type: 1,
+                     skin: 'layui-layer-lan', //样式类名
+                     closeBtn: 1, //显示关闭按钮
+                     anim: 2,
+                     shadeClose: true, //开启遮罩关闭
+                     content: $("#details").html(),
+                     yes:function(index){
+                         location.href = "{:U('Admin/Message/entry/id/"+ id +"')}" ;
+                        // layer.close(index);
+                        // layer.msg('保存成功', {time: 1000, icon:1});
+
+                      }
+                     });
+
+                          }
+
+                    },'json');
+
+					$.post("{:U('Admin/Message/read')}",{id:id}, function($data) {  
+						  $("#msg"+id).find("td").eq(2).html('<span class="text-green">已读</span>');
+                          if($data.status == 1){  
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+
+                            //  setTimeout(function(){
+                            // //    location.href = $data.url; 
+                            //   },1000);   
+                          }else{  
+							  layer.msg($data.info, { time: 1000});
+                            //    location.href = $data.url; 
+                          }     
+                      },'json');
+
+
+                 
+             }
+
+          //话题小组-消息弹窗详情
+           function topicdetails(id){
+        //   var $id = "";
+                //    alert(16); exit;
+                    $.post("{:U('Admin/Message/topicdetail')}",{id:id}, function($data) { 
+                          if($data.status == 1){  
+                                // alert($data.title); 
+                                // alert($data.cat_detail);
+                                $('#topic_cat_detail').html($data.cat_detail);
+                                $('#topictitle').html($data.topicmessagetitle);
+                                $('#topicname').html($data.title);
+                                $('#topictheme').html($data.theme);
+                                $('#topicctime').html($data.contents_time);
+                                var topicuser_id = $data.topicuser_id;
+                                var correlate_id = $data.correlate_id;
+                                if($data.showStatus == 1){
+                                   $('#buttonok').html('<button class="btn btn-info form-group_but" onclick="audit(' + topicuser_id +','+correlate_id+',1)" id="ok">同意<button/>');
+
+                                    $('#buttonno').html('<button class="btn btn-info form-group_but" onclick="audit(' + topicuser_id +','+correlate_id+',2)" id="no">拒绝<button/>');
+                                }else{
+                                    $('#buttonok').html('<button disabled="disabled" class="btn form-group_but" onclick="audit(' + topicuser_id +','+correlate_id+',1)" id="ok">同意<button/>');
+
+                                    $('#buttonno').html('<button disabled="disabled" class="btn form-group_but" onclick="audit(' + topicuser_id +','+correlate_id+',2)" id="no">拒绝<button/>');
+                                }
+                                
+                     layer.open({
+                     title: '消息详情',
+                    //  btn: ['点击前往','取消'],
+                     btn: ['取消'],
+                     area:['800px','410px'],
+                     offset: ['20px'],
+                     type: 1,
+                     skin: 'layui-layer-lan', //样式类名
+                     closeBtn: 1, //显示关闭按钮
+                     anim: 2,
+                     shadeClose: true, //开启遮罩关闭
+                     content: $("#topicdetails").html(),
+                    //  yes:function(index){
+                    //      location.href = "{:U('Admin/Message/entry/id/"+ id +"')}" ;
+                    //   }
+                     });
+
+                          }
+
+                    },'json');
+                    
+					$.post("{:U('Admin/Message/read')}",{id:id}, function($data) {  
+						  $("#msg"+id).find("td").eq(2).html('<span class="text-green">已读</span>');
+                          if($data.status == 1){  
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                          }else{  
+
+							  layer.msg($data.info, { time: 1000});
+                 
+                          }     
+                      },'json');
+
+
+                 
+             }
+
+             function audit(topicuser_id,correlate_id,status){ // topicuser_id:是话题小组加入成员的user_id，correlate_id:话题小组id，status：确认状态 1代表加入 0代表不加入 
+                //  alert(topicuser_id); alert(correlate_id);alert(status);
+
+                 $.post("{:U('Admin/Message/topicaudit')}",{'topicuser_id':topicuser_id,'correlate_id':correlate_id,'status':status}, function($data) {  
+					
+                          if($data.status == 1){  
+							   layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+                                 setTimeout(function(){
+                                   location.href = $data.url; 
+                                  },1000);  
+                          }else{  
+
+							  layer.msg($data.info, { time: 1000});
+                 
+                          }     
+                      },'json');
+             }
+
+</script>
+</body>
+</html>

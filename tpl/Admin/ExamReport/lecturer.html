@@ -1,0 +1,197 @@
+<layout name="layout"/>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+                             数据管理
+      <small>/讲师库报表</small>
+    </h1>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        <section class="content">
+            <div class="box-header with-border info_box_title">
+                <span>讲师库报表</span>
+            </div>
+            <div class="box-body">
+                <div class="col-lg-3"></div>
+                <div class="col-sm-6 mt15 text-center">
+                    <div style="position: relative;">
+                        <div id="chart-teacher" style="width: 100%; height:360px;"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+            <!--  分隔符开始-->
+            <div class="box-header with-border no-padding"></div>
+            <!--  分隔符结束-->
+            <form action="__SELF__" method="get">
+                <div class="row mt15">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <select class="form-control select2 width_10" name="type">
+                                <option selected="selected" value="-1">选择讲师来源</option>
+                                <option value="0" <if condition="isset($data['type']) and $data['type'] eq 0">selected</if> >内部讲师</option>
+                                <option value="1" <if condition="$data['type'] eq 1">selected</if> >外部讲师</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <select class="form-control select2 width_10" name="tissue">
+                                <option value="-1">
+                                    <a>--选择总公司所属部门--</a>
+                                </option>
+                                <foreach name="tool_tree" item="items">
+                                    <option value="{$items['id']}" <if condition="$data['tissue'] eq $items['id']">selected="selected"</if>>{$items['name']}</option>
+                                    <foreach name="items['_data']" item="v">
+                                        <option value="{$v['id']}" <if condition="$data['tissue'] eq $v['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;|--{$v['name']}</option>
+                                        <foreach name="v['_data']" item="s">
+                                            <option value="{$s['id']}" <if condition="$data['tissue'] eq $s['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$s['name']}</option>
+                                            <?php
+																		foreach($s['_data'] as $p){?>
+                                            <option value="{$p['id']}" <if condition="$data['tissue'] eq $p['id']">selected="selected"</if>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$p['name']}</option>
+                                            <?php
+																		}
+																	?>
+                                        </foreach>
+                                    </foreach>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group ">
+                            <input type="text" name="name" class="form-control pull-right" placeholder="请输入讲师姓名" value="{$data['name']}">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-sm-3 text-right">
+                    <a class="btn btn-info form-group_but" href="{:U('exportLecturer')}">导出</a>
+                </div>
+            </div>
+            <!--费用统计分析内容开始-->
+            <div class="row mt15">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">讲师来源</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">所在部门</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">讲师姓名</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">授课数量（次）</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">讲师评分</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">讲师课程</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab" class="passed_table">
+                        <foreach name="data.list" item="v" key="k">
+                            <tr role="row" class="odd text-center">
+                                <td>{$k+1}</td>
+                                <td>
+                                    <if condition="$v['type'] eq 1">外部讲师
+                                    <else/>内部讲师
+                                    </if>
+                                </td>
+                                <td>{$v.tissue_name|default='---'}</td>
+                                <td>{$v.name|default='---'}</td>
+                                <td>{$v.num}</td>
+                                <td class="text-red star">
+                                    <input type="hidden" name="s" value="{$v['score']}">
+                                    <?php $m = 5-$v['score'];for($i=0;$i<$v['score'];$i++){?>
+                                        <?php echo '<i class="fa fa-star mr5"></i>';?>
+                                    <?php }?>
+                                    <?php for($i=0;$i<$m;$i++){?>
+                                        <?php echo '<i class="fa fa-star-o mr5"></i>';?>
+                                    <?php }?>
+                                </td>
+                                <td>
+                                    <a href="{:U('Admin/ExamReport/details',array('id'=>$v['id']))}" class="color_gree bs-callout-info">
+                                    <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--内容結束-->
+            <!--分页开始-->
+            <div class="row">
+                <div class="float_r mr15">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        {$data['page']}
+                    </div>
+                </div>
+            </div>
+            <!--分页结束-->
+        </section>
+    </body>
+    <br>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+    <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+    <script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+    <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+    <script src="__PUBLIC__/Dist/js/demo.js"></script>
+    <script type="text/javascript">
+
+
+        $(function(){
+            $('.star').children('i').each(function(){
+                var val = $('.star').children('input').find('input').val();
+                // alert(val);
+            });
+        })
+        
+        //部门学时统计柱状图和折线图混合
+        var myChart = echarts.init(document.getElementById('chart-teacher'));
+
+        //内部、外部讲师数量
+        var i = {$in},j = {$out};
+        // 指定图表的配置项和数据
+        option = {
+            title: {
+                text: '讲师数量',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+              color:['green','#31b0d5'], //自定义饼状图颜色
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['外部讲师', '内部讲师', ]
+            },
+            series: [{
+                name: '所占比例',
+                type: 'pie',
+                radius: '70%',
+                center: ['50%', '50%'],
+                data: [{
+                    value: j ,
+                    name: '外部讲师',
+                }, {
+                    value: i,
+                    name: '内部讲师',
+                }, ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+</html>

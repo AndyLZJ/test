@@ -1,0 +1,320 @@
+<layout name="layout"/>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+        <h1 class="info_title">
+            考试管理
+            <small>/考试列表</small>
+        </h1>
+
+        <ol class="breadcrumb">
+            <li>
+                
+            </li>
+        </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+        <div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li <if condition="$audit_status eq 0" >class="active"</if>>
+                        <a href="{:U('TestManage/index')}">已通过</a>
+                    </li>
+                    <li <if condition="$audit_status eq 1" >class="active"</if>>
+                        <a href="{:U('TestManage/index?audit_status=1')}">待审核</a>
+                    </li>
+                    <li <if condition="$audit_status eq 2" >class="active"</if>>
+                        <a href="{:U('TestManage/index?audit_status=2')}">已拒绝</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="good_audit">
+                        <!--已通过考试列表开始-->
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <!--筛选栏开始-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="example1_filter" class="dataTables_filter">
+                                        <a href="{:U('Admin/TestManage/addTest')}" type="button" class="btn btn-success mr10 float_r "> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新增考试</a>
+                                        <form action="__SELF__" method="get">
+                                            <div class="input-group mr10">
+                                                <input type="text" name="test_name" class="form-control pull-right" placeholder="搜索考试名称" value="{$test_name}">
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <select class="form-control select2 width_10" name="type" onchange="search()">
+                                                        <option value=""><a>--选择考试方式--</a></option>
+                                                        <option value="0" <if condition="$type eq 1">selected</if>>线上</option>
+                                                        <option value="1" <if condition="$type eq 2">selected</if>>线下</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <select class="form-control select2 width_10" name="status" onchange="search()">
+                                                        <option value=""><a>--选择考试状态--</a></option>
+                                                        <option value="0" <if condition="$status heq 1">selected</if>>未开始</option>
+                                                        <option value="1" <if condition="$status eq 2">selected</if>>进行中</option>
+                                                        <option value="2" <if condition="$status eq 3">selected</if>>已结束</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--筛选栏结束-->
+                            <!--内容开始-->
+                            <div class="row mt10">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+                                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+                                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试开始时间</th>
+                                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试结束时间</th>
+                                                
+                                                <if condition="$audit_status eq 0">
+                                                	<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试状态</th>
+                                                </if>
+                                                <if condition="$audit_status eq 0">
+                                                	<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">及格率</th>
+                                                <elseif condition="$audit_status eq 2"/>
+                                                	<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">拒绝理由</th>
+                                                <else />
+                                                </if>
+                                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tab" class="passed_table">
+                                        <foreach name="list" item="v">
+                                            <tr role="row" class="odd text-center">
+                                                <td>{$v['name']}</td>
+                                                <td class="text-blue">
+                                                    <if condition="$v['type'] eq 0" >线上
+                                                    <else />线下
+                                                    </if>
+                                                </td>
+                                                <td>{$v.start_time}</td>
+                                                <td>{$v.end_time}</td>
+                                                <if condition="$audit_status eq 0">
+                                                	<td>
+	                                                    <span class="text-blue">
+	                                                        <if condition="$v['status'] eq 0" >未开始
+	                                                        <elseif condition="$v['status'] eq 1" />进行中
+	                                                        <else />已结束
+	                                                        </if>
+	                                                    </span>
+                                                	</td>
+                                                </if>
+                                              
+                                                <if condition="$audit_status eq 0">
+                                                	<td>
+	                                                    <span class="text-blue">
+	                                                        {$v.pass_rate}%
+	                                                    </span>
+                                                	</td>
+                                                <elseif condition="$audit_status eq 2"/>
+                                                	<td>
+	                                                    <span class="text-blue" title="{$v.objection}">
+	                                                        {$v.objection|default='---'|msubstr=###,0,8,'...'}
+	                                                    </span>
+                                                	</td>
+                                                <else />
+                                                </if>
+                                                
+                                                <td>
+                                                <if condition="$v['status'] eq 2">
+                                                    <a href="{:U('Admin/TestManage/lookResult',array('id'=>$v['id'],'type'=>$v['type'],'name'=>$v['name'],'status'=>$v['status'],'audit_status'=>$audit_status))}" class="color_gree bs-callout-info">
+                                                        <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看结果
+                                                    </a>
+                                                <else/>
+                                                    <a href="{:U('Admin/TestManage/preview',array('id'=>$v['id'],'type'=>$v['type'],'name'=>$v['name'],'status'=>$v['status'],'audit_status'=>$audit_status))}" class="color_gree bs-callout-info">
+                                                        <i class="fa fa-eye  mr5" aria-hidden="true"></i>预览考试
+                                                    </a>
+                                                </if>
+                                                &nbsp;&nbsp;
+                                                <if condition="$audit_status eq 2">
+                                                	<a href="{:U('addTest',array('id'=>$v['id']))}" class="color_gree bs-callout-info">
+                                                        <i class="fa fa-pencil mr5" aria-hidden="true"></i>修改
+                                                    </a>
+                                                </if>	
+                                                </td>
+                                            </tr>
+                                        </foreach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--内容結束-->
+                            <!--分页开始-->
+                            <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                    {$page}
+                                    </div>
+                                </div>
+                            </div>
+                            <!--分页结束-->
+                        </div>
+                        <!--问卷列表结束-->
+                    </div>
+                    <div class="tab-pane " id="sure_audit">
+                        <!--调研待审核开始-->
+                        <div>
+                            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div id="example1_filter" class="dataTables_filter">
+                                            <a href="TWO_exam_add.html" type="button" class="btn btn-success  float_r "> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新增考试</a>
+                                            <div class="input-group mr10 float_r">
+                                                <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索考试名称">
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--筛选栏结束-->
+                                <!--内容开始-->
+                                <div class="row mt10">
+                                    <div class="col-sm-12">
+                                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>                                                     
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试开始时间</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试结束时间</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tab" class="audit_table">
+                                                <tr role="row" class="odd text-center">
+                                                    <td>调研名字为金融服务礼仪</td>
+                                                    <td class="text-blue">线上</td>
+                                                    <td>2017/02/08 08：08</td>
+                                                    <td>2017/03/08 08：08</td>
+                                                    <td>
+                                                        <a href="resources_questionnaire_lookcourse.html" class="color_gree bs-callout-info">
+                                                            <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--内容結束-->
+                                <!--分页开始-->
+                                <div class="row">
+                                    <div class="float_r mr15">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                            {$page}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--分页结束-->
+                            </div>
+
+                        </div>
+
+                        <!--问卷审核結束-->
+                    </div>
+                    <div class="tab-pane " id="none_audit">
+                        <!--问卷审核开始-->
+                        <div>
+                            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                <!--筛选栏开始-->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div id="example1_filter" class="dataTables_filter">
+
+                                            <button type="button" class="btn btn-warning   float_r" onclick="del_click()">  <i class="fa fa-trash mr5" aria-hidden="true"></i>删除</button>
+                                            <a href="TWO_exam_add.html" type="button" class="btn btn-success mr10 float_r "> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新增考试</a>
+                                            <div class="input-group mr10 float_r">
+                                                <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索考试名称">
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--筛选栏结束-->
+                                <!--内容开始-->
+                                <div class="row mt10">
+                                    <div class="col-sm-12">
+                                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                        <label style="margin-bottom: 0px;">
+                                                            <input type="checkbox" class="refuse_allcheck">
+                                                        </label>
+                                                    </th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试开始时间</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试结束时间</th>
+                                                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tab" class="refuse_table">
+                                                <tr role="row" class="odd text-center">
+                                                    <td>
+                                                        <input type="checkbox">
+                                                    </td>
+                                                    <td>调研名字为金融服务礼仪</td>
+                                                    <td class="text-blue">线上</td>
+                                                    <td>2017/02/08 08：08</td>
+                                                    <td>2017/03/08 08：08</td>
+                                                    <td>
+                                                        <a href="TWO_exam_add.html" class="color_or bs-callout-info mr10">
+                                                            <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                        </a>
+                                                        <a href="TWO_exam_add.html" class="color_gree bs-callout-info">
+                                                            <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--内容結束-->
+                                <!--分页开始-->
+                                <div class="row">
+                                    <div class="float_r mr15">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                            {$page}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--分页结束-->
+                            </div>
+                        </div>
+                        <!--问卷审核結束-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+    <script type="text/javascript">
+    function search(){
+        $('form').submit();
+    }
+    </script>
+</body>
+</html>

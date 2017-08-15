@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>数据管理——费用统计分析——费用详情页面</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/iCheck/all.css">
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+			数据管理
+			<small>/费用学习统计</small>
+		</h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div>
+				<div class="tab-content">
+					<div class="dataTables_wrapper form-inline dt-bootstrap">
+						<div class="box-header with-border">
+							<h3 class="box-title">费用详情页面</h3>
+						</div>
+						<!--内容开始-->
+						<form class="form-horizontal">
+							<div class="box-body">
+								<!--封面上传字段开始-->
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">项目名称：</label>
+									<div class="col-sm-10">
+											<label class="col-sm-2  pt10"><span class="text-bold"></span> {$admin_project['project_name']}</label>
+
+									</div>
+								</div>
+								<!--封面上传字段结束-->
+								<!--项目名称字段结束-->
+								<!--培训班字段开始-->
+								<div class="form-group" id="supplier" style="display: none;">
+									<label for="inputEmail3" class="col-sm-2 control-label">培训班名称：</label>
+
+									<div class="col-sm-10">
+										<label class="col-sm-2  pt10"><span > {$admin_project['class_name']}</span></label>
+									</div>
+								</div>
+								<!--培训班字段结束-->
+								
+							</div>
+		
+						</form>
+						<!--内容結束-->
+
+
+						<div class="row mt10">
+							<div class="col-sm-12">
+								<table class="table table-bordered" role="grid" aria-describedby="example1_info">
+									<thead>
+										<tr role="row">
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"></th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">内部讲师费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">外部讲师费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课程开发费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">外部培训费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训咨询费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训器材费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">场地费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">食宿费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">交通差旅费</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">其他费用</th>
+											<th class="sorting text-center text-danger" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">合计</th>
+										</tr>
+									</thead>
+									<tbody class="passed_table">
+										<tr role="row" class="odd text-center">
+											<td>预算费用</td>
+											<foreach name="amount_data" item="vo" >
+												<td>{$vo}</td>
+											</foreach>
+											<td><php>echo array_sum($amount_data);</php></td>
+										</tr>
+										
+										<tr role="row" class="odd text-center">
+											<td>实际使用</td>
+											<foreach name="actual_amount_data" item="vo" >
+												<td>{$vo}</td>
+											</foreach>
+											<td><php>echo array_sum($actual_amount_data);</php></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!--内容結束-->
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+	</body>
+
+</html>

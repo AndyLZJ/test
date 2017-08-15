@@ -1,0 +1,66 @@
+<layout name="layout" />
+<br />
+
+<div class="col-sm-2">
+	<div class="form-group" id="class1">
+		<select class="form-control select2 width_10" name="test_cate" id="test_cate">
+			<option value="-1">
+				<a>--选择试卷分类--</a>
+			</option>
+			<foreach name="cate" item="v">
+				<option value="{$v.id}">{$v.cat_name}
+				</option>
+			</foreach>
+		</select>
+		<input class="form-control" type="text" name="organ_input" placeholder="请输入题库名称" maxlength="12">
+	</div>
+</div>
+
+<div class="layui-layer-btn">
+	<a class="layui-layer-btn0" id="submit">确定</a>
+	<a class="layui-layer-btn1" id="cancel">取消</a>
+</div>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script>
+	var name = parent.$('input[type=checkbox]:checked').parent().next().attr('alt');
+	var cate = parent.$('input[type=checkbox]:checked').parent().next().attr('ct');
+	$('option').each(function(){
+		if($(this).val() == cate){
+			$(this).attr('selected','selected');
+		}
+	});
+	$('input[name=organ_input]').val(name);
+	$('#submit').click(function(){
+		var inp = $('input[name=organ_input]').val();
+		var selectedcate = $('#test_cate option:selected') .val();
+		var id = parent.$('input[type=checkbox]:checked').val();
+		
+		if($.trim(inp) == ''){
+			layer.msg('试题库名称不能为空',{time:2000});
+			return false;
+		}else if(cate == '-1'){
+			layer.msg('试卷分类不能为空',{time:2000});
+			return false;
+		}else{
+			$.ajax({
+				type:"POST",
+	            url:"{:U('QuestionBank/reName')}",
+	            data:'name='+inp+'&id='+id+'&cate='+selectedcate,
+	            success: function(data){
+	            	if(data.status==0){
+	            		layer.msg(data.info,{time:2000});
+	            		return false;
+	            	}else{
+	            		layer.msg(data.info,{time:2000},function(){
+	            			parent.window.location.reload();
+	            		});
+	            	}
+	            }
+			});
+		}
+	});
+	$('#cancel').click(function(){
+		parent.layer.closeAll();
+	});
+</script>

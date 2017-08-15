@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>—个人中心——找人PK</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+
+		<style type="text/css">
+			.profile-user-img {
+				margin: 0 auto;
+				width: 150px;
+				padding: 3px;
+				border: 3px solid #d2d6de;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+		个人中心
+		<small>/找人PK</small>
+	</h1>
+			<ol class="breadcrumb"></ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box-header with-border info_box_title">
+				<span>找人PK</span>
+			</div>
+			<div class="box-body">
+				<div class="row mt15 text-center">
+					<!--数据对比区域-->
+					<div class="col-sm-7">
+						<div style="border: 1px solid #0288d1; border-radius: 8px;padding: 10px;height: 540px;">
+							<div id="GEREN" style="display: block;">
+								<div id="chart-personPK" style="width: 100%; height:480px; "></div>
+								<div id="test_bumen" style="position: relative;margin-top: -20px;">
+									<div style="display:none" id="win">
+										<p> <span class="text-green text-bold" style="font-size: 20px;">恭喜您这次胜利了！</span> 下次也要努力哦。</p>
+										<p> 平均分<span class="my_integration">120</span>分vs<span class="pk_integration">85</span>分， 我们<span class="my_name"></span>战胜了<span class="pk_name"></span>，我们要再接再厉保持领先。</p>
+									</div>
+									<div style="display:none" id="transport">
+										<p> <span class="text-red text-bold" style="font-size: 20px;">很遗憾。</span> 继续加油喔！</p>
+										<p> 平均分<span class="my_integration">120</span>分vs<span class="pk_integration">85</span>分， 我们<span class="my_name"></span>败给了<span class="pk_name"></span>，我们要继续加油！</p>
+									</div>
+									<div style="display:none" id="divide_equally">
+										<p> <span class="text-green text-bold" style="font-size: 20px;">打平了！</span> </p>
+										<p> 平均分<span class="my_integration">120</span>分vs<span class="pk_integration">85</span>分， 我们<span class="my_name"></span>打平了<span class="pk_name"></span>，我们要继续加油！</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--右侧PK人员信息-->
+					<div class="col-sm-5">
+						<div style="border:  1px solid #0288d1;padding: 60px 20px;border-radius: 8px;height: 540px;">
+							<div class="col-sm-6">
+								<div class="box-body box-profile">
+									<img class="profile-user-img img-responsive img-circle" src="{$avatar}" alt="User profile picture" onerror="this.src='__PUBLIC__/Images/avatar.png'">
+
+									<h3 class="profile-username text-center" id="pk">{$username}</h3>
+									<p class="text-muted text-center">本月积分：<span id="my_integral">{$integral}</span>分</p>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="box-body box-profile">
+									<img id="pk_img" class="profile-user-img img-responsive img-circle" src="../dist/img/user6-128x128.jpg" alt="User profile picture" onerror="this.src='__PUBLIC__/Images/avatar2.png'">
+									<h3 class="profile-username text-center" id="pk_name">小阅</h3>
+									<p class="text-muted text-center">本月积分：<span id="pk_integral">0</span>分</p>
+								</div>
+							</div>
+							<div style="clear: both;margin-top: 345px;">
+								<button id="gbbj2" onclick="person_pk();" class=" btn btn-info form-group_but " style="width: 150px;"><span  id="gerenPK">找人PK</span></button>
+								<button id="gbbj" onclick="bumen_pk();" class="btn btn-success form-group_but " style="margin-left: 50px; width: 150px;"><span  id="bumen">部门PK</span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+	</body>
+	<!--部门PK窗口结束-->
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/demo.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+
+	<script type="text/javascript">
+		//radio选中样式
+		$('input').iCheck({
+			labelHover: false,
+			cursor: true,
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_minimal-blue',
+			increaseArea: '20%'
+		});
+
+		//pk数据对比
+		var myChart = echarts.init(document.getElementById('chart-personPK'));
+		// pk数据对比
+		var option = {
+			title: {
+				text: 'PK数据对比'
+			},
+			legend: {
+				data: ['本人名字', 'PK对象']
+			},
+			radar: [{
+					indicator: [{
+						text: '好为人师'
+					}, {
+						text: '我是学霸'
+					}, {
+						text: '爱学习'
+					}, {
+						text: '任务范儿'
+					}, {
+						text: '系统达人'
+					}, {
+						text: '乐分享'
+					}],
+					center: ['50%', '50%'],
+					radius: 160,
+					startAngle: 90,
+					splitNumber: 5,
+					shape: 'circle',
+					name: {
+						formatter: '【{value}】',
+						textStyle: {
+							color: 'green'
+						}
+					},
+					splitArea: {
+						areaStyle: {
+							color: ['rgba(114, 172, 209, 0.2)',
+								'rgba(114, 172, 209, 0.4)', 'rgba(114, 172, 209, 0.6)',
+								'rgba(114, 172, 209, 0.8)', 'rgba(114, 172, 209, 1)'
+							],
+							shadowColor: 'rgba(0, 0, 0, 0.3)',
+							shadowBlur: 10
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: 'rgba(255, 255, 255, 0.5)'
+						}
+					},
+					splitLine: {
+						lineStyle: {
+							color: 'rgba(255, 255, 255, 0.5)'
+						}
+					}
+				},
+
+			],
+			series: [{
+					name: '雷达图',
+					type: 'radar',
+					itemStyle: {
+						emphasis: {
+							// color: 各异,
+							lineStyle: {
+								width: 4
+							}
+						}
+					},
+					data: [{
+						value: [100, 100, 100, 100, 100, 100],
+						name: '本人名字',
+						symbol: 'rect',
+						symbolSize: 5,
+						lineStyle: {
+							normal: {
+								type: 'dashed'
+							}
+						}
+					}, {
+						value: [100, 100, 100, 100, 100, 100],
+						name: 'PK对象',
+						areaStyle: {
+							normal: {
+								color: 'rgba(255, 255, 255, 0.5)'
+							}
+						}
+					}]
+				},
+
+			]
+		};
+
+		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+
+		//确定后更改
+		function QRDY() {
+			var dyval = $('input:radio[name="diaoyan"]:checked').val();
+			$("#dqdy").html(dyval);
+			layer.closeAll();
+			$("#gerenPK").html("换人PK")
+			$("#bumen").html("部门PK")
+			$("#test_bumen").css("display", "none");
+			$("#gbbj").css("background-color", "#00a65a");
+			$("#gbbj").css("border-color", "#00a65a");
+			$("#gbbj2").css("background-color", "#E6BD1A");
+			$("#gbbj2").css("border-color", "#E6BD1A");
+		};
+
+		//找人PK
+		function person_pk() {
+
+			layer.open({
+				title: '找人PK',
+				btn: ['确定', '取消'],
+				yes: function(index) {
+
+					var body = layer.getChildFrame('body', index);
+
+					var pk_id = body.find("input[type='radio']:checked").val();
+
+					$.ajax({
+						type: "POST",
+						url: "{:U('Center/memberAjax')}",
+						data: {
+							"pk_id": pk_id
+						},
+						traditional: true,
+						success: function(data) {
+							//pk数据对比
+							var myChart = echarts.init(document.getElementById('chart-personPK'));
+							// pk数据对比
+							var option = {
+								title: {
+									text: 'PK数据对比'
+								},
+								legend: {
+									data: ['本人名字', 'PK对象']
+								},
+								radar: [{
+										indicator: [{
+											text: '好为人师'
+										}, {
+											text: '我是学霸'
+										}, {
+											text: '爱学习'
+										}, {
+											text: '任务范儿'
+										}, {
+											text: '系统达人'
+										}, {
+											text: '乐分享'
+										}],
+										center: ['50%', '50%'],
+										radius: 160,
+										startAngle: 90,
+										splitNumber: 5,
+										shape: 'circle',
+										name: {
+											formatter: '【{value}】',
+											textStyle: {
+												color: 'green'
+											}
+										},
+										splitArea: {
+											areaStyle: {
+												color: ['rgba(114, 172, 209, 0.2)',
+													'rgba(114, 172, 209, 0.4)', 'rgba(114, 172, 209, 0.6)',
+													'rgba(114, 172, 209, 0.8)', 'rgba(114, 172, 209, 1)'
+												],
+												shadowColor: 'rgba(0, 0, 0, 0.3)',
+												shadowBlur: 10
+											}
+										},
+										axisLine: {
+											lineStyle: {
+												color: 'rgba(255, 255, 255, 0.5)'
+											}
+										},
+										splitLine: {
+											lineStyle: {
+												color: 'rgba(255, 255, 255, 0.5)'
+											}
+										}
+									},
+
+								],
+								series: [{
+										name: '雷达图',
+										type: 'radar',
+										itemStyle: {
+											emphasis: {
+												// color: 各异,
+												lineStyle: {
+													width: 4
+												}
+											}
+										},
+										data: [{
+											value: [100, 100, 100, 100, 100, 100],
+											name: '本人名字',
+											symbol: 'rect',
+											symbolSize: 5,
+											lineStyle: {
+												normal: {
+													type: 'dashed'
+												}
+											}
+										}, {
+											value: [100, 100, 100, 100, 100, 100],
+											name: 'PK对象',
+											areaStyle: {
+												normal: {
+													color: 'rgba(255, 255, 255, 0.5)'
+												}
+											}
+										}]
+									},
+
+								]
+							};
+
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+
+							option.legend['data'][0] = data.my_name;
+							option.series[0]['data'][0]['name'] = data.my_name;
+							option.series[0]['data'][0]['value'] = data.my_list;
+
+							option.legend['data'][1] = data.pk_name;
+							option.series[0]['data'][1]['value'] = data.pk_list;
+							option.series[0]['data'][1]['name'] = data.pk_name;
+
+							$("#pk_name").html(data.pk_name);
+							$("#pk_img").attr("src", data.pk_avatar);
+							$("#pk_integral").html(data.pk_integral);
+							$("#my_integral").html(data.my_integral);
+							$("#pk").html(data.my_name);
+							myChart.setOption(option);
+							//切换显示按钮
+							QRDY();
+							layer.closeAll();
+
+						}
+					});
+
+				},
+				area: ['300px', '65vmin'],
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				type: 2,
+				content: "{:U('Center/pkMember','','',true)}"
+			});
+		};
+
+		//部门PK
+		function bumen_pk() {
+
+			layer.open({
+				title: '部门PK',
+				btn: ['确定', '取消'],
+				yes: function(index) {
+
+					var body = layer.getChildFrame('body', index);
+
+					var pk_id = body.find("input[type='radio']:checked").val();
+
+					$.ajax({
+						type: "POST",
+						url: "{:U('Center/departmentAjax')}",
+						data: {
+							"pk_id": pk_id
+						},
+						traditional: true,
+						success: function(data) {
+
+							//年度授课次数信息对比树状图
+							var myChart = echarts.init(document.getElementById('chart-personPK'));
+
+							var option = {
+								title: {
+									text: '部门平均分PK'
+								},
+								tooltip: {},
+								legend: {
+									data: ['本人所在部门平均分', 'PK部门平均分']
+								},
+								xAxis: {
+									data: ["平均分"]
+								},
+								yAxis: {
+									type: 'value'
+
+								},
+								series: [{
+									name: '本人所在部门平均分',
+									type: 'bar',
+									barWidth: 35,
+									color: ['green'],
+									data: [100]
+								}, {
+									name: 'PK部门平均分',
+									type: 'bar',
+									barWidth: 35,
+									color: ['#C23531'],
+									data: [100]
+								}, ]
+							};
+
+							option.legend['data'][0] = data.my_name;
+							option.legend['data'][1] = data.pk_name;
+							option.series[0]['name'] = data.my_name;
+							option.series[1]['name'] = data.pk_name;
+							option.series[0]['data'][0] = data.my_total;
+							option.series[1]['data'][0] = data.pk_total;
+
+							if(data.my_total > data.pk_total) {
+								$("#win").show();
+								$("#transport").hide();
+								$("#divide_equally").hide();
+							} else if(data.my_total == data.pk_total) {
+								$("#divide_equally").show();
+								$("#win").hide();
+								$("#transport").hide();
+							} else {
+								$("#win").hide();
+								$("#transport").show();
+								$("#divide_equally").hide();
+							}
+
+							$("#pk_name").html(data.pk_name);
+							$("#pk").html(data.my_name);
+							$(".my_integration").html(data.my_total);
+							$(".pk_integration").html(data.pk_total);
+							$(".my_name").html(data.my_name);
+							$(".pk_name").html(data.pk_name);
+							$("#pk_integral").html(data.pk_total);
+							$("#my_integral").html(data.my_total);
+							// 使用刚指定的配置项和数据显示图表。
+							myChart.setOption(option);
+							//切换显示按钮
+							BMQRDY();
+							layer.closeAll();
+						}
+					});
+				},
+				area: ['300px', '65vmin'],
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				type: 2,
+				content: "{:U('Center/pkDepartment','','',true)}"
+			});
+		};
+
+		function BMQRDY() {
+			layer.closeAll();
+			$("#bumen").html("换个部门");
+			$("#gerenPK").html("找人PK");
+			$("#test_bumen").css("display", "block");
+			$("#gbbj").css("background-color", "#E6BD1A");
+			$("#gbbj").css("border-color", "#E6BD1A");
+			$("#gbbj2").css("background-color", "#00c0ef");
+			$("#gbbj2").css("border-color", "#00c0ef");
+
+		};
+	</script>
+
+</html>

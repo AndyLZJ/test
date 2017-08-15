@@ -1,0 +1,219 @@
+<layout name="layout" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/Huploadify.css"/>
+                  
+              <!--内容开始-->
+              <div class="row">
+                  <div class="col-sm-12">
+                        <div class="box-header with-border">
+                          <!--新增资讯的title-->
+                          <!--<h3 class="box-title ">新增新闻资讯</h3>-->
+
+                          <switch name="type">
+                              <case value="add">
+                      <section class="content-header">
+			                   		<h1 class="info_title">
+			                   	        新增资讯
+			                   	        <!--<small>/培训项目审核</small>-->
+			                   	    </h1>
+			                   		<ol class="breadcrumb">
+			                   			<li>
+			                   				<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+			                   			</li>
+			                   		</ol>
+			                   	</section>
+                              </case>
+                              <default />
+                              <section class="content-header">
+			                   		<h1 class="info_title">
+			                   	        编辑资讯
+			                   	        <!--<small>/培训项目审核</small>-->
+			                   	    </h1>
+			                   		<ol class="breadcrumb">
+			                   			<li>
+			                   				<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+			                   			</li>
+			                   		</ol>
+			                   	</section>
+                          </switch>
+                            
+                          <!--新增资讯的title-->
+                          <!--编辑资讯的title显示该资讯的标题-->
+                          <h3 class="box-title "></h3>
+                          <!--编辑资讯的title显示该资讯的标题-->
+                        </div>
+                        <form method="post" action="{:U('news/update')}" class="form-horizontal">
+                          <div class="box-body">
+
+                            <div class="form-group" id="supplier" style="display: none;">
+                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>资讯所属模板：</label>
+                          
+                          <div class="col-sm-10">
+                            <select name="template" class="form-control select2 ">
+                              <option value="" selected="selected">选择资讯模板类型</option>
+                              <option value="1" <if condition="$detail.template eq '1'">selected</if>>公司资讯</option>
+                              <option value="2" <if condition="$detail.template eq '2'">selected</if>>综合资讯</option>
+                            </select>
+                          </div>
+                        </div>  
+
+                              <div class="form-group" id="supplier" style="display: none;">
+                            <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>资讯类型：</label>
+                            
+                            <div class="col-sm-10">
+                              <select name="type" class="form-control select2 ">
+                                <if condition="$detail.type eq '培训动态'">
+                                </if>
+                                <option value="" selected="selected">选择资讯类型</option>
+                                <option value="1" <if condition="$detail.type eq '1'">selected</if>>要闻</option>
+                                <option value="2" <if condition="$detail.type eq '2'">selected</if>>培训</option>
+                                <option value="3" <if condition="$detail.type eq '3'">selected</if>>通知</option>
+                                <option value="4" <if condition="$detail.type eq '4'">selected</if>>活动</option>
+                              </select>
+                            </div>
+                          </div>  
+                           <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>APP封面图片：</label>
+                            <div class="col-sm-10">
+                              <div class="input-group ">
+                                <div><input readonly="readonly" value="{$detail.img}" style="width: 250px;" type="text" name="app_covers" id="app_covers" class="form-control pull-left" placeholder="">
+                                </div>
+                                <img id="news_app_img_show" style="width: 640px;height: 290px;" src="{$detail.img}"  onerror="this.src='/Public/Images/photo1.png'"  width="100%" />
+                                
+                                <input type="hidden" name="img" value="{$detail.img}" id="covers"/>
+                                                      <div class="">
+                                  
+
+                                  <div id="upload"></div>
+                                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">标题：</label>
+
+                                <div class="col-sm-10">
+                                  <input type="text" value="{$detail.title}" name="title" class="form-control" placeholder="请输入标题" style="width: 500px;">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">正文内容：</label>
+                                
+                                <div class="col-sm-10">
+                                  <script id="container" name="content" type="text/plain" style="height: 160px;width: 100%;margin: 10px 0px 10px 0px;">
+                                    {$detail.content}
+                                  </script>
+                                  
+                                </div>
+                                <div><input type="hidden" name="id" value="{$detail.id|default=''}"/></div>
+                              </div>
+                          <div class="box-footer">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                  <button  class="btn btn-info form-group_but">发布</button>
+                                </div>
+                              </div>
+                          </div>
+                        </form>
+                  </div>
+              </div>
+              <!--内容結束-->
+
+
+</div>
+
+	
+    <!--H5 uploadify-->
+
+		<script  src="__PUBLIC__/uploadify/jquery.js"></script>
+		<script  src="__PUBLIC__/uploadify/jquery.Huploadify.js"></script>
+
+    <script src="__PUBLIC__/Dist/js/utf8-php/ueditor.config.js"></script>
+		<script src="__PUBLIC__/Dist/js/utf8-php/ueditor.all.js"></script>
+		<script src="__PUBLIC__/Dist/js/utf8-php/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+			//富文本框
+			var ue = UE.getEditor('container', {
+				// toolbars: [['fullscreen','emotion' ,'|','simpleupload','|','bold','|','forecolor']		],//定义要显示的工具栏图标
+	  	  toolbars: [
+					['fullscreen','bold','italic',  'underline', '|','simpleupload','|','imageleft',  'imageright','imagecenter']//定义要显示的工具栏图标 加粗、倾斜、下划线、单图上传、图片左浮动、居中、右浮动共计七个选项
+				],
+
+				autoHeightEnabled: false, //高度固定出现滚动条
+				autoFloatEnabled: false,
+				wordCount:false,//字符统计隐藏
+				elementPathEnabled: false,//元素路径隐藏 true为显示
+				autoClearinitialContent :false,//初始内容点击后消失
+        
+			});
+			var ue = UE.getEditor('container'); //初始化对象  
+			$(document).ready(function() {
+				var ue = UE.getEditor('container');
+				// var proinfo = $("#container").text("在这里畅所欲言吧…………");//初始化内容为
+			});
+		</script>
+
+<script type="text/javascript">
+$('#upload').Huploadify({
+					auto:true,
+					fileTypeExts:'*.jpg;*.png;*.gif;*.jpeg',
+					multi:false,
+					formData:{key:123456,key2:'news'}, //banner是图片存放的目录
+					fileSizeLimit:9999,
+					itemTemplate:'',//进度条，若显示进度条用 'itemTemp'
+					showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+					showUploadedSize:true,
+					removeTimeout:9999999,
+					uploader: "{:U('File/uploadify')}",
+
+					onUploadSuccess: function (file, data) {
+				
+								var url = JSON.parse(data);
+								var src = url.src;
+								// alert(url);
+								$('#app_covers').val(url);
+								$('#covers').val(url);
+								$("#news_app_img_show").attr("src",url);
+
+							},
+					});
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+
+  //讲师身份选中显示字段
+  $(function(){
+   alert("1");
+   showCont();
+   $("input[name=lecturer]").on("click",function(){
+    showCont();
+   });
+  });
+  function showCont(){
+   switch($("input[name=lecturer]:checked").attr("id")){
+    case "lecturer_inside":
+     //alert("one");
+     $("#supplier").hide();
+     $("#address").hide();
+     $("#teaching_time").show();
+     $("#age").show();
+     break;
+    case "lecturer_exterior":
+     $("#teaching_time").hide();
+     $("#age").hide();
+     $("#supplier").show();
+     $("#address").show();
+     break;
+    default:
+     break;
+   }
+  }
+</script>
+</body>
+</html>

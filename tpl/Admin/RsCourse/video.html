@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加课程</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/statics/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+
+
+    <link rel="stylesheet" href="__PUBLIC__/Js/highlight/highlight.css">
+    <link href="__PUBLIC__/Js/videojs/dist/video-js/video-js.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/Js/videojs/dist/video-js/video.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Js/videojs-contrib-media-sources/src/videojs-media-sources.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Js/videojs.hls.min.js"></script>
+</head>
+<body>
+<div style="padding: 10px">
+    <input type="hidden" id="domain" value="{$domain}">
+    <input type="hidden" id="uptoken_url" value="{:U('RsCourse/addVideo')}">
+    <div class="mb10">一、请输入章节名称</div>
+    <div class="form-group"><input type="email" class="form-control" name="name" id="name" placeholder="请输入章节名称"></div>
+    <div class="mb10">二、请输入多媒体地址</div>
+    <div class="mb10">
+        <div class="form-group">
+            <div class="col-sm-8"><input type="text" class="form-control" name="media_address" placeholder="多媒体地址" id="media_address"></div>
+            <div for="inputEmail3" class="col-sm-4 " style="padding-left: 0px;margin-left: 10px; margin-top:15px" id="container">
+                <button type="button" class="btn  btn-success " id="pickfiles"><i class="fa fa-arrow-circle-up mr5" aria-hidden="true"></i>上传课件
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="body">
+            <div class="col-md-12 ">
+                <table class="table table-striped table-hover text-left" style="margin-top:40px;">
+                    <thead>
+                    <tr>
+                        <th class="col-md-4">文件名</th>
+                        <th class="col-md-2">大小</th>
+                        <th class="col-md-6" >云存储信息</th>
+                    </tr>
+                    </thead>
+                    <tbody id="fsUploadProgress">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 60px;"><p>1：支持第三方多媒体链接课件或课件上传；</p>
+        <p>2：上传课件仅支持：</br> mp4、avi等视频格式，mp3、wmv等音频格式；</br> ppt/pptx、doc/docx、xls/xlsx等文档格式，</br>jpg等图片格式;单个文件在500MB之内。</p>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/plupload/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/qiniu.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/main.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/ai.js"></script>
+</html>

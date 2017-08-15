@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+</head>
+
+<body>
+    <!--查看试题详情窗口-->
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+    </div>
+    <div class="box-body">
+        <div class="col-sm-12 mt10">
+            <label class="col-sm-2 control-label">所属课程：</label>
+            <div class="col-sm-10">{$data.course_name}
+            </div>
+        </div>
+        
+        <div class="col-sm-12 mt10">
+            <label class="col-sm-2 control-label">试题类型：</label>
+            <div class="col-sm-10">
+                <if condition="$data['classification'] eq 1" >单选题
+                <elseif condition="$data['classification'] eq 2" />多选题
+                <elseif condition="$data['classification'] eq 3" />判断题
+                <else/>简答题
+                </if>
+            </div>
+        </div>
+        <div class="col-sm-12 mt10">
+            <label class="col-sm-2 control-label">题目描述：</label>
+            <div class="col-sm-10">{$data.title}
+            </div>
+        </div>
+        <if condition="$data['classification'] eq 1 OR $data['classification'] eq 2">
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">A：{$data.optiona}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">B：{$data.optionb}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">C：{$data.optionc}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">D：{$data.optiond}
+                </div>
+            </div>
+            <if condition="!empty($data['optione'])">
+            	<div class="col-sm-12 mt10">
+	                <label class="col-sm-2 control-label"></label>
+	                <div class="col-sm-10">E：{$data.optione}
+                	</div>
+            	</div>
+            </if>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label">标准答案：</label>
+                <div class="col-sm-10">{$data.right_option}
+                </div>
+            </div>
+        <elseif condition="$data['classification'] eq 3" />
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">A：{$data.optiona}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">B：{$data.optionb}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label">标准答案：</label>
+                <div class="col-sm-10">{$data.right_option}
+                </div>
+            </div>
+        <else/>
+        <div class="mb30">
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label">标准答案：</label>
+                <div class="col-sm-10">{$data.right_option}
+                </div>
+            </div>
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label">得分关键字：</label>
+                <div class="col-sm-10">{$data.keywords}
+                </div>
+            </div>
+        </div>
+        </if>
+        <div class="mb30">
+            <div class="col-sm-12 mt10">
+                <label class="col-sm-2 control-label">试题解析：</label>
+                <div class="col-sm-10">{$data.analysis}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--添加课程窗口-->
+</body>
+</html>

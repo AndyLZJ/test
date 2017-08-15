@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>评论管理</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+		<style type="text/css">
+			.course_img{ position: relative; }
+			.course_time{
+				padding: 7px;
+			    background-color: rgba(0, 0, 0, 0.5);
+			    z-index: 9999999;
+			    color: #fff;
+			    position: absolute;
+			    right: 0px;
+			    left: 0px;
+			    bottom: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+				        课程列表
+				    </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+						<!--内容开始-->
+						<div class="nav-tabs-custom   mb10">
+							<ul class="nav nav-tabs">
+								<!--筛选栏开始-->
+								<div class="">
+									<div class="col-sm-2 pull-right">
+										<div class="input-group width_10 ">
+											<input type="text" name="table_search" class="keyword form-control pull-right" value="{$keyword}" placeholder="请输入关键字">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2 pull-right">
+										<select class="course_cat form-control select2 width_10">
+											<option value="">全部课程分类</option>
+											<!-- 一级分类 -->
+											<foreach name="courseCat" item="cat0">
+												<option value="{$cat0.id}" <if condition="$cat0.id eq $cid"> selected="selected" </if> >{$cat0.cat_name}</option>
+												<!-- 二级分类 -->
+												<foreach name="cat0.sub_cat" item="cat1">
+													<option value="{$cat1.id}" <if condition="$cat1.id eq $cid"> selected="selected" </if> >&nbsp;&nbsp;&nbsp;&nbsp;|--{$cat1.cat_name}</option>
+													<!-- 三级分类 -->
+													<foreach name="cat1.sub_cat" item="cat2">
+														<option value="{$cat2.id}" <if condition="$cat2.id eq $cid"> selected="selected" </if> >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$cat2.cat_name}</option>
+													</foreach>
+												</foreach>
+											</foreach>
+										</select>
+									</div>
+								</div>
+								<!--筛选栏结束-->
+							</ul>
+							<div class="tab-content">
+								<div class="active">
+									<!--课程列表开始-->
+									<div class="box-body row">
+									
+										<foreach name="list" item="value" >
+										<div class="col-sm-3 mb20">
+											<div class="ulitem" >
+												<a href="__MODULE__/my_course/detail/project_id/true/course_id/{$value.id}/type/2/manager/true/">
+												<div class="course_img">
+												     <img src="{$value.course_cover}" onerror="this.src='__PUBLIC__/Dist/img/class2.png'"/>
+												     <div class="course_time">
+											            <i class="fa fa-clock-o mr5"></i>{$value.course_time}分钟
+											         </div>
+												</div>
+												</a>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 " style="overflow: hidden; height: 23px;">FR:{$value.course_name}</label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>{$value.click_count}</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>{$value.cat_name}</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										</foreach>
+									</div>
+									<!--分页开始-->
+									<div class="row">
+										<div class="dataTables_paginate float_r mr15">
+											<!-- 分页html -->
+											{$pageNav}
+										</div>
+									</div>
+									<!--分页结束	-->
+									<!--课程列表结束-->
+								</div>
+							</div>
+						</div>
+						<!--内容結束-->
+					</div>
+			</div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+		<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+		<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			function del_click() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+			
+			$(".input-group-btn").click(function(){
+				var param = "";
+				var cid = $(".course_cat").val();
+				if(cid) param += "/cid/"+cid;
+				var keyword = $(".keyword").val();
+				if(keyword) param += "/keyword/"+keyword;
+				window.location.href = "__ACTION__/type/2"+param;
+			});
+		</script>
+	</body>
+</html>

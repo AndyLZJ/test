@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>内容管理——新增banner</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+
+       	<link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/Huploadify.css"/>
+		<!--三期时间插件样式-->
+		<link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+		<style type="text/css">
+				.course_map{
+		border: 1px solid #ada7a7;
+    overflow: auto;
+    max-height: 350px;
+		}
+		
+		table{
+		margin-bottom: 0px;
+            }
+ 
+		</style>
+
+	
+	
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        Banner管理
+        <small>/<if condition="$edit eq 1">编辑banner<else /> 新增banner  </if></small>
+      </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+						<div class="box-header with-border">
+							<h3 class="box-title "><if condition="$edit eq 1">编辑banner<else /> 新增banner  </if></h3>
+						</div>
+						<form class="form-horizontal">
+							<div class="box-body">
+
+								<div class=" form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">Banner说明标题：</label>
+									<div class="col-sm-4">
+										<input value="{$data['title']}" style="width: 300px;" name="title" type="text" class="form-control mr30" id="inputEmail3" placeholder="最大输入30个字符">
+									</div>
+									<div class="col-sm-6">
+										<div style="position: absolute;">
+										<div><img id="banner_img_show" src="{$data['banner_img']}" onerror="this.src='/Public/Images/photo1.png'"  style="height:200px;width:400px;"/></div>	
+											<!--此处为banner说明标题-->
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>Banner图片：</label>
+									<div class="col-sm-10">
+										<div class="input-group ">
+                                            <!--<img style="width: 640px;height: 290px;" src="{$banner_img}"  onerror="this.src='/Public/Images/photo1.png'"  width="100%" />-->
+											<input readonly="readonly" value="{$data.banner_img}" style="width: 250px;" type="text" name="banner_covers" id="banner_covers" class="form-control pull-right" placeholder="">
+											<input type="hidden" name="banner_img" value="{$data.banner_img}" id="banner_img"/>
+                                            <div class="">
+												<!--<button type="file" class="btn btn-default">浏览</button>-->
+
+												<div id="upload"></div>
+                                                <!--<a href="javascript:;" class="">浏览
+                                                <input id="fileId1" type="file" accept="image/png,image/gif" name="file" />
+                                                  <input type="file" class="btn btn-primary" id="upload" name="file"><i class="fa fa-folder-open"></i></input><span class="ml15"> (支持：gif、jpg、jpeg、png格式　尺寸：640px*290px)</span>
+                                                </a>-->
+                                        
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class=" form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>Banner图位置：</label>
+									<div class="col-sm-10">
+										<select style="width: 120px;" id="banner_img_site" name="banner_img_site" class="form-control select2 ">
+											<option value="1" <if condition="$data['banner_img_site'] eq 1">selected="selected"</if>>1</option>
+											<option value="2" <if condition="$data['banner_img_site'] eq 2">selected="selected"</if>>2</option>
+											<option value="3" <if condition="$data['banner_img_site'] eq 3">selected="selected"</if>>3</option>
+											<option value="4" <if condition="$data['banner_img_site'] eq 4">selected="selected"</if>>4</option>
+											<option value="5" <if condition="$data['banner_img_site'] eq 5">selected="selected"</if>>5</option>
+										</select>
+									</div>
+								</div>
+
+								<div class=" form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>类型：</label>
+									<div class="col-sm-10">
+										<select onchange="changeType()" name="type" id="type" class="form-control select2 ">
+											<option value="2" <if condition="$data['type'] eq 2">selected="selected"</if>>课程培训Banner</option>
+											<option value="1" <if condition="$data['type'] eq 1">selected="selected"</if>>资讯消息Banner</option>
+											<option value="3" <if condition="$data['type'] eq 3">selected="selected"</if>>调研管理Banner</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group ">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>展放时间：</label>
+
+									<div class="col-sm-10">
+										<div class="input-group date">
+											<input value="{$data['start_date']}" name="start_date" type="text" id="StartTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,readOnly:false})" class="input-sm form-control" value="">
+											<span class="input-group-addon">到</span>
+											<input value="{$data['end_date']}" name="end_date" type="text" id="EndTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,readOnly:false})" class="input-sm form-control" value="">
+										</div>
+									</div>
+								</div>
+
+								<div class=" form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>
+									<span id="target">
+                                    <if condition="$data['type'] eq 2">
+                                        指定课程
+                                    <elseif  condition="$data['type'] eq 1" />
+                                        指定资讯
+									<elseif  condition="$data['type'] eq 3" />
+                                        指定调研
+									<else />
+                                        指定课程
+									</if>
+                                    
+									</span>
+									：
+									
+									
+									</label>
+									<div class="col-sm-10">
+										<input value="{$data['itemName']}" onclick="section_zhidings()" name="correlate_item_show"  id="correlate_item_show"  readonly="readonly" style="width: 300px;" type="text" class="form-control" id="inputEmail3" placeholder="">
+										<input value="{$data['correlate_item']}" name="correlate_item" id="correlate_item"   type="hidden" />
+									</div>
+								</div>
+			
+							</div>
+							<div class="box-footer">
+								<div class="form-group">
+										<div class="col-sm-12 text-center">
+											<!--<a href=""  id="bta" class="btn btn-info form-group_but">保存并发布</a>-->
+											<div id="bta" class="btn btn-info form-group_but"> 保存并发布</div>
+										</div>
+								
+								</div>
+							</div>
+						</form>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	
+		<!--公开范围结束-->
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<!--H5 uploadify-->
+
+		<script  src="__PUBLIC__/uploadify/jquery.js"></script>
+		<script  src="__PUBLIC__/uploadify/jquery.Huploadify.js"></script>
+		
+		<!--时间插件js-->
+		<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript">
+		 // //radio选中样式			
+			// $('input').iCheck({
+			// 	labelHover: false,
+			// 	cursor: true,
+			// 	checkboxClass: 'icheckbox_square-blue',
+			// 	radioClass: 'icheckbox_minimal-blue',
+			// 	increaseArea: '20%'
+			// });
+         /*****上传文件增加年月日，日期文件夹******20170623@andy*****/
+         var   now   =   new   Date();   //获取系统日期
+         var   yy   =   now.getFullYear();   //获取年，即2007
+         var   mm   =   now.getMonth() + 1;   //获取月，即04
+        if(mm < 10){
+            mm = '0' + mm;
+        }
+         var   dd   =   now.getDate();   //获取日，即29
+         if(dd < 10){
+             dd = '0' + dd;
+         }
+         var   clock   =   yy + mm + dd;
+         var str = 'banner/' + clock;
+         $('#upload').Huploadify({
+					auto:true,
+					fileTypeExts:'*.jpg;*.png;*.gif;*.jpeg',
+					multi:false,
+					formData:{key:123456,key2:'banner'}, //banner是图片存放的目录
+					fileSizeLimit:9999,
+					itemTemplate:'',//进度条，若显示进度条用 'itemTemp'
+					showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+					showUploadedSize:true,
+					removeTimeout:9999999,
+					uploader: "{:U('File/uploadify')}",
+					onUploadSuccess: function (file, data) {
+								var url = JSON.parse(data);
+								var src = url.src;
+								$('#banner_img').val(url);
+								$('#banner_covers').val(url);
+								$("#banner_img_show").attr("src",url);
+							}
+					});
+			
+			
+           
+
+        //    $("#file").uploadify({
+		// 		"swf": "__PUBLIC__/plugins/uploadify/uploadify.swf",
+		// 		"buttonClass":"btn btn-primary",
+		// 		"line-height":"15px",
+		// 		"height":"30px",
+		// 		"fileObjName": "download",
+		// 		'fileTypeExts':  "*.gif;*.jpg;*.jpeg;*.png;",    //上传类型   
+		// 		"buttonText": "上传附件",
+		// 		"uploader": "{:U('File/upload')}",
+		// 		"width": 120,
+		// 		'removeTimeout': 1,
+		// 		"onUploadSuccess": function (file, data) {
+		// 			var url = JSON.parse(data);
+		// 			var src = url.src;
+		// 			var img_src = '__UPLOAD__/'+src;
+		// 			$('#filename').val(img_src);
+		// 			$("#image").attr("src",img_src);
+		// 			// $(".certificate_img").removeAttr("style");
+		// 			bannerYL();
+		// 		},
+		// 		'onFallback': function () {
+		// 			alert('未检测到兼容版本的Flash.');
+		// 		}
+		// 	});
+        function changeType(){
+			// alert($('#type').val());
+			if($('#type').val() == 2){
+               $('#target').html('指定课程');
+			}else if($('#type').val() == 1){
+               $('#target').html('指定资讯');
+			}else if($('#type').val() == 3){
+               $('#target').html('指定调研');
+			}
+			$('#correlate_item_show').val('');
+			$('#correlate_item').val('');
+			
+		}
+
+             //选择指定人员
+		function section_zhidings() {
+			// alert(11);
+			var type = $('#type').val();
+
+			var url = "{:U('admin/Banner/getItem')}"+'/type/'+type;
+			// alert(type);
+			layer.open({
+				title: '指定',
+				yes: function (index, layero) {
+					var body = layer.getChildFrame('body', index);
+                   
+					var title = new Array();
+                    
+					var user_id = new Array();
+
+					body.find("input[type='radio']:checked").each(function(i){
+						title = $(this).attr("alt");
+						item_id = $(this).val();
+
+						if(title == undefined){
+							return true;
+						}
+						// setTips(user_name,user_id);
+						$('#correlate_item_show').val(title);
+						$('#correlate_item').val(item_id);
+					});
+
+					layer.closeAll();
+
+					$('.number').html($('#myTags a').length);
+				},
+				btn: ['保存','取消'],
+				area: ['900px', '480px'],
+				offset: ['20px'],
+				type: 2,
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				
+				content: url
+			});
+		};
+        
+
+		 $('#bta').click(function(){
+
+				// layer.msg('保存成功!');   
+				   var id = "{$data['id']}";
+                   var title = $('input[name="title"]').val();
+				   var banner_img = $('input[name="banner_img"]').val();
+				   var banner_img_site = $('select[name="banner_img_site"]').val();
+				   var type = $('select[name="type"]').val();
+				   var start_date = $('input[name="start_date"]').val();
+				   var end_date = $('input[name="end_date"]').val();
+				   var correlate_item = $("#correlate_item").val();
+
+				   	// alert(title.length); exit;
+				   if(title.length > 30){
+					  alert('标题长度不能超过30字符！');
+                      return false;
+				   }else if(banner_img == ''){
+					  alert('Banner图不能为空！');
+                      return false;
+				   }else if(banner_img_site == ''){
+					  alert('Banner图位置为必选项！');
+                      return false;
+				   }else if(type == ''){
+					  alert('Banner类型为必选项！');
+                      return false;
+				   }else if(start_date == '' || end_date == ''){
+					  alert('展放时间为必选项！');
+                      return false;
+				   }else if(correlate_item == ''){
+					  alert('指定项为必选项！');
+                      return false;
+				   }
+				//    alert(title); alert(banner_img_site); alert(type); alert(start_date); alert(end_date);  alert(correlate_item	); 
+                   $.post('{:U("Admin/Banner/add")}',{'id':id,'title':title,'banner_img':banner_img,'banner_img_site':banner_img_site,'type':type,'start_date':start_date,'end_date':end_date,'correlate_item':correlate_item}, function($data) { 
+					//    alert($data['status'] == 1);
+                          if($data['status'] == 1){  
+                          layer.msg('保存成功!',{icon: 1});   
+						 
+						  setTimeout(function(){
+                                location.href = "{:U('Admin/Banner/index')}";
+                              },1000);   
+						
+                        //   window.location.reload();
+						// document.location.reload();//当前页面 
+                         
+						  }else{
+							//   layer.msg('保存发生错误!', {time:1000}); 
+						
+							layer.msg($data['info']); 
+							//   setTimeout(function(){
+							// 	location.href = "{:U('Admin/Banner/index')}";
+                            //   },1000);   
+							  
+							     
+						  }	 
+				   },'json');
+				});
+       
+
+
+
+		</script>
+	</body>
+
+</html>

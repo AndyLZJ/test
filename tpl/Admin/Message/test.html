@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>熟悉</title>
+</head>
+<body>
+    <a href="/Upload/英文面试：工作经验篇.pdf">pdf文件</a>
+    <hr/>
+    <a href="{:U('Message/test',array('type'=>'excel'))}">导出excel</a>
+    <p>hhhhhhhlllll</p>
+    {__ACTION__.html} 
+    <br />
+    {$list}  
+</body>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/layer-v3.0.1/layer/layer.js"></script>
+<script type="text/javascript">
+  setInterval('t()',1000);  
+  
+
+  function t(){
+     $.post("{:U('Admin/Message/emailsend')}",{}, function($data) { 
+          if($data.status == 1){
+              layer.msg('send success', {icon: 1});
+          }
+     },'json');
+  }
+  
+
+ </script>
+
+</html>

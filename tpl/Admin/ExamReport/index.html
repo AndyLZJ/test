@@ -1,0 +1,113 @@
+<!--三期时间插件样式-->
+    <link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+    <layout name="layout"/>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+                             数据管理
+      <small>/考试报表</small>
+    </h1>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        <section class="content">
+            <div class="box-header with-border info_box_title">
+                <span>考试报表</span>
+            </div>
+
+            <div class="row mt15">
+            <form action="__SELF__" method="get">
+                <div class="col-sm-12">
+                    <span class="float_l mt10">开始时间：</span>
+                    <div class="input-group date col-sm-5">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="start_time" name="start_time" value="{$start_time}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})" readonly>
+                       
+                    </div>
+                     <span class=" mt10">&nbsp;至&nbsp;结束日期：</span>
+                     <div class="input-group date col-sm-5">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="end_time" name="end_time" value="{$end_time}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})" readonly>
+                    </div>
+                </div>
+
+                
+                <div class="col-sm-12 mt10">
+                <a class="btn btn-info  pull-right ml10 form-group_but" href="{:U('Admin/ExamReport/export')}">导出</a>
+                    <div class="input-group pull-right">
+                        <input type="text" name="name" class="form-control pull-right" placeholder="请输入考试名称" value="{$name}">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            
+            </form>
+            </div>
+            <!--费用统计分析内容开始-->
+            <div class="row mt15">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">所属项目/计划</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">负责人</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试时间</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">平均分</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试类型</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">应到/实到人数</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tab" class="passed_table">
+                            <foreach name="data" item="v" key="k">
+                                <tr role="row" class="odd text-center">
+                                    <td>{$k+1}</td>
+                                    <td>{$v.test_name}</td>
+                                    <td>{$v.belong_project_name|default='---'}</td>
+                                    <td>{$v.principal|default='---'}</td>
+                                    <td>{$v.start_time} - {$v.end_time} </td>
+                                    <td>{$v.avg|default=0}</td>
+                                    <td>
+                                        <if condition="$v['type'] eq 1">线下
+                                        <else/>线上
+                                        </if>
+                                    </td>
+                                    <td>{$v.should|default=0}/{$v.real|default=0}</td>
+                                </tr>
+                            </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--内容結束-->
+            <!--分页开始-->
+            <div class="row">
+                <div class="float_r mr15">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        {$page}
+                    </div>
+                </div>
+            </div>
+            <!--分页结束-->
+
+        </section>
+    </body>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+    <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+    <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+    <script src="__PUBLIC__/Dist/js/demo.js"></script>
+    <script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+<!--三期时间插件js-->
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        
+    </script>
+
+</html>

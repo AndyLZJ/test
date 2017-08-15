@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加培训项目列表</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+    <!--三期时间插件样式-->
+    <link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+    <style type="text/css">
+        .normal {
+            /*显示样式*/
+            display: block;
+        }
+        .edit {
+            /*隐藏*/
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<assign name="project_id" value="$project_id" />
+<section class="content-header">
+    <h1 class="info_title">
+        培训项目
+        <small>/<if condition="$project_id gt 0">编辑<else />新建</if>培训项目列表</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <if condition="$classid eq 1">
+                <a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+            <else />
+                <a href="{:U('Manage/creatc_edit',array('project_id'=>$project_id))}"><i class="fa fa-mail-reply-all"></i>返回</a>
+            </if>
+        </li>
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+                <!--内容开始-->
+                <div class="box-header with-border">
+                    <h3 class="box-title "><i class="fa fa-plus text-blue"></i><if condition="$project_id gt 0">编辑<else />新建</if>培训项目</h3>
+                </div>
+                <form action="{:U('Manage/form_save')}" method="post" enctype="multipart/form-data">
+                    <div class="box-header with-border">
+                        <label class="box-title col-sm-10"><i class="fa fa-book text-blue mr5"></i>课程</label>
+                        <label class="box-title col-sm-2 "><span class="pull-right"><a onclick="add_course();" style="cursor:pointer"><i class="fa fa-plus mr5"></i>添加</a></span></label>
+                    </div>
+                    <!--添加课程开始-->
+                    <div class="box-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <!--内容开始-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                课程名称
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                授课方式
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                讲师
+                                            </th>
+                                            <th width="220" class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                开始时间
+                                            </th>
+                                            <th width="220" class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                结束时间
+                                            </th>
+                                            <th width="70" class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                学分
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                学习地址
+                                            </th>
+
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                考勤
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                负责人
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="course">
+                                        <foreach name="course" item="vo">
+                                            <tr role="row" class="odd text-center">
+                                                <td>
+                                                    {$vo.course_name}
+                                                    <input type="hidden" name="test_id" value="{$vo.id}" disabled="disabled"/>
+                                                    <input type="hidden" name="type" value="course" disabled="disabled"/>
+                                                </td>
+                                                <td><if condition="$vo['course_way'] eq 0">线上<else />面授</if></td>
+                                                <td><if condition="$vo['course_way'] eq 0"><if condition="!empty($vo['lecturer_name'])">{$vo.lecturer_name}<else />{$vo.name}</if><else />{$vo.name}</if></td>
+                                                <td>
+                                                    <span>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input name="start_time" type="text" id="datebut_course_{$vo.id}" class="form-control pull-right" value="{$vo.start_time}" disabled="disabled" readonly="readonly" onclick="date_time('datebut_course_{$vo.id}')">
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input name="end_time" type="text" id="datainps_course_{$vo.id}" class="form-control pull-right" value="{$vo.end_time}" disabled="disabled" readonly="readonly" onclick="date_time('datainps_course_{$vo.id}')">
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span><input name="credit" class="form-control width_10" type="text" value="{$vo.credit}" disabled="disabled" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></span>
+                                                </td>
+                                                <td>
+                                                    <span><if condition="$vo['course_way'] eq 0">--<else /><input class="form-control width_10" type="text" disabled="disabled" name="location" value="{$vo.location}"/></if></span>
+                                                </td>
+                                                <td><if condition="$vo['course_way'] eq 0">--<else /><input type="checkbox" value="" disabled="disabled" readonly="readonly" name="attendance" <if condition="$vo['is_attachment'] eq 1">checked="checked"</if>></if></td>
+                                                <td>
+                                                    <select class="form-control select2 width_10" name="principal" disabled="disabled">
+                                                        <option value="0">
+                                                            <a>--指定负责人--</a>
+                                                        </option>
+                                                        <foreach name="responsible" item="v">
+                                                            <option value="{$v.id}" <if condition="$v['id'] eq $vo['manager_id']">selected="selected"</if>>{$v.username}</option>
+                                                        </foreach>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="bs-callout-info mr20 editor">
+                                                        <i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+                                                    </a>
+                                                    <a href="javascript:void(0)" class="bs-callout-info mr20 editors_save edit">
+                                                        <i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+                                                    </a>
+
+                                                    <a href="javascript:void(0)" class="color_or delete">
+                                                        <i class="fa fa-trash " aria-hidden="true"></i>删除
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        </foreach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--内容結束-->
+                        </div>
+                    </div>
+                    <!-- 添加课程结束-->
+                    <div class="box-header with-border">
+                        <label class="box-title col-sm-6"><i class="fa fa-object-group text-blue mr5"></i>考试</label>
+                        <label class="box-title col-sm-6">
+                            <span class="pull-right" style="margin-left:15px;"><a onclick="add_exam();" style="cursor:pointer" ><i class="fa fa-plus mr5"  ></i>添加线上考试</a></span>
+                            <span class="pull-right"><a onclick="add_exam_line();" style="cursor:pointer"><i class="fa fa-plus mr5"></i>添加线下考试</a></span>
+                        </label>
+                    </div>
+                    <!--添加考试开始-->
+                    <div class="box-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <!--内容开始-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                考试名称
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                考试方式
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                负责人
+                                            </th>
+                                            <th width="220" class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                开始时间
+                                            </th>
+                                            <th width="200" class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                结束时间
+                                            </th>
+                                            <th  class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                考试时长
+                                            </th>
+                                            <th  class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                考试地址
+                                            </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="examination">
+                                        <foreach name="examination" item="vo">
+                                            <tr role="row" class="odd text-center">
+                                                <td>
+                                                <span>
+                                                    <input name="test_name" class="form-control width_10" type="text" value="{$vo.test_name}" disabled="disabled"/>
+                                                    <input type="hidden" name="test_id" value="{$vo.id}" disabled="disabled"/>
+                                                    <input type="hidden" name="type" value="examination" disabled="disabled"/>
+                                                </span>
+                                                </td>
+                                                <td>
+                                                    <if condition="$vo['id'] eq 0">
+                                                        线下
+                                                        <input type="hidden" name="cacheid" value="{$vo.cacheid}"/>
+                                                        <else />
+                                                        线上
+                                                    </if>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control select2 width_10" name="principal" disabled="disabled">
+                                                        <option value="0">
+                                                            <a>--指定负责人--</a>
+                                                        </option>
+                                                        <foreach name="responsible" item="v">
+                                                            <option value="{$v.id}"  <if condition="$v['id'] eq $vo['manager_id']">selected="selected"</if>>{$v.username}</option>
+                                                        </foreach>
+                                                    </select>
+                                                </td>
+                                                <!--开始时间开始-->
+                                                <td>
+                                                <span>
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input name="start_time" type="text" id="datebut_{$vo.id}" class="form-control pull-right" value="{$vo.start_time}" disabled="disabled" readonly="readonly" onclick="date_time('datebut_{$vo.id}')">
+                                                    </div>
+                                                </span>
+                                                </td>
+                                                <!--结束时间开始-->
+                                                <td>
+                                                <span>
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input name="end_time" type="text" id="datainps_{$vo.id}" class="form-control pull-right" value="{$vo.end_time}" disabled="disabled" readonly="readonly" onclick="date_time('datainps_{$vo.id}')">
+                                                    </div>
+                                                </span>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="test_length" min="0" class="form-control pull-right"  disabled="disabled" style="width:80px;" value="{$vo['test_length']}"/>
+                                                    <!-- <span id="minutes">自动计算</span> -->
+                                                </td>
+                                                <td>
+                                                    <if condition="$vo['id'] eq 0">
+                                                        <input name="examination_address" class="form-control width_10" type="text" value="{$vo['examination_address']}" disabled="disabled"/>
+                                                        <else />
+                                                        --
+                                                    </if>
+                                                </td>
+                                                <td>
+                                                        <a href="javascript:void(0)" class="bs-callout-info mr20 editor">
+                                                            <i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+                                                        </a>
+                                                        <a href="javascript:void(0)" class="bs-callout-info mr20 editors_save edit">
+                                                            <i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+                                                        </a>
+
+                                                    <a href="javascript:void(0)" class="color_or delete">
+                                                        <i class="fa fa-trash " aria-hidden="true"></i>删除
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </foreach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--内容結束-->
+                        </div>
+                    </div>
+                    <!-- 添加考试结束-->
+                    <div class="box-header with-border">
+                        <label class="box-title col-sm-10"><i class="fa fa-bar-chart text-blue mr5"></i>调研</label>
+                        <label class="box-title col-sm-2 "><span class="pull-right"><a onclick="add_diaoyan();" style="cursor:pointer"><i class="fa fa-plus mr5"></i>添加</a></span></label>
+                    </div>
+                    <!--添加考试开始-->
+                    <div class="box-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <!--内容开始-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研名称</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">负责人</th>
+                                            <th  class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">开始时间</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">结束时间</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="research">
+
+                                        <foreach name="research" item="vo">
+                                            <tr role="row" class="odd text-center">
+                                                <td>
+                                                    {$vo.survey_name}
+                                                    <input type="hidden" name="test_id" value="{$vo.id}" disabled="disabled"/>
+                                                    <input type="hidden" name="type" value="research" disabled="disabled"/>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control select2 width_10" name="principal" disabled="disabled">
+                                                        <option value="0">
+                                                            <a>--指定负责人--</a>
+                                                        </option>
+                                                        <foreach name="responsible" item="v">
+                                                            <option value="{$v.id}"  <if condition="$v['id'] eq $vo['manager_id']">selected="selected"</if>>{$v.username}</option>
+                                                        </foreach>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input name="start_time" type="text" id="datebut_research_{$vo.id}" class="form-control pull-right" value="{$vo.start_time}" disabled="disabled" readonly="readonly" onclick="date_time('datebut_research_{$vo.id}')">
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input name="end_time" type="text" id="datainps_research_{$vo.id}" class="form-control pull-right" value="{$vo.end_time}" disabled="disabled" readonly="readonly" onclick="date_time('datainps_research_{$vo.id}')">
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="bs-callout-info mr20 editor">
+                                                        <i class="fa fa-edit  mr5" aria-hidden="true"></i>编辑
+                                                    </a>
+                                                    <a href="javascript:void(0)" class="bs-callout-info mr20 editors_save edit">
+                                                        <i class="fa fa-cloud-download mr5" aria-hidden="true"></i>保存
+                                                    </a>
+
+                                                    <a href="javascript:void(0)" class="color_or delete">
+                                                        <i class="fa fa-trash " aria-hidden="true"></i>删除
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </foreach>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--内容結束-->
+                        </div>
+                    </div>
+                    <!-- 添加考试结束-->
+
+                    <div class="box-footer">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 text-center">
+                                    <button class="btn btn-info form-group_but" id="form_save" type="button">保存并发布</button>
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <button class="btn btn-default form-group_but" id="draft_save" type="button">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="1" name="typeid" />
+                </form>
+                <!--内容結束-->
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!--指派任务窗口结束-->
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<!--三期时间插件js-->
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+
+    //添加考试
+    function add_exam() {
+        layer.open({
+            title: '添加线上考试',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                var body = layer.getChildFrame('body', index);
+                var str = "";
+                var id = "";
+                body.find(".testchecks").each(function () {
+                    if ($(this).is(':checked') == true) {
+                        str += $(this).val() + ",";
+                    }
+                    if (str.substr(str.length - 1) == ',') {
+                        id = str.substr(0, str.length - 1);
+                    }
+                });
+                if (id == "") {
+                    layer.alert("请至少勾选一门试卷");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('testCommit')}",
+                    data: {"id":id},
+                    traditional:true,
+                    success: function(msg){
+                        if(msg.status){
+                            layer.msg('添加成功', {icon: 1,time:1500},function(){
+                                window.location.href = "{:U('Admin/Manage/curriculum')}";
+                            });
+                        }else{
+                            layer.msg('添加失败', {
+                                time: 1500, //2s后自动关闭
+                            });
+                        }
+                    }
+                });
+            },
+            area: ['700px', '500px'],
+            type: 2,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('PjCourse/index','','',true)}"
+        });
+    }
+
+    //添加线下
+    function add_exam_line(){
+        $.ajax({
+            type: "POST",
+            url: "{:U('testCommitline')}",
+            traditional:true,
+            success: function(msg){
+                if(msg.status){
+                    layer.msg('添加成功', {icon: 1,time:1500},function(){
+                        window.location.href = "{:U('Admin/Manage/curriculum')}";
+                    });
+                }else{
+                    layer.msg('添加失败', {
+                        time: 1500, //2s后自动关闭
+                    });
+                }
+            }
+        });
+
+
+    }
+
+    //添加调研
+    function add_diaoyan(){
+        layer.open({
+            title: '添加调研',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                var body = layer.getChildFrame('body', index);
+                var str = "";
+                var id = "";
+                body.find(".testchecks").each(function () {
+                    if ($(this).is(':checked') == true) {
+                        str += $(this).val() + ",";
+                    }
+                    if (str.substr(str.length - 1) == ',') {
+                        id = str.substr(0, str.length - 1);
+                    }
+                });
+                if (id == "") {
+                    layer.alert("请至少勾选一门调研");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('researchCommit')}",
+                    data: {"id":id},
+                    traditional:true,
+                    success: function(msg){
+
+                        if(msg.status){
+                            layer.msg('添加成功', {icon: 1,time:1500},function(){
+                                window.location.href = "{:U('Admin/Manage/curriculum')}";
+                            });
+
+                        }else{
+
+                            layer.msg('保持失败', {
+                                time: 1500, //2s后自动关闭
+                            });
+                        }
+                    }
+                });
+
+            },
+            area: ['700px', '500px'],
+            type: 2,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('PjCourse/research','','',true)}"
+        });
+    }
+
+    //添加课程
+    function add_course(){
+
+        layer.open({
+            title: '添加线上考试',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                var body = layer.getChildFrame('body', index);
+                var str = "";
+                var id = "";
+                body.find(".testchecks").each(function () {
+                    if ($(this).is(':checked') == true) {
+                        str += $(this).val() + ",";
+                    }
+                    if (str.substr(str.length - 1) == ',') {
+                        id = str.substr(0, str.length - 1);
+                    }
+                });
+                if (id == "") {
+                    layer.alert("请勾选课程");
+                    return;
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('courseCommit')}",
+                    data: {"id":id},
+                    traditional:true,
+                    success: function(msg){
+
+                        if(msg.status){
+                            layer.msg('添加成功', {icon: 1,time:1500},function(){
+                                window.location.href = "{:U('Admin/Manage/curriculum')}";
+                            });
+
+                        }else{
+
+                            layer.msg('保持失败', {
+                                time: 1500, //2s后自动关闭
+                            });
+                        }
+                    }
+                });
+
+            },
+            area: ['700px', '500px'],
+            type: 2,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('PjCourse/course','','',true)}"
+        });
+
+    }
+
+    $(function(){
+
+        var project_start_time = '{$project_start_time}';
+        var project_end_time = '{$project_end_time}';
+
+        project_start_time = Date.parse(project_start_time);
+        project_end_time = Date.parse(project_end_time);
+
+        //考试 - 保存文本框
+        $(".editors_save").click(function(){
+            var html = $(this).parents("tr");
+            var type = $(html).find("input[name='type']").val();//试卷类型
+            var test_id = $(html).find("input[name='test_id']").val();//试卷ID
+            var principal = $(html).find("select option:selected").val();//负责人
+            if(type == 'course'){
+                var start_time = $(html).find("input[name='start_time']").val();//获取开始时间
+                var end_time = $(html).find("input[name='end_time']").val();//获取结束时间
+                var credit = $(html).find("input[name='credit']").val();//获取学分
+                var location = $(html).find("input[name='location']").val();//获取学习地址
+                var attendance = $(html).find("input[name='attendance']").is(':checked');//获取考勤
+
+                var formatting_starttime = Date.parse(start_time);
+                var formatting_endtime = Date.parse(end_time);
+
+                if(!formatting_starttime || !formatting_endtime){
+                    layer.msg('请填写课程起止时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }
+                if(project_start_time > formatting_starttime){
+                    layer.msg('课程开始时间不能早于项目开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else if(project_end_time < formatting_endtime){
+                    layer.msg('课程结束时间不能晚于项目结束时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else if(formatting_starttime > formatting_endtime){
+                    layer.msg('课程结束时间不能早于开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+
+                }else if(typeof(location) != "undefined" && location.replace(/(^\s*)/g,"").length <= 0){
+                    layer.msg('学习地址不能为空', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else if(principal <= 0){
+                    layer.msg('请选择指定负责人', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else{
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('updateTest')}",
+                        data: {"start_time":start_time,"end_time":end_time,"credit":credit,"location":location,"type":type,"test_id":test_id,"attendance":attendance,"principal":principal},
+                        traditional:true,
+                        success: function(msg){
+
+                            if(msg.status){
+                                $(html).find("input").each(function(){
+                                    $(this).attr("disabled","disabled");
+                                });
+                                $(html).find("select").attr("disabled","disabled");
+                                $(html).find(".editors_save").hide();
+                                $(html).find(".editor").show();
+                            }else{
+                                layer.msg('保存失败', {
+                                    time: 1500, //2s后自动关闭
+                                });
+                            }
+                        }
+                    });
+                }
+
+            }else if(type == 'examination'){
+                var test_name = $(html).find("input[name='test_name']").val();//获取考试名称
+                var principal = $(html).find("select option:selected").val();//获取负责人
+                var start_time = $(html).find("input[name='start_time']").val().toString();//获取开始时间
+                var end_time = $(html).find("input[name='end_time']").val().toString();  //获取结束时间
+                var cacheid = $(html).find("input[name='cacheid']").val();//获取线下缓存ID
+                var examination_address = $(html).find("input[name='examination_address']").val();//获取考试地址
+                var test_id = $(html).find("input[name='test_id']").val();
+                var formatting_starttime = new Date(Date.parse(start_time.replace(/-/g,"/"))).getTime();
+                var formatting_endtime = new Date(Date.parse(end_time.replace(/-/g,"/"))).getTime();
+
+				var test_length = $(html).find("input[name='test_length']").val();//获取考试时长
+				
+                if(!formatting_starttime || !formatting_endtime){
+                    layer.msg('请填写考试起止时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }
+                if($.trim(test_name) == ''){
+                    layer.msg('考试名称不能为空', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }
+
+                if($.trim(examination_address) == '' && test_id ==0){
+                    layer.msg('考试地址不能为空', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }
+
+                if(project_start_time > formatting_starttime){
+                    layer.msg('考试开始时间不能早于项目开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else if(project_end_time < formatting_endtime){
+                    layer.msg('考试结束时间不能晚于项目结束时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else if(formatting_starttime > formatting_endtime){
+                    layer.msg('考试结束时间不能早于开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }else{
+                    if(formatting_starttime && formatting_endtime){
+                    	if($.trim($(this).parent().parent().find('td:eq(1)').text()) == '线下'){
+	                        var i = Math.floor((formatting_endtime - formatting_starttime)/1000/60);
+	                        var test_length = i;
+	                        $(html).find("input[name='test_length']").val(i);
+                       }else{
+                       		if(test_length == '' || parseInt(test_length)*1 < 1){
+                       			layer.msg('考试时长不能为空', {
+			                        time: 1500, //2s后自动关闭
+			                    });
+			                    return false;
+                       		}
+                       		if((formatting_endtime - formatting_starttime)/60000 < test_length){
+                       			layer.msg('考试时长不能超过起止总时长', {
+			                        time: 1500, //2s后自动关闭
+			                    });
+			                    return false;
+                       		}
+                       	}
+                    }
+
+                    if(principal <= 0){
+                        layer.msg('请选择指定负责人', {
+                            time: 1500, //2s后自动关闭
+                        });
+                        return false;
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: "{:U('updateTest')}",
+                            data: {"test_name":test_name,"principal":principal,"start_time":start_time,"end_time":end_time,"test_id":test_id,"type":type,"cacheid":cacheid,'test_length':test_length,'examination_address':examination_address},
+                            traditional:true,
+                            success: function(msg){
+                                if(msg.status){
+                                    $(html).find("input").each(function(){
+                                        $(this).attr("disabled","disabled");
+                                    });
+                                    $(html).find("select").attr("disabled","disabled");
+                                    $(html).find(".editors_save").hide();
+                                    $(html).find(".editor").show();
+                                }else{
+                                    layer.msg('保存失败', {
+                                        time: 1500, //2s后自动关闭
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }else{
+
+                //获取开始时间
+                var start_time = $(html).find("input[name='start_time']").val();
+
+                //获取结束时间
+                var end_time = $(html).find("input[name='end_time']").val();
+
+                //获取负责人
+                var principal = $(html).find("select option:selected").val();
+
+                //获取线下缓存ID
+                var cacheid = $(html).find("input[name='cacheid']").val();
+
+                var formatting_starttime = Date.parse(start_time);
+                var formatting_endtime = Date.parse(end_time);
+
+                if(!formatting_starttime || !formatting_endtime){
+                    layer.msg('请填写调研起止时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+                    return false;
+                }
+
+                if(project_start_time > formatting_starttime){
+
+                    layer.msg('调研开始时间不能早于项目开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+
+                    return false;
+
+                }else if(project_end_time < formatting_endtime){
+
+                    layer.msg('调研结束时间不能晚于项目结束时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+
+                    return false;
+                }else if(formatting_starttime > formatting_endtime){
+
+                    layer.msg('调研结束时间不能早于开始时间', {
+                        time: 1500, //2s后自动关闭
+                    });
+
+                    return false;
+
+                }else{
+
+                    if(principal <= 0){
+
+                        layer.msg('请选择指定负责人', {
+                            time: 1500, //2s后自动关闭
+                        });
+
+                        return false;
+
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: "{:U('updateTest')}",
+                            data: {"start_time":start_time,"end_time":end_time,"principal":principal,"type":type,"test_id":test_id,"cacheid":cacheid},
+                            traditional:true,
+                            success: function(msg){
+
+                                if(msg.status){
+
+                                    $(html).find("input").each(function(){
+
+                                        $(this).attr("disabled","disabled");
+
+                                    });
+
+                                    $(html).find("select").attr("disabled","disabled");
+
+                                    //修改当前样式
+
+                                    $(html).find(".editors_save").hide();
+
+                                    $(html).find(".editor").show();
+
+                                }else{
+
+                                    layer.msg('保存失败', {
+                                        time: 1500, //2s后自动关闭
+                                    });
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+
+        //删除栏目
+        $(".delete").click(function(){
+
+            var html = $(this).parents("tr");
+
+            //获取试卷ID
+            var test_id = $(html).find("input[name='test_id']").val();
+
+            //获取试卷类型
+            var type = $(html).find("input[name='type']").val();
+
+            $.ajax({
+                type: "POST",
+                url: "{:U('DeleteTest')}",
+                data: {"test_id":test_id,"type":type},
+                traditional:true,
+                success: function(msg){
+
+                    if(msg.status){
+
+                        $(html).remove();
+
+                        layer.msg('删除成功', {icon: 1,time:1500});
+
+                    }else{
+
+                        layer.msg('删除失败', {
+                            time: 1500, //2s后自动关闭
+                        });
+                    }
+                }
+            });
+
+        });
+
+
+        //点击编辑
+        $(".editor").click(function(){
+
+            var html = $(this).parents("tr");
+
+            $(html).find("input").each(function(){
+
+                $(this).removeAttr("disabled");
+
+            });
+
+            $(html).find("select").removeAttr("disabled");
+
+            $(html).find(".editors_save").show();
+
+            $(html).find(".editor").hide();
+
+        });
+
+        //提交表单
+        $("#form_save").click(function(){
+
+            var is_principal = true;
+
+            $("input[name='typeid']").val(2);
+
+
+            $("select option:selected").each(function(){
+
+                if($(this).val() <= 0){
+
+                    layer.msg('请选择指定负责人', {
+                        time: 1500, //2s后自动关闭
+                    });
+
+                    is_principal = false;
+                }
+            });
+
+            $(".editor").each(function(){
+
+                if($(this).css('display') == 'none'){
+
+                    layer.msg('请保存项目', {
+                        time: 1500, //2s后自动关闭
+                    });
+
+                    is_principal = false;
+                }
+            });
+
+
+            if(is_principal){
+                $("form").submit();
+            }
+
+        });
+
+        //存为草稿
+        $("#draft_save").click(function(){
+
+            $("input[name='typeid']").val(1);
+
+            $("form").submit();
+
+        });
+
+
+    });
+
+    //日期
+    function date_time(node){
+
+        var is_disabled = $(node).attr("disabled");
+        if(!is_disabled){
+            WdatePicker({el:node,dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false});
+        }
+    }
+
+</script>
+</body>
+</html>

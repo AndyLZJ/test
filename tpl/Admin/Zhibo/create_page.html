@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>创建直播</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<!--三期时间插件样式-->
+		<link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+
+		<style type="text/css">
+			.table {
+				margin-bottom: 0px;
+			}
+			
+			.firm_map {
+				height: 360px;
+				overflow: auto;
+			}
+			
+			.frim_line {
+				cursor: pointer;
+				line-height: 35px;
+				border: 1px solid #f4f4f4;
+				text-indent: 5px;
+				margin-bottom: 10px;
+			}
+			
+			.frim_line:hover {
+				color: white;
+				background-color: #00acd6;
+			}
+			
+			.frim_line.active {
+				color: white;
+				background-color: #00acd6;
+			}
+			
+			.frim_right {
+				height: 360px;
+				overflow: auto;
+			}
+			
+			.HBinput {
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        培训项目
+        <small>/新建培训项目</small>
+      </h1>
+			<ol class="breadcrumb">
+				<li>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+
+						<div class="box-header with-border">
+							<h3 class="box-title ">创建直播</h3>
+						</div>
+						<form class="form-horizontal">
+							<div class="box-body">
+								<!--项目名称字段开始-->
+								<div class="form-group" id="supplier" >
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>直播标题：</label>
+
+									<div class="col-sm-10">
+										<input type="text" class="form-control mr30" id="inputEmail3" placeholder="">
+									</div>
+								</div>
+								<!--项目名称字段结束-->
+								<!--培训班字段开始-->
+								<div class="form-group" id="supplier" >
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>直播封面：</label>
+
+									<div class="col-sm-10">
+										<div class="input-group ">
+											<input style="width: 250px;" type="text" name="table_search" class="form-control pull-right" placeholder="">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-default">浏览</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--培训班字段结束-->
+								<!--项目名称字段开始-->
+								<div class="form-group" id="supplier" >
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>直播开始时间：</label>
+
+									<div class="col-sm-10">
+										<div class="input-group date">
+											<input name="StartTime" style="width: 300px;" type="text" id="StartTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})" class="input-sm form-control" value="">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group" id="supplier" >
+									<label for="inputEmail3" class="col-sm-2 control-label">直播结束时间：</label>
+
+									<div class="col-sm-10">
+										<div class="input-group date">
+											<input name="EndTime" style="width: 300px;" type="text" id="EndTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})" class="input-sm form-control" value="">
+										</div>
+									</div>
+								</div>
+							
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>直播简介：</label>
+									<div class="col-sm-10">
+
+										<textarea rows="8" class="form-control width_10"></textarea>
+									</div>
+								</div>
+								
+                                
+							
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">推送人群：</label>
+									<div class="col-sm-10">
+									<!--此处复用系统现在用的选择人员方式-->
+										<a onclick="section_zhiding();" class="btn btn-info form-group_but">选择人员</a>
+									</div>
+								</div>
+
+								<div class="form-group" id="supplier" style="display: none;">
+									<label for="inputEmail3" class="col-sm-2 control-label"> <input type="checkbox"><span class="ml10">密码：</span></label>
+									<div class="col-sm-10">
+										<div class="input-group date">
+											<input type="text" class="form-control mr30" id="inputEmail3" placeholder="">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="box-footer">
+								<div class="form-group">
+									<div class="col-sm-12 text-center">
+										<a href="" class="btn btn-info form-group_but">提交审核</a>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--选择指定人员-->
+		<div id="section_zhiding" style="display: none;">
+			<div class="col-xs-12">
+				<div class="box box-primary mt10">
+					<div class="box-header with-border">
+						<h3 class="box-title">请选择指定人员：</h3>
+					</div>
+					<div class="col-sm-12 mt10 mb10">
+						共选中 <span class="text-blue">117</span>人（组织名称后括号内的数字代表选中人数 / 组织总人数）
+						<a class="btn btn-info pull-right form-group_but  mr5" onclick="baocun()">保存</a>
+					</div>
+
+					<div class="col-sm-12  box-footer">
+
+						<!--弹窗左侧内容开始-->
+						<div class="col-sm-3 no-padding">
+							<div class="firm_map">
+								<div class=" frim_line">所有（177/300）</div>
+								<div class=" frim_line">阿拉伯分公司 （10/30）</div>
+								<div class="frim_line">典阅科技分公司 （10/30）</div>
+								<div class=" frim_line ">深圳分公司 （10/30）</div>
+								<div class=" frim_line ">深圳分公司 （10/30）</div>
+								<div class=" frim_line ">深圳分公司（10/30）</div>
+								<div class="frim_line ">深圳分公司 （10/30）</div>
+								<div class=" frim_line ">深圳分公司（10/30）</div>
+								<div class=" frim_line ">深圳分公司（10/30）</div>
+								<div class=" frim_line ">深圳分公司 10/30）</div>
+								<div class=" frim_line ">深圳分公司（10/30）</div>
+								<div class=" frim_line ">深圳分公司（10/30）</div>
+							</div>
+						</div>
+
+						<!--弹窗右侧内容开始-->
+						<div class="col-sm-9 no-padding">
+							<div class="frim_right">
+
+								<table class="table table-bordered table-striped dataTable" id="tableclikes">
+									<tr>
+										<th width="30px"><input type="checkbox" name="check" value="澳门分公司"></th>
+										<th width="60">姓名</th>
+										<th width="100">工号</th>
+										<th width="120px">手机</th>
+										<th>
+											<select class="form-control select2 width_10">
+												<option selected="selected">选择岗位</option>
+												<option>客服经理</option>
+												<option>研发经理</option>
+												<option>产品经理</option>
+											</select>
+										</th>
+										<th>
+											<select class="form-control select2 width_10">
+												<option selected="selected">选择标签</option>
+												<option>标签A</option>
+												<option>标签B</option>
+												<option>标签C</option>
+											</select>
+										</th>
+									</tr>
+
+								</table>
+
+								<div class="box box-solid mt10 sidebar">
+									<ul class="sidebar-menu">
+										<li class="treeview " id="allinput1">
+											<a href="#">
+												<input type="checkbox" name="check" class="checkbox-all" value="澳门分公司"><span class="ml5">澳门分公司</span>
+												<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+											</a>
+											<ul class="treeview-menu menu-open" style="display: none;">
+												<li class="active">
+													<table class="table cliketables  table-bordered table-striped dataTable  one_table">
+														<th width="30">
+															<input type="checkbox" name="check" class="check_all" value="">
+
+														</th>
+														<th colspan="5">市场部</th>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td width="60">王雪</td>
+															<td width="100">56545415</td>
+															<td width="120">13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>黎明</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>特长标签（鼠标放上显示）</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>张红</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+
+													</table>
+
+													<table class="table cliketables table-bordered table-striped dataTable">
+														<th width="30">
+															<input type="checkbox" name="check" value="">
+
+														</th>
+														<th colspan="5">市场部</th>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td width="60">王雪</td>
+															<td width="100">56545415</td>
+															<td width="120">13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>黎明</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>张红</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+
+													</table>
+
+												</li>
+											</ul>
+										</li>
+
+										<li class="treeview ">
+											<a href="#"> <input type="checkbox" name="check" value="阿拉伯分公司"><span class="ml5">阿拉伯分公司</span><span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+											</a>
+											<ul class="treeview-menu menu-open" style="display: none;">
+												<li class="active">
+													<table class="table cliketables table-bordered table-striped dataTable">
+														<th width="30">
+															<input type="checkbox" name="check" value="">
+
+														</th>
+														<th colspan="5">研发部</th>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td width="60">王雪</td>
+															<td width="100">56545415</td>
+															<td width="120">13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>李四</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>王五</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+
+													</table>
+
+												</li>
+
+											</ul>
+										</li>
+
+										<li class="treeview ">
+											<a href="#"> <input type="checkbox" name="check" value="深圳分公司"><span class="ml5">深圳分公司</span><span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+											</a>
+											<ul class="treeview-menu menu-open" style="display: none;">
+												<li class="active">
+													<table class="table cliketables table-bordered table-striped dataTable">
+														<th width="30">
+															<input type="checkbox" name="check" value="">
+
+														</th>
+														<th colspan="5">研发部</th>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td width="60">王雪</td>
+															<td width="100">56545415</td>
+															<td width="120">13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>李四</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+														<tr>
+															<td><input type="checkbox" name="check" value="澳门分公司"></td>
+															<td>王五</td>
+															<td>56545415</td>
+															<td>13949103663</td>
+															<td>柜员</td>
+															<td>标签A</td>
+														</tr>
+
+													</table>
+
+												</li>
+
+											</ul>
+										</li>
+
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						<!--弹窗右侧内容结束-->
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!--指定部人员窗口结束-->
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+		<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<!--时间插件js-->
+		<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript">
+			//radio选中样式			
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'icheckbox_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			//所有公司变色 
+			$(".frim_line").click(function() {
+				$(".frim_line").each(function() {
+					$(this).removeClass("active");
+				});
+				$(this).addClass("active");
+			});
+
+			$(".treeview").find(".iCheck-helper").click(function() { //分公司全选功能
+				var chec = $(this).parent().attr("aria-checked");
+				var box = $(this).parent().parent().parent().find("ul").find("input[type='checkbox']");
+
+				$(box).each(function() {
+
+					if(chec == "true") {
+						$(this)[0].checked = true;
+						$(this).parent().attr("aria-checked", "true")
+						$(this).parent().addClass("checked")
+
+					} else {
+						$(this)[0].checked = false;
+						$(this).parent().attr("aria-checked", "false")
+						$(this).parent().removeClass("checked")
+					}
+				});
+
+			});
+
+			$(".cliketables").find(".iCheck-helper").click(function() { //单个部门全选功能
+				var chec = $(this).parent().attr("aria-checked");
+				var box = $(this).parent().parent().parent().parent().find("td").find("input[type='checkbox']");
+
+				$(box).each(function() {
+
+					if(chec == "true") {
+						$(this)[0].checked = true;
+						$(this).parent().attr("aria-checked", "true")
+						$(this).parent().addClass("checked")
+
+					} else {
+						$(this)[0].checked = false;
+						$(this).parent().attr("aria-checked", "false")
+						$(this).parent().removeClass("checked")
+					}
+				});
+			});
+
+			$("#tableclikes").find(".iCheck-helper").click(function() { //所有全选功能
+				var chec = $(this).parent().attr("aria-checked");
+				var box = $("div.sidebar").find("input[type='checkbox']");
+
+				$(box).each(function() {
+
+					if(chec == "true") {
+						$(this)[0].checked = true;
+						$(this).parent().attr("aria-checked", "true")
+						$(this).parent().addClass("checked")
+
+					} else {
+						$(this)[0].checked = false;
+						$(this).parent().attr("aria-checked", "false")
+						$(this).parent().removeClass("checked")
+					}
+				});
+			});
+
+			//选择指定人员
+			function section_zhiding() {
+				layer.open({
+					title: '指定部门',
+					//btn: ['确定','取消'],
+					area: ['800px', '580px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#section_zhiding")
+				});
+			}
+
+			
+
+			function queding() {
+				var str = "";
+				var c = document.getElementsByName("check")
+				for(var i = 0; i < c.length; i++) {
+					if(c[i].checked == true) {
+						str += c[i].value + ",";
+					}
+				}
+				$("#GKFW").html(str);
+				layer.closeAll();
+			}
+
+			function add_html() {
+				var html = '<tr><td style="position: relative;"><div style="position:relative;"><span class="HBinput"><select class="form-control select2 width_10"  onchange="this.parentNode.nextSibling.value=this.value" ><option value="内部讲师费">内部讲师费</option><option value="外部讲师费">外部讲师费</option><option value="课程开发费">课程开发费</option><option value="外部培训费">外部培训费</option><option value="培训咨询费">培训咨询费</option><option value="培训器材费">培训器材费</option><option value="外部培训费">外部培训费</option><option value="场地费">场地费</option><option value="食宿费">食宿费</option><option value="交通差旅费">交通差旅费</option><option value="其他费用">其他费用</option></select></span><input name="box" style="width:90%;position:absolute;left:0px;" class="form-control "/></div></td><td> <input type="text" class="form-control width_10 text-center" placeholder="" /></td><td><a onclick="result_out();" href="#" class="bs-callout-info text-danger"><i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除</a></td></tr>'
+				$(".dataTable").append(html)
+			}
+
+			function baocun() {
+
+				layer.closeAll();
+			}
+		</script>
+	</body>
+
+</html>

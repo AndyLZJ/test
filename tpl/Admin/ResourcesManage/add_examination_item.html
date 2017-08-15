@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>试卷管理--智能组卷</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/validform.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/style.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/searchSelect/chosen.css">
+<style type="text/css">
+    .input_bottom{
+        border: none;
+        border-bottom:2px solid #1770a0;
+		width:80px; 
+		display:inline;
+    }
+</style>
+</head>
+<body>
+    <section class="content">
+    	<form action="{:U('ResourcesManage/formHandle')}" method="GET" id="form2">
+    <!--试卷所属课程字段开始-->
+      <div class="form-group" id="address">
+        <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red"></span>所属课程：</label>
+        <div class="col-sm-10">
+          <!-- <input type="text" class="form-control" id="suoshu" name="suoshu" placeholder="请输入所属课程名称" datatype="*" nullmsg="请输入所属课程" sucmsg=" " errormsg="所属课程名称格式错误"> -->
+          <select class="form-control select2" name="suoshu" id="suoshu" onchange="getNum();">
+            <option value="-1"><a>--请选择所属课程--</a> </option>
+              <foreach name="course" item="v">
+                <option value="{$v.id}">{$v.course_name}</option>
+              </foreach>
+            </select>
+        </div>
+      </div>
+      <!--试卷所属课程字段结束-->
+      
+      <!--试卷所属课程字段开始-->
+      <div class="form-group" id="address">
+        <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red"></span>试题库：</label>
+        <div class="col-sm-10">
+          <!-- <input type="text" class="form-control" id="suoshu" name="suoshu" placeholder="请输入所属课程名称" datatype="*" nullmsg="请输入所属课程" sucmsg=" " errormsg="所属课程名称格式错误"> -->
+          <select class="form-control select2" name="tiku" id="tiku" onchange="getNum();">
+            <option value="-1"><a>--请选择试题库--</a> </option>
+              <foreach name="question_bank" item="v">
+                <option value="{$v.id}">{$v.name}</option>
+              </foreach>
+            </select>
+        </div>
+      </div>
+      <!--试卷所属课程字段结束-->
+      
+       <!--组卷规则字段开始-->
+      <div class="form-group" id="address">
+        <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red">*</span>组卷规则：</label>
+        <div class="col-sm-10">
+       <div class="mt20">
+        	有单选题  <span  class="text-bold text-blue" id="dan-num">{$count[0]}</span> 道，随机抽取 
+        <input class="form-control ml10 mr10 input_bottom num" type="number" name="dan" id="dan" min="1"/>道，
+        	每道<input class="form-control ml10 mr10 input_bottom fenzhi" type="number" name="dan-fen" id="dan-fen" min="1" max="100" step="0.5"/> 分；
+       </div>
+       <div class="mt20">
+        	有多选题  <span  class="text-bold text-blue" id="duo-num">{$count[1]}</span> 道，随机抽取 
+        <input class="form-control ml10 mr10 input_bottom num" type="number" name="duo" id="duo" min="1"/>道，
+        	每道<input class="form-control ml10 mr10 input_bottom fenzhi" type="number " name="duo-fen" id="duo-fen" min="1" max="100" step="0.5"/> 分；
+       </div>
+       <div class="mt20">
+        	有判断题  <span  class="text-bold text-blue" id="pan-num">{$count[2]}</span> 道，随机抽取 
+        <input class="form-control ml10 mr10 input_bottom num" type="number" name="pan" id="pan" min="1" />道，
+       	 每道<input class="form-control ml10 mr10 input_bottom fenzhi" type="number " name="pan-fen" id="pan-fen" min="1" max="100" step="0.5"/> 分；
+       </div>
+       <div class="mt20">
+        	有简答题  <span  class="text-bold text-blue" id="jian-num">{$count[3]}</span> 道，随机抽取 
+        <input class="form-control ml10 mr10 input_bottom num" type="number" name="jian" id="jian" min="1" />道，
+        	每道<input class="form-control ml10 mr10 input_bottom fenzhi" type="number " name="jian-fen" id="jian-fen" min="1" max="100" step="0.5"/> 分；
+       </div>
+        </div>
+      </div>
+      <input type="hidden" name="name1" />
+      <input type="hidden" name="cate1" />
+      <input type="hidden" name="line1" />
+      
+      <div class="col-sm-6" id="address">
+        <button type="button" class="btn btn-info mr10 float_l" style="margin-bottom: 20px;" id="submit">
+        	<i class="fa" aria-hidden="true"></i>完成
+       	</button>
+      </div>
+      
+      </form>
+      <!--组卷规则字段结束-->
+    </section>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/Js/js/Validform_v5.3.2.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/searchSelect/chosen.jquery.js"></script>
+<script>
+	function getNum(){
+		var tiku = $('select[name=tiku]').val();
+		var course = $('select[name=suoshu]').val();
+		var url = "{:U('getExamNumBy')}";
+		$.ajax({
+			type:"post",
+			data:'course='+course+'&tiku='+tiku,
+			url:url,
+			success:function(msg){
+				$('#dan-num').html(msg[0]);
+				$('#duo-num').html(msg[1]);
+				$('#pan-num').html(msg[2]);
+				$('#jian-num').html(msg[3]);
+			}
+		});
+	}
+</script>
+<script>
+	$(function(){
+		$('input[name=name1]').val(parent.$('#examname').val());
+		$('input[name=cate1]').val(parent.$('#examcate').val());
+		$('input[name=line1]').val(parent.$('input[name=jige]').val());
+		
+		
+		function msg(i){
+			layer.msg(i,{time:2000});
+		}
+		
+		function check_dan(){
+			var dan = $('#dan').val();
+			if(!isNaN(dan) && dan != '' && (dan*1 > ($('#dan-num').html()*1))){
+				$('#dan').val('');
+				msg('抽取的单选题数目不能大于单选题总数');return false;
+			}
+			if(($.trim(dan) != '') && (dan * 1 < 1)){
+				msg('抽取的单选题数目必须大于1');return false;
+			}
+		}
+		function check_duo(){
+			var duo = $('#duo').val();
+			if(!isNaN(duo) && duo != '' && (duo*1 > ($('#duo-num').html()*1))){
+				$('#duo').val('');
+				msg('抽取的多选题数目不能大于多选题总数');return false;
+			}
+			if(($.trim(duo) != '') && (duo * 1 < 1)){
+				msg('抽取的多选题数目必须大于1');return false;
+			}
+		}
+		function check_pan(){
+			var pan = $('#pan').val();
+			if(!isNaN(pan) && pan != '' && (pan*1 > ($('#pan-num').html()*1))){
+				$('#pan').val('');
+				msg('抽取的判断题数目不能大于判断题总数');return false;
+			}
+			if(($.trim(pan) != '') && (pan * 1 < 1)){
+				msg('抽取的判断题数目必须大于1');return false;
+			}
+		}
+		function check_jian(){
+			var jian = $('#jian').val();
+			if(!isNaN(jian) && jian != '' && (jian*1 > ($('#jian-num').html()*1))){
+				$('#jian').val('');
+				msg('抽取的简答题数目不能大于简答题总数');return false;
+			}
+			if(($.trim(jian) != '') && (jian * 1 < 1)){
+				msg('抽取的简答题数目必须大于1');return false;
+			}
+		}
+		$('#dan').blur(function(){
+			check_dan();
+		});
+		
+		$('#duo').blur(function(){
+			check_duo();
+		});
+		
+		$('#pan').blur(function(){
+			check_pan();
+		});
+		$('#jian').blur(function(){
+			check_jian();
+		});
+		
+		$('.fenzhi').blur(function(){
+			var dan = $('#dan').val(),duo = $('#duo').val(),pan = $('#pan').val(),jian = $('#jian').val();
+			var num = $(this).parent().find('input:eq(0)').val(),score = $(this).val();
+			if((score*1 < 1) || dan != '' && $.trim($('#dan-fen').val()) == ''){
+				msg('试题分值必须大于或等于1');return false;
+			}
+		})
+		//检测表单数据
+		function check_data(){
+			var dan = $('#dan').val(),duo = $('#duo').val(),pan = $('#pan').val(),jian = $('#jian').val();
+			check_dan();
+			check_duo();
+			check_pan();
+			check_jian();
+			if(dan != '' && $.trim($('#dan-fen').val()) == ''){
+				msg('请输入单选题分值');return false;
+			}
+			
+			if(duo != '' && $.trim($('#duo-fen').val()) == ''){
+				msg('请输入多选题分值');return false;
+			}
+			
+			if(pan != '' && $.trim($('#pan-fen').val()) == ''){
+				msg('请输入判断题分值');return false;
+			}
+			
+			if(jian != '' && $.trim($('#jian-fen').val()) == ''){
+				msg('请输入简答题分值');return false;
+			}
+			return true;
+		}
+		
+		$('select[name=suoshu]').chosen();
+		
+		$('#submit').click(function(){
+			if(!check_data()){
+				return false;
+			}
+			
+			var dan = $('#dan').val(),duo = $('#duo').val(),pan = $('#pan').val(),jian = $('#jian').val();
+			var num = dan*1 + duo*1 + pan*1 + jian*1;
+			var score = ($('#dan-fen').val())*1*dan + ($('#duo-fen').val())*1*duo + ($('#pan-fen').val())*1*pan + ($('#jian-fen').val())*1*jian;
+			
+			parent.$('#totalExam').val(num);
+			parent.$('#totalScore').val(score);
+			parent.$('#total_span').text(score);
+			
+			var url = "{:U('formHandle')}";
+			$.ajax({
+				type:"post",
+				data:$('#form2').serialize(),
+				url:url,
+				success:function(msg){
+					parent.window.location.reload();
+				}
+			})
+		});
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<layout name="layout"/>
+  <style type="text/css">
+    .layui-layer-content>.form-horizontal>.box-body>.form-group{
+          margin-right: 0px!important;
+          margin-left: 0px!important;
+     }
+     .form-control{
+          width: 250px;
+     }
+  </style>
+  
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+                                            供应商管理
+        <small>/领域管理</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="supplierManage.html"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+            <div class="box">
+            <div class="box-body">
+              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                  <div class="box-header with-border">
+                          <h3 class="box-title ">领域管理</h3>
+                  </div>
+                  <!--筛选栏开始-->
+                  <div class="row mb10 mt10">
+                   <form id="search" action="__SELF__" methoh="get">
+                      <div class="col-sm-12">
+                          <div class="input-group "> 
+                            <input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="请输入领域名称搜索">
+                            <div class="input-group-btn">
+                              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                           
+                          </div>
+                          <a type="button" class="btn btn-warning float_r ml10" onclick="del_all();">
+                            <i class="fa fa-trash-o "></i>
+                                                                                                                        批量删除
+                          </a>
+                          <a type="button" class="btn btn-primary float_r ml10" onclick="add_category();">
+                            <i class="fa fa-plus"></i>
+                                                                                                                       新增领域
+                          </a>
+                      </div>
+                       </form>
+                  </div>
+                  <!--筛选栏结束-->
+              <!--内容开始-->
+              <div class="row">
+                  <div class="col-sm-12">
+                      <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                          <thead>
+                              <tr role="row">
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="50">
+                                     <input type="checkbox" class=supplierCategory_allcheck>
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">领域
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                              </tr>
+                          </thead>
+                          <tbody id="tab" class="supplierCategory_table">
+                           <foreach name="approved_list" item="v">
+                              <tr role="row" class="odd">
+                                <td><input type="Checkbox" name="checkbox[]"  value="{$v.id}"></td>
+                                <td>{$v['tname']}</td>
+                                <td class="edit_style">
+                                    <a onclick="redact();" class="bs-callout-info mr20">
+                                        <i class="fa fa-pencil mr5" aria-hidden="true" data-name="{$v['tname']}" data-id="{$v['id']}">编辑</i>
+                                    </a>
+                                    <a class="color_or mr20" onclick="del();">
+                                        <i class="fa fa-trash-o mr5" aria-hidden="true" data-name="{$v['tname']}" data-id="{$v['id']}">删除</i>
+                                    </a>
+                                </td>
+                              </tr>
+                              </foreach>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <!--内容結束-->
+              <!--分页开始-->
+              <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                       {$approved_page}
+                                    </div>
+                                </div>
+                            </div>
+              <!--分页结束-->
+              </div>
+            </div>
+          </div>
+    </section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript">
+    //全选checkbox
+		 var $checkboxAlls = $(".supplierCategory_allcheck"),
+		            $checkboxs = $(".supplierCategory_table").find("[type='checkbox']").not("[disabled]"),
+		            length = $checkboxs.length,
+		            i=0;
+
+		    $checkboxAlls.on("ifClicked",function(event){
+		        if(event.target.checked){
+		            $checkboxs.iCheck('uncheck');
+		            i=0;
+		        }else{
+		            $checkboxs.iCheck('check');
+		            i=length;
+		        }
+        });
+		    
+    
+    //编辑类型
+	  $(".edit_style").on('click','i',function(){
+		  $('.form-control').attr('datas-id',$(this).attr('data-id'));
+		  $('.form-control').val($(this).attr('data-name'));
+		  $('.category_inputs').val($(this).attr('data-name'));
+		  $('.category_inputs').attr('datas-ids',$(this).attr('data-id'));
+	  })
+ 
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+
+  //删除
+  function del(){
+	 
+    layer.confirm('您确定要删除该领域吗？', {
+      title: '删除领域',
+      content: '<div class="mb10">现领域名称:</div><div><input class="category_inputs" type="text" maxlength="20" name="organ_input" datas-ids="" placeholder="请输入要更新的领域名称" value=""></div>',
+      btn: ['确定删除','取消操作'],
+      shadeClose: true, //开启遮罩关闭
+      skin: 'layui-layer-lan', //按钮
+    }, function(){
+    	$(".category_inputs").attr('datas-ids');
+    	  $.ajax({
+    		type:"POST",
+    		url:"{:U('delSupplierCategory')}",
+    		data:{sid:$(".category_inputs").attr('datas-ids')},
+    		dataType:"json",
+    		success:function(msg){
+    			layer.msg('删除成功',{icon:1,time: 1000});
+    			setTimeout("location.reload();",300);//刷新当前页面.
+    		},
+    		error:function(msg){
+       	        layer.alert('新增失败,2秒后自动关闭',{icon: 1});
+                setTimeout("location.reload();",2000);//刷新当前页面.
+         }
+    	});
+      
+    });
+  }
+
+  //批量删除
+  function del_all(a){
+	var news=document.getElementsByName('checkbox[]');   
+    var mess  = new Array();
+    for (var i = 0,ress=0; i < news.length; i++) {
+        if(news[i].checked){
+         ress=ress+1;
+         mess.push(news[i].value);
+        }
+    }
+    layer.confirm('您确定要批量删除这些领域吗？', {
+      title: '批量删除',
+      btn: ['确定删除','取消操作'],
+      shadeClose: true, //开启遮罩关闭
+      skin: 'layui-layer-lan'
+      //按钮
+    }, function(){
+    	if(mess && mess.length == 0){
+    		 layer.msg('请勾选一条消息', {time: 1000}); 	
+            }else{
+            	$.post('{:U('del_all')}',{id:mess}, function($data) {  
+                    
+                      if($data == 1){  
+						  layer.msg('删除成功',{time: 1000,icon: 1});//bootstrap框架确认弹窗
+						  setTimeout("location.reload();",1000);//刷新当前页面.
+                      }else{  
+						  layer.msg('删除失败', { time: 1000});
+						  setTimeout("location.reload();",1000);//刷新当前页面. 
+                      }     
+                  },'json');
+            }
+            
+        },function(){
+          layer.msg('取消操作',{time: 1000});
+       }
+    
+    );}
+
+  //新增领域
+  function add_category(){
+	  layer.open({
+      content:'<div class="mb10">领域名称：</div><div><input class="form-control" id="catename" type="text" maxlength="20" name="tname" placeholder="请输入新增的领域名称"></div>',
+      title: '新增领域',
+      btn: ['新增','取消'],
+      yes:function(){
+    	  var tname = $('#catename').val();
+    	  if(tname == ''){
+    		  layer.alert('输入类型不能为空!',{icon: 2});
+    		  return false;
+    	  }else{
+    	   $.ajax({
+	              type: "POST",
+	              url: "{:U('addSupplierStyle')}",
+	              data: {tname:$('#catename').val()},
+	              dataType: "json",
+	              success: function(data){
+	                     layer.alert('新增成功,1秒后自动关闭',{icon: 1});
+	                     setTimeout("location.reload();",1000);//刷新当前页面.
+	                   },
+	              error:function(msg){
+	            	     layer.alert('新增失败,2秒后自动关闭',{icon: 2});
+	                     setTimeout("location.reload();",2000);//刷新当前页面.
+	              }
+                });
+    	    }
+      },
+      skin: 'layui-layer-lan', //样式类名
+      closeBtn: 1, //显示关闭按钮
+      anim: 2,
+      shadeClose: true //开启遮罩关闭
+    });
+  }
+  
+  //编辑领域
+  function redact(){
+    layer.open({
+      content: '<div class="mb10">现领域名称:</div><div><input class="form-control" id="catename" type="text" maxlength="20" name="organ_input" datas-id="" placeholder="请输入要更新的领域名称" value=""></div>',
+      title: '编辑领域',
+      btn: ['保存','取消'],
+      yes:function(){
+    	  var tname = $('#catename').val();
+    	  var tid = $('.form-control').attr('datas-id');
+    	  if(tname == ''){
+    		  layer.alert('输入类型不能为空!',{icon: 2});
+    		  return false;
+    	  }else{
+    	   $.ajax({
+	              type: "POST",
+	              url: "{:U('editSupplierCategory')}",
+	              data: {tid:tid,tname:tname},
+	              dataType: "json",
+	              success: function(data){
+	            	  if(data == 1){
+	            		  layer.msg('编辑成功',{icon: 1});
+		                  setTimeout("location.reload();",1000);
+	            	  }else if(data == 0){
+	            		  layer.msg('未作任何编辑',{icon: 2});
+		                  
+	            	  }else{
+	            		  layer.msg('请求类型有误',{icon: 2});
+	            	  }
+	                   }
+                });
+    	    }
+      },
+      skin: 'layui-layer-lan', //样式类名
+      closeBtn: 1, //显示关闭按钮
+      time:0,
+      anim: 2,
+      shadeClose: true //开启遮罩关闭 
+    });
+  }
+</script>

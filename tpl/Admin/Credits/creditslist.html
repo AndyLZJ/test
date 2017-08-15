@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>融易点——学分管理</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+
+  <style type="text/css">
+     .box-title{
+         margin: 6px 0px !important;
+     }
+     .text-muted{
+         line-height: 30px;
+     }
+     .form-group{
+         margin-bottom: 0px;
+     }
+     @media screen and (max-width : 1644px){
+         .credits_screen{margin-bottom: 10px;}
+     }
+  </style>
+</head>
+<body>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        学分管理
+        <small>/查看学分</small>
+      </h1>
+      <ol class="breadcrumb">
+        <!--<li><a class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>-->
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+      <div class="row">
+         <div class="col-md-8">
+           <div class="box box-success box-info">
+               <form action="{:U('Admin/Credits/CreditsList')}" method="get">
+             <div class="box-header with-border">
+                 <!--点击加载选择部门树控件开始-->
+                 <!--<button class="btn btn-default float_l mr10 credits_screen">
+                     <i class="fa fa-sitemap mr5"></i>选择部门
+                 </button>-->
+                 <!--点击加载选择部门树控件结束-->
+                 <div class="col-sm-2">
+                     <div class="form-group">
+                          <select name="user_id" class="form-control select2 width_10">
+                            <option value=""><a>-----选择员工-----</a> </option>
+                            <option value=""><a>全部员工</a></option>
+                            <foreach name="user" item="v" key="k"> 
+                            <option value="{$k}">{$v}</option>
+                            </foreach>
+                            <!--<option>王一二</option>
+                            <option>罗成</option>
+                            <option>付双良</option>-->
+                          </select>
+                     </div>
+                 </div>
+                 <div class="col-sm-2">
+                     <div class="form-group">
+                          <select name="type" class="form-control select2 width_10">
+                            <option value=""><a>--选择学分类型--</a> </option>
+                            <option value=""><a>全部类型</a></option>
+                            <option value="1">参加课程</option>
+                            <option value="2">参加考试</option>
+                            <option value="3">参加调研</option>
+                            <!--<option>好为人师</option>-->
+                          </select>
+                     </div>
+                 </div>
+                 <div class="float_l credits_screen">
+                     <span class="text-muted mr10">时间：</span>
+                    <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                     <input name="start_time" type="text" id="datebut" class="form-input mr5" id="datepicker" value="{$project.start_time}" >—
+                    <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                     <input name="end_time" type="text" id="datainps" class="form-input mr5" id="datepicker" value="{$project.start_time}" >
+                     <!--<input class="form-input ml5" type="text" name=""/>-->
+                 </div>
+                 <!--<div class="float_l credits_screen">
+                     <span class="text-muted mr10">时间：</span>
+                   <span class="text-muted mr10">  <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                     <input name="start_time" type="text" id="datebut" class="form-control pull-right" id="datepicker" value="{$project.start_time}" >—
+                     <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                      <input name="end_time" type="text" id="datainps" class="form-control pull-right" id="datepicker" value="{$project.end_time}" >
+                      </span>
+                 </div>-->
+                 <!--<div class="col-sm-10">
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                    </div>
+                    <input name="start_time" type="text" id="datebut" class="form-control pull-right" id="datepicker" value="{$project.start_time}" >
+                </div> 至
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar" onClick="jeDate({dateCell:'#datainps',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"></i>
+                    </div>
+                    <input name="end_time" type="text" id="datainps" class="form-control pull-right" id="datepicker" value="{$project.end_time}" >
+                </div>
+             </div>-->
+                 <button type="submit" class="btn btn-primary float_l ml10 credits_screen">
+                     搜索
+                 </button>
+             </div>
+             </form>
+             <div class="box-body">
+                 <table class="table table-bordered table-striped dataTable">
+                   <thead>
+                     <tr role="row">
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">增加时间
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分类型
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学分来源
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">关联项目
+                          </th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                       <!--{$res}-->
+                       <foreach name="res" item="v">
+                     <tr>
+                       <td>{$v.add_time|date="Y-m-d H:i",###} </td>
+                       <td>{$v.username}</td>
+                       <td>
+                        <switch name="v.type">
+                             <case value="1">参加课程</case>
+                             <case value="2">参加考试</case>
+                             <case value="3">参加调研</case>
+                             <default />default
+                         </switch>   
+                       </td>
+                       <td>{$v.score}</td>
+                       <td>{$v.source}</td>
+                       <td>{$v.project_name}</td>
+                     </tr>
+                      </foreach>
+                     <!--<tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>王一二</td>
+                       <td>任务范儿</td>
+                       <td>15</td>
+                       <td>选修一门课程</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>罗成</td>
+                       <td>爱学习</td>
+                       <td>10</td>
+                       <td>阅读学习资料</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>付双良</td>
+                       <td>好为人师</td>
+                       <td>30</td>
+                       <td> 发布授课</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>夏夏夏</td>
+                       <td>系统达人</td>
+                       <td>20</td>
+                       <td>查看自己目标</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>王一二</td>
+                       <td>任务范儿</td>
+                       <td>15</td>
+                       <td>选修一门课程</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>罗成</td>
+                       <td>爱学习</td>
+                       <td>10</td>
+                       <td>阅读学习资料</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>付双良</td>
+                       <td>好为人师</td>
+                       <td>30</td>
+                       <td> 发布授课</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>王一二</td>
+                       <td>任务范儿</td>
+                       <td>15</td>
+                       <td>选修一门课程</td>
+                     </tr>
+                     <tr>
+                       <td>2016-11-28 11:05:04</td>
+                       <td>罗成</td>
+                       <td>爱学习</td>
+                       <td>10</td>
+                       <td>阅读学习资料</td>
+                     </tr>-->
+                   </tbody>
+                 </table>
+                 <!--分页开始-->
+                 <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                        <ul class="pagination">
+                                            {$page}
+                                            <!--<li class="paginate_button previous">
+                                               <span style="padding: 6px 30px!important;">共68</span>
+                                            </li>
+                                            <li class="paginate_button previous disabled" id="example1_previous">
+                                               <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                               <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+                                            </li>
+                                            <li class="paginate_button next" id="example1_next">
+                                               <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+                                            </li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                 </div>
+                 <!--分页结束-->
+             </div>
+           </div>
+         </div>
+         <!--<div class="col-md-4">
+           <div class="box box-info">
+             <div class="box-header with-border">
+                 <h3 class="box-title">XXX（根据左侧选择的员工或组织）学分统计概况</h3>
+             </div>
+             <div class="box-body chart-responsive">
+                 <div class="text-center mt10 mb30">xxxx-xx-xx至xxxx-xx-xx学分概况统计
+                     <button type="button" class="btn bg-orange margin btn-xs">历史总积分：560</button>
+                 </div>
+                 </div>
+                 <div class="chart" id="sales-chart" style="height: 300px; position: relative;">
+                 </div>
+                 <div class="chart" id="organ-chart" style="height: 300px; position: relative;">
+                 </div>
+                 <div class="text-center mt10 mb30">xxxx-xx-xx至xxxx-xx-xx组织学分概况</div>
+                 <div class="chart" id="employees-chart" style="height: 300px; position: relative;">
+                 </div>
+                 <div class="text-center mt10 pb30">xxxx-xx-xx至xxxx-xx-xx类别学分概况</div>
+             </div>
+           </div>-->
+         </div>
+      <!--</div>-->
+    </section>
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="__PUBLIC__/plugins/morris/morris.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+
+<script type="text/javascript">
+  
+  //统计图表JS
+  $(function() {  
+    "use strict";  
+    // LINE CHART
+    var line = new Morris.Line({
+      element: 'sales-chart',
+      resize: true,
+      data: [
+        {time: '2015-12-31', 学分: 0},
+        {time: '2016-01-01', 总学分: 2666},
+        {time: '2016-02-01', 总学分: 2778},
+        {time: '2016-03-01', 总学分: 4912},
+        {time: '2016-04-01', 总学分: 3767},
+        {time: '2016-05-01', 总学分: 6810},
+        {time: '2016-06-01', 总学分: 5670},
+        {time: '2016-07-01', 总学分: 4820},
+        {time: '2016-08-01', 总学分: 15073},
+        {time: '2016-09-01', 总学分: 10687},
+        {time: '2016-10-01', 总学分: 10687},
+        {time: '2016-11-01', 总学分: 10687},
+        {time: '2016-12-01', 总学分: 8432}
+      ],
+      xkey: 'time',//按搜索时间区间的自然月显示
+      ykeys: ['总学分'],
+      labels: ['总学分'],
+      lineColors: ['#3c8dbc'],
+      hideHover: 'auto'
+    });
+
+    var donut = new Morris.Donut({  
+        element: 'organ-chart',  
+        resize: true,  
+        colors: ["#00a65a",  "#f56954", "#3c8dbc","#00c0ef"],  
+        data: [  
+            {label: "人事部", value: 158},  
+            {label: "行政部", value: 106},  
+            {label: "技术部", value: 89},  
+            {label: "总经办", value: 110},
+        ],  
+        formatter: function (x) { return x + "学分"},
+        hideHover: 'true'  
+      });  
+ 
+    var donut = new Morris.Donut({  
+        element: 'employees-chart',  
+        resize: true,  
+        colors: ["#00a65a",  "#f56954", "#3c8dbc","#00c0ef", "#f39c12"],  
+        data: [  
+            {label: "系统达人", value: 21},  
+            {label: "爱学习", value: 18},  
+            {label: "任务范儿", value: 20},  
+            {label: "好为人师", value: 21},
+            {label: "我是学霸", value: 19},
+        ],  
+        formatter: function (x) { return x + "学分"},
+        hideHover: 'true'  
+      });  
+    }); 
+  
+  
+//日期选择控件设置
+    jeDate({
+		dateCell:"#indate",//isinitVal:true,
+		format:"YYYY-MM",
+		isTime:false, //isClear:false,
+		minDate:"2015-10-19 00:00:00",
+		maxDate:"2016-11-8 00:00:00"
+	})
+
+    jeDate({
+		dateCell:"#dateinfo",
+		format:"YYYY年MM月DD日 hh:mm:ss",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"2014-09-19 00:00:00",
+		okfun:function(val){alert(val)}
+	})
+
+</script>
+</body>
+</html>

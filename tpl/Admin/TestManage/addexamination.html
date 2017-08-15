@@ -1,0 +1,130 @@
+<layout name="layout"/>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script>
+    //添加试卷
+    function QRDY(){
+        var input = $('input[type=radio]:checked').val();
+        if(typeof(input) == 'undefined'){
+            layer.alert('请选择试卷');return false;
+        }
+
+        var dyval=$('input:radio[name="test"]:checked').val();
+
+        //及格线
+        var passing_score = $('input:radio[name="test"]:checked').attr("alt");
+
+        //及格分数
+        var pass_line = $('input:radio[name="test"]:checked').attr("align");
+
+        //试卷总分数
+        var test_score = $('input:radio[name="test"]:checked').attr("about");
+
+        var val = dyval.split('|');
+        parent.$("#dqdy").html(val[1]);                 //试卷名称
+        parent.$("input[name=hidTestId]").val(val[0]);  //试卷ID
+        parent.$("#wenjuan").html("修改试卷");
+        parent.$("input[name=pass_line]").val(pass_line);
+
+        parent.$("#pass_line_total").val(test_score);
+
+        parent.$("#pass_score").val(pass_line);
+        /*
+        parent.$("select option").each(function(){
+            $(this).removeAttr("selected");
+        });*/
+
+        parent.$("select option").each(function(i){
+            if($(this).val() == passing_score){
+                $(this).selectedIndex = i;
+                $(this).attr("selected",true);
+            }
+        });
+
+        //parent.$("#pass_line").find("option[value='0']").attr("selected",true);
+
+        //parent.$("input[name='pass_line']").removeAttr("readonly");
+
+        parent.layer.closeAll();
+    }
+</script>
+<!--添加线上考试窗口-->
+<div id="add_test">
+    <div class="box-header with-border">
+        <h3 class="box-title">添加线上考试</h3>
+    </div>
+    <div class="box-body">
+        <!--筛选栏开始-->
+        <form action="__SELF__" method="POST" id="searchForm">
+            <div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select class="form-control select2 width_10" name="test_cate">
+                            <option value="">选择试卷分类</option>
+                            <foreach name="cate" item="v">
+                                <option value="{$v.id}" <if condition="$test_cate eq $v['id']">selected</if>>{$v.cat_name}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="input-group ">
+                        <input type="text" class="form-control pull-right" placeholder="请输入试卷名称" name="test_name" value="{$test_name}">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--筛选栏结束-->
+        </form>
+        
+            <div class="col-sm-12 mt10">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷名称</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">试卷分类</th>
+                            <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tab">
+                        <foreach name="examination" item="v">
+                            <tr role="row" class="odd text-center">
+                                <td>
+                                    <a href="{:U('Admin/ResourcesManage/examDestail',array('id'=>$v['id']))}" class="test_name">{$v.test_name}</a>
+                                </td>
+                                <td>{$v.cat_name}</td>
+                                <td>
+                                    <input type="radio" value="{$v.id}|{$v.test_name}" name="test" alt="{$v.pass_line}" align="{$v.passing_score}" about="{$v.test_score}">
+                                </td>
+                            </tr>
+                        </foreach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="box-footer">
+            <div class="col-sm-12 text-center">
+                <a class="btn btn-info form-group_but" onclick="QRDY()">确认</a>
+            </div>
+        </div>
+</div>
+<!--添加线上考试结束-->
+<script>
+    $('select[name=test_cate]').change(function(){
+        $('#searchForm').submit();
+    });
+    $(function(){
+        var inputs = $('input[type=radio]');
+        inputs.each(function(){
+            var exam_id = parent.$('input[name=hidTestId]').val();
+            var i = $(this).val();
+            var j = i.split('|');
+            if(exam_id == j[0]){
+                $(this).attr('checked','checked');
+            }
+        })
+    })
+</script>

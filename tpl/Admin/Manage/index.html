@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{$location}</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<style type="text/css">
+			.ulitem {
+				width: 100%;
+				border: 1px solid #dddddd;
+				background-color: #ffffff;
+				padding: 5px;
+				cursor: pointer;
+			}
+			
+			.ulitem:hover {
+				border: 1px solid red;
+			}
+			
+			.item_time label {
+				font-size: 0.8vw;
+				color: #c17d5b;
+				margin-top: 8px;
+			}
+			
+			.item_con label {
+				margin-top: 5px;
+				font-size: 16px;
+				color: #888484;
+			}
+			
+			.ulitem img {
+				width: 100%;
+			}
+			
+			.ulite_log {
+				background: url(__PUBLIC__/Dist/img/itembg.png) no-repeat;
+				width: 120px;
+				height: 50px;
+				line-height: 52px;
+				text-align: center;
+				color: white;
+				position: absolute;
+				top: 5px;
+				left: 10px;
+				font-size: 0.8vw;
+				font-weight: 600;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        培训项目
+        <small>/培训项目列表</small>
+      </h1>
+			<ol class="breadcrumb">
+				<li>
+
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+
+						<div class="nav-tabs-custom   mb10">
+							<ul class="nav nav-tabs">
+								<li <if condition="$typeid eq 0 ">class="active"</if>>
+									<a href="{:U('index',array('typeid'=>0))}">已发布</a>
+								</li>
+								<li <if condition="$typeid eq 1 ">class="active"</if>>
+									<a href="{:U('index',array('typeid'=>1))}">未发布</a>
+								</li>
+								<li <if condition="$typeid eq 2 ">class="active"</if>>
+									<a href="{:U('index',array('typeid'=>2))}">待审核</a>
+								</li>
+								<li <if condition="$typeid eq 3">class="active"</if>>
+									<a href="{:U('index',array('typeid'=>3))}">已拒绝</a>
+								</li>
+								<li <if condition="$typeid eq 4">class="active"</if>>
+									<a href="{:U('index',array('typeid'=>4))}">已完成</a>
+								</li>
+								<!--筛选栏开始-->
+								<div class="">
+									<div class="col-sm-2 pull-right">
+										<a href="{:U('Admin/Manage/create',array())}" type="button" class="btn btn-primary float_r "><i class="fa fa-plus "></i>新建培训项目</a>
+									</div>
+									<div class="col-sm-3 pull-right">
+										<form action="{:U('Admin/Manage/index')}" method="get">
+											<div class="input-group width_10 ">
+												<input type="hidden" name="typeid" value="{$typeid}" />
+												<input type="text" name="keyword" class="form-control pull-right" placeholder="培训班、培训名称、项目描述、组织人员……">
+												<div class="input-group-btn">
+													<button type="submit" class="btn btn-default">
+												<i class="fa fa-search"></i>
+												</button>
+												</div>
+										</form>
+										</div>
+									</div>
+									<div class="col-sm-2 pull-right">
+										<select class="training_category form-control select2 width_10">
+											<option value="-1">培训类别</option>
+											<!-- 一级分类 -->
+											<option value="0" <if condition="($training_category eq 0) and ($training_category neq null)">selected="selected"</if>>内部培训</option>
+											<option value="1" <if condition="$training_category eq 1">selected="selected"</if>>内部培训</option>
+											<option value="1" <if condition="$training_category eq 2">selected="selected"</if>>外出授课</option>
+										</select>
+									</div>
+									<div class="col-sm-2 pull-right">
+										<select class="plan_category form-control select2 width_10">
+											<option value="-1">计划内外</option>
+											<!-- 一级分类 -->
+											<option value="0" <if condition="($plan_category eq 0) and ($plan_category neq null)">selected="selected"</if>>计划内</option>
+											<option value="1" <if condition="$plan_category eq 1">selected="selected"</if>>计划外</option>
+										</select>
+									</div>
+								</div>
+								<!--筛选栏结束-->
+							</ul>
+
+								<div class="tab-content">
+									<div class="tab-pane active" id="good_audit">
+										<div class="box-body">
+											<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+												<!--内容开始-->
+												<div class="row">
+													<div class="col-sm-12">
+														<table id="tbody" class="table table-bordered table-striped dataTable passed_table" role="grid" aria-describedby="example1_info">
+															<thead>
+															<tr role="row">
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">序号
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">主办部门
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="CSS grade: activate to sort column ascending">培训项目名称
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">培训类别
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">培训起止时间
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">培训学时
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">培训对象
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">计划内/外
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">培训组织人员
+																</th>
+																<th class="sorting text-center" tabindex="0" aria-controls="example1"
+																	rowspan="1" colspan="1"
+																	aria-label="Browser: activate to sort column ascending">操作
+																</th>
+
+															</tr>
+															</thead>
+																<tbody id="tab">
+																	<foreach name="list" item="v" key="k">
+																		<tr role="row" class="odd text-center">
+																			<td>{$k+1}</td>
+																			<td>{$v['tissuename']}</td>
+																			<td>{$v['project_name']}</td>
+																			<td><if condition="($v['training_category'] eq 0) and ($v['training_category'] neq null)">内部培训<elseif condition="$v['training_category'] eq 1"/>外派培训<elseif condition="$v['training_category'] eq 2"/>外出授课<else />-</if></td>
+																			<td>{$v['start_time']} - {$v['end_time']}</td>
+																			<td>{$v['test_length']?$v['test_length']:0}</td>
+																			<td>{$v['class_name']?$v['class_name']:'-'}</td>
+																			<td><if condition="($v['plan_category'] eq 0) and ($v['plan_category'] neq null)">计划内<elseif condition="$v['plan_category'] eq 1"/>计划外<else />-</if></td>
+																			<td>{$v['username']}</td>
+																			<td><a href="{:U('Admin/Manage/detail',array('id'=>$v['id'],'typeid'=>$typeid))}">查看详情</a><if condition="$typeid eq 1"><if condition="$v['isequality'] eq 0"><span style="padding:15px;"><a href="#" onclick="del_click({$v['id']})">删除</a></span></if></if></td>
+																		</tr>
+																	</foreach>
+																</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="row">
+													<div class="float_r mr15">
+														<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+															{$pages}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+
+			$(".plan_category").change(function(){
+
+				var param = "";
+
+				var plan_category = $(".plan_category").val();
+
+				if(plan_category) param += "/plan_category/"+plan_category;
+
+				window.location.href = "__ACTION__/typeid/{$typeid}"+param;
+
+			});
+
+			$(".training_category").change(function(){
+
+				var param = "";
+
+				var training_category = $(".training_category").val();
+
+				if(training_category) param += "/training_category/"+training_category;
+
+				window.location.href = "__ACTION__/typeid/{$typeid}"+param;
+
+			});
+
+
+			function del_click(id) {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					yes:function(){
+
+						if(id != ''){
+							$.ajax({
+								type: "POST",
+								url: "{:U('admin/Manage/del_project')}",
+								data: {"id":id},
+								traditional:true,
+								success: function(msg){
+									if(msg.status > 0 ){
+										layer.msg('删除成功', {time: 1500,icon: 1},function(){
+											window.location.reload();
+										});
+									}else{
+
+										layer.msg('删除失败');
+									}
+								}
+							});
+
+						}else{
+							layer.msg('请勾选课程');
+						}
+
+
+
+					},
+					skin: 'layui-layer-lan'
+					//按钮
+				}, function () {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function () {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+
+		</script>
+	</body>
+
+</html>

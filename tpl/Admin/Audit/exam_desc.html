@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>查看试卷</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<!-- daterange picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<!-- iCheck for checkboxes and radio inputs -->
+		<!-- Bootstrap Color Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+	</head>
+	<body>
+
+		    <!--内容区域顶栏面包屑开始-->
+		    <section class="content-header">
+		      <h1 class="info_title">
+		        审核管理
+		        <small>/试卷审核</small>
+		      </h1>
+		      <ol class="breadcrumb">
+		        <li><a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		      </ol>
+		    </section>
+		     <!--内容区域顶栏面包屑结束-->
+		    <section class="content">
+		          <div class="box pb5 box-primary">
+		              <div class="box-header with-border">
+		                  <h2 class="box-title ">{$xhr.test_name}</h2>
+		              </div>
+		             
+		              <div class="box-body pr10 pl10">
+		                         <!--内容开始-->                        
+		                         <div class="row mb30">
+										 <div class="col-sm-2">
+											<label class="text-aqua mt10 mr10">
+			                                    <i class="fa  fa-send-o mr5"></i>试卷总分： 
+			                                    <span class="text-red">{$xhr.test_score}{$totalScore}</span> 
+		                                    </label>		
+										 </div>
+										 <!-- <div class="col-sm-2">
+										<label class="text-aqua mt10 mr10">
+		                                    <i class="fa  fa-user mr5"></i>上传人： 
+		                                    <span class="text-red">{$xhr.test_heir}</span> 
+	                                    </label>		
+										 </div> -->
+										 <div class="col-sm-4">
+											<label class="text-aqua mt10 mr10">
+		                                       <i class="fa  fa-calendar mr5"></i>上传时间： 
+		                                       <span class="text-red">{$xhr.test_upload_time}</span> 
+		                                    </label>		
+										 </div>	
+										 <if condition="$xhr.status eq 0 "> 
+		                              	 <button type="button" class="btn btn-warning pull-right mr15" onclick="refuse_click();">  
+		                              	    <i class="fa fa-calendar-times-o mr5" aria-hidden="true"></i>审核拒绝
+		                              	 </button>	
+		                              	 <button type="button" class="btn btn-success pull-right mr15" onclick="audit_click();">  
+		                              	    <i class="fa fa-calendar-check-o mr5" aria-hidden="true"></i>审核通过
+		                              	 </button>	
+										    <else /> 
+                                          </if>
+										 <label class="text-aqua mt10 float_r mr30">
+		                                      <i class="fa  fa-send-o mr5"></i>状态： 
+		                                      <span class="text-red">
+								           		<switch name="xhr.status">
+								           			<case value="0">待审核</case>
+								           			<case value="1">已通过</case>
+								           			<case value="3">已拒绝</case>
+								           			<default />default
+									            </switch>  
+												  
+											  </span> 
+		                                 </label>	
+								 </div>
+		                         <!--课程状态结束-->
+		                         
+		                         <!--  分隔符开始-->
+		                         <div class="with-border mt5 mb10"></div>
+		                         <!--  分隔符结束-->
+		                         
+		                         
+		                         <!--试卷主要信息区域开始-->
+		                   			
+								<if condition="(count($singleChoice) eq 0) AND (count($multipleChoice) eq 0) AND (count($descriPtive) eq 0) AND (count($wd) eq 0)">
+									本试卷暂无试题
+								</if>
+
+		                   			<if condition="count($singleChoice) neq 0">
+		                          <div class="mt10">
+						            <h4 class="box-title">
+						                 一、单选题
+						               （<span class="text-red">共 {$singleChoiceSum} 道，共 {$singleChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border mb10"></div>
+								  <volist name="singleChoice" id="vo">
+						          <div class="mb30">
+							          <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p> 
+							          <p class="mb15 mt10 ml15">C.{$vo.optionc}</p> 
+							          <p class="mb15 mt10 ml15">D.{$vo.optiond}</p>
+						          </div>
+								  </volist>
+						          </if>
+
+						          <if condition="count($multipleChoice) neq 0">
+								  <div class="mt10">
+						            <h4 class="box-title">
+						                二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border mb10"></div>
+						           <volist name="multipleChoice" id="vo">
+						          <div class="mb30">
+							          <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p> 
+							          <p class="mb15 mt10 ml15">C.{$vo.optionc}</p> 
+							          <p class="mb15 mt10 ml15">D.{$vo.optiond}</p> 
+							         
+						          </div> 
+								  </volist>   
+						         	</if>
+
+						          	<if condition="count($descriPtive) neq 0">
+						          <div class="mt10">
+						            <h4 class="box-title">
+						                三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border"></div>
+						          <div class="mb30">
+									  <volist name="descriPtive" id="vo">
+							          <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+							          </p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p>
+							            </volist>  
+						          </div>
+						          	</if>
+
+						          	<!--二期新增类型:问答题start-->
+						          	<if condition="count($wd) neq 0">
+						          	<div class="mt10">
+						            	<h4 class="box-title">
+						                	四、问答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）
+						            	</h4>
+						          	</div>
+						          	<div class="box-header with-border"></div>
+						          	<div class="mb30">
+									  	<volist name="wd" id="vo">
+							          	<p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+							          	</p>
+							          	<!--问答题-->
+							          	<textarea name="wd" id="wd" cols="80" rows="3" <if condition="$status eq 0">readonly</if>></textarea>
+							         	<!-- <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> -->
+							            </volist> 
+						          	</div>
+						          	</if>
+									<!--二期新增类型:问答题end-->
+						          <!--试卷主要信息区域结束-->
+						          <!--内容結束-->            
+		              </div>
+		        </div>
+		    </section>
+
+
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+            
+            function audit_click() {
+				layer.confirm('您确定要通过该审核吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					var $id = "{$xhr['id']}";
+					$ids = new Array($id);
+					var $tablenames = new Array('examination');
+		         	 $.post('{:U('Admin/Audit/batchAudit')}',{ids:$ids,auditstyle:"pass",tablenames:$tablenames}, function($data) { 
+                          if($data.status == 1){  
+							  $data.info = '审核通过成功！';
+							  layer.msg($data.info,{time:1000,icon: 1});
+                               setTimeout(function(){
+                               location.href = $data.url; 
+							//    window.open($data.url);
+							// window.history.go(-1);
+                                },1000);   
+                          }else{  
+							  layer.msg($data.info, {
+						       time: 2000
+							  });
+                               setTimeout(function(){
+                               location.href = $data.url; 
+							//    window.open($data.url);
+							// window.history.go(-1);
+                                },2000);  
+                          }     
+                      },'json'); 
+				});
+			}
+
+			function refuse_click() {
+				layer.confirm('您确定要拒绝该审核吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					//ajax请求
+					var $id = "{$xhr['id']}";
+					$ids = new Array($id);
+					var $tablenames = new Array('examination');
+		         	$.post('{:U('Admin/Audit/batchAudit')}',{ids:$ids,auditstyle:"denied",tablenames:$tablenames}, function($data) { 
+                        
+                          if($data.status == 1){  
+							  $data.info = '拒绝审核成功！';
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+
+                             setTimeout(function(){
+                               location.href = $data.url; 
+                              },1000);   
+                          }else{  
+							  layer.msg($data.info, { time: 1000});
+                               location.href = $data.url; 
+                          }     
+                      },'json');
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

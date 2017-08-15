@@ -1,0 +1,143 @@
+<layout name="layout"/>
+	<section class="content-header">
+		<h1 class="info_title">
+    我的考试
+    <small>/培训考试</small>
+ </h1>
+		
+	</section>
+	<section class="content">
+	  <div>
+	    <div class="dataTables_wrapper form-inline dt-bootstrap ">
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<li <if condition="$isnew eq 2">class="active"</if>>
+						<a href="{:U('allExam')}">全部考试</a>
+					</li>
+					<li <if condition="$isnew eq 0">class="active"</if>>
+						<a href="{:U('waitExam')}">培训考试</a>
+					</li>
+					<li <if condition="$isnew eq 1">class="active"</if>>
+						<a href="{:U('otherExam')}">其他考试</a>
+					</li>
+					<div class="col-sm-2 pull-right">
+					<form action="__SELF__" method="get">
+						<div class="input-group width_10 ">
+							<input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="考试名称关联项目">
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+							</div>
+						</div>
+						</form>
+					</div>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="wait_exam">
+						<div class="box-body">
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">考试时长（分钟）</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷总分</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试成绩</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">关联项目</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试状态</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+												</tr>
+											</thead>
+											<tbody id="tab">	
+											<foreach name="data" item="vo">                      
+												<tr role="row" class="odd text-center">
+												<td>
+													<if condition="!empty($vo['test_names'])">
+														{$vo['test_names']}
+													<elseif condition="!empty($vo['test_name'])"/>
+														{$vo['test_name']}
+													<else/>
+														{$vo['name']}
+													</if>
+												</td>
+												<td>{$vo['type']}</td>
+												<td>{$vo['start_time']} - {$vo['end_time']}</td>
+												<td>
+													<if condition="!empty($vo['test_length'])">
+														{$vo['test_length']}
+													<else/>
+														{$vo['times']}
+													</if>
+												</td>
+												<td>{$vo['test_score']|default='---'}</td>
+												<td>{$vo['total_score']|default='---'}</td>
+												<td>{$vo['project_name']|default='---'}</td>
+												<if condition="$vo['statusinfo'] eq '未开始'">
+													<td>
+														未开始
+													</td>
+												<elseif condition="$vo['statusinfo'] eq '进行中'" />
+													<td>
+														进行中
+													</td>
+													<td>
+														<if condition="isset($vo['project_id'])">
+															<if condition="$vo['type'] eq '线上'">
+																<a href="{:U('joinExam',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info"><i class="fa fa-object-group  mr5" aria-hidden="true"></i>参加考试</a>
+	                                                    	<else/>
+	                                                        	<a href="{:U('lookResultOffline',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+	                                                    	</if>
+                                                    	<else/>
+                                                    		<if condition="$vo['type'] eq '线上'">
+                                                                <a href="{:U('joinExam',array('test_id'=>$vo['id'],'examination_id'=>$vo['examination_id'],'flag'=>'flag'))}" class="bs-callout-info"><i class="fa fa-object-group  mr5" aria-hidden="true"></i>参加考试</a>
+                                                            <else/>
+                                                                <a href="{:U('lookResultOffline',array('test_id'=>$vo['id'],'examination_id'=>$vo['examination_id'],'flag'=>'flag'))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                                            </if>
+                                                    	</if>
+													</td>
+												<else/>
+													<td>已结束</td>
+													<td>
+														<if condition="isset($vo['project_id'])">
+															<if condition="$vo['test_id'] neq 0">
+																<a href="{:U('result',array('pid'=>$vo['project_id'],'eid'=>$vo['test_id']))}" class="bs-callout-info  mr20">
+																<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+																</a>
+                                                        	<else/>
+                                                            	<a href="{:U('lookResultOffline',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                                        	</if>
+                                                    	<else/>
+                                                    		<if condition="$vo['type'] eq '线上'">
+                                                                <a href="{:U('result',array('tid'=>$vo['id'],'eid'=>$vo['examination_id'],'user_id'=>$user_id))}" class="bs-callout-info  mr20">
+                                                                    <i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+                                                                </a>
+                                                            <else/>
+                                                                <a href="{:U('lookResultOffline',array('test_id'=>$vo['id'],'examination_id'=>$vo['examination_id'],'flag'=>'flag'))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                                            </if>
+                                                    	</if>
+													</td>
+												</if>
+												</tr>
+											</foreach>									
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row">
+									<div class="float_r mr15">
+										<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+											{$page}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </div>
+	  </div>
+	</section>

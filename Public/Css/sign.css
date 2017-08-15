@@ -1,0 +1,22 @@
+
+/*注册页面样式*/
+.content-wrapper,.main-footer{
+	margin-left: 0px !important;
+	background-color: #fdf9f9 ;
+}
+.sign-top{
+	line-height: 50px;
+	color: white;
+	font-size: 20px;
+	text-indent: 10px;
+	text-align: center;
+}
+.sign-map{
+	margin: auto;
+	width: 75%;
+	padding-top: 10px;
+	background-color: white;
+}
+.box{
+	margin-bottom: 0px;
+}

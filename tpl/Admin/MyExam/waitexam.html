@@ -1,0 +1,181 @@
+<layout name="layout"/>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        我的考试
+        <small>/培训考试</small>
+     </h1>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+		  <div>
+		    <div class="dataTables_wrapper form-inline dt-bootstrap ">
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li <if condition="$isnew eq 2">class="active"</if>>
+							<a href="{:U('allExam')}">全部考试</a>
+						</li>
+						<li <if condition="$isnew eq 0">class="active"</if>>
+							<a href="{:U('waitExam')}">培训考试</a>
+						</li>
+						<li <if condition="$isnew eq 1">class="active"</if>>
+							<a href="{:U('otherExam')}">其他考试</a>
+						</li>
+						<!--考试筛选开始-->
+						<div class="col-sm-2 pull-right">
+						<form action="__SELF__" method="get">
+							<div class="input-group width_10 ">
+								<input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="考试名称关联项目">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+							</form>
+						</div>
+						<!--考试筛选结束-->
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="wait_exam">
+							<!--课程列表开始-->
+							<div class="box-body">
+								<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+									<!--内容开始-->
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+												<thead>
+													<tr role="row">
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试名称</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试方式</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试时间</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">考试时长（分钟）</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷总分</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试成绩</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">关联项目</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">考试状态</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+													</tr>
+												</thead>
+												<tbody id="tab">	
+												<foreach name="approved_list" item="vo">                      
+													<tr role="row" class="odd text-center">
+													<td>
+														<if condition="!empty($vo['test_names'])">
+															{$vo['test_names']}
+														<else/>
+															{$vo['test_name']}
+														</if>
+													</td>
+													<td>
+                                                        <if condition="$vo['test_id'] neq 0">线上
+                                                            <else/>线下
+                                                        </if>
+                                                    </td>
+													<td>{$vo['start_time']} - {$vo['end_time']}</td>
+													<td>{$vo['test_length']}</td>
+													<td>{$vo['test_score']|default='---'}</td>
+													<td>{$vo['total_score']|default='---'}</td>
+													<td>{$vo['project_name']}</td>
+													<!-- <if condition="$typeid eq 0"> -->
+													<if condition="$vo['statusinfo'] eq '未开始'">
+														<td>
+															未开始
+														</td>
+													<elseif condition="$vo['statusinfo'] eq '进行中'" />
+														<td>
+															进行中
+														</td>
+														<td>
+															<if condition="$vo['test_id'] neq 0">
+																<a href="{:U('joinExam',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info"><i class="fa fa-object-group  mr5" aria-hidden="true"></i>参加考试</a>
+                                                        	<else/>
+                                                            	<a href="{:U('lookResultOffline',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                                        	</if>
+														</td>
+													<else/>
+														<td>已结束</td>
+														<td>
+															<if condition="$vo['test_id'] neq 0">
+																<!-- <a href="{:U('getProjectExamInfo',array('project_id'=>$vo['project_id'],'examination_id'=>$vo['test_id']))}" class="bs-callout-info  mr20">
+																<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+																</a> -->
+																<a href="{:U('result',array('pid'=>$vo['project_id'],'eid'=>$vo['test_id']))}" class="bs-callout-info  mr20">
+																<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+																</a>
+                                                        	<else/>
+                                                            	<a href="{:U('lookResultOffline',array('examination_id'=>$vo['test_id'],'project_id'=>$vo['project_id']))}" class="bs-callout-info  mr20"><i class="fa fa-eye  mr5" aria-hidden="true"></i>查看</a>
+                                                        	</if>
+															<!-- <a href="{:U('admin/my_exam/delExam',array('project_id'=>$vo['project_id'],'test_id'=>$vo['test_id']))}" name="delete" del-pid="{$vo['project_id']}" del-tid="{$vo['test_id']}" class="color_or">
+																<i class="fa  fa-trash " aria-hidden="true"></i>删除
+															</a> -->
+														</td>
+													</if>
+														<!-- </if> -->
+													</tr>
+												</foreach>									
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--内容結束-->
+									<!--分页开始-->
+									<div class="row">
+										<div class="float_r mr15">
+											<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+												{$page}
+											</div>
+										</div>
+									</div>
+									<!--分页结束-->
+								</div>
+							</div>
+							<!--课程列表结束-->
+						</div>
+						
+					</div>
+				</div>
+		    </div>
+		  </div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			function del_click() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+			//试卷导入
+			function add_classify() {
+				layer.open({
+					title: '试卷导入',
+					btn: ['导入', '取消'],
+
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: '<div class="mb10"><button type="button" class="btn btn-primary mr10 ">选择文件</button>暂未选择文件</div><div class="mb10"> <button type="button" class="btn btn-block btn-success "><i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</button></div> <div class="mb10">注：试卷导入后不可在线修改，修改需重新导入。</div>'
+				})
+			}
+		</script>

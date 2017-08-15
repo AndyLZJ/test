@@ -1,0 +1,135 @@
+<layout name="layout"/>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        我的培训
+        <small>/我的调研</small>
+     </h1>
+			<ol class="breadcrumb">
+				<li>
+					
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="">
+				<div class="nav-tabs-custom ">
+					<ul class="nav nav-tabs">
+						<li <if condition="$typeid eq 0">class="active"</if>>
+						<a href="{:U('waitSurvey',array('typeid'=>0))}">待参与</a>
+						</li>
+						<li <if condition="$typeid eq 1">class="active"</if>>
+						<a href="{:U('endSurvey',array('typeid'=>1))}">已结束</a>
+						</li>
+						<!--考试筛选开始-->
+						<div class="col-sm-2 pull-right">
+						<form action="__SELF__" method="get">
+							<div class="input-group width_10 ">
+								<input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="调研问卷名称">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default">
+									    <i class="fa fa-search"></i>
+									</button>
+								</div>
+							</div>
+							</form>
+						</div>
+						<!--考试筛选结束-->
+					</ul>
+					<div class="tab-pane " id="end_exam">
+							<!--调研列表开始-->
+							<div class="box-body">
+								<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+									<!--内容开始-->
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+												<thead>
+													<tr role="row">
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研名称
+														</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">有效时间范围
+														</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研类别
+														</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">关联项目
+														</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研状态
+														</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+													</tr>
+												</thead>
+												<tbody>
+												<foreach name="approved_list" item="vo">
+													 <tr role="row" class="odd text-center">
+														<td>
+															{$vo['survey_name']}
+														</td>
+														<td>{$vo['start_time']}---{$vo['end_time']}</td>
+														<td>{$vo['cat_name']}</td>
+														<td>{$vo['project_name']}</td>
+																   <if condition="$vo['status'] eq 1">
+																	<td>已参加</td>
+																	 <else/>
+																	   <td>已逾期</td>
+                                                                   </if>
+														         <td>
+																	<a href="{:U('checkSurveyResult',array('project_id'=>$vo['project_id'],'survey_id'=>$vo['survey_id']))}" class="bs-callout-info  mr20">
+																		<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+																	</a>
+																	<a href="{:U('delSurvey',array('project_id'=>$vo['project_id'],'survey_id'=>$vo['survey_id']))}" name="delete" del-pid="{$vo['project_id']}" del-tid="{$vo['id']}" class="color_or">
+																		<i class="fa  fa-trash " aria-hidden="true"></i>删除
+																	</a>
+																</td>
+													</tr>
+													</foreach>
+												</tbody>
+											</table>
+											<!--分页开始-->
+											<div class="row">
+												<div class="float_r mr15">
+													<div class="dataTables_paginate paging_simple_numbers">
+														{$approved_page}
+													</div>
+												</div>
+											</div>
+											<!--分页结束-->
+										</div>
+									</div>
+									<!--内容結束-->
+								</div>
+							</div>
+							<!--调研列表结束-->
+						</div>
+				</div>
+			</div>
+		</section>
+		<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			function del() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+		</script>

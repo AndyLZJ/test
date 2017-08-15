@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>首页_管理员</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		
+		<!-- date_picker_css -->
+	    <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle.css" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-jquery-ui-override.css" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-iconfont.css" />
+	
+		<style type="text/css">
+			html{background:#fbfbfb; }
+			.content{background:#fbfbfb; }
+			.info_box{background:#fff; box-shadow:0 0px 8px 0 rgba(0, 0, 0, .04); }
+			.quick{color:#fff; background:url(__PUBLIC__/Dist/img/quick_bg.png); padding-left:20px; width:140px; height:58px; line-height:58px; font-size:18px; display:block; float:left; }
+			.mark{position:absolute; top:-5px; right:-5px; border-radius:50%; height:30px; width:30px; line-height:25px!important; font-size:14px; box-shadow:0 2px 8px 0 rgba(0, 0, 0, .2)}
+			.products-list .product-title{line-height:30px; }
+			.products-list .product-img{width:50px; height:50px; background:#10b2da; color:#fff; }
+			.products-list .product-img .day{font-size:24px; text-align:center; line-height:35px; margin-top:8px; display:block; }
+			.products-list .product-title{color:#6f6f6f; }
+			.products-list .product-title:hover{color:#10b2da; }
+			.products-list>.item{padding:15px 0px; }
+			.datetimepicker-inline{width:100%; }
+			.table-condensed{width:100%; }
+			.bg-teal:hover{background-color:#34b9b9!important; }
+			.bg-aqua-active:hover{background-color:#029abf!important; }
+			.bg-green:hover{background-color:#03904f!important; }
+			.bg-yellow:hover{background-color:#de8e10!important; }
+			.bg-red:hover{background-color:#cc4534!important; }
+			.news_color{color:#595959; }
+			.news_color:hover{color:#0288d1; }/*日历行程样式	*/
+			.dy-box{display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; display:box; }
+			.dy-flex{flex:1; -webkit-box-flex:1; -moz-box-flex:1; -webkit-flex:1; -ms-flex:1;  box-flex:1; margin:0; }
+			.dy-header1{padding:0 24px; background-color:#fafafa; color:#444f52; font-size:1.4rem;  line-height:44px;  }
+			.dy-header1 i{display:inline-block; width:22px; color:#23b7e5; line-height:44px; }
+			.dy-header1 i.dy-c1{color:#4eccc4; }
+			.dy-mt18{margin-top:18px; }
+			.dy-idx2{margin-top:10px; }
+			.dy-date-h{padding-left:10px; padding-right:10px; text-align:center; }
+			.dy-date-h i{color:#b1b0b0; font-size:20px; cursor:pointer; }
+			.dy-date-h em{margin-right:10px; }
+			.dy-header1{border-radius:4px 4px 0 0; border:1px solid #e3ebeb; }
+			.dy-main1{padding:0; min-height:0; border-radius:0 0 4px 4px; border:1px solid #e3ebeb; border-top:0; display:flex; }
+			.dy-dlist1{margin-bottom:0px; }
+			.dy-dlist1 li{padding-top:22px; height:62px; color:#666; text-align:center; border-right:1px solid #eef3f3; border-top:1px solid #eef3f3; cursor:pointer; display:list-item; }
+			.dy-dlist1 li p{margin:0; }
+			.dy-dlist1 li b{font-size:14px; color:#4eccc4; }
+			.dy-dlist1 li:nth-child(-n+3){border-top:0; }
+			.dy-dlist1 li:nth-child(3n+0){border-right:0; }
+			.dy-dlist1 li.on{background-color:#4eccc4; color:#fff; }
+			.dy-dlist1 li.on b{color:#fff; }
+			.dy-date-bottom{border-bottom:1px solid #f4f4f4; line-height:30px; }
+			.dy-date-bottom a:hover{color:#10b2da; }
+			.calendarContOuter{width: 100%;height: 300px;margin: 0px auto; font-size: 16px; }
+			.newScrollList{margin:0; height:20px; overflow:hidden; }
+			.newScrollList li{height:20px; }
+			.details_title{ padding: 15px 5px; font-weight: bold; border-bottom: #eee 1px dashed; }
+		    .form-group{ padding-top: 15px; }
+		    .form-group label{ text-align: right; }
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+      首页
+      <small>/管理员面板</small>
+    </h1>
+			<ol class="breadcrumb">
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="info_box">
+						<div class="newScroll box-header with-border">
+							<ul class="newScrollList">
+								<foreach name="notice" item="vo1">
+								<li>
+									<i class="fa fa-volume-up color_blue"></i>
+									<input type="hidden" value="{$vo1.id}" class="noticeId"/>
+									<a class="news_color" href="#">
+										{$vo1.title}
+									</a>
+									<a href="#" class="float_r show_r"><i class="fa fa-chevron-circle-right"></i></a>
+									<span class="text-grey float_r mr10">{$vo1.page}</span>
+									<a href="#" class="float_r mr10 show_l"><i class="fa fa-chevron-circle-left"></i></a>
+									<span class="text-grey float_r mr50">{$vo1.newstime}</span>
+								</li>
+								</foreach>
+								<!-- <li>
+									<i class="fa fa-volume-up color_blue"></i>
+									<a class="news_color" href="#">
+										2222222222小王申请加入中国邮政储蓄银行股份有限公司新疆维吾尔自治区分行
+									</a>
+									<a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+									<span class="text-grey float_r mr10">1/5</span>
+									<a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+									<span class="text-grey float_r mr50">2016年12月21号</span>
+								</li> -->
+								
+							</ul>
+						</div>
+						<div class="box-body">
+							<a href="__MODULE__/manage/create">
+								<div class="transact_but bg-teal color-palette mr15">
+									<div><i class="fa  fa-newspaper-o"></i></div>
+									<span>新建项目</span>
+								</div>
+							</a>
+							<a href="__MODULE__/rs_course/addcourse">
+								<div class="transact_but bg-aqua-active color-palette mr15">
+									<div><i class="fa fa-book"></i></div>
+									<span>上传课程</span>
+								</div>
+							</a>
+							<a href="__MODULE__/rs_survey/listPage">
+								<div class="transact_but bg-green color-palette mr15">
+									<div><i class="fa fa-object-group"></i></div>
+									<span>上传问卷</span>
+								</div>
+							</a>
+							<a href="__MODULE__/resources_manage/passexam">
+								<div class="transact_but bg-yellow color-palette mr15">
+									<div><i class="fa fa-map-o"></i></div>
+									<span>上传试题</span>
+								</div>
+							</a>
+							<!-- <a href="__MODULE__/audit/auditlist">
+								<div class="transact_but bg-red color-palette mr15">
+									<div><i class="fa fa-calendar-check-o"></i></div>
+									<span>审核中心</span>
+									<span class="label label-danger mark">{$undo}</span>
+								</div>
+							</a> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="info_box mt15">
+						<div class="box-header with-border info_box_title">
+							<span>正在进行的项目</span>
+						</div>
+						<div class="box-body">
+							<table class="table table-striped text-center">
+								<tbody>
+									<tr>
+										<th>项目</th>
+										<th style="width: 200px;">项目进度</th>
+										<th>正在进行/即将开始</th>
+										<th>开始时间</th>
+									</tr>
+									<foreach name="active['list']" item="list">
+									<tr>
+										<td>
+											<a href="__MODULE__/manage/detail/id/{$list.project_id}/typeid/0">{$list.project_name}</a>
+										</td>
+										<td>
+											{$list.ev}
+										</td>
+										<td>
+											[{$list.title}] {$list.sub_name}
+										</td>
+										<td>{$list.start_time}</td>
+									</tr>
+									</foreach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div class="info_box mt15">
+						<div class="box-header with-border info_box_title">
+							<span>刚结束的活动</span>
+						</div>
+						<div class="box-body">
+							<table class="table table-striped text-center">
+								<tbody>
+									<tr>
+										<th>活动</th>
+										<th>项目</th>
+										<th>实到/应到</th>
+										<!-- <th>合格人数</th> -->
+										<th>结束时间</th>
+									</tr>
+									<foreach name="actived['list']" item="list">
+									<tr>
+										<td>
+											[{$list.title}] {$list.sub_name}
+										</td>
+										<td>
+											<a href="__MODULE__/manage/detail/id/{$list.project_id}/typeid/0">{$list.project_name}</a>
+										</td>
+										<td>{$list.real_num} / {$list.plan_num}</td>
+										<!-- <td>—</td> -->
+										<td>{$list.end_time}</td>
+									</tr>
+									</foreach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="info_box mt15">
+						<div class="box-header with-border info_box_title">
+							<span>授课信息统计</span>
+						</div>
+						<div class="box-body">
+							<div id="chart-panel" style="width: 100%;height:500px;">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="info_box mt15">
+						<div class="box-header with-border info_box_title">
+							<span>日程计划</span>
+						</div>
+						<div class="calendarContOuter"></div>
+						
+						<!-- 日程计划结束-->
+						<!--  行程事项内容关联区域-->
+						<div class="box-footer">
+							<div id="norw" class="text-center" style="display: block">
+								<img src="__PUBLIC__/Dist/img/renwuico.png" />当天没有任务
+							</div>
+							<div id="Journey" style="display: none;">
+								<div class="dy-date-bottom">
+									<a href="javascript:void(0)" class="product-title">
+										【<span>课程</span>】：演讲与口才训练
+										<span class="product-description pull-right">2017-03-15 14:35:54</span>
+									</a>
+								</div>
+
+								<div class="dy-date-bottom">
+									<a href="javascript:void(0)" class="product-title">
+										【<span>考试</span>】：讲师的自我修养相关知识
+										<span class="product-description pull-right">2017-03-14 14:16:24</span>
+									</a>
+								</div>
+								<div class="dy-date-bottom">
+									<a href="javascript:void(0)" class="product-title">
+										【<span>问卷</span>】：银行大堂经理日常守则调研
+										<span class="product-description pull-right">2017-03-13  10:20:00</span>
+									</a>
+								</div>
+								<div class="dy-date-bottom">
+									<a href="javascript:void(0)" class="product-title">
+										【<span>课程</span>】：银行新员工培训
+										<span class="product-description pull-right">2017-03-12 08:00:00</span>
+									</a>
+								</div>
+								<div class="dy-date-bottom">
+									<a href="javascript:void(0)" class="product-title">
+										【<span>课程</span>】：职场人士健康指南
+										<span class="product-description pull-right">2017-03-10  09:30:00</span>
+									</a>
+								</div>
+
+								<div class="mt5">
+									<a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+									<span class="text-grey float_r mr10">1/5</span>
+									<a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="info_box mt15">
+						<div class="box-header with-border info_box_title">
+							<span>新闻资讯</span>
+						<a href="__MODULE__/news_show/index" class="product-description float_r">更多资讯>></a>
+						</div>
+						<div class="box-body">
+							<ul class="products-list product-list-in-box">
+								<foreach name="news" item="list">
+								<li class="item">
+									<div class="product-img">
+										<span class="day">{$key +1}</span>
+									</div>
+									<div class="product-info">
+										<div>
+											<a href="__MODULE__/news_show/detail/new_id/{$list.id}" class="product-title" style="display:block; ">
+												[{$list.type}]：{$list.title}
+											</a>
+											<span class="label label-success pull-right">new</span>
+											<span class="product-description pull-left">{$list.create_time}</span>
+										</div>
+										<a href="__MODULE__/news_show/detail/new_id/{$list.id}" class="product-description float_r">查看详情&gt;&gt;</a>
+									</div>
+								</li>
+								</foreach>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/datepicker/bootstrap-datetimepicker.js"></script>
+		<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		
+		<!-- CalenStyle js -->
+		<script type="text/javascript" src="__PUBLIC__/CalenStyle/demo/js/jquery-ui-custom-1.11.2.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/CalenStyle/src/calenstyle.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/CalenStyle/src/i18n/calenstyle-i18n-zh-cn.js"></script>
+		
+		<!--成绩发布、调研结果、审批任务、课程学习、参加考试、参与调研、计划总结、消息详情窗口-->
+		<div id="details" style="display: none;">
+		    <div class="col-sm-12">
+		        <div class="details_title">
+		             <i class="fa fa-exclamation-triangle text-yellow mr5"></i>
+		            <span id="cat_detail"></span>
+		      
+		        </div>
+		        <div>
+		           
+		            <div class="form-group">
+		                <label for="inputEmail3" class="col-sm-2 control-label">名称：</label>
+		                <div id="titlename" class="col-sm-10  control-label"></div>
+		            </div>
+		            <div class="form-group">
+		                <label for="inputEmail3" class="col-sm-2 control-label">时间：</label>
+		                <div id="ctime" class="col-sm-10  control-label">{$detail.contents_time}</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+	</body>
+	<script>
+	//培训人数课程数量
+	var myChart = echarts.init(document.getElementById('chart-panel'));
+	
+	// 指定图表的配置项和数据
+	var option = {
+		title: {
+			text: ''
+		},
+		tooltip: {},
+		legend: {
+			data: ['课程数量', '培训人数', ]
+		},
+		xAxis: {
+			data: [{$teach.timeStr}]
+		},
+		yAxis: {},
+		series: [{
+			name: '课程数量',
+			type: 'bar',
+			color: ['#1ab394'],
+			data: [{$teach.courseStr}]
+		}, {
+			name: '培训人数',
+			type: 'bar',
+			color: ['#1f95d0'],
+			data: [{$teach.joinStr}]
+		}, ]
+	};
+	
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+
+   	function getNewNotice(){
+   		var reqUrl = "__MODULE__/index_admin/notice/radom/"+Math.random();
+   		$.ajax({
+			type: "get",
+			url: reqUrl,
+			dataType: "json",
+			success: function(data){
+				if(data.code == 1000){
+					var html = "";
+					var lenth = data.list.length;
+					for(var i=0; i<lenth; i++){
+						var thisData = data.list[i];
+						html += '<li><i class="fa fa-volume-up color_blue"></i>';
+						html += '<input type="hidden" value="'+thisData.id+'" class="noticeId"/>';
+						html += '<a class="news_color" href="javascript:void(0)"> '+thisData.title+'</a>';
+						html += '<a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>';
+						html += '<span class="text-grey float_r mr10">'+thisData.page+'</span>';
+						html += '<a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>';
+						html += '<span class="text-grey float_r mr50">'+thisData.contents_time+'</span></li>';
+					}
+					
+					$(".newScrollList").html(html);
+				}
+			}
+   		});
+   	}
+   	
+   	//查看标记为已读
+   	$(".newScrollList .news_color").on("click",function(){
+   		var id = $(this).closest("li").find(".noticeId").val();
+   		var reqUrl = "__MODULE__/index_admin/notice/radom/"+Math.random()+"/id/"+id;
+   		$.ajax({
+			type: "get",
+			url: reqUrl,
+			dataType: "json",
+			success: function(data){
+				if(data.code == 1000){
+					$("#details #titlename").html(data.list[0].type_name);
+					$("#details #cat_detail").html(data.list[0].cat_detail);
+					$("#details #ctime").html(data.list[0].contents_time);
+					
+					//标记为已读
+					var readUrl = "__MODULE__/index_admin/readNotice/radom/"+Math.random()+"/id/"+id;
+					$.ajax({type: "get",url: readUrl,dataType: "json",success: function(data){}});
+					
+					layer.open({
+						title: '消息详情',
+						btn:['点击前往','取消'],
+						area:['500px','400px'],
+						type: 1,
+						skin: 'layui-layer-lan', //样式类名
+						closeBtn: 1, //显示关闭按钮
+						anim: 2,
+						shadeClose: true, //开启遮罩关闭
+						content: $("#details").html(),
+						yes:function(index){
+							location.href = "{:U('Admin/Message/entry/id/"+ id +"')}" ;
+						}
+					});
+				}
+			}
+   		});
+   	});
+   	
+    $(function(){
+    	//定时获取最新通知（5分钟）
+    	setInterval('getNewNotice()',1000*60);
+    	
+    	$(".newScrollList").on("click", ".show_l", function(){
+	    	var index = $(this).closest("li").index();
+	    	if(index > 0){
+	    		$(".newScrollList li").hide();
+	    		$(".newScrollList li").eq(index-1).show();
+	    	}
+	    });
+	    
+	    $(".newScrollList").on("click", ".show_r", function(){
+	    	var index = $(this).closest("li").index();
+	    	var max = $(".newScrollList li").length;
+	    	if(index == (max - 1)){
+	    		return false;
+	    	}
+    		$(".newScrollList li").hide();
+    		$(".newScrollList li").eq(index+1).show();
+	    });
+	    
+		$(".calendarContOuter").CalenStyle({
+            visibleView: "MonthView",
+            language:"zh-cn",
+            headerSectionsList: 
+            {
+                left: ["PreviousButton"],
+                center:["HeaderLabel"],
+                right: ["NextButton"]
+            },
+            calDataSource: [
+			    {
+			        sourceFetchType: "ALL",
+			        sourceType: "JSON",                     
+			        source: 
+			        {
+			            eventSource: 
+			            [
+			                {$scheduleStr}
+			            ]
+			        }
+			    }
+			]
+        });
+        
+	    $(".calendarContOuter").mouseup(function(){
+			setTimeout(function(){
+				var chooseDay = $(".cCurrentHighlightCircle").closest("td").attr("id");
+				getCalendarData(chooseDay);
+			},100);
+		});
+	    
+	    getCalendarData();
+	    
+	    /* 获取选择日期当天的任务
+	    *  chooseDay 选中的日期
+	    */
+	    function getCalendarData(chooseDay){
+	    	if(!chooseDay || chooseDay==""){
+	    		//没有给参数，选择当天
+	    		chooseDay = $(".cTodayHighlightTextColor").attr("id");
+	    	}
+	    	var cmvEventContSmall = $("#"+chooseDay).find(".cmvEventContSmall").html();
+	    	var cmvEventContAllDay = $("#"+chooseDay).find(".cmvEventContAllDay").html();
+	    	if(cmvEventContSmall=="" && cmvEventContAllDay==""){
+	    		$("#norw").show();
+	    		$("#Journey").hide();
+	    	}else{
+	    		//异步请求任务数据
+	    		var reqUrl = "__MODULE__/index_admin/dayTask"
+	    		$.ajax({
+					type: "post",
+					url: reqUrl,
+					data: "chooseDay="+chooseDay,
+					dataType: "json",
+					success: function(data){
+						if(data.code==1000){
+							var newHtml = "";
+							var total_page = data.list.length;
+							for(var i=0; i<total_page; i++){
+								var mainData = data.list[i];
+								var hideStatus = "";
+								if(i != 0){
+									hideStatus = 'style="display:none;"';
+								}
+								newHtml += '<div class="data_slip" '+hideStatus+'>';
+								for(var j=0; j<mainData.length; j++){
+									var subData = mainData[j];
+									var goHref = "__MODULE__";
+									if(subData.dataType==1){
+										if(subData.sub_type == 1){
+											goHref += "/teach/index";
+										}else if(subData.sub_type == 2){
+											goHref += "/host/index";
+										}else{
+											goHref += "/survey/index";
+										}
+										newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+										newHtml += '【<span>'+subData.title+'</span>】：'+subData.sub_name;
+										newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+									}else{
+										//taskType 任务类型 1 培训项目 2 新建课程、3 新建试卷、4 新建问卷、5 新建话题（工作圈内容发布）、6 发起调研、7 发起考试、8 用户注册、 9 其他（申请积分加分）
+										if(subData.task_type == 1){
+											goHref += "/audit/auditdetail/tablename/admin_project/id/"+subData.task_id;
+										}else if(subData.task_type == 2){
+											goHref += "/audit/auditdetail/tablename/course/id/"+subData.task_id;
+										}else if(subData.task_type == 3){
+											goHref += "/audit/auditdetail/tablename/examination/id/"+subData.task_id;
+										}else if(subData.task_type == 4){
+											goHref += "/audit/auditdetail/tablename/survey/id/"+subData.task_id;
+										}else if(subData.task_type == 5){
+											goHref += "/audit/auditdetail/tablename/friends_circle/id/"+subData.task_id;
+										}else if(subData.task_type == 6){
+											goHref += "/audit/auditdetail/tablename/research/id/"+subData.task_id;
+										}else if(subData.task_type == 7){
+											goHref += "/audit/auditdetail/tablename/test/id/"+subData.task_id;
+										}else if(subData.task_type == 8){
+											goHref += "/audit/auditdetail/tablename/users/id/"+subData.task_id;
+										}else if(subData.task_type == 9){
+											goHref += "/audit/auditdetail/tablename/integration_apply/id/"+subData.task_id;
+										}
+										newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+										newHtml += '【<span>审核</span>】：'+subData.task_desc;
+										newHtml += '<span class="product-description pull-right">'+subData.create_time+'</span></a></div>';
+									}
+								}
+								newHtml += '<div class="newPageNav mt5"><a href="javascript:void(0)" class="float_r showRight"><i class="fa fa-chevron-circle-right"></i></a>';
+								newHtml += '<span class="text-grey float_r mr10">'+(i+1)+'/'+total_page+'</span>';
+								newHtml += '<a href="javascript:void(0)" class="float_r mr10 showLeft"><i class="fa fa-chevron-circle-left"></i></a></div>';
+								newHtml += '</div>';
+							}
+				    		$("#Journey").html(newHtml);
+							if(total_page == 1){
+								$(".newPageNav").remove();
+							}
+							$("#norw").hide();
+				    		$("#Journey").show();
+						}else{
+							$("#Journey").html("");
+							$("#norw").show();
+				    		$("#Journey").hide();
+						}
+					}
+				});
+	    	}
+	    }
+	    
+	    $("#Journey").on("click", ".showLeft", function(){
+	    	var index = $(this).closest(".data_slip").index();
+	    	if(index > 0){
+	    		$(".data_slip").hide();
+	    		$(".data_slip").eq(index-1).show();
+	    	}
+	    });
+	    
+	    $("#Journey").on("click", ".showRight", function(){
+	    	var index = $(this).closest(".data_slip").index();
+	    	var max = $(".data_slip").length;
+	    	if(index == (max - 1)){
+	    		return false;
+	    	}
+    		$(".data_slip").hide();
+    		$(".data_slip").eq(index+1).show();
+	    });
+	    
+	    //cs-icon-Prev 上一月数据  cs-icon-Next 下一月数据，默认三个月数据，不再异步请求每月是否有任务，如有需要再添加
+    });
+</script>
+</html>

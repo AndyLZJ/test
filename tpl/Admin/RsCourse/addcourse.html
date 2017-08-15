@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加课程</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/statics/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/selectUser.css">
+    <style type="text/css">
+        .uploadify-button{
+            text-align: center;
+            line-height: 30px;
+            width: 86px;
+            height: 30px;
+            display: block;
+            background-color: #00c0ef;
+            color: #FFFFFF!important;
+        }
+
+        .uploadify-button:hover {
+            color: #FFFFFF!important;
+            background-color: #31b0d5;
+            border-color: #269abc;
+        }
+    </style>
+</head>
+<body>
+
+	<section class="content-header">
+		<h1 class="info_title">
+			资源管理
+			<small>/课程管理</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		</ol>
+	</section>
+	<section class="content">
+		<div class="box box-primary">
+			<div class="box-body">
+<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+<!--内容开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box-header with-border">
+            <h3 class="box-title "><if condition="$detail.id gt 0">编辑课程<else />添加课程</if></h3>
+        </div>
+        <form id="addForm" action="{:U('RsCourse/editorCourse')}" method="post" class="form-horizontal">
+            <div class="box-body">
+                <!--课程名称字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程名称<span class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="course_name" value="{$detail.course_name}" class="form-control mr30" id="course_name" placeholder="">
+                        <input type="text" class="form-control" value="{$detail.course_code}" name="course_code" id="course_code" placeholder="课程编码">
+                        <input type="hidden" class="form-control" value="{$detail.id}" name="id">
+                        <label id="course_name-error" class="error" for="course_name"></label>
+                    </div>
+                </div>
+                <!--课程名称字段结束-->
+
+                <!--课程分类字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程分类<span class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control select2 " name="course_cat_id">
+                            <option value='-1'>选择课程分类</option>
+                            <foreach name="category_all" item="category">
+                                <option value="{$category.id}" <if condition="$detail.course_cat_id eq $category['id']">selected="selected"</if>>{$category.cat_name}</option>
+                                <notempty name="category['_data']">
+                                    <foreach name="category['_data']" item="v">
+                                        <option value="{$v.id}" <if condition="$detail.course_cat_id eq $v['id']">selected="selected"</if>>├─{$v.cat_name}</option>
+                                        <notempty name="v['_data']">
+                                            <foreach name="v['_data']" item="n">
+                                                <option value="{$n.id}" <if condition="$detail.course_cat_id eq $n['id']">selected="selected"</if>>&emsp;└─{$n.cat_name}</option>
+                                            </foreach>
+                                        </notempty>
+                                    </foreach>
+                                </notempty>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <!--课程分类字段结束-->
+
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">所属层次：</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control select2  error" name="arrangement_id">
+                            <option value="-1">所属层次</option>
+                            <option value="1" <if condition="$detail.arrangement_id eq 1">selected="selected"</if>>基础层</option>
+                            <option value="2" <if condition="$detail.arrangement_id eq 2">selected="selected"</if>>中间层</option>
+                            <option value="3" <if condition="$detail.arrangement_id eq 3">selected="selected"</if>>核心层</option>
+                            <option value="4" <if condition="$detail.arrangement_id eq 4">selected="selected"</if>>专业层</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">所属标签<span class="color_red"></span>：</label>
+                    <div class="col-sm-10">
+                        <p class="btn btn-info btn-flat" onclick="add_tag()"><i class="fa fa-folder-open"></i>添加</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <div class="plus-tag tagbtn clearfix" id="myTags">
+                            <foreach name="detail.tag_list" item="vo" >
+                                <a value='{$vo.id}' title='{$vo.tag_title}' href="javascript:void(0);" />
+                                <span>{$vo.tag_title}</span>
+                                    <em class="myTags">
+                                        <input type="hidden" name="user_id[]" value="{$vo.id}" />
+                                    </em>
+                                </a>
+                            </foreach>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">所属岗位<span class="color_red"></span>：</label>
+
+                    <div class="col-sm-10">
+                        <select class="form-control select2  error" name="jobs_id">
+                            <option value="0">请选择所属岗位</option>
+                            <foreach name="jobs_manage" item="vo" >
+                                <option value="{$vo['id']}" <if condition="$detail.jobs_id eq $vo['id']">selected="selected"</if>>{$vo['name']}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <!--授课方式字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">授课方式<span class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <label>
+                            <div class="radio mr30">
+                                <label>
+                                    <input type="radio" name="course_way" value="0" <if condition="$detail.course_way eq 0">checked="checked"</if>>在线
+                                </label>
+                            </div>
+                            <div class="radio mr30">
+                                <label>
+                                    <input type="radio" name="course_way" value="1" <if condition="$detail.course_way eq 1">checked="checked"</if>>面授
+                                </label>
+                            </div>
+                        </label>
+
+                        <div class="radio mr30">
+                            <label id="course_way-error" class="error" for="course_way"></label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">讲师<span id="lecturer" class="color_red" style="display:none">*</span>：</label>
+
+                    <div class="col-sm-10 online" <if condition="$detail.course_way eq 1">style="display: none;"</if>>
+                        <input type="text" name="lecturer_name" class="form-control mr30" value="{$detail.lecturer_name}">
+                        <select class="form-control select2" name="online_lecturer">
+                            <option value="0">选择讲师</option>
+                            <option disabled="disabled">外部讲师</option>
+                            <foreach name="external" item="v">
+                                <option value="{$v.id}" <if condition="$detail.lecturer eq $v['id']">selected="selected"</if>>{$v.name}</option>
+                            </foreach>
+                            <option disabled="disabled">内部讲师</option>
+                            <foreach name="internal" item="n">
+                                <option value="{$n.id}" <if condition="$detail.lecturer eq $n['id']">selected="selected"</if>>{$n.name}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="col-sm-10 face" <if condition="$detail.course_way eq 0">style="display: none;"</if>>
+                        <select class="form-control select2" name="face_lecturer">
+                            <option value="-1">选择讲师</option>
+                            <option disabled="disabled">外部讲师</option>
+                            <foreach name="external" item="v">
+                                <option value="{$v.id}" <if condition="$detail.lecturer eq $v['id']">selected="selected"</if>>{$v.name}</option>
+                            </foreach>
+                            <option disabled="disabled">内部讲师</option>
+                            <foreach name="internal" item="n">
+                                <option value="{$n.id}" <if condition="$detail.lecturer eq $n['id']">selected="selected"</if>>{$n.name}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+
+                <!--课程时长字段开始-->
+                <div class="form-group" style="display: none;">
+                    <label for="" class="col-sm-2 control-label">时长<span class="color_red">*</span>：</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="course_time" value="{$detail.course_time}" class="form-control mr10" placeholder="单位为分">
+                    </div>
+                </div>
+                <!--课程时长字段结束-->
+                <!--课程介绍字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程介绍：</label>
+
+                    <div class="col-sm-4">
+                        <textarea class="form-control width_10" name="course_intro" rows="5" placeholder="请输入课程简介…………">{$detail.course_intro}</textarea>
+                    </div>
+                </div>
+                <!--课程介绍字段结束-->
+                <!--课程目标字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程目标：</label>
+
+                    <div class="col-sm-10">
+                        <!--编辑器开始-->
+                        <textarea name="course_aim" cols="20" rows="2" class="ckeditor">{$detail.course_aim}</textarea>
+                        <!--编辑器结束-->
+                    </div>
+                </div>
+                <!--课程目标字段结束-->
+                <!--课程大纲字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程大纲：</label>
+                    <div class="col-sm-10">
+                        <!--编辑器开始-->
+                        <textarea name="course_outline" cols="20" rows="2" class="ckeditor">{$detail.course_outline}</textarea>
+                        <!--编辑器结束-->
+                    </div>
+                </div>
+                <!--课程大纲字段结束-->
+                <!--默认媒体地址字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">默认媒体地址：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="media_src" value="{$detail.media_src}" class="form-control">
+                    </div>
+                </div>
+                <!--默认媒体地址字段结束-->
+                <!--课件上传字段开始-->
+                <!--
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课件上传：</label>
+                    <div class="col-sm-10">
+                        <button class="btn btn-info btn-flat"><i class="fa fa-folder-open"></i>上传</button>
+                        <span class="ml10">(支持：mp4，avi等视频格式，单个文件在500MB之内)</span>
+                    </div>
+                </div>-->
+                <!--课件上传字段结束-->
+                <!--制作人字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">制作人：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{$detail.maker}" name="maker" placeholder="">
+                    </div>
+                </div>
+                <!--制作人字段结束-->
+                <!--章节添加字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">章节：</label>
+
+                    <div class="col-sm-10">
+                        <div class="">
+                            <div class="box-body" id="chapter">
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="chapter" id="chapterId" value='{$detail.chapter}'>
+                        <p class="btn btn-info btn-flat" onclick="add_chapter()"><i class="fa fa-folder-open"></i>添加</p>
+                    </div>
+                </div>
+                <!--章节添加字段结束-->
+                <!--课程封面字段开始-->
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">课程封面：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" value="{$detail.course_cover}" name="course_cover" id="filename" readonly="readonly" style="display:none;">
+                        <div id="file" name="file"></div>
+                        <div class="box box-success certificate_img" style="margin-top:15px; <if condition="empty($detail['course_cover'])">display:none;</if>">
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                            <div class="box-body" id="image">
+                                <img src="{$detail.course_cover}" width="100%">
+                            </div>
+                        </div>
+                        <span class="ml10">(支持：gif、jpg、jpeg、bmp、png格式　建议尺寸：220px*124px)</span>
+                    </div>
+                </div>
+            </div>
+            <!--课程封面字段结束-->
+
+            <!--学分字段开始-->
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">学分<span class="color_red">*</span>：</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{$detail.credit}" name="credit" id="" placeholder="">
+                </div>
+            </div>
+            <!--学分字段结束-->
+
+            <!--学分字段开始-->
+            <div class="form-group" id="address">
+                <label for="" class="col-sm-2 control-label">启用：</label>
+
+                <div class="col-sm-10">
+                    <input type="checkbox" name="auditing" value="1" <if condition="$detail.auditing eq 1">checked="checked"</if>> <span class="ml20 ">打勾表示启用</span>
+                </div>
+            </div>
+            <!--学分字段结束-->
+
+    <div class="box-footer">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+
+            <div class="col-sm-10">
+                <button onclick="showloading()" class="btn btn-info form-group_but">保存</button>
+            </div>
+        </div>
+    </div>
+    {__TOKEN__}
+    </form>
+</div>
+</div>
+<!--内容結束-->
+</div>
+
+<!--内容結束-->
+</div>
+
+<!--内容区域顶栏版本信息结束-->
+
+</div>
+</section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/validate/dist/jquery.validate.min.js"></script>
+<script src="__PUBLIC__/Js/js/selectUser.js"></script>
+<script  src="__PUBLIC__/uploadify/jquery.Huploadify.js"></script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        load();
+    });
+
+    function load() {
+
+        var chapterid = $('#chapterId').val();
+        if (chapterid) {
+            var chapternew = JSON.parse(chapterid);
+            for (x in chapternew) {
+                var name = chapternew[x].name;
+                var id = x;
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                        '<br>' + '</div>');
+            }
+        }
+    }
+
+    function del_click() {
+        //删除分组
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan'
+            //按钮
+        }, function () {
+            layer.msg('删除成功', {
+                icon: 1
+            });
+        }, function () {
+            layer.msg('取消删除', {
+                time: 2000, //2s后自动关闭
+            });
+        });
+    }
+
+    //添加章节
+    function add_chapter() {
+        layer.open({
+            title: '添加章节',
+            skin: 'layui-layer-lan',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var body = layer.getChildFrame('body', index);
+
+                var name = body.find("input[name='name']").val();
+
+                var src = body.find("input[name='media_address']").val();
+
+                if (name && src) {
+                    var chapterid = $('#chapterId').val();
+
+                    if (chapterid) {
+                        var chapternew = JSON.parse(chapterid);
+
+                        var len = chapternew.length;
+                        var id = len;
+                        var one = {'name': name, 'src': src};
+                        chapternew[len] = one;
+                        var a = JSON.stringify(chapternew);
+                        $('#chapterId').val(a);
+
+                    } else {
+                        var id = 0;
+                        var chapter = new Array();
+                        var one = {'name': name, 'src': src};
+                        chapter[0] = one;
+                        var a = JSON.stringify(chapter);
+                        $('#chapterId').val(a);
+                    }
+                    $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                            '<br>' + '</div>');
+
+                    layer.close(index);
+
+                } else {
+
+                    layer.msg('章节或地址名称不能为空');
+
+                }
+
+            },
+            area: ['500px', '450px'],
+			offset: ['20px'],
+            type: 2,
+            content:"{:U('RsCourse/video')}",
+        });
+    }
+
+    function del_chapter(src) {
+        //$("#div"+src).remove();
+        var chapterid = $('#chapterId').val();
+        var chapternew = JSON.parse(chapterid);
+        chapternew.splice(src, 1);
+        var a = JSON.stringify(chapternew);
+        $('#chapterId').val(a);
+        $("#chapter").html(' ');
+        var chapterid = $('#chapterId').val();
+        if (chapterid) {
+            var chapternew = JSON.parse(chapterid);
+            for (x in chapternew) {
+                var name = chapternew[x].name;
+                var id = x;
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                        '<br>' + '</div>');
+            }
+        }
+    }
+
+    $("#file").Huploadify({
+        buttonText:'上传封面',
+        auto:true,
+        method:'post',
+        fileTypeExts:'*.jpg;*.png;*.gif;*.jpeg',
+        multi:false,
+        formData:{key:123456,key2:'news'}, //banner是图片存放的目录
+        fileSizeLimit:10240,
+        itemTemplate:'',//进度条，若显示进度条用 'itemTemp'
+        showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+        showUploadedSize:true,
+        removeTimeout:1000,
+        uploader: "{:U('File/upload',array('typeid'=>1))}",
+
+        onUploadSuccess: function (file, data) {
+
+            var url = JSON.parse(data);
+            var src = url.src;
+            var img_src = '__UPLOAD__/'+src;
+            $('#filename').attr('value',img_src);
+            $(".certificate_img").show();
+            $("#image").html('<img width="100%" src="'+img_src+'">');
+
+        },
+    });
+
+    //删除
+    $(".pull-right").click(function(){
+
+        $(".certificate_img").hide();
+
+        $('#filename').attr('value','');
+
+    });
+
+
+
+    $("#addForm").validate({
+        rules: {
+            course_name: 'required',
+            course_time: 'required',
+            credit:'required',
+            course_cat_id: {
+				required:true,
+				min:0
+			},
+            face_lecturer: {
+                required:true,
+                min:0
+            },
+
+        },
+        messages: {
+            course_name: '课程名字不能为空',
+            course_cat_id: '课程分类不能为空',
+            face_lecturer:'讲师不能为空',
+            course_way: '课程方式不能为空',
+            course_time: '授课时长不能为空',
+            credit:'课程学时不能为空'
+        },
+        errorPlacement: function (error, element) {
+            error.appendTo(element.parent());
+        }
+    });
+
+
+    $("#addForm").submit(function(){
+
+        var media_src = $("input[name='media_src']").val();
+
+        var re = new RegExp("^((https|http)?://)");
+
+        if(media_src.length > 0){
+            if(!re.test(media_src)){
+                layer.msg('媒体地址输入不正确');
+                return false;
+            }
+        }
+
+    });
+
+
+    $("input[type='radio']").click(function(){
+
+        document.getElementsByName('online_lecturer')[0].selectedIndex = 0;
+
+        document.getElementsByName('face_lecturer')[0].selectedIndex = 0;
+
+        if($(this).val() == 1){
+
+            $(".online").hide();
+
+            $(".face").show();
+
+            $("#lecturer").show();
+
+        }else{
+
+            $("input[name='lecturer_name']").removeAttr("disabled");
+
+            $(".online").show();
+
+            $(".face").hide();
+
+            $("#lecturer").hide();
+        }
+
+    });
+
+
+    $("select[name='online_lecturer']").change(function(){
+
+        var lecturer_id = $(this).val();
+
+        if(lecturer_id == 0){
+
+            $("input[name='lecturer_name']").removeAttr("disabled");
+
+        }else{
+
+            $("input[name='lecturer_name']").attr("disabled","disabled");
+        }
+
+    });
+
+    $("input[name='lecturer_name']").change(function(){
+
+        var lecturer_name = $("input[name='lecturer_name']").val().length;
+
+        if(lecturer_name > 0){
+
+            $("select[name='online_lecturer']").attr("disabled","disabled");
+
+        }else{
+
+            $("select[name='online_lecturer']").removeAttr("disabled");
+
+        }
+    });
+
+
+    var course_way = '{$detail.course_way}';
+
+    if(course_way == 0){
+
+        var lecturer = '{$detail.lecturer}';
+
+        if(lecturer > 0){
+
+            $("input[name='lecturer_name']").attr("disabled","disabled");
+            $("select[name='online_lecturer']").removeAttr("disabled");
+
+        }else{
+
+            if($("input[name='lecturer_name']").val() != ''){
+
+                $("input[name='lecturer_name']").removeAttr("disabled");
+                $("select[name='online_lecturer']").attr("disabled","disabled");
+            }
+
+        }
+
+        $("#lecturer").hide();
+
+    }else{
+
+        $("#lecturer").show();
+
+    }
+
+    function add_tag() {
+        layer.open({
+            title: '添加标签',
+            skin: 'layui-layer-lan',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+
+                var body = layer.getChildFrame('body', index);
+
+                var user_name = new Array();
+
+                var user_id = new Array();
+
+                body.find("input[type='checkbox']:checked").each(function(i){
+
+                    user_name = $(this).attr("alt");
+                    user_id = $(this).val();
+
+                    setTips(user_name,user_id);
+                });
+                layer.closeAll();
+
+
+
+            },
+            area: ['300px', '450px'],
+            offset: ['20px'],
+            type: 2,
+            content:"{:U('RsCourse/TagList')}",
+        });
+    }
+    function  showloading(){
+        // var loading = layer.load(1); 
+    }
+</script>
+</body>
+
+</html>

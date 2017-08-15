@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新增试题</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/searchSelect/chosen.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/validform.css">
+</head>
+
+<body>
+    <section class="content-header">
+        <h1 class="info_title">
+        试题管理
+        <small>/新增试题</small>
+    </h1>
+        <ol class="breadcrumb">
+            <li>
+				<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+			</li>
+        </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <!--内容开始-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">新增试题</h3>
+                            </div>
+                            <form class="form-horizontal" action="__SELF__" method="POST" id="form">
+                                <div class="box-body">
+                                    <!--所属课程字段开始-->
+                                    <div class="form-group" id="address" style="display: none;">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">所属课程：</label>
+                                        <div class="col-sm-10">
+                                          <select class="form-control select2" name="belongcourse" id="belongcourse">
+                                            <option value="-1"><a>--请选择所属课程--</a> </option>
+                                              <foreach name="course" item="v">
+                                                <option value="{$v.id}">{$v.course_name}</option>
+                                              </foreach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--所属课程字段结束-->
+                                    <!--试题类型字段开始-->
+                                    <div class="form-group" id="supplier" style="display: none;">
+                                        <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>试题类型：</label>
+                                        <div class="col-sm-10">
+                                            <select id="s" class="form-control select2 " style="width:180px" name="classification">
+                                                <option value="1">单选题</option>
+                                                <option value="2">多选题</option>
+                                                <option value="3">判断题</option>
+                                                <option value="4">简答题</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--试题类型字段结束-->
+                                    <!--试题描述字段开始-->
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>试题描述：</label>
+                                        <div class="col-sm-10">
+                    <textarea name="title" id="title" style="resize: none;width:100%;height:150px;font-size: 15px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>试题解析：</label>
+                                        <div class="col-sm-10">
+                    <textarea name="analysis" id="analysis" style="resize: none;width:100%;height:150px;font-size: 15px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <!--课程大纲字段结束-->
+                                    <div id="DX2" class="">
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案A：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optiona[]" datatype="*" sucmsg=" " nullmsg="请输入选项A">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案B：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optionb[]" datatype="*" sucmsg=" " nullmsg="请输入选项B">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案C：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optionc[]" datatype="*" sucmsg=" " nullmsg="请输入选项C">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案D：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optiond[]"  datatype="*" sucmsg=" " nullmsg="请输入选项A">
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段开始-->
+
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>标准答案：</label>
+
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control mr30" id="" placeholder="标准答案如A" name="right_option[]" datatype="*" sucmsg=" " nullmsg="请输入正确答案" maxlength="1">
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段结束-->
+                                    </div>
+                                    <!-- 单选题时内容结束-->
+
+                                    <!-- 多选题目时内容开始-->
+                                    <div id="DX3" class="" style="display: none;">
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案A：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optiona[]">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案B：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optionb[]">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案C：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optionc[]">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>答案D：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" name="optiond[]">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label">答案E：</label>
+                                            <div class="col-sm-10">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" placeholder="注意第五项非必填" name="optione">
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段开始-->
+
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>标准答案：</label>
+
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control mr30" id="" placeholder="标准答案如A,B,C" name="right_option[]">
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段结束-->
+                                    </div>
+                                    <!-- 多选题时内容结束-->
+
+                                    <!-- 判断题题目时内容开始-->
+                                    <div id="PD4" class="" style="display: none;">
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label">答案A：</label>
+                                            <div class="col-sm-4">
+                                                <div style="text-align: left;" class=" control-label">对</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label">答案B：</label>
+                                            <div class="col-sm-4">
+                                                <div style="text-align: left;" class=" control-label">错</div>
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段开始-->
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>标准答案：</label>
+
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control mr30" id="" placeholder="标准答案如A" name="right_option[]">
+                                            </div>
+                                        </div>
+                                        <!--标准答案字段结束-->
+                                    </div>
+                                    <!-- 判断题题目时内容结束-->
+                                    <!-- 简答题题目时内容开始-->
+                                    <div id="WD5" class="" style="display: none;">
+
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>标准答案：</label>
+
+                                            <div class="col-sm-4">
+                                                <textarea class="form-control width_10" cols="100" rows="10" placeholder="在此处填写标准答案…………" name="right_option[]"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="supplier" style="display: none;">
+                                            <label for="" class="col-sm-2 control-label"><span class="color_red">*</span>得分关键字：</label>
+
+                                            <div class="col-sm-4">
+                                                <input style="width: 100%;" type="text" class="form-control mr30" id="" placeholder="如关键词：代理保险、大堂经理等" name="keywords">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 简答题题目时内容结束-->
+                                </div>
+                                <span id="msgdemo2" style="margin-left:30px;"></span>
+                                <div class="box-footer">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-info form-group_but" id="submit">保存</button>
+                                            <button type="reset" class="btn btn-default form-group_but">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--内容結束-->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/plugins/searchSelect/chosen.jquery.js"></script>
+<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+<script src="__PUBLIC__/Js/js/Validform_v5.3.2.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('select[name=belongcourse]').chosen();
+    //表单验证
+    var validform = $("#form").Validform();
+    validform.config({
+        tiptype:function(msg,o,cssctl){
+            var objtip=$("#msgdemo2");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+        },
+        ajaxPost:true,
+        postonce:true,
+        beforeSubmit:function(curform){
+            /*if($('#belongcourse').val() == -1){
+                $('#msgdemo2').text('请选择所属课程').addClass('Validform_checktip Validform_wrong');
+                setTimeout(function(){
+                  $('#msgdemo2').text(' ');
+                },1500);
+                return false;
+            }*/
+        },
+
+        ajaxpost:{
+            success:function(msg,obj){
+                if(msg.status==1){
+                    $('#msgdemo2').text('添加成功');
+                    $('#msgdemo2').addClass('Validform_checktip Validform_right');
+                    setTimeout(function(){
+                        window.location.href=msg.url;
+                    },1500);
+                }else{
+                    $('#msgdemo2').text(msg.info).addClass('Validform_checktip Validform_wrong');
+                    setTimeout(function(){
+                      $('#msgdemo2').text(' ');
+                    },1500)
+                    return false;
+                }
+            }
+        }
+    });
+    //下拉框控制题型           
+    var map = {
+        "1": "DX2",
+        "2": "DX3",
+        "3": "PD4",
+        "4": "WD5"
+    };
+    $("#s").bind("change", function() {
+        var divId = map[this.value];
+        $("#" + divId).show().siblings().hide();
+        $("#" + divId).siblings().find("input,textarea").removeAttr('datatype sucmsg nullmsg').removeClass('Validform_checktip Validform_wrong');
+        $("#" + divId).find("input[name=optiona]").attr('nullmsg','请输入选项A');
+        $("#" + divId).find("input[name=optionb]").attr('nullmsg','请输入选项B');
+        $("#" + divId).find("input[name=optionc]").attr('nullmsg','请输入选项C');
+        $("#" + divId).find("input[name=optiond]").attr('nullmsg','请输入选项D');
+        $("#" + divId).find("input[name=right_option]").attr('nullmsg','请输入正确答案');
+        $("#" + divId).find("input[name=keywords]").attr('nullmsg','请输入得分关键字');
+        $("#" + divId).find("input[name=optione]").attr('ignore','ignore');
+        $("#" + divId).find('input,textarea').attr('sucmsg',' ').attr('datatype','*');
+    });
+})   
+</script>
+</body>
+
+</html>

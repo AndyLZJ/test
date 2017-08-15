@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>试卷管理--智能组卷</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/style.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/searchSelect/chosen.css">
+		<style type="text/css">
+			.input_bottom {
+				border: none;
+				border-bottom: 2px solid #1770a0;
+			}
+			
+			.error {
+				color: red;
+			}
+			
+			.if-min {
+				margin-left: 40px;
+				float: left;
+			}
+			
+			.if-padding {
+				padding-left: 10px;
+			}
+			
+			.if-paddingt {
+				padding-left: 50px;
+			}
+			/* 添加标签  */
+			
+			.checkShowTags {
+				float: left;
+				margin: 7px 0 0 20px;
+			}
+			
+			.checkShowTags a {
+				margin-right: 15px;
+				padding: 0 0 0 10px;
+				background: #B5E0FB;
+				color: #333333;
+				display: block;
+				float: left;
+				height: 22px;
+				line-height: 22px;
+				border-radius: 5px;
+			}
+			
+			.checkShowTags a span {
+				float: left;
+				height: 22px;
+				line-height: 22px;
+			}
+			
+			.checkShowTags a span.delTags {
+				padding: 0 10px 0 7px;
+			}
+			
+			.checkShowTags a span.delTags:hover {
+				color: red;
+			}
+			
+			.dropdown-menu span {
+				margin-left: 10px;
+			}
+			
+			.dropdown-menu span.sub2 {
+				margin-left: 30px;
+			}
+			
+			.dropdown-menu span.sub3 {
+				margin-left: 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">试卷管理<small>/智能组卷</small></h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:window.history.back(1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section>
+			<div class="box box-primary">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+						<!--内容开始-->
+						<div class="row">
+							<form class="form-horizontal" action="{:U('Admin/ResourcesManage/save_temp')}" method="post" id="form">
+								<div class="" id="if-width">
+									<div id="example1_filter" class="dataTables_filter" style="margin-right:5px;">
+										<button type="button" class="btn btn-success mr10 float_r" onclick="save();"><i class="fa fa-mail-forward mr5 " aria-hidden="true"></i>保存</button>
+										<a class="btn btn-info mr10 float_r yulan_ss" href="{:U('preview_temp')}"><i class="fa fa-clipboard mr5 " aria-hidden="true"></i>预览</a>
+										<button type="button" class="btn btn-info mr10 float_r remove_ss" onclick="del_all();"> <i class="fa fa-external-link mr5" aria-hidden="true"></i>移除所选</button>
+										<button type="button" class="btn btn-info mr10 float_r add_ss" onclick="add_examination_item();"> <i class="fa fa-plus mr5 " aria-hidden="true "></i>添加题目</button>
+									</div>
+								</div>
+								<div class="col-sm-11" id="if-width2">
+									<div class="box-body">
+										<!--试卷名称字段开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label if-label"><span class="text-red">*</span>试卷名称：</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="examname" id="examname" placeholder="请输入试卷名称" maxlength="30" value="{$baseinfo['name1']}">
+											</div>
+										</div>
+										<!--试卷名称字段结束-->
+										<!--试卷分类开始-->
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label if-label"><span class="text-red">*</span>试卷分类：</label>
+											<div class="col-sm-10">
+												<select class="form-control select2" name="examcate" id="examcate">
+													<option value="-1">
+														<a>--请选择试卷分类--</a>
+													</option>
+													<foreach name="cate" item="v">
+														<option value="{$v.id}" <if condition="$baseinfo['cate1'] eq $v['id']">selected</if>>{$v.cat_name}</option>
+													</foreach>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label if-label"><span class="color_red">*</span>出卷方式：</label>
+											<div class="col-sm-10">
+												<label>
+
+										<div class="radio mr30">
+											<label>
+												<input type="radio" name="type" id="guding" value="0" checked>固定出卷
+											</label>
+											</div>
+											<div class="radio mr30">
+												<label>
+												<input type="radio" name="type" id="suiji" value="1">随机组卷
+											</label>
+											</div>
+											</label>
+										</div>
+									</div>
+
+									<div id="abc" style="display: none;">
+										<!--题目来源start-->
+										<div class="form-group sourcebank">
+											<label for="inputEmail3" class="col-sm-2 control-label">来源题库：</label>
+											<div class="btn-group">
+												<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">来源题库
+	                                        <span class="caret"></span>
+	                                    </button>
+												<ul class="dropdown-menu" role="menu">
+													<foreach name="bank" item="v" key="k">
+														<li>
+															<a title="{$v.name}">
+																<input type="checkbox" value="{$v.id}"><span title="{$v.name}">{$v.name|msubstr=###,0,5}</span>
+															</a>
+														</li>
+													</foreach>
+												</ul>
+												<div class="checkShowTags" id="myTags">
+													<foreach name="bank" item="v" key="k">
+														<if condition="$v['ischecked'] EQ 1">
+															<a title="" href="javascript:void(0);"><span>{$v['name']}</span><span class="delTags"><input type="hidden" name="name[]" value="{$v['id']}">x</span></a>
+														</if>
+													</foreach>
+												</div>
+											</div>
+										</div>
+										<!--题目来源end-->
+
+										<div class="form-group sourcebank">
+											<label for="inputEmail3" class="col-sm-2 control-label">单选题：</label>
+											<div class="col-sm-10">
+												<input style="ime-mode:Disabled" type="number" min="1" class="form-control mr15 shuliang" name="number_1" placeholder="请输入数量">道（所选题库内共<span id="dan_number">{$examinationInfo[0]}</span>道）
+												<input type="number" min="1" max="100" step="0.5" name="score_1" class="form-control mr15 fenzhi" placeholder="分数"> /每道
+											</div>
+										</div>
+										<div class="form-group sourcebank">
+											<label for="inputEmail3" class="col-sm-2 control-label">多选题：</label>
+											<div class="col-sm-10">
+												<input style="ime-mode:Disabled" type="number" min="1" class="form-control mr15 shuliang" name="number_2" placeholder="请输入数量">道（所选题库内共<span id="duo_number">{$examinationInfo[1]}</span>道）
+												<input type="number" min="1" max="100" step="0.5" name="score_2" class="form-control mr15 fenzhi" placeholder="分数"> /每道
+											</div>
+										</div>
+										<div class="form-group sourcebank">
+											<label for="inputEmail3" class="col-sm-2 control-label">判断题：</label>
+											<div class="col-sm-10">
+												<input style="ime-mode:Disabled" type="number" min="1" class="form-control mr15 shuliang" name="number_3" placeholder="请输入数量">道（所选题库内共<span id="pan_number">{$examinationInfo[2]}</span>道）
+												<input type="number" min="1" max="100" step="0.5" name="score_3" class="form-control mr15 fenzhi" placeholder="分数"> /每道
+											</div>
+										</div>
+										<div class="form-group sourcebank">
+											<label for="inputEmail3" class="col-sm-2 control-label">问答题：</label>
+											<div class="col-sm-10">
+												<input style="ime-mode:Disabled" type="number" min="1" class="form-control mr15 shuliang" name="number_4" placeholder="请输入数量">道（所选题库内共<span id="jian_number">{$examinationInfo[3]}</span>道）
+												<input type="number" min="1" max="100" step="0.5" name="score_4" class="form-control mr15 fenzhi" placeholder="分数"> /每道
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label if-label"><span class="text-red">*</span>及格分数：</label>
+										<div class="col-sm-10">
+											<input type="number" name="jige" class="form-control" min="1" value="{$baseinfo['line1']}" />&nbsp;&nbsp;&nbsp; 总分：
+											<span id="total_span">{$scoreInfo['score']|default=0}</span>
+										</div>
+									</div>
+									<div class="mt10 font_bold text-green" id="if-random">
+
+										共随机抽取 <input class="form-control ml10 mr10 input_bottom" style="width: 90px;" type="text" name="totalExam" id="totalExam" value="{$scoreInfo['num']|default=0}" readonly/>道， 共
+										<input class="form-control ml10 mr10 input_bottom" style="width: 90px;" type="text " name="totalScore" id="totalScore" value="{$scoreInfo['score']|default=0}" readonly /> 分；
+									</div>
+								</div>
+							</form>
+							<!--内容开始-->
+							<div class="row" id="databox">
+								<div class="col-sm-12">
+									<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+										<thead>
+											<tr role="row" class="table_tr">
+												<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+													<label style="margin-bottom: 0px;">
+                                                <input type="checkbox" class="passed_allcheck">
+                                            </label>
+												</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题目描述</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题型</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所属题库</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所属课程</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">分数</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+											</tr>
+										</thead>
+										<tbody id="tab" class="passed_table">
+											<foreach name="data" item="v" key="k">
+												<tr role="row" class="odd text-center">
+													<td>
+														<input type="checkbox" name="checkbox[]" value="{$v.id}">
+													</td>
+													<td>{$k+1}</td>
+													<td>{$v.title|msubstr=###,0,20}</td>
+													<td>
+														<if condition="$v['classification'] eq 1">单选题
+															<elseif condition="$v['classification'] eq 2" />多选题
+															<elseif condition="$v['classification'] eq 3" />判断题
+															<else/>简答题
+														</if>
+													</td>
+													<td width="">{$v['question_bank']|default='---'}</td>
+													<td width="">{$v['course_name']}</td>
+													<td width="">{$v['score']}</td>
+													<td>
+														<a style="cursor:pointer;" onclick="del_one({$v['id']})" class="bs-callout-info">
+															<i class="fa fa-trash-o mr5" aria-hidden="true"></i>移除
+														</a>
+													</td>
+												</tr>
+											</foreach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!--内容結束-->
+							<!--分页开始-->
+							<div class="row">
+								<div class="float_r mr15">
+									<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+										{$page}
+									</div>
+								</div>
+							</div>
+							<!--分页结束-->
+						</div>
+					</div>
+					<!--内容結束-->
+				</div>
+			</div>
+			</div>
+		</section>
+		<input type="hidden" name="hidden_type" />
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src='__PUBLIC__/plugins/autocomplete/jquery.autocomplete.js'></script>
+		<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			$("#guding").on('ifChecked', function(event) { //ifCreated 事件应该在插件初始化之前绑定 
+				$(".remove_ss").show();
+				$(".add_ss").show();
+				$(".yulan_ss").show();
+				$("#databox").show();
+				$(".table_tr").show();
+				$("#abc").hide();
+				$("#totalExam").val("");
+				$("#totalScore").val("");
+			});
+			$("#suiji").on('ifChecked', function(event) { //ifCreated 事件应该在插件初始化之前绑定
+				$(".remove_ss").hide();
+				$(".add_ss").hide();
+				$(".yulan_ss").hide();
+				$("#databox").hide();
+				$(".table_tr").hide();
+				$("#abc").show();
+				$('#databox').empty();
+
+				$.ajax({
+					url: "{:U('del_temp_data')}",
+					type: "GET",
+					success: function() {
+
+					}
+				});
+				$("#totalExam").val("");
+				$("#totalScore").val("");
+			});
+
+			//已通过全选checkbox
+			var $checkboxAll = $(".passed_allcheck"),
+				$checkbox = $(".passed_table").find("[type='checkbox']").not("[disabled]"),
+				length = $checkbox.length,
+				i = 0;
+
+			$checkboxAll.on("ifClicked", function(event) {
+				if(event.target.checked) {
+					$checkbox.iCheck('uncheck');
+					i = 0;
+				} else {
+					$checkbox.iCheck('check');
+					i = length;
+				}
+			});
+
+			//添加标签
+			//参数：   obj容器;   text 文本内容;   value标签值;   name input名称
+			var setTags = function(obj, text, textfull, value, name) {
+				var apdHtml = '<a title="' + text + '" href="javascript:void(0);">';
+				apdHtml += '<span title=' + textfull + '>' + text + '</span><span class="delTags">';
+				apdHtml += '<input type="hidden" name="' + name + '[]" value="' + value + '">x</span></a>';
+				obj.append(apdHtml);
+			};
+			//删除标签
+			$(document).on('click', '.delTags', function() {
+				//移除元素
+				$(this).closest("a").remove();
+				var thisval = $.trim($(this).prev().text());
+
+				//移除CheckBox框选中状态
+				$(".dropdown-menu li").each(function(index) {
+					if($(this).find('span').text() == thisval) {
+						$(this).find('input').iCheck('uncheck');
+					}
+				})
+
+				//重新计算试题数量
+				var bank_ids = new Array();
+				$(".dropdown-menu li").each(function(index) {
+					if($(this).find('div').attr('aria-checked') == 'true') {
+						bank_ids.push($(this).find('input').val());
+					}
+				})
+				$.ajax({
+					type: "post",
+					url: "{:U('getNumsByBankid')}",
+					data: 'id=' + bank_ids,
+					success: function(msg) {
+						var jsonval = eval("(" + msg + ")");
+						$('#dan_number').text(jsonval[0]);
+						$('#duo_number').text(jsonval[1]);
+						$('#pan_number').text(jsonval[2]);
+						$('#jian_number').text(jsonval[3]);
+					}
+				});
+			});
+
+			//多选下拉框
+			$(".dropdown-menu").mouseout(function() {
+				$("#myTags").html("");
+				$(".dropdown-menu li").each(function(index) {
+					var text = $(this).text();
+					var text2 = $(this).find('a').attr('title');
+					var isCheck = $(this).find("input").is(':checked');
+
+					if(isCheck) {
+						var chooseId = $(this).val();
+						setTags($("#myTags"), text, text2, chooseId, "source");
+					}
+				});
+			});
+			$('.dropdown-menu').find('ins').click(function() {
+				var bank_ids = new Array();
+				$(".dropdown-menu li").each(function(index) {
+					if($(this).find('div').attr('aria-checked') == 'true') {
+						bank_ids.push($(this).find('input').val());
+					}
+				})
+				$.ajax({
+					type: "post",
+					url: "{:U('getNumsByBankid')}",
+					data: 'id=' + bank_ids,
+					success: function(msg) {
+						var jsonval = eval("(" + msg + ")");
+						$('#dan_number').text(jsonval[0]);
+						$('#duo_number').text(jsonval[1]);
+						$('#pan_number').text(jsonval[2]);
+						$('#jian_number').text(jsonval[3]);
+					}
+				});
+			});
+
+			//添加考试题目
+			function add_examination_item() {
+				layer.open({
+					title: '添加题目',
+					area: ['1050px', '560px'],
+					offset: ['20px'],
+					type: 2,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: "{:U('add_examination_item')}"
+				});
+			}
+			//批量删除
+			function del_all() {
+				var inp = $('input[type=checkbox]:checked').length;
+				if(inp < 1) {
+					layer.msg('尚未勾选', { time: 2000 });
+					return false;
+				}
+
+				var news = document.getElementsByName('checkbox[]');
+				var mess = new Array();
+				for(var i = 0, ress = 0; i < news.length; i++) {
+					if(news[i].checked) {
+						ress = ress + 1;
+						mess.push(news[i].value);
+					}
+				}
+				layer.confirm('您确定要删除吗？', {
+					title: '删除',
+					btn: ['确定', '取消'],
+					shadeClose: true,
+					skin: 'layui-layer-lan'
+				}, function() {
+					$.post('{:U('
+						del_temp ')}', { id: mess },
+						function(data) {
+							layer.msg(data.info, { time: 2000 }, function() {
+								window.location.reload();
+							});
+						});
+				});
+			}
+
+			//单个删除
+			function del_one(id) {
+				layer.confirm('您确定要删除吗？', {
+					title: '删除',
+					btn: ['确定', '取消'],
+					shadeClose: true, //开启遮罩关闭
+					skin: 'layui-layer-lan'
+				}, function() {
+					console.log(id);
+					$.ajax({
+						type: "post",
+						url: "{:U('del_temp')}",
+						data: 'id=' + id,
+						success: function(msg) {
+							layer.msg(msg.info, { time: 1000 }, function() {
+								window.location.reload();
+							});
+						}
+					});
+				});
+			}
+
+			/**
+			 * 保存试卷
+			 */
+			function save() {
+				$('input[type=radio]').each(function() {
+					if($(this).prop("checked") == true) {
+						$('input[name=hidden_type]').val($(this).val());
+					}
+				});
+				var type = $('input[name=hidden_type]').val();
+
+				if($.trim($('#examname').val()) == '') {
+					layer.msg('试卷名称不能为空', { time: 2000 });
+					return false;
+				}
+				if($('#examcate').val() == -1) {
+					layer.msg('试卷分类不能为空', { time: 2000 });
+					return false;
+				}
+				if($('input[name=jige]').val() == '') {
+					layer.msg('及格分数不能为空', { time: 2000 });
+					return false;
+				}
+				if($('#totalExam').val() == 0) {
+					layer.msg('尚未选题', { time: 2000 });
+					return false;
+				}
+				if(parseFloat($('input[name=jige]').val()) > parseFloat($('#totalScore').val())) {
+					layer.msg('及格分数不能大于试卷总分', { time: 2000 });
+					return false;
+				}
+
+				if(type == 1) {
+					var n_1 = $('input[name=number_1]').val(),
+						n_2 = $('input[name=number_2]').val();
+					var n_3 = $('input[name=number_3]').val(),
+						n_4 = $('input[name=number_4]').val();
+
+					var s_1 = $('input[name=score_1]').val(),
+						s_2 = $('input[name=score_2]').val();
+					var s_3 = $('input[name=score_3]').val(),
+						s_4 = $('input[name=score_4]').val();
+
+					var total_1 = $('#dan_number').text(),
+						total_2 = $('#duo_number').text();
+					var total_3 = $('#pan_number').text(),
+						total_4 = $('#jian_number').text();
+					if(parseInt(n_1) > parseInt(total_1)) {
+						layer.msg('单选题数量不能大于题库内单选题总数', { time: 1500 });
+						return false;
+					}
+					if(parseInt(n_2) > parseInt(total_2)) {
+						layer.msg('多选题数量不能大于题库内多选题总数', { time: 1500 });
+						return false;
+					}
+					if(parseInt(n_3) > parseInt(total_3)) {
+						layer.msg('判断题数量不能大于题库内判断题总数', { time: 1500 });
+						return false;
+					}
+					if(parseInt(n_4) > parseInt(total_4)) {
+						layer.msg('问答题数量不能大于题库内问答题总数', { time: 1500 });
+						return false;
+					}
+					if(n_1 && !s_1) {
+						layer.msg('请输入单选题分值', { time: 1500 });
+						return false;
+					}
+					if(n_2 && !s_2) {
+						layer.msg('请输入多选题分值', { time: 1500 });
+						return false;
+					}
+					if(n_3 && !s_3) {
+						layer.msg('请输入判断题分值', { time: 1500 });
+						return false;
+					}
+					if(n_4 && !s_4) {
+						layer.msg('请输入问答题分值', { time: 1500 });
+						return false;
+					}
+
+					if(!n_1 && s_1) {
+						layer.msg('请输入单选题数量', { time: 1500 });
+						return false;
+					}
+					if(!n_2 && s_2) {
+						layer.msg('请输入多选题数量', { time: 1500 });
+						return false;
+					}
+					if(!n_3 && s_3) {
+						layer.msg('请输入判断题数量', { time: 1500 });
+						return false;
+					}
+					if(!n_4 && s_4) {
+						layer.msg('请输入问答题数量', { time: 1500 });
+						return false;
+					}
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: "{:U('save_temp')}",
+					data: $('form').serialize(),
+					success: function(msg) {
+						if(msg.status == 1) {
+							layer.msg('组卷成功', { time: 2000 }, function() {
+								window.location.href = "{:U('passexam')}";
+							});
+						} else {
+							layer.msg('组卷失败,未知错误', { time: 2000 }, function() {
+								window.location.reload();
+							});
+						}
+					}
+				})
+			}
+
+			$('.shuliang').blur(function() {
+				var n_1 = $('input[name=number_1]').val(),
+					n_2 = $('input[name=number_2]').val();
+				var n_3 = $('input[name=number_3]').val(),
+					n_4 = $('input[name=number_4]').val();
+
+				var s_1 = $('input[name=score_1]').val(),
+					s_2 = $('input[name=score_2]').val();
+				var s_3 = $('input[name=score_3]').val(),
+					s_4 = $('input[name=score_4]').val();
+				$('#totalExam').val(n_1 * 1 + n_2 * 1 + n_3 * 1 + n_4 * 1);
+				$('#totalScore').val(n_1 * s_1 + n_2 * s_2 + n_3 * s_3 + n_4 * s_4);
+				$('#total_span').html(n_1 * s_1 + n_2 * s_2 + n_3 * s_3 + n_4 * s_4);
+			});
+			$('.fenzhi').blur(function() {
+				var n_1 = $('input[name=number_1]').val(),
+					n_2 = $('input[name=number_2]').val();
+				var n_3 = $('input[name=number_3]').val(),
+					n_4 = $('input[name=number_4]').val();
+
+				var s_1 = $('input[name=score_1]').val(),
+					s_2 = $('input[name=score_2]').val();
+				var s_3 = $('input[name=score_3]').val(),
+					s_4 = $('input[name=score_4]').val();
+				$('#totalExam').val(n_1 * 1 + n_2 * 1 + n_3 * 1 + n_4 * 1);
+				$('#totalScore').val(n_1 * s_1 + n_2 * s_2 + n_3 * s_3 + n_4 * s_4);
+				$('#total_span').html(n_1 * s_1 + n_2 * s_2 + n_3 * s_3 + n_4 * s_4);
+			});
+
+			//监听浏览器改clas（布局）
+
+			var widthWd = $(document).width();
+			
+			if(widthWd > 　1380) {
+				$("#if-width").addClass("if-min");
+				$("#if-width2 .if-label").addClass("col-sm-1");
+				$("#if-random").addClass("if-padding");
+			} else {		
+				$("#if-width").addClass("col-sm-5");			
+				$("#if-width2 .if-label").addClass("col-sm-2");		
+				$("#if-random").addClass("if-paddingt");
+			}
+		</script>
+	</body>
+
+</html>

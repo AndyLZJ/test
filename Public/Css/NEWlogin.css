@@ -1,0 +1,253 @@
+/*最新登录页面样式*/
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "Microsoft YaHei";
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+.body_bg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1
+}
+
+.body_bg img {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+}
+
+
+input{
+    height: 40px;
+    line-height: 40px;
+    padding:0px 0px 0px 45px; 
+    width: 320px;
+    background-color: rgba(255,255,255,0);
+    border:1px #fff solid;
+    color: #1d1919;
+    border-radius: 5px;
+    outline: none;
+}
+
+select{
+    height: 40px;
+    line-height: 40px;
+    padding:0px 0px 0px 10px; 
+    width: 145px;
+    border-radius: 5px;
+    border:1px #fff solid;
+    background:#ffffff url(../img/newdowm.png) right no-repeat;
+    color: #ooo;
+}
+
+option{
+    height: 40px;
+    line-height: 40px;
+    padding:0px 0px 0px 10px; 
+    width: 158px;
+    color: #000;
+}
+
+input:visited{
+    background-color: rgba(255,255,255,0);
+    border:none;
+    border-bottom:2px #fff solid;
+}
+.user{
+    background:#ffffff url(../img/newyonghu.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+}
+.password{
+    background:#ffffff url(../img/newmima.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+}
+.yanzheng{
+    background:#ffffff url(../img/newyanzheng.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.anquan{
+    background:#ffffff url(../img/newanquan.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+
+.mobile{
+    background:#ffffff url(../img/newshouji.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+}
+.card{
+    background:#ffffff url(../img/newgonghao.png) no-repeat;
+    background-size: 28px;
+    background-position:11px 5px; 
+}
+a{
+    list-style: none;
+    text-decoration:none;
+    color: #fff;
+}
+
+a:hover{
+    list-style: none;
+    text-decoration:none;
+    color: #fff;
+}
+a:link{
+    list-style: none;
+    text-decoration:none;
+}
+
+.float_l{ float: left;}
+.float_r{ float: right;}
+.mr5{ margin-right: 5px;}
+.mr10{ margin-right: 10px;}
+.ml5{ margin-left: 5px;}
+.mt10{ margin-top: 10px;}
+.mb10{ margin-bottom: 10px;}
+.color_w{ color: #fff;}
+.button{
+   height: 30px;
+   width: 110px;
+   line-height: 30px;
+   color: #fff;
+   display: block;
+    background-color:#ac9456;
+    border-radius: 30px;
+    float: right;
+   margin-right: -25px;
+}
+.button:hover{
+    background: #937f4a;
+    color: #fff;
+    text-decoration:none;
+}
+.code{
+    height: 40px;
+    width: 90px;
+    line-height: 40px;
+    background: #ac9456;
+    color: #ffffff;
+    display: block;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.code_inp{
+    width: 185px;
+}
+.code_inp2{
+    width: 240px;
+}
+.code_img{
+    background: url(../img/code.png);
+    background-size: 100%;
+}
+.refresh{
+    line-height: 40px;
+    margin-left: 10px;
+}
+.label{
+    line-height: 60px;
+}
+.label li{
+    float: left;
+    width: 160px;
+    text-align: center;
+    font-size: 21px;
+    color: #757677;
+    list-style: none;
+}
+.label li a{
+    color: #fff;
+    padding: 10px;
+}
+.active{
+    color: #fff!important;
+    border-bottom: 2px #fff solid;
+}
+
+.login_header{
+    width: 100%;
+    height: 100px;
+    background-color: rgba(255,255,255,0);
+    line-height: 100px;
+    font-size: 1.6vw;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #614f22;
+    text-align: center;
+}
+.login_logo{
+    height: 60px;
+    margin: 20px 0px 20px 50px;
+}
+.sign_in_title{
+    color: #fff;
+    font-size: 21px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom:25px ;
+    margin-bottom: 5vmin;
+    margin-top: 10px;
+    margin-top: 2vmin;
+}
+.login_body{
+    width: 100%;
+    top: 20px;
+    bottom: 0px;
+    min-width: 900px;
+    overflow: auto;
+    min-height: 550px;
+}
+.login_body_left{
+    float: left;
+    width: 42%;
+    height: 100%;
+    margin-left: 8%;
+    background: url(../img/login_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.login_body_right{
+    width: 340px;
+    margin: auto;
+}
+
+.login_footer{
+    width: 100%;
+    height: 80px;
+    background: rgba(255,255,255,0);
+    line-height: 80px;
+    color: #485e6f;
+}
+.info{
+	margin-top: 20px;
+    margin-top: 4vmin;
+}
+.info_box{
+	margin-bottom: 20px;
+    margin-bottom: 4vmin;
+    height: 40px;
+}
+
+.ewmimg{
+	width: 21vmin;
+    margin: auto;
+}
+.ewmbottom{
+	margin-top: 4vmin;
+}

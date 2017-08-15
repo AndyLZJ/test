@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看历史版本</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+</head>
+<body>
+
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        课程管理
+        <small>/查看课程</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title ">{$course_name}</h3>
+        </div>
+        <div class="nav-tabs-custom ml10 mr10 mt10 mb10">
+            <div class="tab-content">
+                <div class="tab-pane active" id="lecturer_inside">
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <!--内容开始-->
+                        <!--课程状态开始-->
+                        <div class="row">
+                            <label class="">
+                                这是本课程的历史版本，由 <span class="text-blue"> {$username}</span>于{$update_time|date="Y-m-d H:i:s",###}修订。
+                            </label>
+                            <label class="text-aqua  float_r mr30">
+                                <if condition="!empty($page['up'])"><button type="button" class="btn btn-success" onclick="location='{:U('RsCourse/checkcourse',array('id'=>$page['up']))}'">上一版本</button></if>
+                                <if condition="!empty($page['next'])"><button type="button" class="btn btn-warning" onclick="location='{:U('RsCourse/checkcourse',array('id'=>$page['next']))}'">下一版本</button></if>
+                            </label>
+                        </div>
+                        <!--课程状态结束-->
+                        <!--课程封面及主要信息区域开始-->
+                        <div class="row">
+                            <!--左侧封面课程区域-->
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <img class="width_10" src="{$course_cover}" onerror="this.src='__PUBLIC__/Dist/img/class2.png'"/>
+                            </div>
+                            <!--右侧课程信息及审核区域-->
+                            <div class="col-sm-7">
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label font_bold">所属层次：<span id="#"><if condition="$arrangement_id eq 1">基础层<elseif condition="$arrangement_id eq 2"/>中间层<elseif condition="$arrangement_id eq 3"/>核心层<elseif condition="$arrangement_id eq 4"/>专业层<else /></if></span>
+                                    </label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">课程分类：<span id="#"><if condition="$course_cat_id eq 1">面授课程 <else />线上课程</if></span> </label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">所属标签：{$tag_name}</label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">授课讲师：<span id="#">{$lecturer_name}</span></label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">课程时长：<span id="#">{$course_time}</span>分钟</label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">制作人：<span id="#">{$maker}</span></label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">上传人：<span id="#">{$username}</span></label>
+                                </div>
+                                <div class="row mb20">
+                                    <label class="col-sm-12 control-label">上传时间：<span
+                                            id="#">{$create_time|date="Y-m-d H:i:s",###}</span></label>
+                                </div>
+                            </div>
+                            <!--右侧课程信息及审核区域区域-->
+                        </div>
+                        <!--课程封面及主要信息区域结束-->
+                        <!--  分隔符开始-->
+                        <div class="box-header with-border"></div>
+                        <!--  分隔符结束-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <!--内部讲师字段开始-->
+                                        <foreach name="chapter" item="vo" key="k">
+                                            <div class="form-group">
+                                                <if condition="$k eq 0">
+                                                    <label for="" class="col-sm-2 control-label">章节：</label>
+                                                    <else/>
+                                                    <label for="" class="col-sm-2 control-label"></label>
+                                                </if>
+                                                <div class="col-sm-10">
+                                                    <label for="" class="control-label">{$vo['name']}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </foreach>
+                                        <!--  分隔符开始-->
+                                        <div class="box-header with-border mb10"></div>
+                                        <!--  分隔符结束-->
+                                        <!--
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-2 control-label">其他附件：</label>
+
+                                            <div class="col-sm-10">
+                                                <label for="" class="control-label"><span id="#"> 这里是附件名字</span>
+                                                </label>
+                                            </div>
+                                        </div>-->
+                                        <!--  分隔符开始-->
+                                        <div class="box-header with-border mb10"></div>
+                                        <!--  分隔符结束-->
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-2 control-label">课程目标：</label>
+                                            <div class="col-sm-6">
+                                                <label for="" class=""><span id="#"> {$course_aim}</span></label>
+                                            </div>
+                                        </div>
+                                        <!--  分隔符开始-->
+                                        <div class="box-header with-border mb10"></div>
+                                        <!--  分隔符结束-->
+
+
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">课程大纲：</label>
+
+                                            <div class="col-sm-6">
+                                                <label for="" class=""><span id="#"> {$course_outline}</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--内容結束-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.tab-content -->
+    </div>
+</section>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+
+
+<script type="text/javascript">
+    //radio选中样式
+    $('input').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_minimal-blue',
+        increaseArea: '20%'
+    });
+
+    function del_click() {
+        //删除分组
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan'
+            //按钮
+        }, function () {
+            layer.msg('删除成功', {
+                icon: 1
+            });
+        }, function () {
+            layer.msg('取消删除', {
+                time: 2000, //2s后自动关闭
+            });
+        });
+    }
+</script>
+</body>
+
+</html>

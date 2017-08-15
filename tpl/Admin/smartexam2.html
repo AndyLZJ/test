@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>试卷管理--智能组卷</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/style.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/searchSelect/chosen.css">
+<style type="text/css">
+    .input_bottom{
+        border: none;
+        border-bottom:2px solid #1770a0;
+    }
+</style>
+</head>
+<body>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      	<h1 class="info_title">试卷管理<small>/智能组卷</small></h1>
+      	<ol class="breadcrumb">
+      	<li>
+        	<a class="text-grey" href="javascript:window.history.back(1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+      	</li>
+    </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+          <div class="box box-primary">
+            <div class="box-body">
+              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">                
+              <!--内容开始-->
+              <div class="row">
+                <form class="form-horizontal" action="{:U('Admin/ResourcesManage/save_temp')}" method="post" id="form">
+              	<div class="col-sm-6">
+	                <div id="example1_filter" class="dataTables_filter" style="margin-right:5px;">
+	                    <button type="button" class="btn btn-success mr10 float_r"  onclick="save();"><i class="fa fa-mail-forward mr5 " aria-hidden="true"></i>保存</button>
+						<a  class="btn btn-info mr10 float_r" href="{:U('preview_temp')}"><i class="fa fa-clipboard mr5 " aria-hidden="true"></i>预览</a>
+						<button type="button" class="btn btn-info mr10 float_r" onclick="del_all();"> <i class="fa fa-external-link mr5" aria-hidden="true"></i>移除所选</button>
+	                    <button type="button" class="btn btn-info mr10 float_r" onclick="add_examination_item();"> <i class="fa fa-plus mr5 " aria-hidden="true "></i>添加题目</button>
+	                </div>
+	            </div>
+              	<div class="col-sm-12">
+                  		<div class="box-body">
+                     		<!--试卷名称字段开始-->
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red">*</span>试卷名称：</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="examname" id="examname" placeholder="请输入试卷名称" maxlength="30" value="{$baseinfo['name1']}">
+                                </div>
+                            </div>
+                            <!--试卷名称字段结束-->
+                            <!--试卷分类开始-->
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red">*</span>试卷分类：</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2" name="examcate" id="examcate">
+                                      <option value="-1"><a>--请选择试卷分类--</a> </option>
+                                      <foreach name="cate" item="v">
+                                        <option value="{$v.id}" <if condition="$baseinfo['cate1'] eq $v['id']">selected</if>>{$v.cat_name}</option>
+                                      </foreach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="text-red">*</span>参考及格线：</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2" name="fx" id="fx">
+                                      <option value="-1">--自定义--</a> </option>
+                                      <option value="10" <if condition="$baseinfo['per1'] eq 10">selected</if>>10%</option>
+                                      <option value="20" <if condition="$baseinfo['per1'] eq 20">selected</if>>20%</option>
+                                      <option value="30" <if condition="$baseinfo['per1'] eq 30">selected</if>>30%</option>
+                                      <option value="40" <if condition="$baseinfo['per1'] eq 40">selected</if>>40%</option>
+                                      <option value="50" <if condition="$baseinfo['per1'] eq 50">selected</if>>50%</option>
+                                      <option value="60" <if condition="$baseinfo['per1'] eq 60">selected</if>>60%</option>
+                                      <option value="70" <if condition="$baseinfo['per1'] eq 70">selected</if>>70%</option>
+                                      <option value="80" <if condition="$baseinfo['per1'] eq 80">selected</if>>80%</option>
+                                      <option value="90" <if condition="$baseinfo['per1'] eq 90">selected</if>>90%</option>
+                                    </select>
+                                    <input type="number" name="jige" class="form-control" min="1" value="{$baseinfo['line1']}"/>
+                                </div>
+                            </div>
+                            <div class="mt10 font_bold text-green">
+                                	共随机抽取 <input class="form-control ml10 mr10 input_bottom" style="width: 90px;" type="text" name="totalExam" id="totalExam" value="{$scoreInfo['num']|default=0}" readonly/>道，
+                                	共<input class="form-control ml10 mr10 input_bottom" style="width: 90px;" type="text " name="totalScore" id="totalScore" value="{$scoreInfo['score']|default=0}" readonly /> 分；
+                           </div>
+                        </div>
+                    </form>
+                    <!--内容开始-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                            <label style="margin-bottom: 0px;">
+                                                <input type="checkbox" class="passed_allcheck">
+                                            </label>
+                                        </th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题目描述</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">题型</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所属题库</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">所属课程</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">分数</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tab" class="passed_table">
+                                    <foreach name="data" item="v" key="k">
+                                        <tr role="row" class="odd text-center">
+                                            <td>
+                                                <input type="checkbox" name="checkbox[]" value="{$v.id}">
+                                            </td>
+                                            <td>{$k+1}</td>
+                                            <td>{$v.title|msubstr=###,0,20}</td>
+                                            <td>
+                                                <if condition="$v['classification'] eq 1">单选题
+                                                <elseif condition="$v['classification'] eq 2"/>多选题
+                                                <elseif condition="$v['classification'] eq 3"/>判断题
+                                                <else/>简答题
+                                                </if>
+                                            </td>
+                                            <td width="">{$v['question_bank']}</td>
+                                            <td width="">{$v['course_name']}</td>
+                                            <td width="">{$v['score']}</td>
+                                            <td>
+                                                <a style="cursor:pointer;" onclick="del_one({$v['id']})" class="bs-callout-info">
+                                                    <i class="fa fa-trash-o mr5" aria-hidden="true"></i>移除
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </foreach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--内容結束-->
+                    <!--分页开始-->
+                    <div class="row">
+						<div class="float_r mr15">
+							<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+								<ul class="pagination">
+									{$page}
+								</ul>
+							</div>
+						</div>
+					</div>
+                    <!--分页结束-->
+                  </div>
+              </div>
+              <!--内容結束-->
+              </div>
+            </div>
+          </div>
+    </section>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+	$(function(){
+		if($('input[name=jige]').val() != '0' || $('input[name=jige]').val() != '0.00'){
+			$('input[name=jige]').attr('readonly','readonly');
+		}
+	})
+	
+	//添加考试题目
+	function add_examination_item(){
+		layer.open({
+			title: '添加题目',
+			area: ['1050px', '560px'],
+			offset: ['20px'],
+			type: 2,
+			skin: 'layui-layer-lan', //样式类名
+			closeBtn: 1, //显示关闭按钮
+			anim: 2,
+			shadeClose: true, //开启遮罩关闭
+			content: "{:U('add_examination_item')}"
+		});
+	}
+    //批量删除
+	function del_all() {
+		var inp = $('input[type=checkbox]:checked').length;
+		if(inp < 1){
+			layer.msg('尚未勾选',{time:2000});
+    		return false;
+		}
+		
+		var news = document.getElementsByName('checkbox[]');
+		var mess = new Array();
+		for(var i = 0, ress = 0; i < news.length; i++) {
+			if(news[i].checked) {
+				ress = ress + 1;
+				mess.push(news[i].value);
+			}
+		}
+		layer.confirm('您确定要删除吗？', {
+			title: '删除',
+			btn: ['确定', '取消'],
+			shadeClose: true,
+			skin: 'layui-layer-lan'
+		}, function() {
+			$.post('{:U('del_temp')}',{id: mess},function(data){
+				layer.msg(data.info,{time:2000},function(){
+					window.location.reload();
+				});
+			});
+		});
+	}
+	
+	//单个删除
+	function del_one(id){
+		layer.confirm('您确定要删除吗？', {
+			title: '删除',
+			btn: ['确定','取消'],
+			shadeClose: true, //开启遮罩关闭
+			skin: 'layui-layer-lan'
+		}, function(){
+			console.log(id);
+			$.ajax({
+				type:"post",
+				url:"{:U('del_temp')}",
+				data:'id='+id,
+				success:function(msg){
+					layer.msg(msg.info, {time:1000},function(){
+						window.location.reload();
+					});
+				}
+			});
+		});
+	}
+	
+	/**
+	 * 保存试卷
+	 */
+	function save(){
+		if($.trim($('#examname').val()) == ''){
+			layer.msg('试卷名称不能为空',{time:2000});
+			return false;
+		}
+		if($('#examcate').val() == -1){
+			layer.msg('试卷分类不能为空',{time:2000});
+			return false;
+		}
+		if($('input[name=jige]').val() == ''){
+			layer.msg('及格分数不能为空',{time:2000});
+			return false;
+		}
+		if(parseFloat($('input[name=jige]').val()) > parseFloat($('#totalScore').val())){
+			layer.msg('及格分数不能大于试卷总分',{time:2000});
+			return false;
+		}
+		$.ajax({
+			type:'POST',
+			url:"{:U('save_temp')}",
+			data:$('form').serialize(),
+			success:function(msg){
+				if(msg.status == 1){
+					layer.msg('组卷成功',{time:2000},function(){
+						window.location.href="{:U('passexam')}";
+					});
+				}else{
+					layer.msg('组卷失败,未知错误',{time:2000},function(){
+						window.location.reload();
+					});
+				}
+			}
+		})
+	}
+	
+	$('select[name=fx]').change(function(){
+		var val = $(this).val();
+		var score = $('#totalScore').val();
+		if(val==-1){
+			$('input[name=jige]').removeAttr('readonly');
+			$('input[name=jige]').val('');
+		}else{
+			$('input[name=jige]').attr('readonly','readonly');
+			var f = Math.round($('#totalScore').val() * 1 * val / 100);
+			$('input[name=jige]').val(f);
+		}
+	})
+	
+</script>
+</body>
+</html>

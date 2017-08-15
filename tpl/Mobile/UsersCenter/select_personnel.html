@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>选择人员</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+</head>
+<body>
+    <div class="select_personnel">
+        <input type="hidden" name="token" id="token" value="{$items['token']}"/>
+        <input type="hidden" name="secret_key" id="secret_key" value="{$items.secret_key}"/>
+       <!--总公司开始-->
+        <if condition="$items['name'] neq ''">
+            <div class="department">
+                {$items['name']}
+            </div>
+        <!--总公司结束-->
+        <!--分公司开始或者总公司部门-->
+            <foreach name="list" item="vol">
+                <div  data-id="{$vol['id']}" data-name="{$vol['name']}">
+                    <div class="department">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vol['name']}<br />
+                    </div>
+                    <!--部门-->
+                    <foreach name="vol['sub_list']" item="vol3">
+                        <div  data-id="{$vol3['id']}" data-name="{$vol3['name']}">
+                            <div class="department">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vol3['name']}<br />
+                            </div>
+                            <!--部门下的人员-->
+                            <foreach name="vol3['sub_lists']" item="vol4">
+                                <div class="personnel" data-id="{$vol4['id']}" data-name="{$vol4['username']}">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <img src="{$vol4['avatar']}" />
+                                    <div class="info">
+                                        {$vol4['username']}<br />
+                                    </div>
+                                </div>
+                            </foreach>
+                        </div>
+                    </foreach>
+                </div>
+            </foreach>
+        <!--分公司结束或者总公司部门-->
+            <else />
+            <div class="department">
+                {$data}
+            </div>
+            </if>
+    </div>
+    <div class="my_bottom_blank"></div>
+    <div class="bottom_button" data-ids="">确定</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script>
+    $(function(){
+        $(".personnel").click(function(){
+           /* if($(this).hasClass("on")){
+                $(this).removeClass("on");
+                $(this).addClass('on').siblings().removeClass("on");
+            }else{
+                var id = $(this).attr('data-id');
+                $(".bottom_button").attr('data-ids',id);
+                $(this).addClass("on").siblings().removeClass('on');
+
+            }*/
+            var id = $(this).attr('data-id');
+            $('.personnel').removeClass("on");
+            $(this).addClass('on');
+            $(".bottom_button").attr('data-ids',id);
+        })
+
+        $(".bottom_button").click(function(){
+            //获取选定的人员，跳转链接
+
+            var token = $('#token').val();
+            var secret_key = $('#secret_key').val();
+            var pk_id = $(this).attr('data-ids');
+            var newHref = "__CONTROLLER__/memberPk?token="+token+"&secret_key="+secret_key+"&pk_id="+pk_id;
+            window.location.replace(newHref);
+        })
+
+    })
+</script>
+</html>

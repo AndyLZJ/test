@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+
+<div id="add_exam">
+    <div class="box-header with-border">
+        <h3 class="box-title">添加线上考试</h3>
+    </div>
+    <div class="box-body">
+        <!--筛选栏开始-->
+        <div>
+            <form action="{:U('PjCourse/index')}" method="get">
+                <div class="col-sm-12">
+                    <div class="input-group " style="float:right;width:50%">
+                        <input type="text" id="test_name"  name="keywords" class="form-control pull-right" placeholder="请输入试卷名称">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!--筛选栏结束-->
+        <div class="col-sm-12">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row">
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷名称</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">试卷类别</th>
+                    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">选用</th>
+                </tr>
+                </thead>
+                <tbody id="examinations">
+                <foreach name="list" item="vo">
+                    <tr role="row" class="odd text-center">
+                        <td>
+                            <a href="">{$vo.test_name}</a>
+                        </td>
+                        <td>{$vo.cat_name}</td>
+                        <td><input type="checkbox" class="testchecks" value="{$vo.id}"></td>
+                    </tr>
+                </foreach>
+
+
+                </tbody>
+            </table>
+        </div>
+        <!--分页开始-->
+        <div class="float_r mr15">
+            <div class="dataTables_paginate paging_simple_numbers" id="test">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

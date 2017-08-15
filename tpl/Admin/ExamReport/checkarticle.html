@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>数据管理——调研报表——调研详情页面</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+
+    <style type="text/css">
+        a {
+            color: #337ab7;
+        }
+
+        a:hover,
+        a:active,
+        a:focus {
+            outline: none;
+            text-decoration: none;
+            color: #03A9F4;
+        }
+
+        table tr td {
+            border-bottom: 1px solid #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<form class="form-horizontal col-sm-12">
+
+	<div class="row mt20">
+		<div class="col-sm-12">
+			<table id="example1" class="table table-condensed" role="grid" aria-describedby="example1_info">
+				<tbody id="tab" class="passed_table">
+				<tr role="row">
+					<th class=" text-center">提交时间</th>
+					<th class="sorting text-center">答案文本</th>
+					<th class="sorting text-center">操作</th>
+				</tr>
+				<foreach name="list" item="vo" key="k" >
+					<tr role="row" class="odd text-center">
+						<td>{$vo['commit_time']}</td>
+						<td class="text-left">{$vo['describe']}</td>
+						<td class="text-right">
+							<a target="_blank" href="{:U('Admin/ExamReport/userArticle',array('research_id'=>$vo['research_id'],'survey_id'=>$vo['survey_id'],'user_id'=>$vo['user_id'],'project_id'=>$vo['project_id'],'u_survey_id'=>$vo['u_survey_id']))}">查看详情>></a>
+						</td>
+					</tr>
+				</foreach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<!--分页开始-->
+	<div class="row">
+		<div class="float_r mr15">
+			<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+				{$page}
+			</div>
+		</div>
+	</div>
+	<!--分页结束-->
+</form>
+</body>
+
+</html>

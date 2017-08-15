@@ -1,0 +1,255 @@
+<layout name="layout"/>
+<style>
+    .delall {
+        width: 120px;
+    }
+
+    .error_message {
+        display: none;
+        color: red;
+    }
+    
+    span {
+    	color: red;
+    }
+</style>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        供应商管理
+        <small>/新增供应商</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="supplierManage.html"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+                <!--内容开始-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title text-light-blue">新增供应商</h3>
+                            <!--新增供应商时，显示“新增供应商”，编辑供应商时，显示供应商名称-->
+                        </div>
+                        <form id="addForm" action="{:U('Supplier/addSupplier')}" method="post" class="form-horizontal" onSubmit="return sub()">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>供应商名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" name="type" value="1">
+                                        <input type="text" name="sname" value="{$sname}" class="form-control Supplier"
+                                               maxlength="20" placeholder="请输入供应商名称 ">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>类型：</label>
+                                    <div class="col-sm-10">
+                                        <!-- <div class="btn-group">
+                                        <button type="button" id="btn-flat1" class="btn btn-default btn-flat">请选择供应商类型
+                                        </button>
+                                        <ul id="style" class="dropdown-menu " role="menu">
+                                          <li data-id="0"><a href="#">机构</a></li>
+                                          <li data-id="1"><a href="#">讲师</a></li>
+                                        </ul>
+                                        <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                                          <span class="caret"></span>
+                                        </button>
+                                      </div> -->
+                                        <select class="form-control" name="style">
+                                            <option value=''>请选择供应商类型</option>
+                                            <option value='2'
+                                            <if condition="$style eq 2">selected="selected"</if>
+                                            >讲师</option>
+                                            <option value='1'
+                                            <if condition="$style eq 1">selected="selected"</if>
+                                            >机构</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>擅长领域：</label>
+                                    <div class="col-sm-10">
+                                        <!-- <div class="btn-group">
+                                          <button type="button" class="btn btn-default btn-flat good_style">请选择擅长的领域
+                                          </button>
+                                          <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                          </button> -->
+                                        <!--  <ul  class="dropdown-menu" role="menu">
+                                           <foreach name="res" item="v">
+                                           <li class="good_styles" data-id="{$v['id']}"><a href="#">{$v['tname']}</a></li>
+                                           </foreach>
+                                         </ul> -->
+                                        <select class="form-control " name="sc_type">
+                                            <option value='' selected="selected">请选择擅长的领域</option>
+                                            <foreach name="res" item="v">
+                                                <option value="{$v['id']}"
+                                                <if condition="$sc_type eq $v['id']">selected="selected"</if>
+                                                >{$v['tname']}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>核心产品：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="main_course" class="form-control course" maxlength="20"
+                                           placeholder="请输入主打的课程名称">
+
+                                    <button type="button" class="btn btn-primary btn-sm ml5" onclick="add_course();">添加
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10 mb5">
+                                    <ul id="mb5">
+                                        <foreach name="tag" item="vo">
+                                            <li data="{$vo}" class="mb5 add_courses"><i
+                                                    class="fa fa-angle-double-right text-light-blue mr5"></i><input
+                                                    type="hidden" name="tag[]" value="{$vo}">{$vo}<a
+                                                    class="fa fa-times-circle text-red ml20"></a></li>
+                                        </foreach>
+                                    </ul>
+                                    <span class="mb5 error_message">---当前还没添加主打的课程---</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>联系人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="linkman" value="{$linkman}" class="form-control"
+                                           maxlength="20" placeholder="请输入联系人">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>职位：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="{$position}" name="position" class="form-control"
+                                           maxlength="20" placeholder="请输入职位名称 ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">电话：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="{$tel}" name="tel" class="form-control" maxlength="20"
+                                           placeholder="请输入电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span>*</span>手机：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="{$phone_number}" name="phone_number" class="form-control"
+                                           maxlength="20" placeholder="请输入手机号码">
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-info form-group_but" onclick="add();">保存</button>
+                                        <!--点击保存后，提示保存成功，提示关闭后跳到供应商列表页面-->
+                                        <input class="btn btn-default form-group_but delall" value="清空" onclick="reset();">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--内容結束-->
+            </div>
+        </div>
+    </div>
+</section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        //点击删除课程
+        $("#mb5").on('click', 'li', function () {
+            $(this).remove();
+        })
+    })
+    //radio选中样式
+    $('input').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_minimal-blue',
+        increaseArea: '20%'
+    });
+
+    //添加课程
+
+    function add_course() {
+
+        var data = $("input[name='main_course']").val();
+
+        if (data == '') {
+            $(".error_message").css('display', 'block');
+        }
+        else {
+            $(".error_message").css('display', 'none');
+            $("#mb5").append('<li data="' + data + '" class="mb5 add_courses"><i class="fa fa-angle-double-right text-light-blue mr5"></i><input type=\"hidden\" name=\"tag[]\" value=\"' + data + '\">' + data + '<a class="fa fa-times-circle text-red ml20"></a></li>');
+        }
+    }
+    //新增供应商
+    function add() {
+        $("#addForm").validate({
+            rules: {
+                sname: 'required',
+                style: 'required',
+                sc_type: 'required',
+                linkman: 'required',
+                position: 'required',
+                // tel: 'required',
+                phone_number: 'required',
+            },
+            messages: {
+                sname: '供应商名称必填',
+                style: '供应商领域必填',
+                sc_type: '擅长领域必填',
+                linkman: '联系人必填',
+                position: '联系人必填',
+                // tel: '联系电话必填',
+                phone_number: '手机必填',
+            },
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parent()).css('color', 'red')
+                return false;
+            },
+        });
+
+        
+
+    }
+     
+     function sub(){
+        var style = $("select[name='style']").val();
+        var sc_type = $("select[name='sc_type']").val();
+        //   alert(typeof(style));
+         
+        if ($("#mb5 li").length == 0) {
+            layer.alert('核心产品还没添加');
+            return false;
+        } else if (style == '') {
+            layer.alert('类型不能为空');
+            return false;
+        } else if (sc_type == "") {
+            layer.alert('擅长领域不能为空');
+            return false;
+        }
+     }
+
+
+    $("addForm").submit(function(){
+
+        alert(0);
+        return false;
+
+    });
+</script>

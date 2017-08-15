@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>考试管理——考试列表</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+			课程历史版本
+			<small>/历史版本列表</small>
+		</h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div>
+
+				<div class="tab-content">
+
+					<div class="dataTables_wrapper form-inline dt-bootstrap">
+
+						<div class="box-header with-border">
+							<h3 class="box-title">{$course_name} 历史版本</h3>
+						</div>
+
+						<!--内容开始-->
+						<div class="row mt10">
+							<div class="col-sm-12">
+								<table  class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+									<thead>
+										<tr role="row">
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">更新时间</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">版本内容</th>
+											<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">修订者</th>
+
+										</tr>
+									</thead>
+									<tbody class="passed_table">
+										<foreach name="list" item="data" key="k">
+											<tr role="row" class="odd text-center">
+												<td>{$k+1}</td>
+												<td>{$data['update_time']|date="Y-m-d H:i",###}</td>
+												<td>
+													<a href="{:U('RsCourse/checkcourse',array('id'=>$data['id']))}" class="color_gree bs-callout-info">
+														<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+													</a>
+												</td>
+												<td><span class="text-blue">{$data['username']}</span></td>
+											</tr>
+										</foreach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!--内容結束-->
+						<!--分页开始-->
+						<div class="row">
+							<div class="float_r mr15">
+								<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+									{$show}
+								</div>
+							</div>
+						</div>
+						<!--分页结束-->
+
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+	</body>
+
+</html>

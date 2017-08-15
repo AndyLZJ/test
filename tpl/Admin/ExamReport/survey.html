@@ -1,0 +1,107 @@
+<!--三期时间插件样式-->
+<link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+<layout name="layout" />
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+	<h1 class="info_title">
+                             数据管理
+      <small>/调研报表</small>
+    </h1>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+	<div class="box-header with-border info_box_title">
+		<span>调研报表</span>
+	</div>
+	<div class="row mt15">
+		<form action="__SELF__" method="get">
+			<div class="col-sm-8">
+				<span class="float_l mt10 ">开始时间：</span>
+				<div class="input-group date col-sm-3">
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<input type="text" class="form-control pull-right" id="start_time" name="start_time" value="{$data.start_time}" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})">
+				</div>
+				<span class=" mt10 ">&nbsp;至&nbsp;结束日期：</span>
+				<div class="input-group date col-sm-3">
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+					<input type="text" class="form-control pull-right" id="end_time" name="end_time" value="{$data.end_time}" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})">
+				</div>
+			</div>
+			<div class="">
+			<a class="btn btn-info  pull-right ml10 form-group_but" href="{:U('exportSurvey')}">导出</a>
+			<div class="input-group pull-right">
+				<input type="text" name="name" class="form-control pull-right" placeholder="请输入问卷名称" value="{$data.name}">
+				<div class="input-group-btn">
+					<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+				</div>
+			</div>
+	</div>
+
+	<!--<div class="row mt15">-->
+		
+
+		<!--</div>-->
+
+	</div>
+	</form>
+	<!--费用统计分析内容开始-->
+	<div class="row mt15">
+		<div class="col-sm-12">
+			<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+				<thead>
+					<tr role="row">
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">序号</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">问卷名称</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">所属项目/计划</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">负责人</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">有效时间</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">应到/实到人数</th>
+						<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">详情</th>
+					</tr>
+				</thead>
+				<tbody id="tab" class="passed_table">
+					<foreach name="data.list" item="v" key="k">
+						<tr role="row" class="odd text-center">
+							<td>{$k+1}</td>
+							<td>{$v.name|default='---'}</td>
+							<td>{$v.project_name|default='---'}</td>
+							<td>{$v.principal|default='---'}</td>
+							<td>{$v.start_time} - {$v.end_time}</td>
+							<td>{$v.should} / {$v.real}</td>
+							<td>
+								<a href="<if condition=" $v.typeid eq 2 ">{:U('admin/ExamReport/article',array('survey_id'=>$v['survey_id'],'project_id'=>$v['id']))}<else /> {:U('admin/ExamReport/article',array('survey_id'=>$v['survey_id'],'research_id'=>$v['id']))}</if>">详情</a>
+							</td>
+						</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!--内容結束-->
+	<!--分页开始-->
+	<div class="row">
+		<div class="float_r mr15">
+			<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+				{$data.page}
+			</div>
+		</div>
+	</div>
+	<!--分页结束-->
+
+</section>
+</body>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<!--三期时间插件js-->
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+
+</html>

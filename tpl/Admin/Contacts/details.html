@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人详情页</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+
+    <style type="text/css">
+        .box-title {
+            margin-right: 20px !important;
+        }
+
+        .organization_box {
+            margin-bottom: 0px !important;
+        }
+
+        .no_employees {
+            height: 500px;
+        }
+
+        .no_employees p {
+            line-height: 50px;
+            padding-top: 160px;
+        }
+
+        .organ_input {
+            width: 250px;
+        }
+
+        .box-solid > .sidebar-menu > li.active > a, .box-solid > .sidebar-menu > li > a:hover, .box-solid > .sidebar-menu > li > a {
+            padding: 10px 5px 10px 15px;
+        }
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group {
+            margin-right: 0px!important;
+            margin-left: 0px!important;
+        }
+
+
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group > .col-sm-10 {
+            width: 300px!important;
+        }
+    </style>
+    <style type="text/css">
+        .frim_line.active {
+            color: white;
+            background-color: #00acd6;
+        }
+        .action {
+            width: 400px;
+            height: 30px;
+            margin: 10px 0;
+        }
+        .imageBox {position: relative; height: 400px; width: 400px; border: 1px solid #aaa; background: #fff; overflow: hidden; background-repeat: no-repeat; cursor: move; box-shadow: 4px 4px 12px #B0B0B0;}
+        .imageBox .thumbBox {position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px; box-sizing: border-box; border: 1px solid rgb(102, 102, 102); box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5); background: none repeat scroll 0% 0% transparent;}
+        .imageBox .spinner {position: absolute; top: 0; left: 0; bottom: 0; right: 0; text-align: center; line-height: 400px; background: rgba(0, 0, 0, 0.7);}
+        .Btnsty_peyton {float: right; width: 66px; display: inline-block; margin-bottom: 10px; height: 57px; line-height: 57px; font-size: 20px; color: #FFFFFF; margin: 0px 2px; background-color: #f38e81; border-radius: 3px; text-decoration: none; cursor: pointer; box-shadow: 0px 0px 5px #B0B0B0; border: 0px #fff solid;}
+        /*选择文件上传*/
+        .new-contentarea {width: 165px; overflow: hidden; margin: 0 auto; position: relative; float: left;}
+        .new-contentarea label {width: 100%; height: 100%; display: block;}
+        .new-contentarea input[type=file] {width: 188px; height: 60px; background: #333; margin: 0 auto; position: absolute; right: 50%; margin-right: -94px; top: 0; right/*\**/: 0px\9; margin-right/*\**/: 0px\9; width/*\**/: 10px\9; opacity: 0; filter: alpha(opacity=0); z-index: 2;}
+        a.upload-img {width: 165px; display: inline-block; margin-bottom: 10px; height: 57px; line-height: 57px; font-size: 20px; color: #FFFFFF; background-color: #f38e81; border-radius: 3px; text-decoration: none; cursor: pointer; border: 0px #fff solid; box-shadow: 0px 0px 5px #B0B0B0;}
+        a.upload-img:hover {background-color: #ec7e70;}
+        .tc {text-align: center;}
+    </style>
+</head>
+
+<body>
+<!--内容区域顶栏面包屑结束-->
+<!--添加员工窗口-->
+<div id="add_employees">
+	<div class="box-header with-border info_box_title mb15">
+        <span>员工资料</span>
+    </div>
+    <form class="form-horizontal col-sm-12">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label mt15">用户头像：</label>
+                <div class="col-sm-9">
+                    <div class="cropped">
+                        <img id="use_img" src="{$data.avatar}"
+                             style="width:100px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"
+                             class="img-circle" alt="User Image">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--基本信息开始-->
+        <div class="box-header with-border info_box_title mb15">
+            <span>基本信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">姓名：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.username}"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">性别：</label>
+                <div class="col-sm-9">
+                	<if condition="$data['gender'] eq 1">
+                		<input type="text" class="form-control" value="男"/>
+                	<elseif condition="$data['gender'] eq 2"/>
+                		<input type="text" class="form-control" value="女"/>
+                	<else/>
+                		<input type="text" class="form-control" value="未知"/>
+                	</if>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">年龄：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.age}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-header with-border info_box_title mb15">
+            <span>岗位信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">入集团时间：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.group_time}"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">入中心时间：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.center_time}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">区域：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.area}"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">岗位：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.name}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">部门：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.job_number}"/>
+                </div>
+            </div>
+            <!-- <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">工号：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.job_number}"/>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">室：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.room}"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">职级：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.rank}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">序列：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.sequence}"/>
+                </div>
+            </div>
+        </div>
+		<div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">用户组级别：</label>
+                <div class="col-sm-9">
+                    <if condition="$data['education'] eq 0">
+                		<input type="text" class="form-control" value="普通用户"/>
+                	<elseif condition="$data['education'] eq 1"/>
+                		<input type="text" class="form-control" value="管理员"/>
+                	<elseif condition="$data['education'] eq 2"/>
+                		<input type="text" class="form-control" value="负责人"/>
+                	</if>
+                </div>
+            </div>
+        </div>
+        <div class="box-header with-border info_box_title mb15">
+            <span>个人信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">学历：</label>
+                <div class="col-sm-9">
+                	<if condition="$data['education'] eq 1">
+                		<input type="text" class="form-control" value="博士研究生"/>
+                	<elseif condition="$data['education'] eq 2"/>
+                		<input type="text" class="form-control" value="硕士研究生"/>
+                	<elseif condition="$data['education'] eq 3"/>
+                		<input type="text" class="form-control" value="本科"/>
+                	<elseif condition="$data['education'] eq 4"/>
+                		<input type="text" class="form-control" value="专科"/>
+                	<else/>
+                		<input type="text" class="form-control" value="专科以下"/>
+                	</if>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">手机号码：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.phone}"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">办公电话：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.tel}" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">IP电话：</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{$data.ip_phone}" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script>
+	$('input').each(function(){
+		$(this).attr('readonly','readonly');
+	});
+</script>
+</html>

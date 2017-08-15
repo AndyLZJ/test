@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>融易点——首页——培训主管面板</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/skins/_all-skins.min.css">
+    <style type="text/css">
+        html {
+            background: #fbfbfb;
+        }
+
+        .content {
+            background: #fbfbfb;
+        }
+
+        .info_box {
+            background: #fff;
+            box-shadow: 0 0px 8px 0 rgba(0, 0, 0, .04);
+        }
+
+        .quick {
+            color: #fff;
+            background: url(__PUBLIC__/Dist/img/quick_bg.png);
+            padding-left: 20px;
+            width: 140px;
+            height: 58px;
+            line-height: 58px;
+            font-size: 18px;
+            display: block;
+            float: left;
+        }
+
+        .mark {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            line-height: 25px !important;
+            font-size: 14px;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2)
+        }
+
+        .products-list .product-title {
+            line-height: 30px;
+        }
+
+        .products-list .product-img {
+            width: 50px;
+            height: 50px;
+            background: #10b2da;
+            color: #fff;
+        }
+
+        .products-list .product-img .day {
+            font-size: 24px;
+            text-align: center;
+            line-height: 18px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .products-list .product-img .month {
+            font-size: 14px;
+            text-align: center;
+            display: block;
+        }
+
+        .products-list .product-title {
+            color: #6f6f6f;
+        }
+
+        .products-list .product-title:hover {
+            color: #10b2da;
+        }
+
+        .products-list > .item {
+            padding: 15px 0px;
+        }
+    </style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        首页
+        <small>/管理员面板</small>
+    </h1>
+    <ol class="breadcrumb">
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="info_box">
+                <div class="box-header with-border">
+                    <i class="fa fa-volume-up color_blue"></i>
+                    <a class="text-grey" href="#">
+                        小王申请加入中国邮政储蓄银行股份有限公司新疆维吾尔自治区分行
+                    </a>
+                    <a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+                    <span class="text-grey float_r mr10">1/5</span>
+                    <a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+                    <span class="text-grey float_r mr50">2016年12月21号</span>
+                </div>
+                <div class="box-body">
+                    <div>
+                        <span class="quick">快捷方式</span>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-calendar-plus-o"></i></div>
+                                <span>新建培训项目</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-book"></i></div>
+                                <span>课程管理</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-edit"></i></div>
+                                <span>考试管理</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-id-badge"></i></div>
+                                <span>讲师管理</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-user-circle"></i></div>
+                                <span>供应商管理</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-question-circle"></i></div>
+                                <span>问卷管理</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-pie-chart"></i></div>
+                                <span>统计报表</span>
+                            </div>
+                        </a>
+                        <a>
+                            <div class="quick_but">
+                                <div><i class="fa fa-th-large"></i></div>
+                                <span>综合业务</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>待处理事项</span>
+                </div>
+                <div class="box-body">
+                    <a>
+                        <div class="transact_but bg-teal color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>加入申请</span>
+                            <span class="label label-danger mark">4</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-aqua-active color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>课件审核</span>
+                            <span class="label label-danger mark">27</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-green color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>试卷审核</span>
+                            <span class="label label-danger mark">1</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-light-blue color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>培训项目</span>
+                            <span class="label label-danger mark">8</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-yellow color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>问卷审核</span>
+                            <span class="label label-danger mark">7</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-red color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>课程审核</span>
+                            <span class="label label-danger mark">3</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-teal color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>被拒课件</span>
+                            <span class="label label-danger mark">52</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-orange color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>被拒试卷</span>
+                            <span class="label label-danger mark">9</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-maroon color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>被拒项目</span>
+                            <span class="label label-danger mark">37</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-purple color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>被拒问卷</span>
+                            <span class="label label-danger mark">15</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-green color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>被拒课程</span>
+                            <span class="label label-danger mark">5</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-aqua color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>培训项目任务</span>
+                            <span class="label label-danger mark">8</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-light-blue color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>课程任务</span>
+                            <span class="label label-danger mark">48</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-red color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>试卷任务</span>
+                            <span class="label label-danger mark">2</span>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="transact_but bg-yellow color-palette mr15">
+                            <div><i class="fa fa-calendar-plus-o"></i></div>
+                            <span>问卷任务</span>
+                            <span class="label label-danger mark">4</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>正在进行的项目</span>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>项目</th>
+                            <th style="width: 200px;">进度</th>
+                            <th>正在进行/即将开始</th>
+                            <th>开始时间</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td><a href="#">2016新员工培训</a></td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                </div>
+                            </td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场礼仪</a></td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td><a href="#">2016新员工培训2016新员工培训</a></td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                                </div>
+                            </td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场礼仪</a></td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td><a href="#">2016 新员工培训</a></td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                                </div>
+                            </td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场</a></td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td><a href="#">2016 新员工培训</a></td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                    <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                                </div>
+                            </td>
+                            <td><a href="#">[课程] 职场礼仪职场</a></td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>刚结束的活动</span>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>活动</th>
+                            <th>项目</th>
+                            <th>实到/应到</th>
+                            <th>合格人数</th>
+                            <th>结束时间</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td><a href="#">2016新员工培训</a></td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场礼仪</a></td>
+                            <td>50/60</td>
+                            <td>—</td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td><a href="#">2016新员工培训2016新员工培训</a></td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场礼仪</a></td>
+                            <td>50/60</td>
+                            <td>—</td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td><a href="#">2016 新员工培训</a></td>
+                            <td><a href="#">[课程] 职场礼仪职场礼仪职场</a></td>
+                            <td>50/60</td>
+                            <td>48</td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td><a href="#">2016 新员工培训</a></td>
+                            <td><a href="#">[课程] 职场礼仪职场</a></td>
+                            <td>50/60</td>
+                            <td>—</td>
+                            <td>2016-12-21 12:12:12</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>统计</span>
+                </div>
+                <div class="box-body">
+                    <div id="chart-panel" style="width: 100%;height:500px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="info_box mt15">
+                <div class="box-header with-border info_box_title">
+                    <span>新闻资讯</span>
+                </div>
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="product-img">
+                                <span class="day">27</span>
+                                <span class="month">Sep</span>
+                            </div>
+                            <div class="product-info">
+                                <div>
+                                    <a href="javascript:void(0)" class="product-title">
+                                        经济日报：培育新动能 壮大新实力—记贵州建设国内首屈一指第一家
+                                        <span class="label label-success pull-right">new</span>
+                                    </a>
+                                </div>
+                          <span class="product-description float_l">
+                            <i class="fa fa-clock-o"></i>
+                            2016-09-27  14:35:54
+                          </span>
+                                <a href="#" class="product-description float_r">
+                                    查看详情>>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/statics/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+<script src="__PUBLIC__/Js/js/app.min.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script type="text/javascript">
+
+    //统计图表
+    var myChart = echarts.init(document.getElementById('chart-panel'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '统计标题'
+        },
+        tooltip: {},
+        legend: {
+            data: ['课程数量', '培训人数', '讲师数量']
+        },
+        xAxis: {
+            data: ["6月", "7月", "8月", "9月", "10月"]
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '课程数量',
+                type: 'bar',
+                color: ['#1ab394'],
+                data: [5, 20, 36, 10, 18, 20]
+            },
+            {
+                name: '培训人数',
+                type: 'bar',
+                color: ['#1f95d0'],
+                data: [15, 10, 30, 16, 20, 25]
+            },
+            {
+                name: '讲师数量',
+                type: 'bar',
+                color: ['#ee4735'],
+                data: [10, 25, 26, 17, 10, 20]
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>
+</body>
+</html>

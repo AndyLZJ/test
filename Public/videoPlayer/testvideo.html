@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">  
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">  
+	<link href="css/video-js.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="js/videojs-ie8.min.js"></script>
+	<script src="js/video.min.js"></script>
+	<style>
+	.vjs-current-time{display: block}
+	</style>
+	<title>video5.18.4测试</title>
+</head>
+<body>
+<input type="button" id="video1" value="video1"/>
+<input type="button" id="video2" value="video2"/>
+	<video id="my-video" class="video-js vjs-big-play-centered" controls 
+	width="400" height="300" 
+	poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491045540573&di=91d045d40ed4627c04baae5a6c9db5ab&imgtype=0&src=http%3A%2F%2Fwww.wallcoo.com%2Fanimal%2FMX069_Pretty_Puppies_puppy_garden_adventure%2Fwallpapers%2F1680x1050%2FGarden_adventure_of_the_little_puppy_photos_pictures_puppy_MIL56006.jpg" 
+	data-setup='{}'>
+		<source src="http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4" type='video/mp4'/>
+		<source src="http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4" type='video/webm'/>
+		<source src="http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4" type='video/ogg'/>
+	    <p class="vjs-no-js">要查看此视频，请启用JavaScript</p>
+	</video>
+	<input type="hidden" id="preSeeTime" value=""/>
+	<script type="text/javascript">
+		/*
+		playToggle 播放切换
+		volumeMenuButton 音量菜单按钮
+		currentTimeDisplay 当前时间显示
+		timeDivider 时间分隔线
+		durationDisplay 持续时间显示
+		progressControl 进度控制
+		liveDisplay 实时显示
+		remainingTimeDisplay 剩余时间显示
+		customControlSpacer 定制控制间隔
+		playbackRateMenuButton 播放速率菜单按钮
+		chaptersButton 章节按钮
+		descriptionsButton 说明按钮
+		subtitlesButton 字幕按钮
+		captionsButton 字幕按钮
+		fullscreenToggle 全屏切换
+		*/
+		
+		$(document).ready(function(){
+			/* function updateSeeTime(){
+				var whereYouAt = myPlayer.currentTime();//获取播放进度（单位秒）
+				var timeLeft = myPlayer.remainingTime();
+				var seePrecent = whereYouAt / (whereYouAt + timeLeft);
+				seePrecent = Math.floor(seePrecent * 100);
+				seePrecent = seePrecent.toFixed(2);
+				$(".vjs-play-progress").css("width",seePrecent+"%");
+			    //console.log(whereYouAt);
+			    //console.log(seePrecent);
+			}
+			 */
+			
+			var myPlayer = videojs('my-video',{
+				 	//techOrder: ["flash","html5"],
+					controlBar: {
+						volumeMenuButton: false,
+						progressControl: false,
+						remainingTimeDisplay: false,
+					}
+			});
+			 
+			//延时处理，避免VIDEOJS: {} Video is not ready. (Video.js)
+			setTimeout(function(){
+				myPlayer.currentTime(130);//断点续播（单位秒）
+			}, 400);
+			
+			var progressHtml = '<div class="vjs-progress-control vjs-control"><div tabindex="0" class="vjs-progress-holder vjs-slider vjs-slider-horizontal" role="slider" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" aria-label="progress bar" aria-valuetext=""><div class="vjs-play-progress vjs-slider-bar" style="width:0%;"><span class="vjs-control-text"><span>Progress</span>: 0%</span></div></div></div>';
+			if($(".vjs-progress-control").length == 0){
+				$(".vjs-current-time").after(progressHtml);
+			}
+			
+			var seeTime;
+			myPlayer.on('play', function() {
+				seeTime = setInterval(function(){
+					var whereYouAt = myPlayer.currentTime();//获取播放进度（单位秒）
+					var timeLeft = myPlayer.remainingTime();
+					var seePrecent = whereYouAt / (whereYouAt + timeLeft);
+					seePrecent = Math.floor(seePrecent * 100);
+					seePrecent = seePrecent.toFixed(2);
+					$(".vjs-play-progress").css("width",seePrecent+"%");
+				}, 1000);
+			});
+			
+			//暂停播放
+			myPlayer.on('pause', function() {  
+				clearInterval(seeTime);
+			});
+			
+			//切换视频
+			$("#video1").click(function(){
+				var video1 = 'http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4';
+				var video2 = 'http://v1.occupationedu.com/%E4%B8%93%E4%B8%9A%E5%8C%96%E9%94%80%E5%94%AE%E6%B5%81%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%893';
+		        myPlayer.src(video1);  //重置video的src
+		        myPlayer.load(video1);  //使video重新加载
+		        setTimeout(function(){
+					myPlayer.currentTime(50);//断点续播（单位秒）
+				}, 400);
+			});
+			
+			$("#video2").click(function(){
+				var video1 = 'http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4';
+				var video2 = 'http://v1.occupationedu.com/%E4%B8%93%E4%B8%9A%E5%8C%96%E9%94%80%E5%94%AE%E6%B5%81%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%893';
+		        myPlayer.src(video2);  //重置video的src
+		        myPlayer.load(video2);  //使video重新加载
+		        setTimeout(function(){
+					myPlayer.currentTime(150);//断点续播（单位秒）
+				}, 400);
+			});
+		});
+		
+	</script>
+</body>

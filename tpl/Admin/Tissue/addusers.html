@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>融易点——系统管理——组织架构</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+
+    <style type="text/css">
+        .box-title {
+            margin-right: 20px !important;
+        }
+
+        .organization_box {
+            margin-bottom: 0px !important;
+        }
+
+        .no_employees {
+            height: 500px;
+        }
+
+        .no_employees p {
+            line-height: 50px;
+            padding-top: 160px;
+        }
+
+        .organ_input {
+            width: 250px;
+        }
+
+        .box-solid > .sidebar-menu > li.active > a, .box-solid > .sidebar-menu > li > a:hover, .box-solid > .sidebar-menu > li > a {
+            padding: 10px 5px 10px 15px;
+        }
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group {
+            margin-right: 0px!important;
+            margin-left: 0px!important;
+        }
+
+
+
+        .layui-layer-content > .form-horizontal > .box-body > .form-group > .col-sm-10 {
+            width: 300px!important;
+        }
+    </style>
+    <style type="text/css">
+        .frim_line.active {
+            color: white;
+            background-color: #00acd6;
+        }
+        .action {
+            width: 400px;
+            height: 30px;
+            margin: 10px 0;
+        }
+        .imageBox {position: relative; height: 400px; width: 400px; border: 1px solid #aaa; background: #fff; overflow: hidden; background-repeat: no-repeat; cursor: move; box-shadow: 4px 4px 12px #B0B0B0;}
+        .imageBox .thumbBox {position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px; box-sizing: border-box; border: 1px solid rgb(102, 102, 102); box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5); background: none repeat scroll 0% 0% transparent;}
+        .imageBox .spinner {position: absolute; top: 0; left: 0; bottom: 0; right: 0; text-align: center; line-height: 400px; background: rgba(0, 0, 0, 0.7);}
+        .Btnsty_peyton {float: right; width: 66px; display: inline-block; margin-bottom: 10px; height: 57px; line-height: 57px; font-size: 20px; color: #FFFFFF; margin: 0px 2px; background-color: #f38e81; border-radius: 3px; text-decoration: none; cursor: pointer; box-shadow: 0px 0px 5px #B0B0B0; border: 0px #fff solid;}
+        /*选择文件上传*/
+        .new-contentarea {width: 165px; overflow: hidden; margin: 0 auto; position: relative; float: left;}
+        .new-contentarea label {width: 100%; height: 100%; display: block;}
+        .new-contentarea input[type=file] {width: 188px; height: 60px; background: #333; margin: 0 auto; position: absolute; right: 50%; margin-right: -94px; top: 0; right/*\**/: 0px\9; margin-right/*\**/: 0px\9; width/*\**/: 10px\9; opacity: 0; filter: alpha(opacity=0); z-index: 2;}
+        a.upload-img {width: 165px; display: inline-block; margin-bottom: 10px; height: 57px; line-height: 57px; font-size: 20px; color: #FFFFFF; background-color: #f38e81; border-radius: 3px; text-decoration: none; cursor: pointer; border: 0px #fff solid; box-shadow: 0px 0px 5px #B0B0B0;}
+        a.upload-img:hover {background-color: #ec7e70;}
+        .tc {text-align: center;}
+    </style>
+</head>
+
+<body>
+<!--内容区域顶栏面包屑结束-->
+<!--添加员工窗口-->
+<div id="add_employees">
+
+    <form class="form-horizontal col-sm-12">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label mt15"><span class="color_red">*</span>用户头像：</label>
+                <div class="col-sm-8">
+                    <div class="cropped">
+                        <img onclick="change_use()" id="use_img" src="<if condition="!empty($avatar)">{$avatar}</if>"
+                             style="width:100px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"
+                             class="img-circle" alt="User Image" onerror="this.src='__PUBLIC__/Dist/img/user8-128x128.jpg'">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label "><span class="text-red">*</span>账号：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入电子邮件" name="email" value="{$email}" onkeyup="value=value.replace(/[?!\u4e00-\u9fa5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[?!\u4e00-\u9fa5]/g,''))"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label "><span class="text-red">*</span>密码：</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" placeholder="<if condition="$typeid eq 1">密码空为不修改<else/>请输入密码</if>" name="password"/>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label "><span class="text-red">*</span>确认密码：</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" placeholder="<if condition="$typeid eq 1">密码空为不修改<else/>请再次输入密码</if>" name="passwords"/>
+                </div>
+            </div>
+
+        </div>
+        <!--基本信息开始-->
+        <div class="box-header with-border info_box_title mb15">
+            <span>基本信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label "><span class="text-red">*</span>姓名：</label>
+                <div class="col-sm-8">
+
+                    <input type="text"  <if condition="$user_id eq 1 AND $redact eq 1">readonly</if> class="form-control" placeholder="请输入姓名" name="username" value="{$username}"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">出生日期：</label>
+                <div class="col-sm-8">
+                    <input type="text" onchange="datebirth(this)" value="{$birthday}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,readOnly:false,maxDate:'%y-%M-%d'})" class="form-control" placeholder="" name="birthday"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label "><span class="text-red">*</span>性别：</label>
+                <div class="col-sm-8">
+                    <div class="mt5">
+                        <span class="mr15">
+                        <input class="mr5" type="radio" name="sex" value="1" <if condition="$gender eq 1">checked="checked"</if> <if condition="empty($gender)">checked="checked"</if>/> 男</span>
+                        <input class="mr5" type="radio" name="sex" value="2" <if condition="$gender eq 2">checked="checked"</if>/> 女
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">年龄：</label>
+                <div class="col-sm-8">
+                    <div class="mt10" id="age">
+                        {$age}
+                    </div>
+                    <input type="hidden" value="{$age}" name="age" />
+                </div>
+            </div>
+        </div>
+
+        <div class="box-header with-border info_box_title mb15">
+            <span>岗位信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">入集团时间：</label>
+                <div class="col-sm-8">
+                    <input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,readOnly:false,maxDate:'%y-%M-%d'})" class="form-control" placeholder="" name="group_time" value="{$group_time}"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">入中心时间：</label>
+                <div class="col-sm-8">
+                    <input type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,readOnly:false,maxDate:'%y-%M-%d'})" class="form-control" placeholder="" name="center_time" value="{$center_time}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">区域：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" name="area" value="{$area}" maxlength="20"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">岗位：</label>
+                <div class="col-sm-8">
+                    <select id="jobs_id" class="form-control select2 width_10">
+                        <foreach name="jobs_manage" item="v">
+                            <option value="{$v['id']}"
+                            <if condition="$v['id'] eq $job_id">selected="selected"</if>
+                            >{$v['name']}</option>
+                        </foreach>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">部门：</label>
+                <div class="col-sm-8">
+                    <select class="form-control select2 width_10" id="tissue_id">
+                        <if condition="!empty($tree_items['_data'])">
+
+                            <option value="{$tree_items['id']}"
+                            <if condition="$tree_items['id'] eq $tid">selected="selected"</if>
+                            >{$tree_items['name']}</option>
+
+                            <foreach name="tree_items['_data']" item="v">
+                                <if condition="!empty($v['_data'])">
+                                    <option value="{$v['id']}"
+                                    <if condition="$v['id'] eq $tid">selected="selected"</if>
+                                    >&nbsp;&nbsp;{$v['name']}</option>
+                                    <foreach name="v['_data']" item="o">
+                                        <option
+                                        <if condition="$o['id'] eq $tid">selected="selected"</if>
+                                        value="{$o['id']}">&nbsp;&nbsp;&nbsp;&nbsp;{$o['name']}</option>
+                                        <foreach name="o['_data']" item="i">
+                                            <option
+                                            <if condition="$i['id'] eq $tid">selected="selected"</if>
+                                            value="{$i['id']}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$i['name']}</option>
+                                        </foreach>
+                                    </foreach>
+                                    <else/>
+                                    <if condition="$v['pid'] eq 1">
+                                        <option value="{$v['id']}"
+                                        <if condition="$v['id'] eq $tid">selected="selected"</if>
+                                        >&nbsp;&nbsp;{$v['name']}</option>
+                                        <elseif condition="$level neq 4"/>
+                                        <option
+                                        <if condition="$v['id'] eq $tid">selected="selected"</if>
+                                        value="{$v['id']}">&nbsp;&nbsp;{$v['name']}</option>
+                                    </if>
+                                </if>
+                            </foreach>
+                            <else/>
+                            <option
+                            <if condition="$tree_items['id'] eq $tid">selected="selected"</if>
+                            value="{$tree_items['id']}">{$tree_items['name']}</option>
+                        </if>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">工号：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入工号" name="job_number" value="{$job_number}" maxlength="10"/>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="form-group ">
+
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">室：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入科室" name="room" value="{$room}" maxlength="10"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">职级：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" name="rank" value="{$rank}" maxlength="10"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">序列：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入序列:" name="sequence" value="{$sequence}" maxlength="20"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-header with-border info_box_title mb15">
+            <span>个人信息</span>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">学历：</label>
+                <div class="col-sm-8">
+                    <select class="form-control select2 width_10" name="education" id="education">
+                        <option value="-1" selected="selected">选择学历</option>
+                        <option value="1" <if condition="$education eq 1">selected="selected"</if>>博士研究生</option>
+                        <option value="2" <if condition="$education eq 2">selected="selected"</if>>硕士研究生</option>
+                        <option value="3" <if condition="$education eq 3">selected="selected"</if>>本科</option>
+                        <option value="4" <if condition="$education eq 4">selected="selected"</if>>专科</option>
+                        <option value="5" <if condition="$education eq 5">selected="selected"</if>>专科以下</option>
+                    </select>
+                </div>
+            </div>
+            <!--
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">手机号码：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入工号" name="mobilephone" value="{$mobilephone}" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+                </div>
+            </div>-->
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">手机号码：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="请输入员工手机号" value="<notempty name="phone">{$phone}</notempty>" name="phone" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">办公电话：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" value="{$tel}" name="tel" onkeyup="value=value.replace(/[?!\u4e00-\u9fa5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[?!\u4e00-\u9fa5]/g,''))"/>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-3 control-label ">IP电话：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="" value="{$ip_phone}" name="ip_phone" onkeyup="value=value.replace(/[?!\u4e00-\u9fa5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[?!\u4e00-\u9fa5]/g,''))"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="width: 12%;" class="pull-left control-label ">标签：</label>
+            <div class="col-sm-8">
+                <div class="mb10" id="addsurvey">
+                    <foreach name="tag_list" item="item">
+                        <a type="button" class="btn mb10  btn-default btn-sm"><input class="btn-sm" type="text"
+                                                                                     name="tag[]" maxlength="10"
+                                                                                     value="{$item['tag_title']}"
+                                                                                     id="{$item['id']}"><i
+                                class=" ml5 fa fa-times" onclick="del_button(this,{$item['id']})"></i></a>
+                    </foreach>
+                </div>
+                <div class="mb10">
+                    <button type="button" class="btn btn-primary  btn-sm " onclick="addnew();"><i
+                            class="fa fa-plus"></i>新增
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--添加员工窗口-->
+<!--上传头像弹窗-->
+<div id="change_use" style="display: none; ">
+    <div class="box-body ">
+        <div class="col-sm-12 mt10 ">
+            <div style="margin: auto; width: 400px;">
+
+                <div class="imageBox">
+                    <div class="thumbBox"></div>
+                    <div class="spinner" style="display: none">Loading...</div>
+                </div>
+                <div class="action">
+                    <!-- <input type="file" id="file" style=" width: 200px">-->
+                    <div class="new-contentarea tc">
+                        <a href="javascript:void(0)" class="upload-img">
+                            <label for="upload-file">选择图像</label>
+                        </a>
+                        <input type="file" class="" name="upload-file" id="upload-file" />
+                    </div>
+
+                    <input type="hidden" id="imgType" value="0">
+                    <input type="button" id="btnCrop" class="Btnsty_peyton" value="保存">
+                    <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+">
+                    <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+<script src="__PUBLIC__/Dist/js/cropbox.js"></script>
+<script type="text/javascript">
+    //点击新增按钮，添加分类栏
+    function addnew() {
+
+        $("#addsurvey").append('<a type="button" class="btn mb10  btn-default btn-sm"><input class="btn-sm" type="text" name="tag[]" maxlength="10" value="" id="0"><i class=" ml5 fa fa-times" onclick="del_button(this,0)"></i></a>');
+
+    }
+
+    $("#department_id").change(function(){
+        $("input[name='tissue_id']").val($(this).val());
+    });
+
+    $("#jobs_id").change(function(){
+        $("input[name='jobs_id']").val($(this).val());
+    });
+
+
+    function del_button(items,id){
+
+        var parentNode = items.parentNode;
+
+        parentNode.remove();
+    }
+
+    function datebirth(obj){
+
+        var endTime = obj.value.substring(0,4);
+
+        var date=new Date;
+
+        var age = 0;
+
+        var year = date.getFullYear();
+
+        age = (year - endTime);
+
+        document.getElementById("age").innerHTML = age;
+
+        $("input[name='age']").val(age);
+    }
+
+    //上传头像弹窗区域
+    function change_use() {
+        $(".imageBox").attr("style","");
+        $(".spinner").show();
+        layer.open({
+            title: '上传头像',
+            area: ['600px', '550px'],
+            offset: ['20px'],
+            type: 1,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: $("#change_use")
+        });
+    }
+
+    //头像上传插件开始
+    $(window).load(function() {
+        var options = {
+            thumbBox: '.thumbBox',
+            spinner: '.spinner',
+            imgSrc: 'images/avatar.png'
+        }
+        var cropper = $('.imageBox').cropbox(options);
+        $('#upload-file').on('change', function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                options.imgSrc = e.target.result;
+                cropper = $('.imageBox').cropbox(options);
+            }
+            reader.readAsDataURL(this.files[0]);
+            //this.files = [];
+        });
+        $('#btnCrop').on('click', function() {
+            var img = cropper.getDataURL();
+
+            var avatar = '';
+
+            if(img != 0) {                         //判断是否选择图片
+                $("#use_img").attr("src", img);
+
+                layer.closeAll();
+                $("#imgType").val(1);
+            }else{
+                $("#imgType").val(0);
+                alert("没有选择图片");
+            }
+        });
+        $('#btnZoomIn').on('click', function() {
+            cropper.zoomIn();
+        });
+        $('#btnZoomOut').on('click', function() {
+            cropper.zoomOut();
+        });
+    });
+
+
+</script>
+</body>
+
+</html>

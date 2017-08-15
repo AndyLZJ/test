@@ -1,0 +1,150 @@
+<layout name="layout"/>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        试题管理
+        <small>/查看结果</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i
+                    class="fa fa-mail-reply-all"></i>返回</a>
+        </li>
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title ">{$data['test_name']}</h3>
+        </div>
+        <div class="ml10 mt10">
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <!--内容开始-->
+                <div class="row mt10 mb5">
+                    <div class="col-sm-2">
+                        <input type="hidden" name="tid" value="{$t_id}"/>
+                        <input type="hidden" name="pid" value="{$p_id}"/>
+                        <label class="text-aqua mt10 mr30">
+                            <i class="fa  fa-send-o mr5"></i>试卷总分： <span class="text-red">{$data['test_score']}</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="text-aqua mt10 mr30">
+                            <i class="fa  fa-send-o mr5"></i>你的得分： <span class="text-red">{$data['total_score']}</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="text-aqua mt10 mr30">
+                            <i class="fa  fa-share-alt mr5"></i>试卷类别： <span class="text-red">{$data['cat_name']}</span>
+                        </label>
+                    </div>
+                    <if condition="empty($data['flag'])">
+                        <div class="col-sm-3">
+                            <label class="text-aqua mt10 ">
+                                <i class="fa  fa-tasks mr5"></i>关联项目： <span class="text-red">{$data['project_name']}</span>
+                            </label>
+                        </div>
+                    </if>
+                    <div class="col-sm-2">
+                        <label class="text-aqua mt10 float_r mr30">
+                            <i class="fa  fa-send-o mr5"></i>状态：<span class="text-green">已结束</span>
+                        </label>
+                    </div>
+                </div>
+                <!--课程状态结束-->
+                <!--试卷主要信息区域开始-->
+
+                <foreach name="data.examination_item" item="vo">
+                    <div class="box-header with-border mt10">
+
+                        <h4 class="box-title">一、
+                            <if condition="$vo['classification'] eq 1">单选题
+                                <elseif condition="$vo['classification'] eq 2"/>
+                                多选题
+                                <else/>
+                                判断题
+                            </if>
+                            （<span class="text-red">共 <if condition="$vo['classification'] eq 1">
+                                {$data['topic_total']['one']}
+                                <elseif condition="$vo['classification'] eq 2"/>
+                                {$data['topic_total']['two']}
+                                <else/>
+                                {$data['topic_total']['three']}
+                            </if> 道，共 {$vo['item_score']} 分</span>）
+                            <if condition="$vo['isexam'] eq 1"><span href="#" class="color_gree "><i
+                                    class="fa  fa-check mr5" aria-hidden="true"></i></span>
+                                <else/>
+                                <span href="#" class="color_red "><i class="fa  fa-close "
+                                                                     aria-hidden="true"></i></span></if>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="mb30">
+                            <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.item_score} 分</span>）<span
+                                    href="#" class="color_gree "></span></p>
+                            <if condition="$vo['classification'] eq 1">
+                                <p class="mb15 mt10"><input type="radio" value="A"
+                                    <if condition="$vo['exam_answer'] eq 'A'">checked="checked"
+                                        <else/>
+                                        disabled="disabled"
+                                    </if>
+                                    > <span class="ml10"> A.{$vo.optiona}</span></p>
+                                <p class="mb15 mt10"><input type="radio" value="B"
+                                    <if condition="$vo['exam_answer'] eq 'B'">checked="checked"
+                                        <else/>
+                                        disabled="disabled"
+                                    </if>
+                                    > <span class="ml10"> B.{$vo.optionb}</span></p>
+                                <p class="mb15 mt10"><input type="radio" value="C"
+                                    <if condition="$vo['exam_answer'] eq 'C'">checked="checked"
+                                        <else/>
+                                        disabled="disabled"
+                                    </if>
+                                    > <span class="ml10">C.{$vo.optionc}</span></p>
+                                <p class="mb15 mt10"><input type="radio" value="D"
+                                    <if condition="$vo['exam_answer'] eq 'D'">checked="checked"
+                                        <else/>
+                                        disabled="disabled"
+                                    </if>
+                                    > <span class="ml10"> D.{$vo.optiond}</span></p>
+                                <elseif condition="$vo['classification'] eq 2"/>
+                                <assign name="A" value="A"/>
+                                <assign name="B" value="B"/>
+                                <assign name="C" value="C"/>
+                                <assign name="D" value="D"/>
+                                <p class="mb15 mt10"><input type="checkbox" value="A" disabled="disabled"
+                                    <in name="$A" value="$vo['exam_answer']">checked="checked"</in>
+                                    > <span class="ml10"> A.{$vo.optiona}</span></p>
+                                <p class="mb15 mt10"><input type="checkbox" value="B" disabled="disabled"
+                                    <in name="$B" value="$vo['exam_answer']">checked="checked"</in>
+                                    > <span class="ml10"> B.{$vo.optionb}</span></p>
+                                <p class="mb15 mt10"><input type="checkbox" value="C" disabled="disabled"
+                                    <in name="$C" value="$vo['exam_answer']">checked="checked"</in>
+                                    > <span class="ml10">C.{$vo.optionc}</span></p>
+                                <p class="mb15 mt10"><input type="checkbox" value="D" disabled="disabled"
+                                    <in name="$D" value="$vo['exam_answer']">checked="checked"</in>
+                                    > <span class="ml10"> D.{$vo.optiond}</span></p>
+                                <else/>
+                                <p class="mb15 mt10">
+                                    <label>
+                                        <div class="radio mr30"><label><input type="radio" value="对" disabled="disabled"
+                                            <if condition="$vo['exam_answer'] eq '对'">checked="checked"</if>
+                                            ><span class="ml10">A.{$vo.optiona}</span></label></div>
+                                        <div class="radio "><label> <input type="radio" value="错" disabled="disabled"
+                                            <if condition="$vo['exam_answer'] eq '错'">checked="checked"</if>
+                                            ><span class="ml10">B.{$vo.optionb}</span></label></div>
+                                    </label>
+                                </p>
+                            </if>
+                        </div>
+                    </div>
+                </foreach>
+                <!--多选题结束-->
+
+                <!--试卷主要信息区域结束-->
+                <!--内容結束-->
+            </div>
+        </div>
+    </div>
+</section>

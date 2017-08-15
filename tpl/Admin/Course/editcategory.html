@@ -1,0 +1,39 @@
+<div class="mb10">请选择上级分类</div>
+<div>
+    <select class="form-control" type="text" id="organ_input" name="organ_input" placeholder="">
+        <option value="0">选择上级分类</option>
+        <foreach name="catage" item="vo">
+            <eq name="vo.id" value="$pid">
+                <option value="{$vo.id}" selected>{$vo.cat_name}</option>
+                <else/>
+                <option value="{$vo.id}">{$vo.cat_name}</option>
+            </eq>
+        </foreach>
+    </select>
+</div>
+<div class="mb10">请输入分类名称</div>
+<div><input class="form-control" type="text" id="organ_input1" value="{$name}" placeholder=""><input
+        class="form-control" type="hidden" id="organ_input2" value="{$id}" placeholder=""></div>
+<button id="cli">点击</button>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#cli").click(function () {
+            var id = $("#organ_input2").val();
+            var pid = $("#organ_input").val();
+            var name = $("#organ_input1").val();
+            $.post(
+                    '{:U("course/tree")}',
+                    {'pid': pid, 'name': name, 'id': id},
+                    function (data) {
+                        if (data == 1) {
+                            parent.location.reload();
+                        } else {
+
+                        }
+
+                    }
+            )
+        });
+    });
+</script>

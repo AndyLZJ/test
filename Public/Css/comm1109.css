@@ -1,0 +1,189 @@
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, 
+big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, 
+center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,p {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 outline: 0;
+	 font-size: 100%;
+	 vertical-align: baseline;
+	 background: transparent;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+	line-height: 30px;
+}
+a{
+	text-decoration: none;
+    cursor: pointer;
+}
+html,
+body {
+	font-size: 14px;
+	background: #f3f3f3;
+	font-family: "AvenirNextLTPro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*浮动*/
+
+.float_r{ float: right;}
+.float_l{ float: left;}
+
+/*间距*/
+
+.ml5{ margin-left: 5px;}
+.ml10{ margin-left: 10px;}
+.ml30{ margin-left: 30px;}
+
+.mr5{ margin-right: 5px;}
+.mr10{ margin-right: 10px;}
+.mr30{ margin-right: 30px;}
+.mr50{ margin-right: 50px;}
+
+.mt10{ margin-top: 10px;}
+.mt30{ margin-top: 30px;}
+
+.mb10{ margin-bottom: 10px;}
+
+.pl10{ padding-left: 10px;}
+
+.pr10{ padding-right: 10px;}
+.pr30{ padding-right: 30px;}
+
+.pt10{ padding-top: 10px;}
+
+.pb10{ padding-bottom: 10px;}
+
+/*颜色*/
+
+.color_yellow{ color: #f5c009 !important;}
+
+
+/*板块样式*/
+
+.left_side_content nav {
+	width: 215px;
+	position: absolute;
+	bottom: 0px;
+	top: 0px;
+	left: 0px;
+	background: #ffffff;
+	box-shadow: 4px 0px 8px rgba(0,0,0,0.15);
+}
+.navbar {
+	width: 215px;
+	border: none;
+}
+.panel{
+	border: #fff;
+}
+.logo {
+	width: 100%;
+	height: 180px;
+	background: #0083d6;
+	margin-bottom: 20px;
+}
+.logo_img{
+	width: 100px;
+    height: 100px;
+    margin: 40px 55px;
+}
+.right_side_content{
+	position: absolute;
+	left: 215px;
+	right: 0px;
+	top: 0px;
+    bottom: 0px;
+    min-width: 1128px;
+}
+.top_bar_bg{
+	background: #0091ea;
+	height: 180px;
+	width: 100%;
+	position: absolute;
+	z-index: -1;
+}
+.levelone_menu a{
+	display: block;
+	width: 100%;
+	line-height: 20px;
+    padding: 10px 20px;
+    color: #272727;
+    font-size: 16px;
+    text-decoration: none;
+} 
+.levelone_menu i{
+	font-size: 16px;
+	margin-right: 5px;
+}
+.leveltwo_menu li a {
+    color: #272727;
+    font-size: 14px;
+    padding: 10px 40px;
+}
+nav .levelone_menu>a:hover{
+	background: #0091ea;
+	color: #fff;
+}
+.leveltwo_menu a:hover{
+	color: #0091ea;
+}
+.right_content{
+	position: absolute;
+	right: 20px;
+	left: 20px;
+	bottom: 20px;
+	margin: auto;
+	height: 100%;
+}
+.function_area{
+	height: 50px;
+	width: 100%;
+	margin-top: 20px;
+	display: block;
+	overflow: hidden;
+}
+.function_area span,.function_area a {
+	color: #fff;
+	font-size: 16px;
+	line-height: 80px;
+	text-decoration: none;
+}
+
+.crumbs{
+	height: 50px;
+	width: 100%;
+	margin-top: 20px;
+	color: #fff;
+	display: block;
+	vertical-align:bottom;
+}
+.crumbs_title{
+	font-size: 24px;
+	float: left;
+	border-left: #fff 5px solid;
+    padding-left: 10px;
+}
+.crumbs_place{
+	float: right;
+	color: #fff;
+}
+.crumbs_place i ,.crumbs_place a {
+	color: #fff;
+	text-decoration: none;
+}
+.content{
+	width: 100%;
+	background: #fff;
+	padding: 20px;
+}
+.screen{
+	border-bottom: 1px #d0d0d0 solid;
+	padding-bottom:15px;
+}
+
+.function_button{
+	text-align: right;
+}
+.paging{
+	text-align: right;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>积分中心</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		 <link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+	     <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+         <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+         <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+         <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+        积分中心
+        <small>/积分规则</small>
+     </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="javascript:history.go(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+		  <div>
+		    <div class="dataTables_wrapper form-inline dt-bootstrap ">
+				<!--内容开始-->
+									<div class="row">
+										<div class="col-sm-12">
+											<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+												<thead>
+													<tr role="row">
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" width="50">序号</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">规则名称</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">分值</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">封顶</th>
+														<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类型</th>
+													</tr>
+												</thead>
+												<tbody id="tab">
+													<foreach name="list1" item="v" key="k">
+													<if condition="($v.id eq 3) OR ($v.id eq 4)">
+													   <tr role="row" class="odd text-center">
+														<td>{$k+1}</td>
+														<td>{$v.name}</td>
+														<td><span id="score" title="{$v.id}" class="caname">{$v.score}</span>分</td>
+														<td><span id="oneday_score" title="{$v.id}" class="caname">{$v.oneday_score}</span>分/月</td>
+														<td>{$v.type}</td>
+													<else/>
+													    <tr role="row" class="odd text-center">
+														<td>{$k+1}</td>
+														<td>{$v.name}</td>
+														<td><span id="score" title="{$v.id}" class="caname">{$v.score}</span>分</td>
+                                                       <empty name="v.oneday_score">
+                                                        <td><span class="caname"></span></td>
+                                                        <else /> 
+                                                        <td><span id="oneday_score" title="{$v.id}" class="caname">{$v.oneday_score}</span>分/天</td>
+                                                        </empty> 	
+														<td>{$v.type}</td>
+													</if>
+													</tr>
+													</foreach>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--内容結束-->
+		    </div>
+		  </div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			
+
+			
+
+		</script>
+	</body>
+
+</html>

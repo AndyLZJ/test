@@ -1,0 +1,251 @@
+<layout name="layout"/>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        供应商管理
+        <small>/供应商列表</small>
+      </h1>
+      <ol class="breadcrumb">
+        <!--<li><a class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>-->
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+            <div class="box">
+            <div class="box-body">
+              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                  <!--筛选栏开始-->
+                  <div class="row mb10">
+                      <div class="col-sm-12">
+                       <!--<form action="__SELF__,array()" method="get">-->
+                          <form action="{:U('Admin/Supplier/supplierManage',array())}" method="get">
+                          <select class="form-control"  name="style_search">
+                                   <!-- 供应商类型 1机构 2讲师 --> 
+                                    <if condition="$keywords eq 1" >
+                                    <option value='1' selected="selected">机构</option>
+                                    <option value='2'>讲师</option>
+                                    <option value=''>全部</option> 
+                                    <elseif condition="$keywords eq 2"/>
+                                    <option value='2' selected="selected">讲师</option>
+                                    <option value='1'>机构</option>
+                                    <option value=''>全部</option> 
+                                    <elseif condition="$keywords eq ''" />           
+                                    <option value='' selected="selected">全部</option>
+                                    <option value='1'>机构</option>
+                                    <option value='2'>讲师</option>
+                                    </if>         
+                          </select>
+                          <div class="input-group">
+                                      <input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="请输入供应商名称搜索">
+                                      <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                           <i class="fa fa-search"></i>
+                                        </button>
+                                      </div>
+                                 </div>
+                           </form>
+                          <a type="button" class="btn btn-primary float_r ml10" href="{:U('supplierCategory')}">
+                            <i class="fa fa-th-list"></i>
+                                                                                                        领域管理
+                          </a>
+                          <a type="button" class="btn btn-primary float_r ml10" href="{:U('addSupplier')}">
+                            <i class="fa fa-plus"></i>
+                                                                                                        新增供应商
+                          </a> 
+                      </div>
+                     
+                  </div>
+                  <!--筛选栏结束-->
+              <!--内容开始-->
+              <div class="row">
+                  <div class="col-sm-12">
+                      <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                          <thead>
+                              <tr role="row">
+                                 
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">供应商
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类型
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">擅长领域
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">核心产品
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">讲师数量
+                                  </th>
+                                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <foreach name="approved_list" item="vo">
+                              <tr role="row" class="odd">
+                               
+                                <td>{$vo['sname']}</td>
+                                <td><if condition="$vo['style'] eq 2 ">讲师<else />机构</if></td>
+                                <td>{$vo['tname']}</td>
+                                <td>{$vo['main_courses']}</td>
+                                <td>{$vo['lecturerNum']}</td>
+                                <td>
+                                    <a href="{:U('supplierDetail',array('sid'=>$vo['sid'],'m'=>'check'))}" class="mr20 supplierDetail" data-id="{$vo['sid']}" >
+                                        <i class="fa fa-search mr5 " aria-hidden="true"></i>查看
+                                    </a>
+                                    <if condition="$vo['isequality'] neq 1">
+                                        <a href="{:U('editSupplier',array('sid'=>$vo['sid'],'m'=>'edit'))}" class=" mr20 supplierDetail" data-id="{$vo['sid']}" >
+                                            <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                        </a>
+                                        <a href="#" class="color_or mr20 supplierDetail delete" data-id="{$vo['sid']}" >
+                                            <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                                        </a>
+                                    </if>
+                                </td>
+                              </tr>
+                              </foreach>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <!--内容結束-->
+              <!--分页开始-->
+              <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                       {$approved_page}
+                                    </div>
+                                </div>
+                           </div>
+              <!--分页结束-->
+              </div>
+            </div>
+          </div>
+    </section>
+
+<!--领域管理窗口开始-->
+<div id="add_category" style="display: none;">
+   <div class="addcategory mr10 ml10 mt10 mb10 pb10">
+     <input type="text" class="addcategorybox" name="categorybox" />
+     <button type="button" class="btn btn-primary btn-sm ml5">新增领域</button>
+   </div>
+   <div class=" mr10 ml10 mt10 mb10">
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力资源管理"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力资源"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力资源"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力资源管理"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力源"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+     <div class="float_l mr10 mb10">
+         <input class="categorybox" type="text" name="categorybox" value="人力资源管理人力资源管理"/>
+         <button type="button" class="close">
+           <i class="fa fa-times-circle text-red"></i>
+         </button>
+     </div>
+   </div>
+</div>
+<!--领域管理窗口结束-->
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>  
+<script type="text/javascript">
+  //  删除
+  $(function(){
+	  $(".delete").on('click',function(){
+		  var data = $(this).attr('data-id');
+		   layer.confirm('您确定要删除该供应商吗？',{
+		      title: '删除供应商',
+		      btn: ['确定删除','取消操作'],
+		      shadeClose: true, //开启遮罩关闭
+		      skin: 'layui-layer-lan'
+		      },function(){
+		    	   $.ajax({
+				     type:'post',
+				     url:"{:U('delSupplier')}",
+				     dataType:"json",
+				     data:{id:data},
+				     success:function(data){
+               if(data.status==0){
+                  layer.msg(data.msg,{icon:2,time: 1000});
+               }else if(data.status==1){
+                  layer.msg(data.msg,{icon:1,time: 1000});
+               }
+				        setTimeout(function(){
+                   location.reload();
+                          },1000); 
+				        // location.reload();
+				     },
+				     error:function(xhr){
+					       layer.msg('删除失败',{icon:2,time: 1000});
+					     },
+			     });
+		      });
+		  })  
+	  })	  
+ 
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+
+  //批量删除
+  function del(){
+    layer.confirm('您确定要删除该供应商吗？', {
+      title: '删除供应商',
+      btn: ['确定删除','取消操作'],
+      shadeClose: true, //开启遮罩关闭
+      skin: 'layui-layer-lan'
+      //按钮
+    }, function(){
+      layer.msg('删除成功',{time: 1000});
+    });
+  }
+
+  //领域管理
+  function add_category(){
+     layer.confirm('领域管理',{
+        title: '领域管理',
+        btn: ['保存','取消'],
+        area:['700px','420px'],
+        type: 1,
+        skin: 'layui-layer-lan', //样式类名
+        closeBtn: 1, //显示关闭按钮
+        anim: 2,
+        shadeClose: true, //开启遮罩关闭
+        content: $("#add_category").html(),
+        yes:function(index){
+           layer.close(index);
+           layer.msg('保存成功', {time: 1000, icon:1});
+           location.reload();
+        }
+     });
+  }
+</script>

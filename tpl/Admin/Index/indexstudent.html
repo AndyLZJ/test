@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>学员端首页</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="__PUBLIC__/Css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/skins/_all-skins.min.css">
+        <!-- date_picker_css -->
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-jquery-ui-override.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/CalenStyle/src/calenstyle-iconfont.css" />
+
+        <style type="text/css">
+            html {
+                background: #fbfbfb;
+            }
+            .content {
+                background: #fbfbfb;
+            }
+            
+            .info_box {
+                background: #fff;
+                box-shadow: 0 0px 8px 0 rgba(0, 0, 0, .04);
+            }
+            
+            .quick {
+                color: #fff;
+                background: url(__PUBLIC__/Dist/img/quick_bg.png);
+                padding-left: 20px;
+                width: 140px;
+                height: 58px;
+                line-height: 58px;
+                font-size: 18px;
+                display: block;
+                float: left;
+            }
+            
+            .mark {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                border-radius: 50%;
+                height: 30px;
+                width: 30px;
+                line-height: 25px!important;
+                font-size: 14px;
+                box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2)
+            }
+            
+            .products-list .product-title {
+                line-height: 30px;
+            }
+            
+            .products-list .product-img {
+                width: 50px;
+                height: 50px;
+                background: #10b2da;
+                color: #fff;
+            }
+            
+            .products-list .product-img .day {
+                font-size: 24px;
+                text-align: center;
+                line-height: 35px;
+                margin-top: 8px;
+                display: block;
+            }
+            
+            .rw_numb {
+                font-size: 24px;
+                text-align: center;
+                line-height: 18px;
+                margin-top: 8px;
+                display: block;
+            }
+            
+            .products-list .product-img .month {
+                font-size: 14px;
+                text-align: center;
+                display: block;
+            }
+            
+            .products-list .product-title {
+                color: #6f6f6f;
+            }
+            
+            .products-list .product-title:hover {
+                color: #10b2da;
+            }
+            
+            .products-list>.item {
+                padding: 15px 0px;
+            }
+            
+            .small-box {
+                background: #1f95d0;
+                color: #fff;
+            }
+            
+            .small-box .icon {
+                color: rgba(255, 255, 255, 0.5)
+            }
+            
+            .task_item {
+                padding: 10px 10px 30px;
+                background: #f8f8f8;
+                border-bottom: 1px solid #fff;
+                color: #1f95d0;
+            }
+            
+            .ulitem {
+                width: 100%;
+                border: 1px solid #dddddd;
+                background-color: #ffffff;
+                padding: 5px;
+                cursor: pointer;
+            }
+            
+            .ulitem:hover {
+                border: 1px solid red;
+            }
+            
+            .news_color {
+                color: #595959;
+            }
+            
+            .news_color:hover {
+                color: #0288d1;
+            }
+            /*日历行程样式    */
+            
+            .dy-box {
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                display: box;
+            }
+            
+            .dy-flex {
+                -webkit-box-flex: 1;
+                -moz-box-flex: 1;
+                -webkit-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                box-flex: 1;
+                margin: 0;
+            }
+            
+            .dy-header1 {
+                padding: 0 24px;
+                background-color: #fafafa;
+                color: #444f52;
+                font-size: 1.4rem;
+                line-height: 44px;
+            }
+            
+            .dy-header1 i {
+                display: inline-block;
+                width: 22px;
+                color: #23b7e5;
+                line-height: 44px;
+            }
+            
+            .dy-header1 i.dy-c1 {
+                color: #4eccc4;
+            }
+            
+            .dy-mt18 {
+                margin-top: 18px;
+            }
+            
+            .dy-idx2 {
+                margin-top: 10px;
+            }
+            
+            .dy-date-h {
+                padding-left: 10px;
+                padding-right: 10px;
+                text-align: center;
+            }
+            
+            .dy-date-h i {
+                color: #b1b0b0;
+                font-size: 20px;
+                cursor: pointer;
+            }
+            
+            .dy-date-h em {
+                margin-right: 10px;
+            }
+            
+            .dy-header1 {
+                border-radius: 4px 4px 0 0;
+                border: 1px solid #e3ebeb;
+            }
+            
+            .dy-main1 {
+                padding: 0;
+                min-height: 0;
+                border-radius: 0 0 4px 4px;
+                border: 1px solid #e3ebeb;
+                border-top: 0;
+                display: flex;
+            }
+            
+            .dy-dlist1 {
+                margin-bottom: 0px;
+            }
+            
+            .dy-dlist1 li {
+                padding-top: 22px;
+                height: 62px;
+                color: #666;
+                text-align: center;
+                border-right: 1px solid #eef3f3;
+                border-top: 1px solid #eef3f3;
+                cursor: pointer;
+                display: list-item;
+            }
+            
+            .dy-dlist1 li p {
+                margin: 0;
+            }
+            
+            .dy-dlist1 li b {
+                font-size: 14px;
+                color: #4eccc4;
+            }
+            
+            .dy-dlist1 li:nth-child(-n+3) {
+                border-top: 0;
+            }
+            
+            .dy-dlist1 li:nth-child(3n+0) {
+                border-right: 0;
+            }
+            
+            .dy-dlist1 li.on {
+                background-color: #4eccc4;
+                color: #fff;
+            }
+            
+            .dy-dlist1 li.on b {
+                color: #fff;
+            }
+            
+            .dy-date-bottom {
+                border-bottom: 1px solid #f4f4f4;
+                line-height: 30px;
+            }
+            
+            .dy-date-bottom a:hover {
+                color: #10b2da;
+            }
+            .calendarContOuter{width: 100%;height: 300px;margin: 0px auto; font-size: 16px; }
+        </style>
+    </head>
+
+    <body>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+                首页
+                <small>/学员面板</small>
+            </h1>
+        <ol class="breadcrumb">
+        </ol>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--个人消息-->
+                    <div class="info_box mt15">
+                        <!--
+                        <div class="box-header with-border">
+                            <i class="fa fa-volume-up color_blue"></i>
+                            <a class="news_color" href="#">
+                                小王申请加入中国邮政储蓄银行股份有限公司新疆维吾尔自治区分行
+                            </a>
+                            <a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+                            <span class="text-grey float_r mr10">1/5</span>
+                            <a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+                            <span class="text-grey float_r mr50">2016年12月21号</span>
+                        </div>-->
+                        <!--个人消息结束-->
+                        <div class="box-header with-border info_box_title">
+                            <span>我的任务</span>
+                        </div>
+                        <div class="box-body">
+                            <ul class="products-list product-list-in-box">
+                                <div class="col-sm-4">
+                                    <li class="item ">
+                                        <a>
+                                            <div class="product-img bg-blue">
+                                                <span class="rw_numb">{$data.unFinishedCourseNum}</span>
+                                                <span class="month">课程</span>
+                                            </div>
+                                        </a>
+                                        <div class="product-info">
+                                            <div>
+                                            <if condition="$data['data'][0]['course_name'] eq ''">
+                                                <a class="product-title">暂无课程</a>
+                                            <else/>
+                                                <a class="product-title" href="{:U('Admin/MyCourse/detail',array('project_id'=>$data['data'][0]['project_id'],'course_id'=>$data['data'][0]['course_id']))}">{$data['data'][0]['course_name']}</a>
+                                            </if>
+                                            </div>
+                                            <span class="product-description float_l"><i class="fa fa-clock-o"></i>{$data['data'][0]['start_time']}</span>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="col-sm-4">
+                                    <li class="item ">
+                                        <a>
+                                            <div class="product-img bg-green">
+                                            <span class="rw_numb">{$data.unFinishedTestNum}</span>
+                                                <span class="month">考试</span>
+                                            </div>
+                                        </a>
+                                        <div class="product-info">
+                                            <div>
+                                            <a class="product-title" href="{:U('Admin/MyExam/waitExam')}">
+                                                <if condition="!empty($data['unFinishedTestInfo'][0]['test_names'])">
+                                                    {$data['unFinishedTestInfo'][0]['test_names']|default='暂无考试'}
+                                                <else/>{$data['unFinishedTestInfo'][0]['test_name']|default='暂无考试'}
+                                                </if>
+                                            </a>
+                                            </div>
+                                            <span class="product-description float_l"><i class="fa fa-clock-o"></i>
+                                                {$data.unFinishedTestInfo.0.start_time}
+                                            </span>
+                                        </div>
+                                    </li>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <li class="item ">
+                                        <a>
+                                            <div class="product-img bg-teal">
+                                                <span class="rw_numb">{$data.unFinishedSurveyNum}</span>
+                                                <span class="month">问卷</span>
+                                            </div>
+                                        </a>
+                                        <div class="product-info">
+                                            <div>
+                                                <a class="product-title" href="{:U('Admin/MySurvey/waitSurvey')}">
+                                                    {$data['unFinishedSurveyInfo'][0]['name']|default='暂无问卷'}
+                                                </a>
+                                            </div>
+                                            <span class="product-description float_l"><i class="fa fa-clock-o"></i>
+                                                {$data['unFinishedSurveyInfo'][0]['start_time']}
+                                            </span>
+                                        </div>
+                                    </li>
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+
+                    <!--学习概况开始-->
+                    <div class="info_box mt15">
+                        <div class="box-header with-border info_box_title">
+                            <span>学习概况</span>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-6">
+                                    <!-- small box -->
+                                    <div class="small-box">
+                                        <div class="inner">
+                                            <h3>{$data.hours|default=0}<span style="font-size: 20px"> 小时</span></h3>
+                                            <p>累计学时</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fa fa-tachometer"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-4 col-xs-6">
+                                    <!-- small box -->
+                                    <div class="small-box">
+                                        <div class="inner">
+                                            <h3>{$data.finishedCourseNum|default=0}<span style="font-size: 20px"> 门</span></h3>
+                                            <p>课程数量</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fa fa-book"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-4 col-xs-6">
+                                    <!-- small box -->
+                                    <div class="small-box">
+                                        <div class="inner">
+                                            <h3>{$data.credit|default=0}<span style="font-size: 20px"> 分</span></h3>
+                                            <p>累计学分</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fa fa-cube"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--最近学习-->
+                    <div class="info_box mt15">
+                        <div class="box-header with-border info_box_title">
+                            <span>最近学习</span>
+                        </div>
+                    <div class="box-body">
+                        <foreach name="data.data" item="v">
+                        <div class="col-sm-3 mb20">
+                            <div class="ulitem">
+                                <a href="{:U('Admin/MyCourse/detail',array('project_id'=>$v['project_id'],'course_id'=>$v['course_id']))}">
+                                    <if condition="$v['course_way'] eq 0">
+                                        <div><img src="{$v.course_cover}" onerror="this.src='/Public/Dist/img/course_way0.png'" width="100%" /></div>
+                                    <else/>
+                                        <div><img src="{$v.course_cover}" onerror="this.src='/Public/Dist/img/course_way1.png'" width="100%" /></div>
+                                    </if>
+                                </a>
+                                <div class="box-title mt5 row">
+                                    <label class="col-sm-12">FR:{$v.cat_name}<span class="pull-right text-right">{$v.course_time}分钟</span></label>
+                                    <label class="col-sm-12"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+                                </div>
+                                <div class="box-title row">
+                                    <label class="col-sm-12 "><h4><a title="{$v.course_name}">{$v.course_name|msubstr=###,0,8,'...'}</a></h4></label>
+                                </div>
+                                <div class="progress progress-sm ">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{$v.per}" aria-valuemin="0" aria-valuemax="100" style="width: {$v.per}%">
+                                        <span class="sr-only">{$v.per}% Complete</span>
+                                    </div>
+                                </div>
+                                <div class="box-title mt5">
+                                    <a href="{:U('Admin/MyCourse/detail',array('project_id'=>$v['project_id'],'course_id'=>$v['course_id']))}">
+                                        <button type="button" class="btn btn-block btn-info btn-flat">继续学习</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        </foreach>
+                    </div>
+                    </div>
+
+                </div>
+                <!-- 左侧结束-->
+
+                <!--右侧开始-->
+                <div class="col-lg-4">
+                    <div class="info_box mt15">
+                        <div class="box-header with-border info_box_title">
+                            <span>日程计划</span>
+                        </div>
+                        <div class="calendarContOuter"></div>
+                        
+                        <!-- 日程计划结束-->
+                        <!--  行程事项内容关联区域-->
+                        <div class="box-footer">
+                            <div id="norw" class="text-center" style="display: block">
+                                <img src="__PUBLIC__/Dist/img/renwuico.png" />当天没有任务
+                            </div>
+                            <div id="Journey" style="display: none;">
+                                <div class="dy-date-bottom">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        【<span>课程</span>】：演讲与口才训练
+                                        <span class="product-description pull-right">2017-03-15 14:35:54</span>
+                                    </a>
+                                </div>
+
+                                <div class="dy-date-bottom">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        【<span>考试</span>】：讲师的自我修养相关知识
+                                        <span class="product-description pull-right">2017-03-14 14:16:24</span>
+                                    </a>
+                                </div>
+                                <div class="dy-date-bottom">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        【<span>问卷</span>】：银行大堂经理日常守则调研
+                                        <span class="product-description pull-right">2017-03-13  10:20:00</span>
+                                    </a>
+                                </div>
+                                <div class="dy-date-bottom">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        【<span>课程</span>】：银行新员工培训
+                                        <span class="product-description pull-right">2017-03-12 08:00:00</span>
+                                    </a>
+                                </div>
+                                <div class="dy-date-bottom">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        【<span>课程</span>】：职场人士健康指南
+                                        <span class="product-description pull-right">2017-03-10  09:30:00</span>
+                                    </a>
+                                </div>
+
+                                <div class="mt5">
+                                    <a href="#" class="float_r"><i class="fa fa-chevron-circle-right"></i></a>
+                                    <span class="text-grey float_r mr10">1/5</span>
+                                    <a href="#" class="float_r mr10"><i class="fa fa-chevron-circle-left"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="info_box mt15">
+                        <div class="box-header with-border info_box_title">
+                            <span>新闻资讯</span>
+                            <a href="{:U('Admin/NewsShow/index')}" class="product-description float_r">更多资讯>></a>
+                        </div>
+                        <div class="box-body">
+                            <ul class="products-list product-list-in-box">
+                                <foreach name="data.news" item="v" key="k">
+                                    <li class="item">
+                                        <div class="product-img">
+                                            <span class="day">{$k+1}</span>
+                                        </div>
+                                        <div class="product-info">
+                                         <a href="{:U('Admin/News/show',array('id'=>$v['id']))}" class="product-title">
+                                                    [
+                                                    	<if condition="$v['type'] eq 1">要闻
+                                                    	<elseif condition="$v['type'] eq 2"/>培训
+                                                    	<elseif condition="$v['type'] eq 3"/>通知
+                                                    	<else/>活动
+                                                    	</if>
+                                                    ]：{$v.title|strip_tags=###|msubstr=###,0,10,'...'|trim=###}
+                                                </a>  <span class="label label-success pull-right">new</span>
+                                            <div>
+                                                <span class="product-description pull-left">{$v.create_time}</span>
+                                            </div>
+                                            <a href="{:U('Admin/News/show',array('id'=>$v['id']))}" class="product-description float_r">查看详情>></a>
+                                        </div>
+                                    </li>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--右侧结束-->
+            </div>
+        </section>
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+        <script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+        <script src="__PUBLIC__/dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/dist/js/demo.js"></script>
+        <!-- CalenStyle js -->
+        <script type="text/javascript" src="__PUBLIC__/CalenStyle/demo/js/jquery-ui-custom-1.11.2.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/CalenStyle/src/calenstyle.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/CalenStyle/src/i18n/calenstyle-i18n-zh-cn.js"></script>
+        <script type="text/javascript">
+        
+                //去除所有空格
+            function Trim(str, is_global) {
+                var result;
+                result = str.replace(/(^\s+)|(\s+$)/g, "");
+                if(is_global.toLowerCase() == "g")
+                    result = result.replace(/\s/g, "");
+                return result;
+            }
+
+            //日程计划-年份-减
+            $("#dy-pre").click(function() {
+                $("#dy-year").html(parseInt($("#dy-year").html()) - 1);
+                buttons.removeClass();
+                buttons.each(function() {
+                    if($(this).text() != "1月") {
+                        $("#dy-date").find("li").addClass("col-lg-4");
+                    }
+                });
+                $("#January").addClass("col-lg-4 on");
+            });
+                //日程计划-年份-加
+            $("#dy-next").click(function() {
+
+                //年份加1
+                $("#dy-year").html(parseInt($("#dy-year").html()) + 1);
+                //清除li标签下面的类
+                buttons.removeClass();
+                //遍历li
+                buttons.each(function() {
+                    if($(this).text() != "1月") {
+                        buttons.addClass("col-lg-4");
+                    }
+                });
+                $("#January").addClass("col-lg-4 on");
+            });
+
+            var buttons = $("#dy-date").find("li"); //找到所有的li标签
+            buttons.on('click', function() {
+                buttons.removeClass(); //清除li标签下面的类
+                buttons.addClass("col-lg-4"); //添加li标签下面的类
+                $(this).addClass("col-lg-4 on"); //添加点击li标签下面的新类
+                if(Trim($(this).html(), "g").indexOf("●") > -1) { //判断选择月份是否有任务
+                    $("#Journey").show();
+                    $("#norw").hide();
+                } else {
+                    $("#Journey").hide();
+                    $("#norw").show();
+                }
+            });
+        </script>
+
+<script>
+$(function(){
+    $(".calendarContOuter").CalenStyle({
+            visibleView: "MonthView",
+            language:"zh-cn",
+            headerSectionsList: 
+            {
+                left: ["PreviousButton"],
+                center:["HeaderLabel"],
+                right: ["NextButton"]
+            },
+            calDataSource: [
+                {
+                    sourceFetchType: "ALL",
+                    sourceType: "JSON",                     
+                    source: 
+                    {
+                        eventSource: 
+                        [
+                            {$schedule}
+                        ]
+                    }
+                }
+            ]
+        });
+    $(".calendarContOuter").mouseup(function(){
+        setTimeout(function(){
+            var chooseDay = $(".cCurrentHighlightCircle").closest("td").attr("id");
+            getCalendarData(chooseDay);
+        },100);
+    });
+    
+    getCalendarData();
+    
+    /* 获取选择日期当天的任务
+    *  chooseDay 选中的日期
+    */
+    function getCalendarData(chooseDay){
+        if(!chooseDay || chooseDay==""){
+            //没有给参数，选择当天
+            chooseDay = $(".cTodayHighlightTextColor").attr("id");
+        }
+        var cmvEventContSmall = $("#"+chooseDay).find(".cmvEventContSmall").html();
+        var cmvEventContAllDay = $("#"+chooseDay).find(".cmvEventContAllDay").html();
+        if(cmvEventContSmall=="" && cmvEventContAllDay==""){
+            $("#norw").show();
+            $("#Journey").hide();
+        }else{
+            //异步请求任务数据
+            var reqUrl = "{:U('Admin/Index/dayTask')}"
+            $.ajax({
+                type: "post",
+                url: reqUrl,
+                data: "chooseDay="+chooseDay,
+                dataType: "json",
+                success: function(data){
+                    if(data.code==1000){
+                        var newHtml = "";
+                        var total_page = data.list.length;
+                        for(var i=0; i<total_page; i++){
+                            var mainData = data.list[i];
+                            var hideStatus = "";
+                            if(i != 0){
+                                hideStatus = 'style="display:none;"';
+                            }
+                            newHtml += '<div class="data_slip" '+hideStatus+'>';
+                            for(var j=0; j<mainData.length; j++){
+                                var subData = mainData[j];
+                                var goHref = "";
+                                if(subData.type=='考试'){
+                                    if(subData.subType == '项目考试'){
+                                        goHref += "{:U('Admin/MyExam/waitExam')}";
+                                    }else{
+                                        goHref += "{:U('Admin/MyExam/otherExam')}";
+                                    }
+                                    newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                    newHtml += '【<span>考试</span>】'+subData.test_name;
+                                    newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                }else if(subData.type=='调研'){
+                                    if(subData.subType == '项目调研'){
+                                        goHref += "{:U('Admin/MySurvey/waitSurvey',array('typeid'=>0))}";
+                                    }else{
+                                        goHref += "{:U('Admin/MySurvey/researchList',array('typeid'=>1))}";
+                                    }
+                                    newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                    newHtml += '【<span>调研</span>】'+subData.name;
+                                    newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                }else if(subData.type=='课程'){
+                                    goHref += subData.url ;
+                                    newHtml += '<div class="dy-date-bottom"><a href="'+goHref+'" class="product-title">';
+                                    newHtml += '【<span>课程</span>】'+subData.course_name;
+                                    newHtml += '<span class="product-description pull-right">'+subData.start_time+'</span></a></div>';
+                                }
+                            }
+                            newHtml += '<div class="newPageNav mt5"><a href="javascript:void(0)" class="float_r showRight"><i class="fa fa-chevron-circle-right"></i></a>';
+                            newHtml += '<span class="text-grey float_r mr10">'+(i+1)+'/'+total_page+'</span>';
+                            newHtml += '<a href="javascript:void(0)" class="float_r mr10 showLeft"><i class="fa fa-chevron-circle-left"></i></a></div>';
+                            newHtml += '</div>';
+                        }
+                        $("#Journey").html(newHtml);
+                        if(total_page == 1){
+                            $(".newPageNav").remove();
+                        }
+                        $("#norw").hide();
+                        $("#Journey").show();
+                    }else{
+                        $("#Journey").html("");
+                        $("#norw").show();
+                        $("#Journey").hide();
+                    }
+                }
+            });
+        }
+    }
+    
+    $("#Journey").on("click", ".showLeft", function(){
+        var index = $(this).closest(".data_slip").index();
+        if(index > 0){
+            $(".data_slip").hide();
+            $(".data_slip").eq(index-1).show();
+        }
+    });
+    
+    $("#Journey").on("click", ".showRight", function(){
+        var index = $(this).closest(".data_slip").index();
+        var max = $(".data_slip").length;
+        if(index == (max - 1)){
+            return false;
+        }
+        $(".data_slip").hide();
+        $(".data_slip").eq(index+1).show();
+    });
+
+    function layDateStart(id){
+    var start = {
+        elem:id,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        istime: false,
+        isclear: false,
+        istoday: false,
+        choose: function(datas){
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    laydate(start);
+}
+    
+    //cs-icon-Prev 上一月数据  cs-icon-Next 下一月数据，默认三个月数据，不再异步请求每月是否有任务，如有需要再添加、
+})
+</script>        
+    </body>
+</html>

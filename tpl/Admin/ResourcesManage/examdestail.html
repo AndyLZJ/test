@@ -1,0 +1,162 @@
+<layout name="layout"/>
+		    <!--内容区域顶栏面包屑开始-->
+		    <section class="content-header">
+		      <h1 class="info_title">
+		       试卷管理
+		        <small>/查看试题</small>
+		      </h1>
+		      <ol class="breadcrumb">
+		        <li><a href="javascript:history.go(-1);"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+		      </ol>
+		    </section>
+		    <!--内容区域顶栏面包屑结束-->
+		    <section class="content">
+		          <div class="box pb5 box-primary">
+		              <div class="box-header with-border">
+		                  <h2 class="box-title ">{$xhr.test_name}</h2>
+		              </div>
+		              <ul class="nav nav-tabs">
+								<li class="active">
+									<a href="##">试卷详情</a>
+								</li>
+								<if condition="$refused eq 1 OR $refused eq 2">
+								<else />
+								<li>
+									<a href="{:U('examCount',array('id'=>$xhr['id']))}">试卷统计</a>
+								</li>
+								</if>
+					  </ul>
+		              <div class="box-body pr10 pl10">
+		                         <!--内容开始-->                        
+		                         <div class="row mb30">
+										 <div class="col-sm-2">
+											<label class="text-aqua mt10 mr10">
+			                                    <i class="fa  fa-send-o mr5"></i>试卷总分： 
+			                                    <span class="text-red">{$xhr.test_score}{$totalScore}</span> 
+		                                    </label>		
+										 </div>
+										 <!-- <div class="col-sm-2">
+										<label class="text-aqua mt10 mr10">
+		                                    <i class="fa  fa-user mr5"></i>上传人： 
+		                                    <span class="text-red">{$xhr.test_heir}</span> 
+	                                    </label>		
+										 </div> -->
+										 <div class="col-sm-4">
+											<label class="text-aqua mt10 mr10">
+		                                       <i class="fa  fa-calendar mr5"></i>上传时间： 
+		                                       <span class="text-red">{$xhr.test_upload_time}</span> 
+		                                    </label>		
+										 </div>	
+										 <label class="text-aqua mt10 float_r mr30">
+		                                      <i class="fa  fa-send-o mr5"></i>状态： 
+		                                      <span class="text-red">
+								           		<if condition="$xhr['status'] eq 1">
+			                        				<span class="text-green">已通过</span>
+				                    			<elseif condition="$xhr['status'] eq 3" />
+				                    				<span class="text-red">已拒绝</span>
+				                    			<else/>
+				                    				<span class="text-red">待审核</span>
+			                        			</if>
+											  </span> 
+		                                 </label>	
+								 </div>
+		                         <!--课程状态结束-->
+		                         
+		                         <!--  分隔符开始-->
+		                         <div class="with-border mt5 mb10"></div>
+		                         <!--  分隔符结束-->
+		                         
+		                         
+		                         <!--试卷主要信息区域开始-->
+		                   			
+								<if condition="(count($singleChoice) eq 0) AND (count($multipleChoice) eq 0) AND (count($descriPtive) eq 0) AND (count($wd) eq 0)">
+									本试卷暂无试题
+								</if>
+
+		                   			<if condition="count($singleChoice) neq 0">
+		                          <div class="mt10">
+						            <h4 class="box-title">
+						                 一、单选题
+						               （<span class="text-red">共 {$singleChoiceSum} 道，共 {$singleChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border mb10"></div>
+								  <volist name="singleChoice" id="vo">
+						          <div class="mb30">
+							          <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p> 
+							          <p class="mb15 mt10 ml15">C.{$vo.optionc}</p> 
+							          <p class="mb15 mt10 ml15">D.{$vo.optiond}</p>
+						          </div>
+								  </volist>
+						          </if>
+
+						          <if condition="count($multipleChoice) neq 0">
+								  <div class="mt10">
+						            <h4 class="box-title">
+						                二、多选题（<span class="text-red">共 {$multipleChoiceSum} 道，共 {$multipleChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border mb10"></div>
+						           <volist name="multipleChoice" id="vo">
+						          <div class="mb30">
+							          <p class="mb15 mt10"> {$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）</p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p> 
+							          <p class="mb15 mt10 ml15">C.{$vo.optionc}</p> 
+							          <p class="mb15 mt10 ml15">D.{$vo.optiond}</p> 
+							        <if condition="!empty($vo['optione'])">
+							        	<p class="mb15 mt10 ml15">E.{$vo.optione}</p>
+							        </if>
+						          </div> 
+								  </volist>   
+						         	</if>
+
+						          	<if condition="count($descriPtive) neq 0">
+						          <div class="mt10">
+						            <h4 class="box-title">
+						                三、判断题（<span class="text-red">共 {$descriPtiveChoiceSum} 道，共 {$descriPtiveChoiceTotalScore} 分</span>）
+						            </h4>
+						          </div>
+						          <div class="box-header with-border"></div>
+						          <div class="mb30">
+									  <volist name="descriPtive" id="vo">
+							          <p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+							          </p> 
+							          <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> 
+							          <p class="mb15 mt10 ml15">B.{$vo.optionb}</p>
+							            </volist>  
+						          </div>
+						          	</if>
+
+						          	<!--二期新增类型:简答题start-->
+						          	<if condition="count($wd) neq 0">
+						          	<div class="mt10">
+						            	<h4 class="box-title">
+						                	四、简答题（<span class="text-red">共 {$wdSum} 道，共 {$wdTotalScore} 分</span>）
+						            	</h4>
+						          	</div>
+						          	<div class="box-header with-border"></div>
+						          	<div class="mb30">
+									  	<volist name="wd" id="vo">
+							          	<p class="mb15 mt10">{$i}.{$vo.title}（<span class="text-red">该小题 {$vo.score} 分</span>）
+							          	</p>
+							          	<!--简答题-->
+							          	<textarea name="wd" id="wd" cols="80" rows="2" <if condition="$status eq 0">readonly</if>></textarea>
+							         	<!-- <p class="mb15 mt10 ml15">A.{$vo.optiona}</p> -->
+							            </volist> 
+						          	</div>
+						          	</if>
+									<!--二期新增类型:简答题end-->
+						          <!--试卷主要信息区域结束-->
+						          <!--内容結束-->            
+		              </div>
+		        </div>
+		    </section>
+
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		
+	</body>
+
+</html>

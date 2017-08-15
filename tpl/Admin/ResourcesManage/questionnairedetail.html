@@ -1,0 +1,311 @@
+<layout name="layout"/>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+	        问卷管理
+	        <small>/查看问卷</small>
+	    </h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="javascript:history.go(-1);"><i class="fa fa-mail-reply-all"></i>返回</a>
+			</li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div class="box">
+			<div class="box-header with-border">
+				<h3 class="box-title ">{$base['survey_name']}</h3>
+			</div>
+			<div class="nav-tabs-custom ml10 mr10 mt10 mb10">
+				<ul class="nav nav-tabs">
+				<li class="active">
+						<a href="##">问卷详情</a>
+					</li>
+					<if condition="$refused eq 1 OR $refused eq 2">
+					<else />
+					<li>
+						<a href="{:U('questionNaireCount',array('id'=>$base['id']))}">问卷统计</a>
+					</li>
+					</if>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="lecturer_inside">
+						<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+							<!--内容开始-->
+							<div class="row mt10 mb5">
+								<div class="col-sm-3">
+									<label class="text-aqua mt10 mr30">
+                        <i class="fa  fa-send-o mr5"></i>问卷分类： <span class="text-red">{$base['cat_name']}</span></label>
+								</div>
+								<div class="col-sm-3">
+									<label class="text-aqua mt10 mr30">
+                        <i class="fa  fa-user mr5"></i>上传人： <span class="text-red">{$base['username']}</span> </label>
+								</div>
+								<div class="col-sm-4">
+									<label class="text-aqua mt10 mr30">
+                        <i class="fa  fa-calendar mr5"></i>上传时间： <span class="text-red">{$base['survey_upload_time']}</span> </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="text-aqua mt10 float_r mr30">
+                        			<i class="fa  fa-send-o mr5"></i>状态： 
+                                  <span class="text-red">
+                                      	<if condition="$base['status'] eq 1">
+                        					<span class="text-green">已通过</span>
+	                    				<elseif condition="$base['status'] eq 3" />
+	                    					<span class="text-red">已拒绝</span>
+	                    				<else/>
+	                    					<span class="text-red">待审核</span>
+                        				</if>
+						            </span> 
+						            </label>
+								</div>
+							    </div>
+							<!--课程状态结束-->
+
+							<!--  分隔符开始-->
+							<div class="box-header with-border mt5 mb10"></div>
+							<!--  分隔符结束-->
+
+							<!--试卷主要信息区域开始-->
+							<h4 class="box-title">{$base.survey_desc}</h4>
+							<!--  分隔符开始-->
+							<div class="box-header with-border mt5 mb10"></div>
+							<!--  分隔符结束-->
+							
+							<foreach name="list" item="thisValue" key="key">
+							<div class="box-header with-border mt5 mb10"></div>
+							<h4 class="box-title">{$key+1}. {$thisValue.title}
+							<if condition="$thisValue.classification eq 1">（单选）</if>
+							<if condition="$thisValue.classification eq 2">（多选）</if>
+							<if condition="$thisValue.classification eq 3">（判断）</if>
+							<if condition="$thisValue.classification eq 4">（简答）</if>
+							</h4>
+							<if condition="$thisValue.classification eq 1 or $thisValue.classification eq 2">
+								<div class="box-body row">
+									<if condition="$thisValue.optiona neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">A.{$thisValue.optiona}</span></div>
+									</if>
+									<if condition="$thisValue.optionb neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">B.{$thisValue.optionb}</span></div>
+									</if>
+									<if condition="$thisValue.optionc neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">C.{$thisValue.optionc}</span></div>
+									</if>
+									<if condition="$thisValue.optiond neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">D.{$thisValue.optiond}</span></div>
+									</if>
+									<if condition="$thisValue.optione neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">E.{$thisValue.optione}</span></div>
+									</if>
+									<if condition="$thisValue.optionf neq ''">
+										<div class="col-sm-2 mt10"><div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0; cursor: pointer;"></ins></div> <span class="ml5 ">F.{$thisValue.optionf}</span></div>
+									</if>
+								</div>
+							</if>
+							<if condition="$thisValue.classification eq 3">
+								<div class="box-body">
+											<p class="mb15 mt10"> <label>
+								          	<div class="radio mr30">
+								          	<label>
+								          	<input type="radio"  name="lecturer" value="option1">
+								          	<span class="ml10">A.{$thisValue.optiona}</span>
+								          	</label>
+								          	</div>
+										<div class="radio "><label> <input type="radio" name="lecturer" value="" ><span class="ml10">B.{$thisValue.optionb}</span></label></div>
+										</label>
+										</p>
+									</div>
+							</if>
+							<if condition="$thisValue.classification eq 4">
+								<div class="box-body">
+									<div class="col-sm-6">
+										<textarea class="form-control width_10" rows="5" placeholder="尽情发表您的想法吧…………"></textarea>
+									</div>
+								</div>
+							</if>
+							</foreach>
+							<div class="box-header with-border mt5 mb10"></div>
+						<!--试卷主要信息区域结束-->
+
+						<!--内容結束-->
+					</div>
+				</div>
+				<div class="tab-pane" id="lecturer_exterior">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+						<!--内容开始-->
+						<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+							<!--筛选栏开始-->
+							<div class="row mt10 mb10">
+								<div class="col-sm-2">
+									<div class="input-group width_10">
+										<input type="text" name="table_search" class="form-control pull-right" placeholder="组织">
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group ">
+										<input type="text" name="table_search" class="form-control pull-right" placeholder="姓名">
+										<div class="input-group-btn">
+											<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-8">
+
+									<label class="text-aqua mt10 float_r mr30">
+                        <i class="fa  fa-send-o mr5"></i>状态： <span class="text-red">已通过</span> </label>
+
+					
+									<label class="text-aqua mt10 float_r mr30">
+                        <i class="fa  fa-star mr5"></i>使用次数： <span class="text-red">66</span> </label>
+								</div>
+
+							</div>
+							<!--筛选栏结束-->
+							<!--内容开始-->
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+										<thead>
+											<tr role="row">
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">学员</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">组织</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">培训项目</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">是否有效</th>
+												<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">调研提交时间</th>
+
+											</tr>
+										</thead>
+										<tbody id="tab">
+											<tr role="row" class="odd text-center">
+												<td>林丹</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>培训项目名字</td>
+												<td><span href="#" class="color_gree "><i class="fa  fa-check mr5" aria-hidden="true"></i></span></td>
+
+												<td>2016/08/08 08：08</td>
+
+											</tr>
+											<tr role="row" class="odd text-center">
+												<td>王溯源</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>新员工培训项目</td>
+												<td><span href="#" class="text-red "><i class="fa  fa-close " aria-hidden="true"></i></span></td>
+												<td>2016/08/08 08：08</td>
+											</tr>
+											<tr role="row" class="odd text-center">
+												<td>林丹</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>培训项目名字</td>
+												<td><span href="#" class="color_gree "><i class="fa  fa-check mr5" aria-hidden="true"></i></span></td>
+
+												<td>2016/08/08 08：08</td>
+
+											</tr>
+											<tr role="row" class="odd text-center">
+												<td>王溯源</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>新员工培训项目</td>
+												<td><span href="#" class="text-red "><i class="fa  fa-close " aria-hidden="true"></i></span></td>
+												<td>2016/08/08 08：08</td>
+											</tr>
+											<tr role="row" class="odd text-center">
+												<td>林丹</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>培训项目名字</td>
+												<td><span href="#" class="color_gree "><i class="fa  fa-check mr5" aria-hidden="true"></i></span></td>
+
+												<td>2016/08/08 08：08</td>
+
+											</tr>
+											<tr role="row" class="odd text-center">
+												<td>王溯源</td>
+												<td>深圳分公司/人事行政部</td>
+												<td>新员工培训项目</td>
+												<td><span href="#" class="text-red "><i class="fa  fa-close " aria-hidden="true"></i></span></td>
+												<td>2016/08/08 08：08</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!--内容結束-->
+							<!--分页开始-->
+							<div class="row">
+								<div class="float_r mr15">
+									<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+										<ul class="pagination">
+											<li class="paginate_button previous disabled" id="example1_previous">
+												<a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+											</li>
+											<li class="paginate_button active">
+												<a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+											</li>
+											<li class="paginate_button ">
+												<a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+											</li>
+											<li class="paginate_button ">
+												<a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+											</li>
+											<li class="paginate_button ">
+												<a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+											</li>
+											<li class="paginate_button ">
+												<a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+											</li>
+											<li class="paginate_button ">
+												<a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+											</li>
+											<li class="paginate_button next" id="example1_next">
+												<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!--分页结束-->
+
+						</div>
+
+					</div>
+					<!--内容結束-->
+				</div>
+			</div>
+		</div>
+		<!-- /.tab-content -->
+	 </div>
+    </section>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script type="text/javascript">
+		//radio选中样式
+		$('input[type="radio"]').iCheck({
+			labelHover: false,
+			cursor: true,
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_minimal-blue',
+			increaseArea: '20%'
+		});
+
+		function del_click() {
+			//删除分组
+			layer.confirm('您确定要删除吗？', {
+				btn: ['确定', '取消'],
+				skin: 'layui-layer-lan'
+					//按钮
+			}, function() {
+				layer.msg('删除成功', {
+					icon: 1
+				});
+			}, function() {
+				layer.msg('取消删除', {
+					time: 2000, //2s后自动关闭
+				});
+			});
+		}
+	</script>
+</body>
+
+</html>

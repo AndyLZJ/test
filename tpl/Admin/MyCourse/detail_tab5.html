@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>课程详情_问答</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+		<!-- video player -->
+		<link rel="stylesheet" href="__PUBLIC__/videoPlayer/video-js.css">
+		<style type="text/css">
+			.course_img{height:100%; }
+			body,fieldset,legend,button,input,textarea{margin:0; padding:0; border:0; outline:0}
+			a:hover,a:visited,a:link,a:active{text-decoration:none}
+			sup{vertical-align:text-top}
+			sub{vertical-align:text-bottom; }
+			legend{color:#000}
+			fieldset,img{border:0}
+			button,input,select,textarea{font-size:100%}
+			table{border-collapse:collapse; border-spacing:0}
+			.clear{clear:both; float:none; height:0; overflow:hidden}
+			#pn{height:auto; background:#fff; margin:0 auto; padding:20px; padding-top:0}
+			.list0{padding:20px 0; position:relative; border-top:1px solid #eee}
+			.head{width:60px; float:left}
+			.head img{width:60px; height:60px; border-radius:50%}
+			.close{width:20px; height:20px; position:absolute; top:0; right:0; color:#696e78; font-size:14px; text-align:center; line-height:20px}
+			.close:hover{color:#eb7350}
+			.HF_content{line-height:20px; font-size:14px; margin-left:70px}
+			.name{color:#eb7350}
+			.pic{margin:5px 0}
+			.good:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.good{*zoom:1; margin-top:5px}
+			.date{float:left; color:#808080}
+			.good a{float:right; color:#808080}
+			.people{background:#f7f7f7; height:28px; line-height:28px; padding-left:10px; margin:5px 0}
+			.comment:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.comment{*zoom:1; padding:10px 0; border-top:1px solid #eee}
+			.comment-left{width:30px; float:left; display:inline; margin-right:10px}
+			.comment-left img{width:30px; height:30px; border-radius:50%; border:1px solid #e0dddd; padding:2px}
+			.comment-text{line-height:18px}
+			.comment-text span{color:#eb7350}
+			.comment-date{font-size:12px; line-height:14px; color:#ccc; position:relative}
+			.comment-zan{position:absolute; right:95px; bottom:0; color:#808080}
+			.comment-dele{position:absolute; right:0; bottom:0; color:#808080}
+			.hf:after{clear:both; content:''; display:block; width:0; height:0; visibility:hidden}
+			.hf{*zoom:1; margin-top:5px}
+			.hf-text{border:1px solid #eee; display:block; height:35px; width:100%; padding:5px; resize:none; color:#ccc; font-size:12px}
+			.hf-on .hf-text{height:60px; color:#333; border:1px solid #ff8140}
+			.hf-btn{float:right; width:65px; height:26px; background:#f7f7f7; color:#ccc; font-size:12px; display:none}
+			.hf-btn-on{background:#ff8140; color:#fff}
+			.hf-nub{float:right; padding:3px 5px; color:#666; display:none}
+			.hf-on .hf-btn{display:inline}
+			.hf-on .hf-nub{display:inline}
+			.huifu{right:45px}
+			.FBmap{margin:auto}
+			.FBmap textarea{resize:none; border:1px solid #c7c3c3; width:100%; min-height:100px; margin:auto; margin-top:5px}
+			.FBmap textarea:focus{resize:none; border:1px solid #ff8140; width:100%; min-height:100px; margin:auto; margin-top:5px; padding:3px; font-size:16px}
+			.FBbtn{float:right; color:white; cursor:pointer; height:35px; width:75px; margin-top:-5px; background-color:orangered}
+			.course_cover{padding:1px; margin:0; width:706px; height:406px; border:2px solid #ccc;}
+			.kejianFullScreen{position: absolute; right: 20px; margin-top: -35px; cursor:pointer; }
+			.kejianSetFull{margin:0; border:0; padding:0; clear:both; position:fixed; right:0; top:0; left:0; bottom:0; z-index:99999; }
+			
+			/*课程问答*/
+			.btn1{border: none; height: 2.0em; background-color: #3E8CD0; color: white; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn2{border: none; height: 2.0em; background-color: #e1e2e4; color: black; font-size: 1em; margin-top: 0.5em; width: 100%; border-radius: 0.5em; }
+			.btn1:focus{outline: none; border: none; }
+			.btn2:focus{outline: none; border: none; }
+			.que_gundong{border: 1px solid #00acd6; padding: 0px 5px; border-radius: 5px; position: fixed; top: 0px; width: 32%; background:#fff; }
+			.chap_string{padding:0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+		</style>
+	</head>
+	<body>
+		<section class="content">
+			<div class="box-body">
+				<div class="tab-content">
+					<div class="que_map form-horizontal" id="que_map">
+						<div class="form-group">
+							<div class="float_l"><span class="text-red">*</span>标题：</div>
+							<div class="col-sm-6">
+								<textarea class="form-control quesTitle" rows="1" placeholder="给问题起一个标题吧 ..."></textarea>
+						    </div>
+						</div>
+						<div class="form-group">
+							<div class="float_l"><span class="text-red">*</span>问题：</div>
+							<div class="col-sm-6">
+								<textarea class="form-control quesCon" rows="3" placeholder="请输入您的问题 ..."></textarea>
+							</div>
+						</div>
+						<div class="form-group" style="margin-left:52px; ">
+							<input type="button" class="addQues btn btn-info form-group_but  mb10" value="发布问题"/>
+						</div>
+					</div>
+					<!--------------------------------------------- 课程问答开始 -->
+					<div id="Question">
+						<!--总回答数量-->
+						<div class="box-header with-border">
+							<p class="box-title">共<span class="text-red">{$quesNum}条</span>回答</p>
+						</div>
+						<div class="row mt10 ">
+							<div class="col-sm-2">
+								<a href="__ACTION__/tab/5/project_id/{$project_id}/course_id/{$course_id}"><button name="btn_name" id="1" class="<if condition='$chapIndex eq 0'>btn1<else/>btn2</if>">全部问题</button></a>
+							</div>
+							<foreach name="base.chapter" item="chap" key="chapOrder">
+							<div class="col-sm-2">
+								<a href="__ACTION__/tab/5/project_id/{$project_id}/course_id/{$course_id}/chapIndex/{$chapOrder + 1}">
+									<button name="btn_name" title="{$chap.name}" class="chap_string <if condition='($chapOrder + 1) eq $chapIndex'>btn1<else/>btn2</if>">{$chap.name}</button>
+								</a>
+							</div>
+							</foreach>
+						</div>
+						<div class="row mt10">
+							<!--左侧问题展示区域-->
+							<div class="col-sm-8 quesListCon">
+								<foreach name="ques" item="quesData">
+								<div class="box-header with-border">
+									<h3 class="box-title font_bold">{$quesData.title}</h3>
+									<div class="mt10">
+										<a target="_blank" href="__CONTROLLER__/answerPage/ques_id/{$quesData.id}" class="btn btn-info btn-sm  mb10">我来回答</a>
+										<span class=" float_r"><a target="_blank" href="__CONTROLLER__/answerPage/ques_id/{$quesData.id}" class="mr10">{$quesData.answer_num}条回复>></a><span  class="mr10">{$quesData.username}</span> {$quesData.add_time}</span>
+									</div>
+								</div>
+								</foreach>
+							</div>
+						</div>
+						
+						<!--分页开始-->
+						<div class="row">
+							<div class="dataTables_paginate float_r mr15">
+								<!-- 分页html -->
+								{$pageNav}
+							</div>
+						</div>
+						<!--分页结束	-->
+						
+					</div>
+					<!-- 课程问答结束 -->
+				</div>
+			</div>
+		</section>
+		<input type="hidden" id="pd" value="1" />
+		<input type="hidden" id="course_score" value="{$base.course_score}"/>
+		<input type="hidden" id="lecturer_score" value="{$base.lecturer_score}"/>
+		<input type="hidden" id="joinStatus" value="{$base.joinStatus}"/>
+		<input type="hidden" id="ogtype" value="{$ogtype}"/>
+		<input type="hidden" id="sub_comment_id" value=""/>
+		<input type="hidden" id="newReplyId" value=""/>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			
+			if($("#joinStatus").val() == "0"){
+				$(".dzan").remove();
+				$(".comment-dele").remove();
+				$(".hf-text").remove();
+			}
+			
+			//发布问题
+			$(".addQues").click(function(){
+				var title = $(".quesTitle").val();
+				var content = $(".quesCon").val();
+				title = encodeURIComponent(title);
+				content = encodeURIComponent(content);
+				var course_id = "{$course_id}";
+				var project_id = "{$project_id}";
+				var chapIndex = "{$chapIndex}";
+				$.ajax({
+					type: "post",
+					url: "__CONTROLLER__/newQues",
+					data: "course_id="+course_id+"&project_id="+project_id+"&chapIndex="+chapIndex+"&title="+title+"&content="+content,
+					dataType: "json",
+					success: function(data){
+						if(data.code == 1000){
+							layer.msg('问题已发布', {
+								time: 800, //2s后自动关闭
+							});
+							
+							var html = '<div class="box-header with-border">';
+							html += '<h3 class="box-title font_bold">'+$(".quesTitle").val()+'</h3><div class="mt10">';
+							html += '<a href="__CONTROLLER__/answerPage/ques_id/'+data.last_id+'" class="btn btn-info btn-sm  mb10">我来回答</a>';
+							html += '<span class=" float_r"><a href="__CONTROLLER__/answerPage/ques_id/'+data.last_id+'" class="mr10">0条回复>></a><span  class="mr10">{$username}</span> '+data.curr_time+'</span></div></div>';
+							$(".quesListCon").append(html);
+							
+							$(".quesTitle").val("");
+							$(".quesCon").val("");
+							
+							parent.iFrameHeight();//操作父级方法 重新设置iframe高度
+							/* setTimeout(function(){
+								window.location.href = "__CONTROLLER__/answerPage/ques_id/"+data.last_id;	
+							}, 1000); */
+						}else{
+							layer.alert(data.message);
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

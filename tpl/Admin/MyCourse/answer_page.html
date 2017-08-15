@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>我的课程-回答页面</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<style type="text/css">
+			.box-title {
+				line-height: 25px !important;
+			}
+			.question_xq {
+				font-size: 16px;
+				color: #847878;
+				line-height: 25px;
+			}
+			.text-gray {
+				color: #98999c !important;
+			}
+		</style>
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+     我的课程
+      <small>/回答问题</small>
+    </h1>
+    <ol class="breadcrumb">
+				<li>
+					<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box-header with-border info_box_title">
+				<span>问答详情</span>
+			</div>
+			<div class="box-body">
+				<div class="box-header with-border">
+					<h3 class="box-title font_bold">{$ques.title}</h3>
+
+					<div class="mt10">
+						<div class="box-title">{$ques.content}
+						</div>
+						<span class="float_r text-gray"><span  class="mr10">{$ques.username}</span>{$ques.add_time}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="box-header with-border info_box_title">
+				<span>全部答案（{$answerNum}）</span>
+			</div>
+			<div class="box-body">
+				<foreach name="answer" item="data">
+				
+				<div class="box-header with-border">
+					<div class="mt10">
+						<div class="question_xq">{$data.content}
+						</div>
+						<span class="float_r text-gray"><span class="mr10">{$data.username}</span> {$data.add_time}</span>
+					</div>
+				</div>
+				</foreach>
+				<!--分页开始-->
+				<div class="row" style="margin-top:30px; ">
+					<div class="dataTables_paginate float_r mr15">
+						<!-- 分页html -->
+						{$pageNav}
+					</div>
+				</div>
+				<!--分页结束	-->
+				<div class="box-header with-border info_box_title">
+					<span>添加答案</span>
+				</div>
+				<div class="col-sm-12 mt15">
+					<div class="form-group">
+						<textarea class="form-control" id="answerCon" rows="10" placeholder="请输入您的回答  ..."></textarea>
+					</div>
+					<div class="text-right">
+						<a  class="btn answerBtn btn-info form-group_but  mb10">回答</a>
+					</div>
+				</div>
+
+			</div>
+		</section>
+	</body>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script>
+	$(".answerBtn").click(function(){
+		var content = $("#answerCon").val();
+		content = $.trim(content);
+		content = encodeURIComponent(content);
+		if(!content || content == ""){
+			layer.alert("请填写答案再提交");
+			return;
+		}
+		
+		$.ajax({
+			type: "post",
+			url: "__CONTROLLER__/answer",
+			data: "content="+content+"&ques_id={$ques_id}",
+			dataType: "json",
+			success: function(data){
+				if(data.code == 1000){
+					layer.msg("提交成功");
+					setTimeout(function(){
+						window.location.href = window.location.href;
+					},1000);
+				}else{
+					layer.alert(data.message);
+				}
+			}
+		});
+	});
+	</script>
+</html>

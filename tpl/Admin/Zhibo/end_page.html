@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>观看直播</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<!-- video player -->
+		<link rel="stylesheet" href="__PUBLIC__/videoPlayer/video-js.css">
+		<script src="__PUBLIC__/videoPlayer/videojs-ie8.min.js"></script>
+		<script src="__PUBLIC__/videoPlayer/video.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/videoPlayer/ckplayer/ckplayer.js" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+                              课程直播
+        <small>/播放界面</small>
+               </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="__CONTROLLER__/index"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+
+						<div class="box-header with-border ">
+							<h3 class="box-title text-blue">听袁腾飞老师讲中华文明起源 <small class="text-blue ml20" style="font-size: 80%;">当前人数1035人</small></h3>
+						</div>
+						<form class="form-horizontal">
+							<div class="box-body">
+								<div class="">
+									<div class="col-sm-9">
+										<div class="box">
+											<div class="">
+												<div class="col-sm-12" id="video_box" style="margin-top:30px; padding:10px; height:600px; border:2px solid #ddd; ">
+													<!-- 视频播放 -->
+													<video id="my-video" class="video-js vjs-big-play-centered" controls 
+													width="col-sm-12" height="col-sm-12" 
+													data-setup='{}'>
+													    <p class="vjs-no-js">要查看此视频，请启用JavaScript</p>
+													</video>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="box">
+											<div class="row">
+												<div class="col-sm-12" style="padding-left: 20px;padding-right: 20px;padding-bottom: 10px;">
+													<div style="min-height:63vmin;">
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">典阅——市场部——张少华：</span>
+															<p class="ml20"><span>这里是内容人员评论内容区域，字段长的时候自动换行</span></p>
+														</div>
+
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">张少华：</span>
+															<p class="ml20"><span>这门课程不错哦，小伙伴们抓紧学习吧。</span></p>
+														</div>
+
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">张少华：</span>
+															<p class="ml20"><span>这门课程不错哦，小伙伴们抓紧学习吧。</span></p>
+														</div>
+
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">张少华：</span>
+															<p class="ml20"><span>这门课程不错哦，小伙伴们抓紧学习吧。</span></p>
+														</div>
+
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">张少华：</span>
+															<p class="ml20"><span>这门课程不错哦，小伙伴们抓紧学习吧。</span></p>
+														</div>
+
+														<div class="box-header with-border ">
+															<span class="pull-right text-gray">2017-6-23 16:42:43</span>
+															<span class="text-blue">张少华：</span>
+															<p class="ml20"><span>这门课程不错哦，小伙伴们抓紧学习吧。</span></p>
+														</div>
+
+													</div>
+
+													<div class="mt15">
+														<div class="input-group width_10">
+															<input style="height: 80px;" type="texdt" name="table_search" class="form-control pull-right" placeholder="">
+															<div class="input-group-btn" style="width: 1%;">
+																<button style="height: 80px;" type="button" class="btn btn-success">发送</button>
+															</div>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/Css/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式			
+			layer.confirm('直播已结束，是否观看录制视频？', {
+				btn: ['是的', '不了']
+			}, function(index, layero){
+				layer.close(index)
+			}, function(index){
+				
+			});
+			
+			var playW = $("#video_box").width();
+			var playH = $("#video_box").height();
+			//初始化视频播放器
+			$(function(){
+				var myPlayer = videojs('my-video',{
+					controlBar: {
+						volumeMenuButton: false,
+						progressControl: false,
+						remainingTimeDisplay: false,
+					}
+				});
+				var playW = $("#video_box").width();
+				var playH = $("#video_box").height();
+				myPlayer.width(playW);
+				myPlayer.height(playH);
+				//LP_20170720141444.mp4 张雪峰   LP_20170720144835.mp4
+				myPlayer.src("/Upload/LP_20170720144835.mp4");  //重置video的src
+			    myPlayer.load("/Upload/LP_20170720144835.mp4");  //使video重新加载
+			});
+			
+			/* var videoPath = "/Upload/LP_20170720141444.mp4";
+			var videoPath = "/Upload/LP_20170720144835.mp4";
+			var flashvars={
+					f:videoPath,
+					c:0,
+					b:1,
+					i:''
+					};
+				var video=[videoPath+'->video/mp4'];
+				CKobject.embed('__PUBLIC__/videoPlayer/ckplayer/ckplayer.swf','video_box','ckplayer_video_box',playW,playH,false,flashvars,video)	
+			 */
+		</script>
+	</body>
+
+</html>

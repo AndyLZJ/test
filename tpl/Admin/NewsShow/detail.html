@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>资讯详情</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        资讯详情
+        <small>/新闻资讯</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" onclick="JavaScript:history.back(-1)" class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+            <div class="box box-primary">
+            <div class="box-body">
+              <div class="dataTables_wrapper form-inline dt-bootstrap">               
+              <!--内容开始-->
+              <div class="row">
+                  <div class="col-sm-12">
+                        <div class="box-header with-border text-center">
+                          <h2 class="box-title text-light-blue font_bold"> <span class="mr5 text-yellow">[{$new.type}]</span>{$new.title}</h2>
+                          <div class="mt10 text-muted">
+                               <span class="mr30">
+                                   <i class="fa fa-clock-o mr5"></i>
+                                   发布时间：{$new.create_time}
+                               </span>
+                               <span class="mr30">
+                                   <i class="fa fa-id-card-o mr5"></i>
+                                   作者：{$new.username}
+                               </span>
+                          </div>
+                        </div>
+                        <form class="form-horizontal">
+                          <div class="box-body">
+                              {$new.content}
+                          </div>
+                        </form>
+                  </div>
+              </div>
+              <!--内容結束-->
+              </div>
+            </div>
+          </div>
+    </section>
+</body>
+</html>

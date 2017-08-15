@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加培训项目</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	<!-- daterange picker -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+	<!-- bootstrap datepicker -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+	<!-- iCheck for checkboxes and radio inputs -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+	<!-- Bootstrap Color Picker -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+	<!-- Bootstrap time Picker -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+
+	<link rel="stylesheet" href="__PUBLIC__/Css/selectUser.css">
+    <!--三期时间插件样式-->
+
+    <link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+	<style type="text/css">
+		.uploadify-button{
+			text-align: center;
+			line-height: 30px;
+			width: 86px;
+			height: 30px;
+			display: block;
+			background-color: #333;
+			color: #FFFFFF!important;
+		}
+
+		.uploadify-button:hover {
+			color: #FFFFFF!important;
+			background-color: #262626;
+			border-color: #204d74;
+		}
+	</style>
+</head>
+<assign name="project_id" value="$project_id" />
+<body>
+	<!--内容区域顶栏面包屑开始-->
+	<section class="content-header">
+		<h1 class="info_title">
+    培训项目
+    <small>/<if condition="$project_id gt 0">编辑<else/>新建</if>培训项目</small>
+  </h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+			</li>
+		</ol>
+	</section>
+	<!--内容区域顶栏面包屑结束-->
+	<section class="content">
+		<div class="box">
+			<div class="box-body">
+				<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+
+
+					<div class="box-header with-border">
+						<h3 class="box-title "><if condition="$project_id">编辑培训项目<else />新建培训项目</if></h3>
+					</div>
+					<form id="commentForm" name="form1" class="form-horizontal" action="{:U('Admin/Manage/submit')}" method="post" enctype="multipart/form-data">
+						<if condition="$project_id"><input type="hidden" value="{$project_id}" name="project_id"/></if>
+						<input type="hidden" value="1" name="typeid" />
+						 <fieldset>
+						<div class="box-body">
+							<!--项目名称字段开始-->
+							<div class="form-group" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">项目名称<span class="color_red">*</span>：</label>
+
+								<div class="col-sm-10">
+
+									<input id="cname" name="project_name" type="text" class="form-control mr30" placeholder="" required="required" value="{$project.project_name}">
+
+								</div>
+							</div>
+
+							<div class="form-group" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">培训类别：</label>
+								<div class="col-sm-10">
+									<span style="margin-right:15px;"><input name="training_category" type="radio" class="form-control mr30" value="0" <if condition="$project['training_category'] eq 0">checked="checked"</if>>内部培训</span>
+									<span style="margin-right:15px;"><input name="training_category" type="radio" class="form-control mr30" value="1" <if condition="$project['training_category'] eq 1">checked="checked"</if> style="margin-right:15px;">外派培训</span>
+									<span style="margin-right:15px;"><input name="training_category" type="radio" class="form-control mr30" value="2" <if condition="$project['training_category'] eq 2">checked="checked"</if> style="margin-right:15px;">外出授课</span>
+								</div>
+							</div>
+							<div class="form-group" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">计划内外：</label>
+								<div class="col-sm-10">
+									<span style="margin-right:15px;"><input name="plan_category" type="radio" class="form-control mr30" value="0" <if condition="$project['plan_category'] eq 0">checked="checked"</if>>计划内</span>
+									<span style="margin-right:15px;"><input name="plan_category" type="radio" class="form-control mr30" value="1" <if condition="$project['plan_category'] eq 1">checked="checked"</if>>计划外</span>
+								</div>
+							</div>
+
+							<!--项目名称字段结束-->
+							<!--培训班字段开始-->
+							<div class="form-group" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">培训对象：</label>
+
+								<div class="col-sm-10">
+									<input name="class_name" type="text" class="form-control mr30" id="class_name" placeholder="" maxlength="10" value="{$project.class_name}">
+								</div>
+							</div>
+							<!--培训班字段结束-->
+
+
+							<!--项目名称字段开始-->
+							<div class="form-group" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">项目时间<span class="color_red">*</span>：</label>
+
+								<div class="col-sm-10">
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input name="start_time" type="text" id="datebut" class="form-control pull-right"  value="{$project.start_time}" readonly="readonly" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})">
+									</div> 至
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input name="end_time" type="text" id="datainps" class="form-control pull-right" value="{$project.end_time}" readonly="readonly" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})">
+									</div>
+
+								</div>
+							</div>
+							<!--项目名称字段结束-->
+							<!--项目描述字段开始-->
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">项目描述：</label>
+								<div class="col-sm-10">
+									<!--编辑器开始-->
+									<textarea name="project_description" id="TextArea1" cols="20" rows="2" class="ckeditor" required="required">{$project.project_description}</textarea>
+									<!--编辑器结束-->
+								</div>
+							</div>
+							<!--项目描述字段结束-->
+							<!--封面上传字段开始-->
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">项目封面：</label>
+								<div class="col-sm-10">
+									<input type="text" value="{$project.project_covers}" name="filename" id="filename" readonly="readonly" style="display:none;">
+									<div id="file" name="file"></div>
+									<div class="box box-success certificate_img" style="margin-top:15px; <if condition="empty($project['project_covers'])">display:none;</if>">
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+									</div>
+									<div class="box-body" id="image">
+										<img src="{$project.project_covers}" width="100%">
+									</div>
+								</div>
+									<span class="ml10">(支持：gif、jpg、jpeg、bmp、png格式　建议尺寸：220px*124px)</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">项目预算<span class="color_red">*</span>：</label>
+								<div class="col-sm-10">
+									<table class="table table-bordered table-striped dataTable text-center">
+										<thead><th width="280" class="text-center">费用名称</th>
+											<th  class="text-center">费用预算(元)</th>
+											<th class="text-center">操作</th></thead>
+								<tbody>
+									<foreach name="name" item="v" key="k">
+									<if condition="in_array($v,array('内部讲师费','外部讲师费','课程开发费','外部培训费','培训咨询费','培训器材费','场地费','食宿费','交通差旅费','其他费用',))">
+										<tr>
+											<td style="position: relative;">
+												<div style="position:relative;">
+													<span class="HBinput">
+														<select class="form-control select2 width_10"  onchange="this.parentNode.nextSibling.value=this.value;check_name();">
+														<option value="内部讲师费" <if condition="$v eq '内部讲师费'">selected</if>>内部讲师费</option>
+														<option value="外部讲师费" <if condition="$v eq '外部讲师费'">selected</if>>外部讲师费</option>
+														<option value="课程开发费" <if condition="$v eq '课程开发费'">selected</if>>课程开发费</option>
+														<option value="外部培训费" <if condition="$v eq '外部培训费'">selected</if>>外部培训费</option>
+														<option value="培训咨询费" <if condition="$v eq '培训咨询费'">selected</if>>培训咨询费</option>
+														<option value="培训器材费" <if condition="$v eq '培训器材费'">selected</if>>培训器材费</option>
+														<option value="场地费" <if condition="$v eq '场地费'">selected</if>>场地费</option>
+														<option value="食宿费" <if condition="$v eq '食宿费'">selected</if>>食宿费</option>
+														<option value="交通差旅费" <if condition="$v eq '交通差旅费'">selected</if>>交通差旅费</option>
+														<option value="其他费用" <if condition="$v eq '其他费用'">selected</if>>其他费用</option>
+														</select></span><input name="box[]" style="width:90%;position:absolute;left:0px;" class="form-control boxs" placeholder="输入或下拉选择" value="{$v}" maxlength="20"  onblur="check_name();"/>
+												</div>
+											</td>
+											<td>
+												<input type="number" name="amount[]" class="form-control width_10 text-center numbers" min="0.1" onblur="up();" value="{$amount[$k]}" step="0.1" max="9999999999"/>
+											</td>
+											<td>
+												<a onclick="del(this);" href="javascript:void(0);" class="bs-callout-info text-danger del">
+													<i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+												</a>
+											</td>
+										</tr>
+									<else/>
+										<tr>
+											<td style="position: relative;">
+												<div style="position:relative;">
+													<span class="HBinput">
+														<select class="form-control select2 width_10"  onchange="this.parentNode.nextSibling.value=this.value;check_name();" >
+														<option value="{$v}" >{$v}</option>
+														<option value="内部讲师费" >内部讲师费</option>
+														<option value="外部讲师费" >外部讲师费</option>
+														<option value="课程开发费" >课程开发费</option>
+														<option value="外部培训费" >外部培训费</option>
+														<option value="培训咨询费" >培训咨询费</option>
+														<option value="培训器材费" >培训器材费</option>
+														<option value="场地费" >场地费</option>
+														<option value="食宿费" >食宿费</option>
+														<option value="交通差旅费" >交通差旅费</option>
+														<option value="其他费用" >其他费用</option>
+														</select></span><input name="box[]" style="width:90%;position:absolute;left:0px;" class="form-control boxs" placeholder="输入或下拉选择" value="{$v}" maxlength="20"  onblur="check_name();"/>
+												</div>
+											</td>
+											<td>
+												<input type="number" name="amount[]" class="form-control width_10 text-center numbers" min="0.1" onblur="up();" value="{$amount[$k]}" step="0.1" max="9999999999"/>
+											</td>
+											<td>
+												<a onclick="del(this);" href="javascript:void(0);" class="bs-callout-info text-danger del">
+													<i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+												</a>
+											</td>
+										</tr>
+									</if>
+									</foreach>
+								</tbody>
+									<tfoot>
+										<tr>
+											<td style="position: relative;">合计</td>
+											<td class="total">{$project.project_budget|default=0}</td>
+											<input type="hidden" name="project_budget" id="project_budget" value="{$project.project_budget|default=0}"/>
+											<td>
+												<a onclick="add_html()" href="javascript:void(0);" class="bs-callout-info text-success">
+													<i class="fa fa fa-plus mr5" aria-hidden="true"></i>新增费用
+												</a>
+											</td>
+										</tr>
+									</tfoot>
+									</table>
+								</div>
+							</div>
+							<!--制作人字段结束-->
+							<!--章节添加字段开始-->
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">指定人员：</label>
+								<div class="col-sm-10">
+									已选定 <span class="text-blue number">{$designee_total|default=$user}</span>人
+									<button class="btn btn-primary form-group_but preview" type="button" onclick="section_zhiding()">选择人员</button>
+									<div class="plus-tag tagbtn clearfix" id="myTags">
+										<foreach name="designee" item="vo" >
+											<a value='{$vo.id}' title='{$vo.username}' href="javascript:void(0);"/><span>{$vo.username}</span><em class="myTags"><input type="hidden"  name="user_id[]" value="{$vo.id}" /></em></a>
+										</foreach>
+									</div>
+								</div>
+							</div>
+							<!--章节添加字段结束-->
+							<!--学分字段开始-->
+							<div class="form-group" id="address" style="display: none;">
+								<label for="inputEmail3" class="col-sm-2 control-label">公开报名：</label>
+
+									<div class="col-sm-10">
+										<input name="is_public" type="checkbox" value="1" <if condition="$project['is_public'] eq 1">checked="checked"</if>/> <span class="ml20 ">
+										<button class="btn btn-primary form-group_but preview" type="button" onclick="open_range()">公开范围</button></span>
+										<div class="plus-tag tagbtn clearfix "  style="margin-top: 10px" id="open">
+											<foreach name="department" item="vo" >
+												<a  value='{$vo.id}' title='{$vo.name}' href="javascript:void(0);" /><span>{$vo.name}</span><em class="open"><input type="hidden"  name="tissue_id[]" value="{$vo.id}" /></em></a>
+											</foreach>
+										</div>
+
+									</div>
+							</div>
+							<!--学分字段结束-->
+						<div class="box-footer">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div class="col-sm-6">
+										<button type="submit" class="btn btn-default form-group_but" id="continue">下一步</button>
+									</div>
+									<div class="col-sm-6">
+										<button type="submit"  class="btn btn-default form-group_but" id="draft">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						</fieldset>
+					</form>
+					<!--内容結束-->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+	<script src="__PUBLIC__/Js/js/selectUser.js"></script>
+	<script src="__PUBLIC__/Js/js/startScore.js"></script>
+	<script src="__PUBLIC__/Js/js/photo.js"></script>
+	<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="__PUBLIC__/Js/js/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+	<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+	<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+	<script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+	<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+	<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+	<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+	<script  src="__PUBLIC__/uploadify/jquery.Huploadify.js"></script>
+<!--三期时间插件js-->
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+
+	<script type="text/javascript">
+		function add_html(){
+	  		var html = '';
+	  		html +='<tr>';
+			html +='<td style="position: relative;">';
+			html +='<div style="position:relative;">';
+			html +='<span class="HBinput">';
+			html +='<select class="form-control select2 width_10" onchange="this.parentNode.nextSibling.value=this.value;check_name();">';
+			html +='<option value=""></option>';
+			html +='<option value="内部讲师费">内部讲师费</option>';
+			html +='<option value="外部讲师费">外部讲师费</option>';
+			html +='<option value="课程开发费">课程开发费</option>';
+			html +='<option value="外部培训费">外部培训费</option>';
+			html +='<option value="培训咨询费">培训咨询费</option>';
+			html +='<option value="培训器材费">培训器材费</option>';
+			html +='<option value="场地费">场地费</option>';
+			html +='<option value="食宿费">食宿费</option>';
+			html +='<option value="交通差旅费">交通差旅费</option>';
+			html +='<option value="其他费用">其他费用</option>';
+			html +='</select>';
+			html +='</span><input name="box[]" style="width:90%;position:absolute;left:0px;" class="form-control boxs" maxlength="20" onblur="check_name();"/>';
+			html +='</div>';
+			html +='</td>';
+			html +='<td>';
+			html +='<input type="number" name="amount[]" class="form-control width_10 text-center numbers" min="1" onblur="up();" step="0.1" max="9999999999"/>';
+			html +='</td>';
+			html +='<td>';
+			html +='<a onclick="del(this);" href="javascript:void(0);" class="bs-callout-info text-danger del"><i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除</a>';
+			html +='</td>';
+			html +='</tr>';
+			$(".dataTable").append(html);
+	 	}
+		
+		function up(){
+			var i = 0;
+			$('.numbers').each(function(){
+				if($(this).val() != ''){
+					i += parseFloat($(this).val());
+				}
+			});
+			$('.total').html(i);
+			$('#project_budget').val(i);
+		}
+		
+		//input事件触发
+		function check_name(){
+			var isset = '';
+			$('.boxs').each(function(){
+				if($.trim($(this).val()) != ''){
+					if(isset.indexOf($(this).val()) !== -1){
+						layer.msg('该费用已存在');
+						$(this).val('');
+						$(this).parent().parent().next().find('input').val('');
+						return false;
+					}
+				console.log(isset);
+				isset += $(this).val();
+				}
+			});
+		}
+		
+		function del(m){
+			$(m).parent().parent().remove();
+		}
+		//选择指定人员
+		function section_zhiding() {
+			layer.open({
+				title: '指定人员',
+				yes: function (index, layero) {
+					var body = layer.getChildFrame('body', index);
+
+					var user_name = new Array();
+
+					var user_id = new Array();
+
+					body.find("input[type='checkbox']:checked").each(function(i){
+						user_name = $(this).attr("alt");
+						user_id = $(this).val();
+
+						if(user_name == undefined){
+							return true;
+						}
+						setTips(user_name,user_id);
+					});
+
+					layer.closeAll();
+
+					$('.number').html($('#myTags a').length);
+				},
+				btn: ['保存','取消'],
+				area: ['1100px', '550px'],
+				offset: ['20px'],
+				type: 2,
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				content: "{:U('admin/tissue/designee','','',true)}"
+			});
+		}
+
+		//radio选中样式
+		$('input').iCheck({
+			labelHover: false,
+			cursor: true,
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_minimal-blue',
+			increaseArea: '20%'
+		});
+
+		//所有公司变色 
+		$(".frim_line").click(function() {
+			if($(this).attr('id') == -1){
+				$('.treeview').show();
+			}
+			$(this).addClass("active").siblings().removeClass('active');
+			var company_id = $(this).attr('id');
+			$('#company'+company_id).show().siblings().hide();
+		});
+
+		$(".treeview").find(".iCheck-helper").click(function() { //分公司全选功能
+			var chec = $(this).parent().attr("aria-checked");
+			var box = $(this).parent().parent().parent().find("ul").find("input[type='checkbox']");
+
+			$(box).each(function() {
+				if(chec == "true") {
+					$(this)[0].checked = true;
+					$(this).parent().attr("aria-checked", "true")
+					$(this).parent().addClass("checked")
+				} else {
+					$(this)[0].checked = false;
+					$(this).parent().attr("aria-checked", "false")
+					$(this).parent().removeClass("checked")
+				}
+			});
+
+		});
+
+		$(".cliketables").find(".iCheck-helper").click(function() { //单个部门全选功能
+			var chec = $(this).parent().attr("aria-checked");
+			var box = $(this).parent().parent().parent().parent().find("td").find("input[type='checkbox']");
+
+			$(box).each(function() {
+				if(chec == "true") {
+					$(this)[0].checked = true;
+					$(this).parent().attr("aria-checked", "true")
+					$(this).parent().addClass("checked")
+				} else {
+					$(this)[0].checked = false;
+					$(this).parent().attr("aria-checked", "false")
+					$(this).parent().removeClass("checked")
+				}
+			});
+		});
+
+		$("#tableclikes").find(".iCheck-helper").click(function() { //所有全选功能
+			var chec = $(this).parent().attr("aria-checked");
+			var box = $("div.sidebar").find("input[type='checkbox']");
+
+			$(box).each(function() {
+				if(chec == "true") {
+					$(this)[0].checked = true;
+					$(this).parent().attr("aria-checked", "true")
+					$(this).parent().addClass("checked")
+				} else {
+					$(this)[0].checked = false;
+					$(this).parent().attr("aria-checked", "false")
+					$(this).parent().removeClass("checked")
+				}
+			});
+		});
+
+		function queding() {
+			var str = "";
+			var c = document.getElementsByName("check")
+			for(var i = 0; i < c.length; i++) {
+				if(c[i].checked == true) {
+					str += c[i].value + ",";
+				}
+			}
+			$("#GKFW").html(str);
+			layer.closeAll();
+		}
+
+		function baocun() {
+			layer.closeAll();
+		}
+
+		$("#file").Huploadify({
+			buttonText:'上传封面',
+			auto:true,
+			method:'post',
+			fileTypeExts:'*.jpg;*.png;*.gif;*.jpeg',
+			multi:false,
+			formData:{key:123456,key2:'news'}, //banner是图片存放的目录
+			fileSizeLimit:10240,
+			itemTemplate:'',//进度条，若显示进度条用 'itemTemp'
+			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+			showUploadedSize:true,
+			removeTimeout:1000,
+			uploader: "{:U('File/upload',array('typeid'=>1))}",
+
+			onUploadSuccess: function (file, data) {
+
+				var url = JSON.parse(data);
+				var src = url.src;
+				var img_src = '__UPLOAD__/'+src;
+				$('#filename').attr('value',img_src);
+				$(".certificate_img").show();
+				$("#image").html('<img width="100%" src="'+img_src+'">');
+
+			},
+		});
+
+		//删除
+		$(".pull-right").click(function(){
+
+			$(".certificate_img").hide();
+
+			$('#filename').attr('value','');
+
+		});
+		
+		function checkDate(start,end){
+			if(start == '' || end == ''){
+				layer.msg('项目起止时间不能为空!');
+				return false;
+			}
+			var startTime = new Date(start);
+			var endTime = new Date(end);
+			var yusuan = $('#inputEmail3').val();
+			if(startTime.getTime() >= endTime.getTime()){
+				layer.msg('项目开始时间不能早于结束时间!');
+				return false;
+			}else if( $('.numbers').length < 1){
+				layer.msg('项目预算不能为空!');
+				return false;
+			}else{
+				return true;
+			}
+		}
+		$("#continue").click(function(){
+			var start =	$("#datebut").val();
+			var end =	$("#datainps").val();
+			if(!checkDate(start,end)){
+				return false;
+			}
+			
+			var f = true;
+			$('.boxs').each(function(){
+				var ss = $(this).val();
+				ss = $.trim(ss);
+				if(ss == ''){
+					layer.msg('预算费用名称不能为空!');
+					f = false;
+					return false;
+				}
+			});
+			$('.numbers').each(function(){
+				var numbers = $(this).val();
+				if($.trim(numbers) == ''){
+					layer.msg('预算金额不能为空!');
+					f = false;
+					return false;
+				}
+			});
+			
+			if(!f){
+				return false;
+			}
+			
+			var user_id = $("input[name='user_id[]']").val();
+			var tissue_id = $("input[name='tissue_id[]']").val();
+
+			if(user_id == undefined && tissue_id == undefined){
+				layer.msg('指定人员或公开报名不能为空!');
+				return false;
+			}
+
+
+			$("input[name='post_type']").val(1);
+			$("input[name='typeid']").val(2);
+		})
+
+		$("#draft").click(function(){
+			var start =	$("#datebut").val();
+			var end =	$("#datainps").val();
+			if(!checkDate(start,end)){
+				return false;
+			}
+			
+			$("input[name='post_type']").val(2);
+			$("input[name='typeid']").val(1);
+		})
+
+		//指定部门
+		function move_org() {
+
+			layer.open({
+				title: '指定人员',
+				btn: ['确定','取消'],
+				yes: function (index, layero) {
+					var body = layer.getChildFrame('body', index);
+
+					var user_name = new Array();
+
+					var user_id = new Array();
+
+					body.find("input[type='checkbox']:checked").each(function(i){
+
+						user_name = $(this).attr("alt");
+						user_id = $(this).val();
+
+						setTips(user_name,user_id);
+					});
+
+					layer.closeAll();
+
+				},
+				area: ['700px', '450px'],
+				offset: ['20px'],
+				type: 2,
+				skin: 'layui-layer-lan', //样式类名
+				closeBtn: 1, //显示关闭按钮
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				content: "{:U('Manage/personnel','','',true)}"
+			});
+
+		}
+
+		//公开范围
+		function open_range(){
+
+			var is_public = $("input[name='is_public']:checked").val();
+
+			if(is_public == 1){
+				layer.open({
+					title: '公开范围',
+					btn: ['确定','取消'],
+					yes: function (index, layero) {
+
+						var body = layer.getChildFrame('body', index);
+
+						var user_name = new Array();
+
+						var user_id = new Array();
+
+						body.find("input[type='checkbox']:checked").each(function(i){
+
+							user_name = $(this).attr("alt");
+
+							user_id = $(this).val();
+
+							OpenTips(user_name,user_id);
+						});
+
+						layer.closeAll();
+
+					},
+					area: ['700px', '450px'],
+					offset: ['20px'],
+					type: 2,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: "{:U('Jurisdiction/authority',array('typeid'=>2),'',true)}"
+				});
+
+			}else{
+
+				layer.msg('请勾选公开报名!');
+
+			}
+
+		}
+		
+		
+	 	
+	</script>
+</body>
+</html>

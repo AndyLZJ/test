@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>调研结果</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/all.css" />
+    <style type="text/css">
+	.item_op{
+		margin-top:30px; padding:0 15px; 
+	}
+	.item_op input{
+		border:0; border-radio:5px; width:100px; height:30px; background:#ccc; font-size:16px; 
+	}
+	#goNext{
+	float:right;
+	}
+	.item_op input.btn{
+	background:#3497DA; color:#fff; 
+	}
+	</style>
+</head>
+<body>
+   <!-- <header>
+       <div class="back"></div> 
+       <p>调研结果</p>
+    </header>
+    <div class="my_blank"></div>-->
+   <div class="investigation">
+        <h1>{$data.title}</h1>
+        <!-- classification 1表示单选题 2表示多选题 3判断 4简答 -->
+   		<if condition="$data.classification eq 1 or $data.classification eq 2">
+	        <if condition="$data.optiona neq ''">
+	        <p>{$data.optiona}（{$data.a_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.a_rate}">{$data.a_rate}</span></div>
+	        </if>
+	        
+	        <if condition="$data.optionb neq ''">
+	        <p>{$data.optionb}（{$data.b_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.b_rate}">{$data.b_rate}</span></div>
+	        </if>
+	        
+	        <if condition="$data.optionc neq ''">
+	        <p>{$data.optionc}（{$data.c_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.c_rate}">{$data.c_rate}</span></div>
+	        </if>
+	        
+	        <if condition="$data.optiond neq ''">
+	        <p>{$data.optiond}（{$data.d_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.d_rate}">{$data.d_rate}</span></div>
+	        </if>
+	        
+	        <if condition="$data.optione neq ''">
+	        <p>{$data.optione}（{$data.e_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.e_rate}">{$data.e_rate}</span></div>
+	        </if>
+	    </if>
+        
+        <if condition="$data.classification eq 3">
+	        <p>{$data.optiona}（{$data.a_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.a_rate}">{$data.a_rate}</span></div>
+	        
+	        <p>{$data.optionb}（{$data.b_num}）</p>
+	        <div class="bg1 line"><span style="width:{$data.b_rate}">{$data.b_rate}</span></div>
+        </if>
+        
+        <if condition="$data.classification eq 4">
+        	<p>{$data.myAnswer}</p>
+        </if>
+    
+	    <if condition="$code eq '1000'">
+	        <div class="item_op">
+	        	<form action="" method="post" id="survey_form">
+					<input type="hidden" name="auth" id="auth" value="{$base.auth}"/>
+					<input type="hidden" name="token" id="token" value="{$base.token}"/>
+					<input type="hidden" name="secret_key" id="secret_key" value="{$base.secret_key}"/>
+					<input type="hidden" name="survey_type" id="survey_type" value="{$base.survey_type}"/>
+					<input type="hidden" name="survey_id" id="survey_id" value="{$base.survey_id}"/>
+					<input type="hidden" name="project_id" id="project_id" value="{$base.project_id}"/>
+					<input type="hidden" name="research_id" id="research_id" value="{$base.research_id}"/>
+		        	<input type="hidden" id="preId" value="{$data.preId}"/>
+		        	<input type="hidden" id="nextId" value="{$data.nextId}"/>
+			       	<input type="button" id="goPre" <if condition="$data.preStatus eq 1"> class="btn" </if> value="上一题"/>
+			       	<input type="button" id="goNext" <if condition="$data.nextStatus eq 1"> class="btn"  </if> value="下一题"/>
+		       	</form>
+	        </div>
+        </if>
+  		<if condition="$code neq 1000">
+	  		<h1>{$message}</h1>
+  		</if>
+   </div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script type="text/javascript">
+	$("#goPre").click(function(){
+		var btn = $(this).attr("class");
+		if(btn != "btn"){
+			return false;
+		}
+		var data = $("#survey_form").serialize();
+		var topicId = $("#preId").val();
+		var newHref = "__CONTROLLER__/seeDetail?"+data+"&topicId="+topicId+"&random="+Math.random();
+		window.location.replace(newHref);
+	});
+	
+	$("#goNext").click(function(){
+		var btn = $(this).attr("class");
+		if(btn != "btn"){
+			return false;
+		}
+		var data = $("#survey_form").serialize();
+		var topicId = $("#nextId").val();
+		var newHref = "__CONTROLLER__/seeDetail?"+data+"&topicId="+topicId+"&random="+Math.random();
+		window.location.replace(newHref);
+	});
+</script>
+</html>

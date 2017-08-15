@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>内容管理——banner管理</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"href="__PUBLIC__/Css/skins/comm.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/layer/skin/layer.css">
+        <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+		<style type="text/css">
+			.frim_line.active {
+				color: white;
+				background-color: #00acd6;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+			Banner管理
+			<!--<small>/试题库名称</small>-->
+		</h1>
+		
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+				<!--筛选栏开始-->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="dataTables_filter">
+							<button type="button" class="btn btn-info mr10 float_r" onclick="add_employees();"> <i class="fa fa-gears mr5 " aria-hidden="true "></i>设置</button>
+							<a href="{:U('Admin/Banner/bannerDetail')}" type="button" class="btn btn-success mr10 float_r "> <i class="fa fa-plus mr5 " aria-hidden="true "></i>新增</a>
+						</div>
+					</div>
+				</div>
+				<!--筛选栏结束-->
+				<!--内容开始-->
+				<div class="row mt10">
+					<div class="col-sm-12">
+						<table id="example1" class="table table-condensed" role="grid" aria-describedby="example1_info">
+							<thead>
+								<tr role="row">
+									<th class="sorting text-center" width="100" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Banner位置</th>
+									<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">标题</th>
+									<th class="sorting text-center" width="300" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+								</tr>
+							</thead>
+							<tbody id="tab" class="passed_table">
+
+								
+								<volist name="lists" id="vo">
+								<tr role="row" class="odd text-center">
+									<td>{$vo.siteName}</td>
+									<td>{$vo.title}</td>
+									<td class="text-right">
+										<if condition="count($lists) eq 1"><else/>
+										<if condition="$i eq 1">    
+									    <a href="{:U('Admin/Banner/orderNumber',array('id'=>$vo['id'],'order'=>1))}" class="text-success mr20"><i class="fa fa-arrow-down  mr5" aria-hidden="true"></i>下移</a>
+										</if>
+
+										<if condition="$i eq count($lists)">     
+                                            <a href="{:U('Admin/Banner/orderNumber',array('id'=>$vo['id'],'order'=>-1))}" class="text-blue mr20"><i class="fa fa-arrow-up  mr5" aria-hidden="true"></i>上移</a>
+										</if>
+										
+										<if condition="($i neq 1) AND ($i neq count($lists))">        
+											<a href="{:U('Admin/Banner/orderNumber',array('id'=>$vo['id'],'order'=>-1))}" class="text-blue mr20"><i class="fa fa-arrow-up  mr5" aria-hidden="true"></i>上移</a>
+									     	<a href="{:U('Admin/Banner/orderNumber',array('id'=>$vo['id'],'order'=>1))}" class="text-success mr20"><i class="fa fa-arrow-down  mr5" aria-hidden="true"></i>下移</a>
+									     </if>
+
+										 </if>
+
+										<a href="{:U('Admin/Banner/bannerDetail',array('id'=>$vo['id'],'edit'=>1))}" class="mr20">
+											<i class="fa fa-edit mr5" aria-hidden="true"></i>编辑
+										</a>
+                                         
+										<a href="#" class="color_or" onclick="del_click({$vo['id']})">
+											<i class="fa  fa-trash-o mr5" aria-hidden="true"></i>删除
+										</a>
+									</td>
+								</tr>
+								</volist>
+ 
+
+							
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+				<!--内容結束-->
+			</div>
+
+		</section>
+		<!--banner设置-->
+		<div id="add_employees" style="display: none;">
+
+			<div class="col-sm-12 text-center mt20 font_bold">
+				滚动图片速度
+			</div>
+			<form class="form-horizontal col-sm-12">
+				<div class="form-group mt10">
+					<div class="col-sm-4">
+						<button id="speed1" type="button" class="btn frim_line mb10 mt10 btn-block <if condition="$lists[0]['speed'] eq 1"> active </if> " data-widget="remove"> 快（1秒）</button>
+					</div>
+
+					<div class="col-sm-4">
+						<button id="speed2" type="button" class="btn frim_line mb10 mt10 btn-block <if condition="$lists[0]['speed'] eq 3"> active </if> " data-widget="remove"> 中（3秒）</button>
+					</div>
+
+					<div class="col-sm-4">
+						<button id="speed3" type="button" class="btn frim_line mb10 mt10 btn-block <if condition="$lists[0]['speed'] eq 5"> active </if> " data-widget="remove"> 慢（5秒）</button>
+					</div>
+				</div>
+			</form>
+
+			<div class="col-sm-12 text-center mt10">
+				<a class="btn btn-info form-group_but" onclick="set()">保存</a>
+			</div>
+		</div>
+		<!--banner设置结束-->
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+        <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script src="__PUBLIC__/plugins/uploadify/jquery.uploadify.min.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+
+			function del_click(id) {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					location.href = "{:U('Admin/Banner/del')}" + "/id/" + id;
+					// layer.msg('删除成功', {
+					// 	icon: 1
+					// });
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+
+			//批量导入
+			function add_classify() {
+				layer.open({
+					title: '问卷导入',
+					btn: ['导入', '取消'],
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: '<div class="mb10">一、请选择试题所属课程</div><div class="form-group"><select class="form-control select2 width_10"><option ><a>--选择问卷分类--</a> </option><option><a>职业心态</a></option><option>临柜技能</option><option>分类三</option><option>分类四</option></select></div>     <div class="mb10">二、请根据模板格式导入数据</div><div class="mb10"> <button type="button" class="btn btn-block btn-success "><i class="fa fa-arrow-circle-down mr5" aria-hidden="true"></i>下载模板</button></div> <div class="mb10">注：导入文件请勿超过1M。</div>    <div class="mb10">三、请选择需要导入的Excel文件</div> <div class="mb10"><button type="button" class="btn btn-primary mr10 ">选择文件</button>暂未选择文件</div>'
+				})
+			}
+
+			//新增问卷分类
+			function add_Que_classify() {
+				layer.open({
+					title: '问卷分类',
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: '<div class="mb10"><button type="button" class="btn mb10  btn-default btn-sm" data-widget="remove"> 分类名字<i class=" ml5 fa fa-times"></i></button> <button type="button" class="btn mb10  btn-default btn-sm" data-widget="remove"> 分类名字<i class=" ml5 fa fa-times"></i></button> <button type="button" class="btn mb10  btn-default btn-sm" data-widget="remove"> 分类名字<i class=" ml5 fa fa-times"></i></button> <button type="button" class="btn mb10  btn-default btn-sm" data-widget="remove"> 分类名字<i class=" ml5 fa fa-times"></i></button> <button type="button" class="btn mb10  btn-default btn-sm" data-widget="remove"> 分类名字<i class=" ml5 fa fa-times"></i></button> </div> <div class="mb10"><button type="button" class="btn btn-primary  btn-sm " > <i class="fa fa-plus"></i>新增</button></div>'
+				})
+			}
+
+			//全选checkbox
+			var $checkboxAll = $(".passed_allcheck"),
+				$checkbox = $(".passed_table").find("[type='checkbox']").not("[disabled]"),
+				length = $checkbox.length,
+				i = 0;
+
+			$checkboxAll.on("ifClicked", function(event) {
+				if(event.target.checked) {
+					$checkbox.iCheck('uncheck');
+					i = 0;
+				} else {
+					$checkbox.iCheck('check');
+					i = length;
+				}
+			});
+
+			//新增员工
+			function add_employees() {
+				layer.open({
+					title: '设置速度',
+					//					btn: ['确定', '取消'],
+					area: ['400px', '260px'],
+					offset: ['20px'],
+					type: 1,
+					skin: 'layui-layer-lan', //样式类名
+					closeBtn: 1, //显示关闭按钮
+					anim: 2,
+					shadeClose: true, //开启遮罩关闭
+					content: $("#add_employees")
+				});
+			}
+
+			//速度按钮变色变
+			$(".frim_line").click(function() {
+				$(".frim_line").each(function() {
+					$(this).removeClass("active");
+				});
+				$(this).addClass("active");
+			});
+
+
+			function set(){
+				
+				   var speed = "";
+                   var speendbt1 = $('#speed1').attr('class');
+				   var speendbt2 = $('#speed2').attr('class');
+				   var speendbt3 = $('#speed3').attr('class');
+           
+                   if(speendbt1.indexOf("active") > -1){
+                     speed = 1;
+				   }else if(speendbt2.indexOf("active") > -1){
+                     speed = 3;
+				   }else if(speendbt3.indexOf("active") > -1){
+                     speed = 5;
+				   }
+                  
+		
+                   $.post('{:U("Admin/Banner/speedSet")}',{'speed':speed}, function($data) { 
+				
+                        if($data['status'] == 1){  
+                    
+						   layer.msg($data['info'],{icon:1});//bootstrap框架确认弹窗
+						  setTimeout(function(){
+                                location.href = "{:U('Admin/Banner/index')}";
+                              },1000);   
+	
+                         
+						  }else{
+							
+							layer.msg($data['info']); 
+							//   setTimeout(function(){
+							// 	location.href = "{:U('Admin/Banner/index')}";
+                            //   },1000);   
+							  
+							     
+						  }	 
+				   },'json');
+				}
+		</script>
+	</body>
+
+</html>

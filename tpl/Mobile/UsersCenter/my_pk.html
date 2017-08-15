@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>人员PK</title>
+	<meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    
+    <meta  name="applicable-device"  content="mobile">
+    <script type="text/javascript">
+        document.getElementsByTagName("html")[0].style.fontSize = (document.width?document.width:document.documentElement.clientWidth)*0.0375+"px";
+    </script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Mobile/css/alls.css" />
+
+</head>
+<body>
+    <input type="hidden" name="token" id="token" value="{$items.token}"/>
+    <input type="hidden" name="secret_key" id="secret_key" value="{$items.secret_key}"/>
+    <div class="pk2">
+        <div class="my_blank"></div>
+        <div id="main"></div>
+        <div class="buttons">
+            <p id="selectPersonnel">换人PK</p>
+            <p id="selectDepartment">部门PK</p>
+        </div>
+
+         <div class="content content1 cbfix">
+
+            <div class="fr name">
+                <img src="{$items.avatar}" style="width:40px;height:40px" alt=""><br />
+                <b>{$items.username}</b>
+                <p>本月积分{$items.integral}</p>
+            </div>
+        </div>
+    </div>
+   <!-- <div class="oveylay"></div>-->
+   <!-- <div class="pk_dialog">
+        <img src="__PUBLIC__/Mobile/images/pk3.png" class="head">
+        <div class="departments">
+           <img src="__PUBLIC__/Mobile/images/icon2.png"><img src="__PUBLIC__/Mobile/images/icon2.png"><img src="__PUBLIC__/Mobile/images/icon2.png"><img src="__PUBLIC__/Mobile/images/icon2.png">
+        </div>
+        <button>取消</button>
+    </div>-->
+</body>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Mobile/js/commom.js"></script>
+<script src="__PUBLIC__/Mobile/js/echarts.min.js"></script>
+
+<script>
+    $(function(){
+        $("#selectPersonnel").click(function() {
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/pkMember?token="+token+"&secret_key="+secret_key;
+        });
+
+        //选择部门
+        $("#selectDepartment").click(function() {
+            var token = $("#token").val();
+            var secret_key = $("#secret_key").val();
+            location.href = "__CONTROLLER__/pkDepartment?token="+token+"&secret_key="+secret_key;
+        });
+        var myChart = echarts.init($("#main")[0]);
+        var option = {
+           
+            radar: [
+                {
+                    shape: 'circle',
+                    name: {
+                        textStyle: {
+                            color:'#FFF'
+                        }
+                    },
+                    splitNumber: 4,
+                    splitArea: {
+                        areaStyle: {
+                            color: ['rgba(255, 255, 255, 0.8)','rgba(255, 255, 255, 0.6)','rgba(255, 255, 255, 0.4)','rgba(255, 255, 255, 0.2)']
+                        }
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        }
+                    },
+                    splitLine: {
+                        show:false
+                    },
+                    indicator: [
+                        { text: '我是学霸' },
+                        { text: '爱学习' },
+                        { text: '乐分享' },
+                        { text: '系统达人' },
+                        { text: '任务范儿' },
+                        { text: '好为人师' }
+                    ]
+                }
+            ],
+            series:[
+                {
+                    type: 'radar',
+                    lineStyle:{
+                        normal:{width:0}
+                    },
+                    symbol: 'none',
+                    data: [
+                        {
+                           // value: [8,8,8,6,6,6],
+                            areaStyle: {
+                                normal: {
+                                    opacity: 0.8,
+                                    color: "#5867c3"
+                                }
+                            }
+                        }
+                    ]
+                },
+            ]
+        };
+
+        option.series[0]['data'][0]['value'] = {$items['my_list']};
+        myChart.setOption(option);
+
+       /* $(".buttons p").click(function(){
+            $(".oveylay,.pk_dialog").show();
+        })
+        function hideDialog(){
+            $(".oveylay,.pk_dialog").hide();
+        }
+        $(".oveylay").click(hideDialog);
+        $(".pk_dialog button").click(hideDialog);*/
+    })
+</script>
+</html>

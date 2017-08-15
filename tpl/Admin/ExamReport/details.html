@@ -1,0 +1,176 @@
+<link rel="stylesheet" href="__PUBLIC__/plugins/layui/css/layui.css">
+<layout name="layout"/>
+        <!--内容区域顶栏面包屑开始-->
+        <section class="content-header">
+            <h1 class="info_title">
+                             数据管理
+      <small>/查看讲师</small>
+    </h1>
+            <ol class="breadcrumb">
+        <li>
+          <a href="{:U('lecturer')}"><i class="fa fa-mail-reply-all"></i>返回</a>
+        </li>
+      </ol>
+        </section>
+        <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+      <div class="box-header with-border info_box_title">
+        <span>查看讲师</span>
+      </div>
+      <div class=" ml10 mr10 mt10 mb10">
+
+        <!--内容开始-->
+        <div class="row">
+          <div class="col-sm-12">
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group col-sm-2">
+                  <label class="control-label">讲师姓名：</label>
+                  <label class="control-label">{$data.uinfo.name}</label>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">讲师来源：</label>
+                  <label class="control-label">
+                    <if condition="$data.uinfo.type eq 1">外部讲师
+                    <else/>内部讲师
+                    </if>
+                  </label>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">工号：</label>
+                  <label class="control-label">{$data.uinfo.job_number|default='---'}</label>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">讲师级别：</label>
+                  <label class="control-label">{$data.uinfo.levels}</label>
+                </div>
+
+                <div class="form-group col-sm-2">
+                  <label class="control-label">年龄（岁）：</label>
+                  <label class="control-label">{$data.uinfo.age}</label>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">授课次数：</label>
+                  <label class="control-label">{$data.count|default=0}</label>
+                </div>
+
+                <div class="form-group col-sm-2">
+                  <label class="control-label">授课年限：</label>
+                  <label class="control-label">{$data.uinfo.year|default=0} 年</label>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">授课课程：</label>
+                  <label class="control-label">{$data.course_count|default=0} 门</label>
+                </div>
+
+                <div class="form-group col-lg-12">
+                  <label class="float_l control-label">讲师介绍：</label>
+                  <label style="text-align:left;" class="col-lg-11 control-label">{$data.uinfo.description}</label>
+                </div>
+                <div class="form-group col-lg-12">
+                  <label class="float_l control-label">证书：</label>
+                  <div class="col-sm-10" style="display: block;">
+                      <div class="box box-success certificate_img mr30 float_l">
+                        <div class="box-body">
+                          <img src="__ROOT__{$data.uinfo.certificates}" alt="证书预览" width="100%" />
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+              <thead>
+                <tr role="row" >
+                  <th  class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">课程</th>
+                  <th  class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">所属项目</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">课件制作人</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">课程类型</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">实到/应到人数</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">课程评价</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">讲师评价</th>
+                  <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">授课时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach name="data.list" item="v">
+                  <tr class="text-center" role="row" class="odd">
+                    <td>
+                      <a>{$v.course_name}</a>
+                    </td>
+                    <td>{$v.project_name}</td>
+                    <td>{$v.maker}</td>
+                    <td>
+                      <if condition="$v['course_way'] eq 1">面授
+                      <else/>在线
+                      </if>
+                    </td>
+                    <td>{$v.real} / {$v.should}</td>
+
+                    <td class="text-red">             
+                      <input type="hidden" name="s" value="{$v['score']}">
+                      <?php $m = 5-$v['score'];for($i=0;$i<$v['score'];$i++){?>
+                          <?php echo '<i class="fa fa-star mr5"></i>';?>
+                      <?php }?>
+                      <?php for($i=0;$i<$m;$i++){?>
+                          <?php echo '<i class="fa fa-star-o mr5"></i>';?>
+                      <?php }?>
+                    </td>
+                    <td class="text-red">             
+                      <input type="hidden" name="s" value="{$v['lscore']}">
+                      <?php $m = 5-$v['lscore'];for($i=0;$i<$v['lscore'];$i++){?>
+                          <?php echo '<i class="fa fa-star mr5"></i>';?>
+                      <?php }?>
+                      <?php for($i=0;$i<$m;$i++){?>
+                          <?php echo '<i class="fa fa-star-o mr5"></i>';?>
+                      <?php }?>
+                    </td>
+
+                    <td>{$v.pj_start_time}</td>
+                  </tr>
+                </foreach>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--内容結束-->
+        <!--分页开始-->
+        <div class="row">
+          <div class="float_r mr15">
+            <div class="dataTables_paginate paging_simple_numbers" id="demo1">
+              {$data.page}
+            </div>
+          </div>
+        </div>
+        <!--分页结束-->
+
+        <!--内容結束-->
+
+      </div>
+
+    </section>
+    <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/plugins/layui/layui.js"></script>
+    <script type="text/javascript">
+
+      /*layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage,
+        layer = layui.layer;
+  
+        laypage({
+          cont: 'demo1'
+          ,pages: "{$data.allpage}"//总页数
+          ,groups: 5 //连续显示分页数
+        });
+  
+    });*/
+
+    </script>
+  </body>
+
+</html>

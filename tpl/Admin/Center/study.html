@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心_学分统计</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+    <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+    
+    <!--三期时间插件样式-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Js/monthPicker/monthPicker.css"/>
+	<style type="text/css">
+	    .ulitem {
+	        padding: 10px;
+	        border: 1px #dcdcdc solid;
+	    }
+	    .ulitem:hover {
+	        border: 1px #0288d1 solid;
+	        box-shadow: 0 1px 3px rgba(3, 169, 244, .45);
+	    }
+	    .course_img {
+	        position: relative;
+	    }
+	    .course_time {
+	        padding: 7px;
+	        background-color: rgba(0, 0, 0, 0.5);
+	        z-index: 9999999;
+	        color: #fff;
+	        position: absolute;
+	        right: 0px;
+	        left: 0px;
+	        bottom: 0px;
+	    }
+	    .integral_stati {
+	        display: block;
+	        margin: 0 auto;
+	        border: 16px solid #fff;
+	        width: 200px;
+	        height: 200px;
+	        border-radius: 50%;
+	        color: #fff;
+	        font-size: 3.0rem;
+	        box-shadow: 0 1px 8px rgba(0, 0, 0, .2);
+	        line-height: 180px;
+	        overflow: hidden;
+	        cursor: default;
+	    }
+	    .table-head th{text-align:center;}
+	    .table-head th.theme1{background:#ddd;}
+	    .table-head th.theme2{background:#ccc;}
+	    tbody tr{border-bottom:1px solid #ccc; }
+	    .operate{color:#0099FF; }
+	    .operate:hover{color:#0099FF; cursor:pointer; text-decoration:underline; }
+	</style>
+</head>
+<body>
+<!--内容区域顶栏面包屑开始-->
+<section class="content-header">
+    <h1 class="info_title">
+        个人中心
+        <small>/学分统计</small>
+    </h1>
+    <ol class="breadcrumb">
+    </ol>
+</section>
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+    <div class="box-header with-border info_box_title">
+        <span>学分统计</span>
+    </div>
+    <div class="box-body">
+        <select style="width:150px; " class="form-control select2" id="getStudyCredit">
+            <option value="1" <if condition="$circleType eq 1"> selected="selected" </if>>年度</option>
+            <option value="2" <if condition="$circleType eq 2"> selected="selected" </if>>季度</option>
+            <option value="3" <if condition="$circleType eq 3"> selected="selected" </if>>月度</option>
+        </select>
+        <div class="col-sm-3 text-center mt10" id="circle1">
+            <span class="integral_stati" style="background:#71d6d0;">{$totalScore}</span>
+            <div class="mt10">年度总学分</div>
+        </div>
+        <div class="col-sm-3 text-center mt10" id="circle2">
+            <span class="integral_stati" style="background:#71d6d0;">{$upCredit}</span>
+            <div class="mt10">在线培训学分</div>
+        </div>
+        <div class="col-sm-3 text-center mt10" id="circle3">
+            <span class="integral_stati" style="background:#71d6d0;">{$downCredit}</span>
+            <div class="mt10">线下培训学分</div>
+        </div>
+        <div class="col-sm-3 text-center mt10" id="circle4">
+            <div id="chart-bearing" style="height:250px;"></div>
+            <div class="float_l" style="margin-top: -55px;width: 100%;">学分完成率</div>
+        </div>
+    </div>
+</section>
+<section class="content">
+   	<div class="col-sm-12 nav-tabs-custom mt10 with-border">
+   		<ul class="nav nav-tabs nav_two">
+			<li <if condition="$type eq 1"> class="active" </if>>
+				<a href="__CONTROLLER__/study?type=1">全部</a>
+			</li>
+			<li <if condition="$type eq 2"> class="active" </if>>
+				<a href="__CONTROLLER__/study?type=2">在线培训</a>
+			</li>
+			<li <if condition="$type eq 3"> class="active" </if>>
+				<a href="__CONTROLLER__/study?type=3">线下培训班</a>
+			</li>
+		</ul>
+		<div class="mt15">
+			<form action="" method="get" class="form-inline" role="form">
+				<input style="width:200px; " type="text" class="form-control" placeholder="请输入开始时间" id="startTime" name="startTime" value="{$startTime}"/>
+				<span>至</span>
+				<input style="width:200px; " type="text" class="form-control" placeholder="请输入结束时间" id="endTime" name="endTime" value="{$endTime}"/>
+				<input type="hidden" name="type" value="{$type}"/>
+				<input type="hidden" name="circleType" value="{$circleType}"/>
+				<input type="submit" class="btn-info btn ml20" value="查询"/>
+				<input type="button" class="btn-info btn ml20 exportBtn" value="导出"/>
+			</form>
+		</div>
+	</div>
+   	<if condition="$type eq 1">
+   		<!-- 全部 -->
+		<table class="table table-hover">
+			<thead>
+				<tr class="table-head">
+					<th class="theme1" colspan="3">基本信息</th>
+					<th class="theme2" colspan="3">在线培训</th>
+					<th class="theme1" colspan="5">线下培训</th>
+					<th class="theme2" colspan="3">互动统计</th>
+				</tr>
+				<tr style="background:#ddd; ">
+					<th>序号</th>
+					<th>姓名</th>
+					<th>所属部门</th>
+					<th>学习课程数</th>
+					<th>获得学分</th>
+					<th>学习时长</th>
+					<th>内部培训班</th>
+					<th>外派培训班</th>
+					<th>外出授课</th>
+					<th>获得学分</th>
+					<th>学习时长</th>
+					<th>考试次数</th>
+					<th>问卷次数</th>
+					<th>笔记数</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>{$list.0.username}</td>
+					<td>{$list.0.part}</td>
+					<td>{$list.0.course_num}</td>
+					<td>{$list.0.upCredit}</td>
+					<td>{$list.0.up_time}</td>
+					<td>{$list.0.project0}</td>
+					<td>{$list.0.project1}</td>
+					<td>{$list.0.project2}</td>
+					<td>{$list.0.downCredit}</td>
+					<td>{$list.0.hours}</td>
+					<td>{$list.0.exam_num}</td>
+					<td>{$list.0.survey_num}</td>
+					<td>{$list.0.note_num}</td>
+				</tr>
+			</tbody>
+		</table>
+	<elseif condition="$type eq 2"/>
+   		<!-- 在线培训 -->
+   		<table class="table table-hover">
+   			<thead>
+   				<tr style="background:#ddd; ">
+					<th>序号</th>
+					<th>完成学习时间</th>
+					<th>课程名称</th>
+					<th>课程时长(分钟)</th>
+					<th>学分</th>
+					<th>课程类型</th>
+					<th>操作</th>
+				</tr>
+   			</thead>
+			<tbody>
+				<foreach name="list" item="data" key="key">
+					<tr>
+						<td>{$key+1}</td>
+						<td>{$data.create_time}</td>
+						<td>{$data.course_name}</td>
+						<td>{$data.course_time}</td>
+						<td>{$data.course_credit}</td>
+						<td>{$data.course_type}</td>
+						<if condition="$data.project_id eq '0'">
+							<td><a href="__MODULE__/my_course/detail/project_id/true/course_id/{$data.source_id}" target="_blank" class="operate">重新学习</a></td>
+						<else/>
+							<td><a href="__MODULE__/my_course/detail/project_id/{$data.project_id}/course_id/{$data.source_id}" target="_blank" class="operate">重新学习</a></td>
+						</if>
+					</tr>
+				</foreach>
+				<empty name="list">
+					<tr style="background:#ddd; ">
+						<td colspan="7" style="line-height:60px !important; text-align:center; font-size:20px; color:#aaa; background:#fff;">您还没有线上学习课程~</td>
+					</tr>
+				</empty>
+			</tbody>
+		</table>
+   	<else/>
+   		<!-- 线下培训 -->
+   		<table class="table table-hover">
+   			<thead>
+   				<tr style="background:#ddd; ">
+			   		<th>序号</th>
+					<th>主办部门</th>
+					<th>培训项目名称</th>
+					<th>培训类别</th>
+					<th>培训开始时间</th>
+					<th>培训结束时间</th>
+					<th>培训学时(小时)</th>
+					<th>培训对象</th>
+					<th>培训组织人员</th>
+					<th>获得学分</th>
+					<th>操作</th>
+				</tr>
+   			</thead>
+			<tbody>
+				<foreach name="list" item="data" key="key">
+					<tr>
+						<td>{$key + 1}</td>
+						<td>{$data.part}</td>
+						<td>{$data.project_name}</td>
+						<td>{$data.project_type}</td>
+						<td>{$data.start_time}</td>
+						<td>{$data.end_time}</td>
+						<td>{$data.total_time}</td>
+						<td>{$data.class_name}</td>
+						<td>{$data.manager}</td>
+						<td>{$data.credit}</td>
+						<td><a class="operate" onclick="detail({$data.id})">查看详情</a></td>
+					</tr>
+				</foreach>
+			</tbody>
+		</table>
+   	</if>
+   	<!--分页开始-->
+	<div class="row">
+		<div class="float_r mr15">
+			<div class="dataTables_paginate paging_simple_numbers">
+				{$pageNav}
+			</div>
+		</div>
+	</div>
+	<!--分页结束-->
+</section>
+
+</body>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/monthPicker/monthPicker.js"></script>
+<script type="text/javascript">
+    //仪表盘
+    var myChart = echarts.init(document.getElementById('chart-bearing'));
+    var option = {
+        legend: {
+            right: 10, // legend 放置在右侧中间。
+            top: '0%',
+            orient: 'vertical' // 纵向布局。
+        },
+        tooltip: {
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [{
+            name: '本月学时完成率',
+            type: 'gauge',
+            center: ['50%', '50%'],    // 调整全局居中位置
+            radius: '90%',            //整体内部大小控制
+            detail: {
+                  formatter: '{value}%'
+            }, //仪表盘显示数据
+            axisLine: { //仪表盘轴线样式
+                lineStyle: {
+                    width: 20
+                }
+            },
+            splitLine: { //分割线样式
+                length: 20
+            },
+            data: [{
+                value: 0,
+                name: '完成率'
+            }]
+        }]
+    };
+    myChart.setOption(option);
+    
+    //月份选择
+    $("#startTime").click(function(){
+		monthPicker.init();
+	});
+	$("#endTime").click(function(){
+		monthPicker.init();
+	});
+	
+	//列表行悬停效果
+    $("tbody tr").mouseover(function(){
+    	$(this).css("background-color","#ccc");
+    }).mouseout(function(){
+    	$(this).css("background-color","#fff");
+    });
+    
+    $("form").submit(function(){
+    	var start_time = $("input[name='startTime']").val();
+    	var end_time = $("input[name='endTime']").val();
+		if(!start_time){
+			layer.msg('请选择开始时间', {time:1000});
+    		return false;
+		}
+		if(!end_time){
+			layer.msg('请选择结束时间', {time:1000});
+    		return false;
+		}
+    	var startTime = new Date(start_time);
+    	var endTime = new Date(end_time);
+    	if(startTime.getTime() > endTime.getTime()){
+    		layer.msg('开始时间不能早于结束时间', {time:1000});
+    		return false;
+    	}
+    });
+	
+    //查看详情
+    function detail(id){
+        var url = "__MODULE__/my_goal/detail"+'/id/'+id;
+        layer.open({
+            title: '查看详情',
+            type: 2,
+            offset:'10px',
+            btn: ['确定', '取消'],
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            area: ['900px', '650px'],
+            content:url
+        });
+    }
+    
+    //导出数据
+    $(".exportBtn").click(function(){
+    	window.location.href = "__CONTROLLER__/studyExport?type={$type}&startTime={$startTime}&endTime={$endTime}";
+    });
+    
+    //学分统计
+    $("#getStudyCredit").change(function(){
+    	getStudyCredit();
+    });
+    
+    getStudyCredit();
+    
+    function getStudyCredit(){
+    	var type = $("#getStudyCredit").val();
+    	
+    	//选项锁定
+    	$("input[name='circleType']").val(type);
+    	$(".nav_two a").each(function(){
+    		var href= $(this).attr("href");
+    		href += "&circleType="+type;
+    		$(this).attr("href", href);
+    	});
+    	
+    	$.ajax({
+			type: "get",
+			url: "__CONTROLLER__/getStudyCredit?creditType="+type,
+			dataType: "json",
+			success: function(data){
+				$("#circle1 span").html(data.totalScore);
+				if(type == 1){
+					$("#circle1 div").html("年度总学分");
+				}else if(type == 2){
+					$("#circle1 div").html("季度总学分");
+				}else{
+					$("#circle1 div").html("本月总学分");
+				}
+				$("#circle2 span").html(data.upCredit);
+				$("#circle3 span").html(data.downCredit);
+				
+				myChart.setOption({
+		            series:[{
+		            	data: [{
+		                    value: data.finishRate
+		                }]
+		            }]
+		        });
+			}
+		});
+    }
+    
+</script>
+</html>

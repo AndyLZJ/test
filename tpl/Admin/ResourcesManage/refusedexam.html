@@ -1,0 +1,277 @@
+<section class="content-header">
+<div class="nav-tabs-custom">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="{:U('ResourcesManage/passExam')}">试卷管理</a>
+		</li>
+		<li>
+			<a href="{:U('QuestionBank/index')}">试题库管理</a>
+		</li>
+	</ul>
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{:U('ResourcesManage/passExam')}">已通过</a>
+		</li>
+		<li>
+			<a href="{:U('ResourcesManage/auditExam')}">待审核</a>
+		</li>
+		<li class="active">
+			<a href="{:U('ResourcesManage/refusedExam')}">已拒绝</a>
+		</li>
+	</ul>
+</div>
+</section>
+<layout name="layout" />
+<!--内容区域顶栏面包屑开始-->
+<!--<section class="content-header">
+	<h1 class="info_title">
+			试卷管理
+			<small>/试卷列表</small>
+		</h1>
+
+	<ol class="breadcrumb">
+		<li>
+
+		</li>
+	</ol>
+</section>-->
+<!--内容区域顶栏面包屑结束-->
+<section class="content">
+	<div>
+		<div class="nav-tabs-custom">
+			
+			<div class="tab-content">
+				<div class="tab-pane active" id="good_audit">
+					<!--课程列表开始-->
+						<div>
+							<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<!--筛选栏开始-->
+								<div class="row">
+								<form action="__SELF__" method="get" id="searchForm">
+								<!--新增搜索条件  试卷分类/上传人-->
+									<div class="col-sm-2">
+										<div class="form-group">
+											<select class="form-control select2 width_10" name="test_cate">
+												<option value="-1"><a>--选择试卷分类--</a> </option>
+												<foreach name="category" item="v">
+													<option value="{$v.id}" 
+														<if condition="$cate eq $v['id']">selected</if>>{$v.cat_name}
+													</option>
+												</foreach>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<div class="input-group width_10">
+											<input type="text" name="keyword" class="form-control pull-right" value="{$keyword}" placeholder="搜索试卷名" style="width:300px;">
+										    <div class="input-group-btn">
+										    	<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+											</div>
+										</div>
+										</div>
+									</div>
+									</form>
+									<div class="col-sm-2">
+										
+									</div>
+									<div class="col-sm-6">
+										<div id="example1_filter" class="dataTables_filter">
+											<button type="button" class="btn btn-primary mr10 float_r" onclick="add_classify();">
+												<i class="fa fa-cloud-upload mr5 " aria-hidden="true "></i>导入试卷
+											</button>
+											<a  class="btn btn-success mr10 float_r" href="{:U('smartexam2')}">
+												<i class="fa fa-cloud-upload mr5 " aria-hidden="true "></i>智能组卷
+											</a>
+										</div>
+									</div>
+								</div>
+								<!--筛选栏结束-->
+								<!--内容开始-->
+								<div id="uploadexam" style="display:none;">
+								<form action="{:U('importExam')}" method="post" enctype="multipart/form-data">
+								<div class="mb10">请选择试卷分类</div>
+								<div class="form-group">
+								<select name="importExam" class="form-control select2 width_10">
+								<option selected="selected" value="0">--选择试卷分类--</option>
+								<foreach name="category" item="vo">
+								<option value="{$vo['id']}">{$vo['cat_name']}</option>
+								</foreach>
+								</select>
+								</div>
+								<div  class="mb10 uploadify">
+								<input type="file" name="importExam"/>
+								<!-- <button  type="button" class="btn btn-primary mr10 ">一、选择文件</button>暂未选择文件 -->
+								</div>
+								
+								<div class="mb10"> 
+								<a href="{:U('downloadExam')}"><button type="button" class="btn btn-block btn-success ">
+								<i class="fa fa-arrow-circle-down mr5" aria-hidden="true">
+								</i>下载模板</button></a></div> 
+								<div class="mb10">注：试卷导入后不可在线修改，修改需重新导入。</div>
+								<input style="margin-buttom:-20px;margin-left:90px" class="btn btn-primary mr10 " type="submit" value="提交"/>
+								<input type="button" value="取消" onclick="javascript:layer.closeAll();" class="btn btn-primary mr10">
+								</form>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+											<thead>
+												<tr role="row">
+													<th class="sorting_asc text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+														<label style="margin-bottom: 0px;">
+															<input type="checkbox" class=refuse_allcheck>
+														</label>
+													</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷名称</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">试卷分类</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">试卷分值</th>													
+                                                 <!--<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">使用统计</th>-->	
+												    <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">类型</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">上传时间</th>
+													<th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">操作</th>
+
+												</tr>
+											</thead>
+											<tbody id="tab" class="refuse_table">
+												<volist name="approved_list" id="msg">
+												<tr role="row" class="odd text-center">
+													<td>
+														<input type="checkbox" name="checkbox[]"  value="{$msg.id}">
+													</td>
+													<td><a>{$msg['test_name']}</a></td>
+													<td> {$msg['cat_name']}</td>
+													<td>{$msg['test_score']}</td>
+													<!-- <td><a href="">82</a></td> -->
+													<td>
+														<if condition="$msg['type'] eq 0">
+															组卷
+														<else/>
+															导入
+														</if>
+													</td>
+													<td>{$msg['test_upload_time']}</td>
+													<td>
+														<a href="{:U('examDestail',array('id'=>$msg['id'],'refused'=>1,'status'=>3))}" class="bs-callout-info">
+															<i class="fa fa-eye  mr5" aria-hidden="true"></i>查看
+														</a>
+														<if condition="$msg['isequality'] neq 1">
+															<span name="del">
+															<a data-id="{$msg['id']}" href="#" class="bs-color_gree mr20">
+																<i class="fa fa-trash mr5" aria-hidden="true"></i>删除
+															</a>
+															</span>
+														</if>
+													</td>
+												</tr>
+												</volist>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--内容結束-->
+								<!--分页开始-->
+								<div class="row">
+									<div class="float_r mr15">
+										<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+											{$approved_page}
+										</div>
+									</div>
+								</div>
+								<!--分页结束-->
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script type="text/javascript">
+	$('select[name=test_cate]').change(function(){
+		$('#searchForm').submit();
+	});
+
+	$("span[name='del'] a").click(function(){
+		var id = $(this).attr('data-id');
+		layer.confirm('您确定要删除吗？', {
+			btn: ['确定', '取消'],
+			yes:function(){
+				  $.ajax({
+                	  url:"{:U('del_all')}",
+                	  type:"POST",
+                	  data:{id:id},
+                	  dataType:"JSON",
+                	  success:function(xhr){
+                		  if(xhr == 1){
+                			  layer.msg('操作成功', {time: 1500,icon: 1});
+                			  location.reload();	  
+                		  }else{
+                			  layer.msg('操作失败', {time: 1500,icon: 1});
+                		  }  
+                	  },
+                  })
+			},
+			skin: 'layui-layer-lan'
+		}); 
+	})
+	
+	//初始化页面
+	$(document).ready(function () {
+        load();
+        formval()
+    });
+	function load() {
+        Upload();
+        var src = $('#filename').val();
+        if (src) {
+            $("#image").html('<img style="width:100px;height:100px" src="__PUBLIC__/' + src + '" class="user-image" alt="User Image">');
+        }
+        var chapterid = $('#chapterId').val();
+        if (chapterid) {
+            var chapternew = JSON.parse(chapterid);
+            for (x in chapternew) {
+                var name = chapternew[x].name;
+                var id = x;
+                $("#chapter").append('<div id="div' + id + '"><i class="del" onclick="del_chapter(' + id + ')">删除</i><input  type="text" disabled="disabled" name="chapter[]" value="' + name + '">' +
+                '<br>' + '</div>');
+            }
+        }
+   }
+	
+	     //radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			
+			 //试卷导入
+			 function add_classify(){
+			 	layer.open({
+			 		title: '试卷导入',
+			        skin: 'layui-layer-lan', //样式类名
+			        closeBtn: 0, //显示关闭按钮
+			        anim: 2,
+			        shadeClose: true, //开启遮罩关闭
+			        content: $('#uploadexam').html(),
+			        success:function(){
+                        $('.layui-layer-btn').hide();
+                    }
+			    })
+			 }
+		  
+             //已通过全选checkbox
+			var $checkboxAll = $(".passed_allcheck"),
+			            $checkbox = $(".passed_table").find("[type='checkbox']").not("[disabled]"),
+			            length = $checkbox.length,
+			            i=0;
+
+			    $checkboxAll.on("ifClicked",function(event){
+			        if(event.target.checked){
+			            $checkbox.iCheck('uncheck');
+			            i=0;
+			        }else{
+			            $checkbox.iCheck('check');
+			            i=length;
+			        }
+            });
+
+	</script>

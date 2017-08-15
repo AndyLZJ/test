@@ -1,0 +1,323 @@
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<!-- daterange picker -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/datepicker/datepicker3.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/colorpicker/bootstrap-colorpicker.min.css">
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/timepicker/bootstrap-timepicker.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/selectUser.css">
+<!--三期时间插件样式-->
+<link rel="stylesheet" href="__PUBLIC__/Dist/js/My97DatePicker/skin/default/datepicker.css">
+<layout name="layout"/>
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+        <h1 class="info_title">
+            考试管理
+            <small>/新增考试</small>
+        </h1>
+		<ol class="breadcrumb">
+            <li>
+				<a href="javascript:void(0)" onclick="JavaScript:history.back(-1)"><i class="fa fa-mail-reply-all"></i>返回</a>
+			</li>
+        </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">新增考试</h3>
+                    </div>
+                    <form class="form-horizontal" action="__SELF__" method="POST">
+                        <div class="box-body">
+                            <!--授课方式字段开始-->
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>考试方式：</label>
+                                    <div class="col-sm-10">
+                                        <label>
+                                            <div class="radio mr30">
+                                                <label >
+                                                    <input type="radio" name="examfs" id="examfs1" value="1" checked=""/>
+                                                    线上
+                                                </label>
+                                            </div>
+                                            <div class="radio mr30">
+                                                <label>
+                                                    <input type="radio" name="examfs" id="examfs2" value="2" />
+                                                    线下
+                                                </label>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--授课方式字段结束-->
+                            <!--项目名称字段开始-->
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>考试名称：</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control mr30" id="test_name" name="name" value="{$testInfo.name}">
+                                </div>
+                            </div>
+                            <!--项目名称字段结束-->
+
+                            <div class="" id="kaoshi" style="margin-bottom:10px;display: none;">
+                                <label for="inputEmail3" class="col-sm-2 control-label" style="margin-left: -10px;"><span class="color_red">*</span>考试地址：</label>
+
+                                <div class="col-sm-10" style="margin-bottom:10px;">
+                                    <input type="text" class="form-control mr30" name="address">
+                                </div>
+                            </div>
+                            <!--培训班字段开始-->
+                            <div class="" id="yincang" >
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>添加试卷：</label>
+                                <div class="col-sm-10 mb10" style="margin-left: -10px;">
+                                    <a onclick="add_test();" class="btn btn-success form-group_but" ><i class="fa fa-plus mr5 "  aria-hidden="true "></i><span id="wenjuan">添加试卷</span></a>
+                                    <span class="ml10 text-bold text-blue" id="dqdy">{$examinationInfo.test_name}</span>
+                                    <input type="hidden" name="hidTestId" value="{$examinationInfo.id}"><!--试卷id-->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>及格分数：</label>
+
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control mr30" value="{$testInfo.pass_line}" name="pass_line" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">分
+                                    <input type="number" id="pass_line_total" value="" style="display:none;"/>
+                                    <input type="number" id="pass_score" value="" style="display:none;"/>
+                                </div>
+                            </div>
+							
+							<input type="hidden" name="id" value="{$id}"/>
+                            <!--培训班字段结束-->
+                            <!--项目名称字段开始-->
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_red">*</span>起止时间：</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" value="{$testInfo.start_time}" id="start" readonly name="start_time" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})" >
+                                    </div> 至
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" value="{$testInfo.end_time}" id="end" readonly name="end_time" onclick="WdatePicker({dateFmt:'yyyy-MM-dd H:mm:ss',isShowClear:false,readOnly:false})">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" id="times" style="margin-bottom:10px;">
+                                <label for="inputEmail3" class="col-sm-2 control-label" style="margin-left: -10px;"><span class="color_red">*</span>考试时长：</label>
+                                <div class="col-sm-10" style="margin-bottom:10px;">
+                                    <input type="number" class="form-control mr10" value="{$testInfo.test_length}" name="test_length" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">分钟
+                                </div>
+                            </div>
+                            <!--项目名称字段结束-->
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"> <span class="color_red">*</span>指定人员：</label>
+                                <div class="col-sm-10">
+                                    <a onclick="move_org();" class="btn btn-info form-group_but">选择人员</a>
+                                    <div style="margin:5px 5px;"></div>
+                                    <!--人员显示标签start-->
+                                    <div class="plus-tag tagbtn clearfix" id="myTags">
+                                        <foreach name="designee" item="vo" >
+                                            <a value='{$vo.id}' title='{$vo.username}' href="javascript:void(0);" />
+                                                <span>{$vo.username}</span>
+                                                <em class="myTags">
+                                                    <input type="hidden" name="tissue_id[]" value="{$vo.id}" />
+                                                </em>
+                                            </a>
+                                        </foreach>
+                                    </div>
+                                    <!--人员显示标签end-->
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <span id="GKFW">{$tissue_name}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer" id="tijiao">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-info form-group_but" id="submit">提交</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--内容結束-->
+                </div>
+            </div>
+        </div>
+    </section>
+<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/Js/js/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/Js/js/date/jedate/jedate.js"></script>
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+<script src="__PUBLIC__/Js/js/selectUser.js"></script>
+<!--三期时间插件js-->
+<script src="__PUBLIC__/Dist/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+    //radio选中样式
+    $('input').iCheck({ 
+        labelHover : false, 
+        cursor : true, 
+        checkboxClass : 'icheckbox_square-blue', 
+        radioClass : 'iradio_minimal-blue', 
+        increaseArea : '20%' 
+    }); 
+    $("#examfs1").on('ifChecked', function(event){ //ifCreated 事件应该在插件初始化之前绑定 
+        $("#yincang").show();    //线上考试时显示
+        $("#times").show();
+        $('#kaoshi').hide();
+    }); 
+    $("#examfs2").on('ifChecked', function(event){ //ifCreated 事件应该在插件初始化之前绑定
+        $("#yincang").hide();   //线下考试隐藏
+        $("#times").hide();
+        $('#kaoshi').show();
+    });
+
+
+    //指定人员
+    function move_org() {
+        layer.open({
+            title: '指定人员',
+            btn: ['确定','取消'],
+            yes: function (index, layero) {
+                var body = layer.getChildFrame('body', index);
+                var user_name = new Array();
+                var user_id = new Array();
+
+                body.find("input[type='checkbox']:checked").each(function(i){
+                    user_name = $(this).attr("alt");
+                    user_id = $(this).val();
+
+                    if(user_name == undefined){
+                        return true;
+                    }
+                    if($(this).attr('class')=='check_tissue'){
+                        return true;
+                    }
+                    setTips(user_name,user_id);
+                });
+                layer.closeAll();
+            },
+            area: ['900px', '480px'],
+            // offset: ['15px', '250px'],
+            type: 2,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('admin/tissue/designee','','',true)}"
+        });
+
+    }        
+    
+    //添加试卷
+    function add_test() {
+    	var id = $('input[name=hidTestId]').val();
+        layer.open({
+            title: '添加试卷',
+            // offset: ['50px', '250px'],
+            //btn: ['确定', '取消'],
+            area: ['800px', '500px'],
+            type: 2,
+            skin: 'layui-layer-lan', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: "{:U('addExamination')}"
+        });
+    }
+    function xianshi(huoqu){
+        if(huoqu==1){
+            $("#yincang").show();
+            $("#times").show();
+            $('#address').hide();
+        }else{
+            $("#yincang").hide();
+            $("#times").hide();
+            $('#address').show();
+        }
+    }
+
+    $("#submit").click(function(){
+        var user = $('.myTags').find('input').val();
+
+        var name= $("input[name='name']").val();                //考试名称
+        var start_time= $("input[name='start_time']").val();    //开始时间
+        var end_time= $("input[name='end_time']").val();        //结束时间
+        var tissue_id= $("input[name='tissue_id']").val();      //人员
+        var hidTestId= $("input[name='hidTestId']").val();     //试卷ID
+        var type = $('input[name=examfs]:checked').val();      //考试方式
+		var test_length = $('input[name=test_length]').val();			//考试时长
+		
+        test_start_time = Date.parse(start_time);
+        test_end_time = Date.parse(end_time);
+
+        if(name.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length == 0){
+            layer.alert("请填写考试名称");
+            return;
+        }else if(start_time == ""){
+            layer.alert("请选择开始时间");
+            return;
+        }else if(end_time == ""){
+            layer.alert("请选择结束时间");
+            return;
+        }else if(test_start_time > test_end_time){
+            layer.msg('开始时间不能大于结束时间', {
+                time: 1500, //2s后自动关闭
+            });
+            return false;
+        }else if(user == undefined){
+            layer.alert("请选择指定考试参与人员");
+            return;
+        }
+        if(type == 1){
+            if(hidTestId == ''){
+                layer.alert("请添加试卷");
+                return;
+            }
+            if((test_end_time - test_start_time) / 60000 < test_length){
+            	layer.alert("考试时长不能超过起止总时长");
+                return;
+            }
+        }
+
+        var fractional_value = parseInt($("input[name='pass_line']").val());
+        var pass_score = parseInt($("#pass_line_total").val());
+        if(fractional_value > pass_score){
+            layer.msg('及格分数不能大于试卷总分',{time:2000});
+            return false;
+        }
+        $("form").submit();
+    });
+
+</script>
+</body>
+</html>

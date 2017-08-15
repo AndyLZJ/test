@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>融易点——讲师列表</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+  <link rel="stylesheet"href="__PUBLIC__/plugins/iCheck/all.css">
+  <link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+</head>
+<body>
+
+    <!--内容区域顶栏面包屑开始-->
+    <section class="content-header">
+      <h1 class="info_title">
+        讲师管理
+        <small>/讲师列表</small>
+      </h1>
+      <ol class="breadcrumb">
+        <!--<li><a class="text-grey"><i class="fa fa-mail-reply-all"></i>返回</a></li>-->
+      </ol>
+    </section>
+    <!--内容区域顶栏面包屑结束-->
+    <section class="content">
+          <div>
+             
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="{:U('Lecturer/pagelist', ['type' => 0])}" data-toggle="">内部讲师</a></li>
+                  <li><a href="{:U('Lecturer/pagelistoutside', ['type' => 1])}" data-toggle="">外部讲师</a></li>
+                  <a href="{:U('Lecturer/add')}" type="button" class="btn btn-primary float_r mt5"><i class="fa fa-plus"></i>添加讲师</a>
+                </ul>
+                <div class="tab-content">
+                   <div class="tab-pane active" id="lecturer_inside">
+                       <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-6">
+                                <div class="box-tools">
+                                    <!--<select class="form-control select2 ">
+                                            <option selected="selected">--选择组织--</option>
+                                            <option>组织一</option>
+                                            <option>组织二</option>
+                                            <option>组织三组织三</option>
+                                    </select>-->
+                                    <form action="{:U('Admin/Lecturer/pagelist')}">
+                                    <div class="input-group">
+                                      <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入名字搜索" value="{$condition}">
+                                      <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                           <i class="fa fa-search"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    </form>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                         <!--<button type="button" class="btn btn-warning btn-sm  float_r" onclick="del_all();">
+                                         <i class="fa fa-trash-o"></i>批量删除</button>-->
+                                </div>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                                                          <!--内容开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+               aria-describedby="example1_info">
+            <thead>
+            <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                    <label style="margin-bottom: 0px;">
+                         <input type="checkbox" width="20" class="inside_allcheck">
+                    </label>
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="Browser: activate to sort column ascending">姓名
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="Platform(s): activate to sort column ascending">讲师级别
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="Engine version: activate to sort column ascending">所在组织
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">联系电话
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">擅长领域
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">授课年限
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">受聘时间
+                </th>
+                <!--<th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">授课次数
+                </th>-->
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                    aria-label="CSS grade: activate to sort column ascending">操作
+                </th>
+            </tr>
+            </thead>
+            <tbody class="inside_table">
+            <foreach name="list" item="vo">
+             <!--{$vo.id}-->
+                <tr role="row" class="odd">
+                    <td>
+                        <input type="checkbox" name="checkbox[]"  value="{$vo.id}">
+                    </td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.levels}</td>
+                    <td>{$vo.tissuename}</td>
+                    <td>{$vo.age}</td>
+                    <td>
+                     {$vo.tname}
+                    </td>
+                    <td>{$vo.year}年</td>
+                    <td>{$vo.employed_time}</td>
+                    <td>
+                        <a href="{:U('Lecturer/detail', ['id' => $vo['id'],'type'=>0])}" class="color_or mr20">
+                            <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                        </a>
+                        <if condition="$vo.isequality eq 0">
+                            <a href="{:U('Lecturer/edit', ['id' => $vo['id']])}" class="bs-callout-info">
+                                <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                            </a>
+                            &nbsp;&nbsp;
+                             <a href="#" class="bs-callout-info color_or" onclick="del_click('{$vo.id}');">
+                                                        <i class="fa fa-trash-o mr5" aria-hidden="true"></i>删除
+                            </a>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--内容結束-->
+                          <!--分页开始-->
+                          <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                          {$page}
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                   <div class="tab-pane" id="lecturer_exterior">
+                       <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                          <!--筛选栏开始-->
+                          <div class="row mb10">
+                              <div class="col-sm-6">
+                                <div class="box-tools">
+                                    <!--<select class="form-control select2 ">
+                                            <option selected="selected">--选择供应商--</option>
+                                            <option>供应商一</option>
+                                            <option>供应商二</option>
+                                            <option>供应商三供应商三</option>
+                                    </select>-->
+                                    <div class="input-group">
+                                      <input type="text" name="table_search" class="form-control pull-right" placeholder="请输入名字搜索">
+                                      <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                           <i class="fa fa-search"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                  <div id="example1_filter" class="dataTables_filter" style="line-height: 30px;">
+                                       <button type="button" class="btn btn-warning btn-sm  float_r" onclick="del_all();">
+                                       <i class="fa fa-trash-o"></i>
+                                       删除</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <!--筛选栏结束-->
+                          <!--内容开始-->
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                      <thead>
+                                          <tr role="row">
+                                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" width="45">
+                                                  <label style="margin-bottom: 0px;">
+                                                     <input type="checkbox" width="20" class="exterior_check">
+                                                  </label>
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">姓名
+                                              </th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">供应商</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">年龄</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">讲师级别</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">授课年限</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">课酬/天</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">授课次数</th>
+                                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">操作</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody class="exterior_table">
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                          <tr role="row" class="odd">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>夏夏夏</td>
+                                            <td>供应商供应商</td>
+                                            <td>25</td>
+                                            <td>中级</td>
+                                            <td>10年</td>
+                                            <td>3022</td>
+                                            <td>25</td>
+                                            <td>
+                                                <a href="#" class="color_or mr20">
+                                                    <i class="fa fa-search mr5" aria-hidden="true"></i>查看
+                                                </a>
+                                                <a href="#" class="bs-callout-info">
+                                                    <i class="fa fa-pencil mr5" aria-hidden="true"></i>编辑
+                                                </a>
+                                            </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <!--内容結束-->
+                          <!--分页开始-->
+                          <div class="row">
+                                <div class="float_r mr15">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous">
+                                               <span style="padding: 6px 30px!important;">共68</span>
+                                            </li>
+                                            <li class="paginate_button previous disabled" id="example1_previous">
+                                               <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+                                            </li>
+                                            <li class="paginate_button active">
+                                               <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+                                            </li>
+                                            <li class="paginate_button ">
+                                               <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+                                            </li>
+                                            <li class="paginate_button next" id="example1_next">
+                                               <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                          </div>
+                          <!--分页结束-->
+                       </div>
+                   </div>
+                </div>
+                <!-- /.tab-content -->
+              </div>
+            </div>
+    </section>
+
+        <script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="__PUBLIC__/Js/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+        <script src="__PUBLIC__/Dist/js/app.min.js"></script>
+        <script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+        <script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+        <script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+        <script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+         <script src="__PUBLIC__/plugins/layer/layer.js"></script>
+        <script src="__PUBLIC__/Dist/js/demo.js"></script>
+<script type="text/javascript">
+  
+  //radio选中样式
+  $('input').iCheck({ 
+    labelHover : false, 
+    cursor : true, 
+    checkboxClass : 'icheckbox_square-blue', 
+    radioClass : 'iradio_minimal-blue', 
+    increaseArea : '20%' 
+  }); 
+
+  //讲师身份选中显示字段
+  $(function(){
+   showCont();
+   $("input[name=lecturer]").on("click",function(){
+    showCont();
+   });
+  });
+  function showCont(){
+   switch($("input[name=lecturer]:checked").attr("id")){
+    case "lecturer_inside":
+     //alert("one");
+     $("#supplier").hide();
+     $("#address").hide();
+     $("#teaching_time").show();
+     $("#age").show();
+     break;
+    case "lecturer_exterior":
+     $("#teaching_time").hide();
+     $("#age").hide();
+     $("#supplier").show();
+     $("#address").show();
+     break;
+    default:
+     break;
+   }
+  }
+
+  //内部讲师全选checkbox
+      var $checkboxAlls = $(".inside_allcheck"),
+                  $checkboxs = $(".inside_table").find("[type='checkbox']").not("[disabled]"),
+                  length = $checkboxs.length,
+                  i=0;
+
+          $checkboxAlls.on("ifClicked",function(event){
+              if(event.target.checked){
+                  $checkboxs.iCheck('uncheck');
+                  i=0;
+              }else{
+                  $checkboxs.iCheck('check');
+                  i=length;
+              }
+            });
+
+      //外部讲师全选checkbox
+      var $checkboxAllb = $(".exterior_check"),
+                  $checkboxb = $(".exterior_table").find("[type='checkbox']").not("[disabled]"),
+                  length = $checkboxb.length,
+                  i=0;
+
+          $checkboxAllb.on("ifClicked",function(event){
+              if(event.target.checked){
+                  $checkboxb.iCheck('uncheck');
+                  i=0;
+              }else{
+                  $checkboxb.iCheck('check');
+                  i=length;
+              }
+            });
+
+ //批量删除
+      function del_all(){
+        layer.confirm('您确定要批量删除这些消息吗？', {
+          title: '批量删除',
+          btn: ['确定删除','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+        }, function(){
+                 var news=document.getElementsByName('checkbox[]');
+                 
+                //  alert(news);
+                var mess  = new Array();
+                  for (var i = 0,ress=0; i < news.length; i++) {
+                      if(news[i].checked){
+                       ress=ress+1;
+                       mess.push(news[i].value);
+                      }
+
+                  }
+                  console.log(mess);
+                //   alert(ress);             
+                if(ress>=1){
+          
+					$.post('{:U('Admin/Lecturer/multidel')}',{id:mess}, function($data) {  
+                        
+                          if($data.status == 1){  
+							  layer.msg($data.info,{time: 1000,icon: 1});//bootstrap框架确认弹窗
+
+                              setTimeout(function(){
+                               location.href = $data.url; 
+                              },1000);   
+                          }else{  
+							  layer.msg($data.info, { time: 1000});
+                              location.href = $data.url; 
+                          }     
+                      },'json');
+                //   layer.msg('删除成功', {time: 1000,icon: 1});
+                }else{
+                  layer.msg('删除失败', {time: 1000}); 
+                }
+                
+            },
+      function(){
+      layer.msg('取消操作',{time: 1000});
+    });
+      }
+
+
+       //单个删除
+      function del_click(sid){
+        layer.confirm('您确定要删除此消息吗？', {
+          title: '删除',
+          btn: ['确定删除','取消操作'],
+          shadeClose: true, //开启遮罩关闭
+          skin: 'layui-layer-lan'
+          //按钮
+        }, function(){
+            
+            // var sid = id;
+            // alert(sid);exit; 
+          location.href = '{:U("Admin/Lecturer/delone")}?id='+sid;
+          layer.msg('删除成功',{time: 1000});
+        },
+        function(){
+      layer.msg('取消操作',{time: 1000});
+    });
+      }
+</script>
+</body>
+</html>
+
+

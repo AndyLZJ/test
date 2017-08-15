@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>前台课程列表页面</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/ionicons-2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/comm.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layer/skin/layer.css">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/iCheck/all.css">
+		<link rel="stylesheet" href="__PUBLIC__/Dist/css/Mycourse.css">
+	</head>
+	<body>
+		<!--内容区域顶栏面包屑开始-->
+		<section class="content-header">
+			<h1 class="info_title">
+				        培训项目
+				        <small>/课程列表</small>
+				    </h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="#"><i class="fa fa-mail-reply-all"></i>返回</a>
+				</li>
+			</ol>
+		</section>
+		<!--内容区域顶栏面包屑结束-->
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap ">
+						<!--内容开始-->
+						<div class="box-header with-border mb20">
+							<label class="box-title col-sm-6"> <i class="fa fa-bullhorn text-blue"></i> 您有课程需要参与，请知悉。</label>
+							<label class="box-title col-sm-4">2016年12月12日  18：30</label>
+							<label class="box-title col-sm-2 "> <span class="pull-right"> <a>上一条</a> 1/6 <a>下一条</a></span> </label>
+						</div>
+						<div class="nav-tabs-custom   mb10">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#My_coursess" data-toggle="tab">我的课程</a>
+								</li>
+								<li>
+									<a href="#Open_classss" data-toggle="tab">公开课</a>
+								</li>
+								<!--筛选栏开始-->
+								<div class="">
+									<div class="col-sm-2 pull-right">
+										<div class="input-group width_10 ">
+											<input type="text" name="table_search" class="form-control pull-right" placeholder="请输入关键字">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2 pull-right">
+										<select class="form-control select2 width_10">
+											<option>
+												<a>--选择课程分类--</a>
+											</option>
+											<option>
+												<a>职业心态</a>
+											</option>
+											<option>临柜技能</option>
+											<option>分类三</option>
+											<option>分类四</option>
+										</select>
+									</div>
+								</div>
+								<!--筛选栏结束-->
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="My_coursess">
+									<!--我的课程列表开始-->
+									<div class="box-body row">
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<a href="Front_Attendance_course.html">
+													<div><img src="../dist/img/class1.png" /></div>
+												</a>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class2.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class3.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class4.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class5.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class6.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class4.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class1.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class6.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class2.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--分页开始-->
+									<div class="row">
+										<div class="float_r mr20">
+											<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+												<ul class="pagination">
+													<li class="paginate_button previous disabled" id="example1_previous">
+														<a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+													</li>
+													<li class="paginate_button active">
+														<a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+													</li>
+													<li class="paginate_button next" id="example1_next">
+														<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<!--分页结束	-->
+									<!--我的课程列表结束-->
+								</div>
+								<div class="tab-pane " id="Open_classss">
+									<!--公开课开始-->
+									<div class="box-body row">
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class6.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class5.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class4.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class3.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class2.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class1.png" /></div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class3.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class6.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class2.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 mb20">
+											<div class="ulitem">
+												<div><img src="../dist/img/class1.png" /></div>
+												<div class="box-title mt5 row">
+													<div class="ulite_log"></div>
+													<label class="col-sm-8 ">FR:职业心态 <span class="pull-right">45分钟</span></label>
+													<label class="col-sm-4 text-right"><a><i class="fa fa-eye mr5 "></i> <span>45</span></a></label>
+												</div>
+												<div class="box-title mt5 row">
+													<label class="col-sm-12 "><h4><a>数码摄影-录播合辑</a></h4></label>
+												</div>
+												<div class="progress progress-sm ">
+													<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--分页开始-->
+									<div class="row">
+										<div class="float_r mr20">
+											<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+												<ul class="pagination">
+													<li class="paginate_button previous disabled" id="example1_previous">
+														<a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
+													</li>
+													<li class="paginate_button active">
+														<a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a>
+													</li>
+													<li class="paginate_button ">
+														<a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a>
+													</li>
+													<li class="paginate_button next" id="example1_next">
+														<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<!--分页结束	-->
+									<!--公开课結束-->
+								</div>
+							</div>
+						</div>
+						<!--内容結束-->
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="__PUBLIC__/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="__PUBLIC__/plugins/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/plugins/fastclick/fastclick.js"></script>
+		<script src="__PUBLIC__/Dist/js/app.min.js"></script>
+		<script src="__PUBLIC__/plugins/sparkline/jquery.sparkline.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="__PUBLIC__/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<script src="__PUBLIC__/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="__PUBLIC__/plugins/chartjs/Chart.min.js"></script>
+		<script src="__PUBLIC__/Dist/js/pages/dashboard2.js"></script>
+		<script src="__PUBLIC__/plugins/iCheck/icheck.min.js"></script>
+		<script src="__PUBLIC__/plugins/ckeditor/ckeditor.js"></script>
+		<script src="__PUBLIC__/Dist/js/demo.js"></script>
+		<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+		<script type="text/javascript">
+			//radio选中样式
+			$('input').iCheck({
+				labelHover: false,
+				cursor: true,
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_minimal-blue',
+				increaseArea: '20%'
+			});
+			function del_click() {
+				//删除分组
+				layer.confirm('您确定要删除吗？', {
+					btn: ['确定', '取消'],
+					skin: 'layui-layer-lan'
+						//按钮
+				}, function() {
+					layer.msg('删除成功', {
+						icon: 1
+					});
+				}, function() {
+					layer.msg('取消删除', {
+						time: 2000, //2s后自动关闭
+					});
+				});
+			}
+		</script>
+	</body>
+</html>
